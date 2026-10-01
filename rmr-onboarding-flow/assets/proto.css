@@ -1,0 +1,26 @@
+/* PROTOTYPE-ONLY styling — nothing here comes from the design system.
+   Interaction affordances the mocks don't show (hover/focus, cursors, index page). */
+
+a.btn, a.btn--text, button.btn { cursor: pointer; }
+.btn--primary:not(:disabled):hover { filter: brightness(0.92); }
+.btn--secondary:hover { background: var(--component-selector); }
+.btn--text:hover { text-decoration: underline; }
+.menu-item:not(.is-selected) .menu-item__body:hover { background: var(--component-selector); }
+.attach:hover { border-color: var(--border-button-tertiary); }
+.attach.has-file .attach__text { color: var(--text-primary); }
+.user-info, .link { cursor: pointer; }
+
+/* flow index page */
+.proto-index { max-width: 720px; margin: 48px auto; padding: 0 16px; font-family: var(--font-main); }
+.proto-index h1 { font-size: var(--font-size-3xl); line-height: var(--line-height-xl); font-weight: 400; color: var(--text-blue); margin: 0 0 8px; }
+.proto-index p { color: var(--text-secondary); margin: 0 0 24px; }
+.proto-index ol { margin: 0; padding: 0; list-style: none; background: var(--background-primary); border-radius: var(--radius-container); box-shadow: var(--shadow-sm); }
+.proto-index li { border-bottom: 1px solid var(--border); }
+.proto-index li:last-child { border-bottom: 0; }
+.proto-index li a { display: flex; justify-content: space-between; padding: 12px 16px; }
+.proto-index li a:hover { background: var(--component-selector); }
+.proto-index li span:last-child { color: var(--text-secondary); font-size: var(--font-size-xs); }
+
+/* Stepper steps jump to their screen */
+.stepper__item[data-href] { cursor: pointer; }
+.stepper__item[data-href]:hover .stepper__label { text-decoration: underline; }

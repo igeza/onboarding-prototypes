@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal Preview – Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/rmr.css">
+<link rel="stylesheet" href="../assets/proto.css">
+<style>
+/* Preview-only: the form step shown by the RMX Form Designer's "Portal Preview" (no header or menu). */
+.preview { position: relative; min-height: 100vh; overflow: clip; isolation: isolate; }
+.preview .portal-bg { z-index: 0; }
+.preview .main { z-index: 1; }
+.preview textarea { display: block; width: 100%; border: 0; outline: 0; resize: vertical; font: inherit; color: inherit; background: none; }
+.preview .question__fields { max-width: 480px; }
+.btn[disabled] { opacity: 0.5; cursor: default; }
+</style>
+</head>
+<body>
+<div class="preview">
+<main class="main" data-component="Main Content">
+<div class="context-bar" data-component="Context Bar"><div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div><h1 class="context-bar__title">Form</h1></div>
+<section class="step-card step-card--fit" data-component="DTS">
+  <div class="step-card__head" data-component="Header"><h2 class="step-card__title">Basic Info</h2><p class="step-card__subtitle">Please fill in the below information</p></div>
+  <div id="questions">
+  <div class="question" data-component="Question">
+    <p class="question__text">1. Do you have pets?*</p>
+    <div class="question__slot">
+      <label class="radio" data-component="Radio Button"><input type="radio" name="has-pets" value="yes"><span class="radio__mark"></span><span>Yes</span></label>
+      <label class="radio" data-component="Radio Button"><input type="radio" name="has-pets" value="no"><span class="radio__mark"></span><span>No</span></label>
+    </div>
+  </div>
+  </div>
+</section>
+<div class="footer-buttons" data-component="Footer Buttons">
+  <button type="button" class="btn btn--secondary" data-component="Button" disabled><span class="btn__container">Back</span></button>
+  <button type="button" class="btn btn--primary" data-component="Button"><span class="btn__container">Next</span></button>
+</div>
+</main>
+<div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
+</div>
+<script>
+/* Renders the form as last saved in the Form Designer (sessionStorage); the static question above is the fallback. */
+(function () {
+  var saved;
+  try { saved = JSON.parse(sessionStorage.getItem('rmx-onboarding-form') || 'null'); } catch (e) {}
+  if (!saved) return;
+  function esc(t) { var d = document.createElement('div'); d.textContent = t == null ? '' : t; return d.innerHTML; }
+  var n = 0;
+  document.getElementById('questions').innerHTML = saved.map(function (f, i) {
+    if (f.type === 'tx') return '<div class="question" data-component="Question"><p class="question__text">' + esc(f.title) + '</p></div>';
+    n++;
+    var o = (f.opts && f.opts[f.type]) || [], name = 'q' + i, slot;
+    if (f.type === 'mc') slot = o.map(function (v) { return '<label class="radio" data-component="Radio Button"><input type="radio" name="' + name + '"><span class="radio__mark"></span><span>' + esc(v) + '</span></label>'; }).join('');
+    else if (f.type === 'cb') slot = o.map(function (v) { return '<label class="checkbox" data-component="Checkbox"><input type="checkbox" name="' + name + '"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>' + esc(v) + '</span></label>'; }).join('');
+    else if (f.type === 'dd') slot = '<div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" aria-haspopup="listbox" aria-expanded="false"></button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="' + name + '"><div class="dropdown__panel" role="listbox" hidden>' + o.map(function (v) { return '<div class="dropdown__item" role="option" data-value="' + esc(v) + '">' + esc(v) + '</div>'; }).join('') + '</div></div>';
+    else if (f.type === 'pa') slot = '<div class="question__fields"><div class="input" data-component="Input field"><textarea name="' + name + '" rows="3"></textarea></div></div>';
+    else if (f.type === 'fl') slot = '<div class="question__fields"><div class="input" data-component="Input field"><input type="file" name="' + name + '"></div></div>';
+    else slot = '<div class="question__fields"><div class="input" data-component="Input field"><input type="text" name="' + name + '" autocomplete="off"></div></div>';
+    var title = f.title || f.fallback || (f.type === 'fl' ? 'Untitled Attachment' : 'Untitled Question');
+    return '<div class="question" data-component="Question"><p class="question__text">' + n + '. ' + esc(title) + (f.required ? '*' : '') + '</p>' +
+      (f.help ? '<p class="question__hint">' + esc(f.help) + '</p>' : '') + '<div class="question__slot">' + slot + '</div></div>';
+  }).join('');
+})();
+</script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding – Pay Charges (Payment)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/rmr.css">
+<link rel="stylesheet" href="../assets/proto.css">
+</head>
+<body>
+<div class="page">
+<header class="header" data-component="Header">
+  <div class="header__left" data-component="Header Left">
+    <div class="header__logo" data-component="New Logo">
+      <div class="header__logo-mark"><img src="../assets/img/logo-mark.svg" alt=""></div>
+      <div class="header__logo-icon"><img src="../assets/img/logo-icon.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="header__right" data-component="Header Right">
+    <img class="header__icon" src="../assets/img/connect.svg" alt="" width="24" height="24">
+    <div class="header__divider"><div class="header__divider-rot"><div class="header__divider-line"><div><img src="../assets/img/header-divider.svg" alt=""></div></div></div></div>
+    <button type="button" class="user-info" data-component="User Info">
+      <span class="user-info__avatar" aria-hidden="true">WC</span>
+      <span class="user-info__name">Watson Crane</span>
+      <img class="header__icon" src="../assets/img/keyboard-arrow-down.svg" alt="" width="24" height="24">
+    </button>
+  </div>
+</header>
+<div class="content" data-component="Content">
+<nav class="menu" data-component="Menu">
+  <div class="menu__group" data-component="Expanded Menu">
+    <a class="menu-item is-selected" href="01-dashboard.html" data-component="Dashboard"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/dashboard.svg" alt="" width="16" height="16"><span>Dashboard</span></span></a>
+    <a class="menu-item" href="#" data-component="Application"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/application.svg" alt="" width="16" height="16"><span>Application</span></span></a>
+  </div>
+  <div class="menu__footer" data-component="Expanded Menu Item">
+    <div class="menu__footer-line"><div><img src="../assets/img/menu-divider.svg" alt=""></div></div>
+    <a class="menu-item" href="#" data-component="Collapse"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/keyboard-double-arrow-left.svg" alt="" width="16" height="16"><span>Collapse</span></span></a>
+  </div>
+</nav>
+<main class="main" data-component="Main Content">
+<div class="context-bar" data-component="Context Bar">
+  <div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div>
+  <h1 class="context-bar__title">Onboarding</h1>
+</div>
+<div class="stepper" data-component="Stepper Container"><div class="stepper__item" data-href="02-docs-to-sign.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Documents to Sign</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="03-file-upload.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">File Upload</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="04-insurance.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Insurance</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item is-active" data-href="06-pay-charges-payment.html" data-component="Stepper"><span class="step step--active" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Pay Charges</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="07-setup-payment-method.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Setup Payment Method</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="10-pet-information.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Additional Information</span></div></div>
+<section class="step-card" data-component="DTS">
+  <div class="step-card__head" data-component="Header"><h2 class="step-card__title">Pay Charges</h2><p class="step-card__subtitle">Select a payment amount or start selecting charges to pay.</p></div>
+  <div style="display:flex;flex:1 1 auto;flex-direction:column;gap:24px;min-height:492px" data-component="Payment Method">
+    <div class="layout-split" data-component="Container">
+      <div class="layout-split__main" data-component="Card Details Container" style="gap:24px">
+        <div class="section" data-component="Container">
+          <div class="section__row" data-component="Balance Container"><h3 class="section__title">New Payment Method</h3><label class="checkbox" data-component="Checkbox"><input type="checkbox" name="save-method" checked><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>Save as Your Payment Method</span></label></div>
+          <div class="field" data-component="Input Field" style="width:240px"><div class="field__header"><span>Payment Method</span></div><div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" aria-haspopup="listbox" aria-expanded="false">Credit Card</button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="Payment Method" value="Credit Card"><div class="dropdown__panel" role="listbox" hidden><div class="dropdown__item is-selected" role="option" data-value="Credit Card">Credit Card</div><div class="dropdown__item" role="option" data-value="Bank Account">Bank Account</div></div></div></div>
+          <div class="form-row" data-component="Card Information"><div class="field" data-component="Input Field" style="flex:1.4 1 0"><div class="field__header"><span>Card Number*</span></div><div class="input" data-component="Input field"><input type="text" name="Card Number*" value="4147 2038 5521 9305" autocomplete="off"></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Expiration Date*</span></div><div class="input" data-component="Input field"><input type="text" name="Expiration Date*" value="08 / 28" placeholder="MM / YY" autocomplete="off"></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Security Code*</span></div><div class="input" data-component="Input field"><input type="text" name="Security Code*" value="408" placeholder="CVV" autocomplete="off"><img src="../assets/img/csv-card.svg" alt="" width="20" height="20"></div></div></div>
+        </div>
+        <div class="section" data-component="Billing Information">
+          <div class="section__row"><h3 class="section__title">Billing Information</h3><a class="btn--text" href="#" data-component="Button">Use Address on File</a></div>
+          <div class="form-row"><div class="field" data-component="Input Field"><div class="field__header"><span>First Name</span></div><div class="input" data-component="Input field"><input type="text" name="First Name" value="Watson" autocomplete="off"></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Last Name</span></div><div class="input" data-component="Input field"><input type="text" name="Last Name" value="Crane" autocomplete="off"></div></div></div>
+          <div class="form-row"><div class="field" data-component="Input Field" style="flex:none;width:229.33px"><div class="field__header"><span>Country</span></div><div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" aria-haspopup="listbox" aria-expanded="false">United States</button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="Country" value="United States"><div class="dropdown__panel" role="listbox" hidden><div class="dropdown__item is-selected" role="option" data-value="United States">United States</div><div class="dropdown__item" role="option" data-value="Canada">Canada</div></div></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Street</span></div><div class="input" data-component="Input field"><input type="text" name="Street" value="742 Willow Crescent, Apt 3B" autocomplete="off"></div></div></div>
+          <div class="form-row"><div class="field" data-component="Input Field"><div class="field__header"><span>City</span></div><div class="input" data-component="Input field"><input type="text" name="City" value="Albany" autocomplete="off"></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>State</span></div><div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" aria-haspopup="listbox" aria-expanded="false">NY</button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="State" value="NY"><div class="dropdown__panel" role="listbox" hidden><div class="dropdown__item" role="option" data-value="CA">CA</div><div class="dropdown__item is-selected" role="option" data-value="NY">NY</div><div class="dropdown__item" role="option" data-value="TX">TX</div></div></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Postal Code</span></div><div class="input" data-component="Input field"><input type="text" name="Postal Code" value="12203" autocomplete="off"></div></div></div>
+        </div>
+      </div>
+      <aside class="summary" data-component="Summary Container" style="gap:24px">
+        <div style="display:flex;flex-direction:column;gap:16px;min-height:225px" data-component="Summary Details">
+          <div class="summary__item"><span class="summary__label">Amount Due</span><span class="summary__value">$1,488.75</span></div>
+          <div class="summary__item"><span class="field__header"><span>Platform Fee</span><img src="../assets/img/info-20.svg" alt="" width="20" height="20"></span><span class="summary__value">$10.00</span></div>
+          <div class="divider-h"></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><span class="summary__label summary__label--lg">Total Due</span><span class="summary__total">$1,498.75</span></div>
+        </div>
+      </aside>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px" data-component="Container"><div class="divider-h"></div><label class="checkbox" data-component="Checkbox"><input type="checkbox" name="terms"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>I have read and agree to the <span class="link">Terms and Conditions</span>.</span></label></div>
+  </div>
+</section>
+<div class="footer-buttons" data-component="Footer Buttons"><button type="button" class="btn btn--secondary" data-component="Button" data-href="05-pay-charges.html"><span class="btn__container">Back</span></button><div style="display:flex;align-items:center;gap:24px"><a class="btn--text" href="07-setup-payment-method.html" data-href="07-setup-payment-method.html" data-step-skip="3" data-component="Button">Skip</a><button type="button" class="btn btn--primary" data-component="Button" data-href="06a-payment-submitted.html" data-step-save="3" data-payment-submit><span class="btn__container">Submit Payment</span></button></div></div>
+</main>
+<div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
+</div>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

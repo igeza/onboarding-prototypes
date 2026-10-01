@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding – Documents to Sign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/rmr.css">
+<link rel="stylesheet" href="../assets/proto.css">
+</head>
+<body>
+<div class="page">
+<header class="header" data-component="Header">
+  <div class="header__left" data-component="Header Left">
+    <div class="header__logo" data-component="New Logo">
+      <div class="header__logo-mark"><img src="../assets/img/logo-mark.svg" alt=""></div>
+      <div class="header__logo-icon"><img src="../assets/img/logo-icon.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="header__right" data-component="Header Right">
+    <img class="header__icon" src="../assets/img/connect.svg" alt="" width="24" height="24">
+    <div class="header__divider"><div class="header__divider-rot"><div class="header__divider-line"><div><img src="../assets/img/header-divider.svg" alt=""></div></div></div></div>
+    <button type="button" class="user-info" data-component="User Info">
+      <span class="user-info__avatar" aria-hidden="true">WC</span>
+      <span class="user-info__name">Watson Crane</span>
+      <img class="header__icon" src="../assets/img/keyboard-arrow-down.svg" alt="" width="24" height="24">
+    </button>
+  </div>
+</header>
+<div class="content" data-component="Content">
+<nav class="menu" data-component="Menu">
+  <div class="menu__group" data-component="Expanded Menu">
+    <a class="menu-item is-selected" href="01-dashboard.html" data-component="Dashboard"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/dashboard.svg" alt="" width="16" height="16"><span>Dashboard</span></span></a>
+    <a class="menu-item" href="#" data-component="Application"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/application.svg" alt="" width="16" height="16"><span>Application</span></span></a>
+  </div>
+  <div class="menu__footer" data-component="Expanded Menu Item">
+    <div class="menu__footer-line"><div><img src="../assets/img/menu-divider.svg" alt=""></div></div>
+    <a class="menu-item" href="#" data-component="Collapse"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/keyboard-double-arrow-left.svg" alt="" width="16" height="16"><span>Collapse</span></span></a>
+  </div>
+</nav>
+<main class="main" data-component="Main Content">
+<div class="context-bar" data-component="Context Bar">
+  <div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div>
+  <h1 class="context-bar__title">Onboarding</h1>
+</div>
+<div class="stepper" data-component="Stepper Container"><div class="stepper__item is-active" data-href="02-docs-to-sign.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Documents to Sign</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="03-file-upload.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">File Upload</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="04-insurance.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Insurance</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="05-pay-charges.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Pay Charges</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="07-setup-payment-method.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Setup Payment Method</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="10-pet-information.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Additional Information</span></div></div>
+<section class="step-card" data-component="Container">
+  <div class="step-card__head" data-component="Header"><h2 class="step-card__title">Documents to Sign</h2><p class="step-card__subtitle">All resident related documents that are ready to review and/or sign will be here.</p></div>
+  <div style="flex:1 1 auto;display:flex;flex-direction:column;gap:18px" data-component="Content">
+    <div style="flex:1 1 auto"><table class="table table--tall" data-component="Table"><thead><tr><th>Document Name</th><th>Published</th><th>Expiration</th><th>Number of Signers</th><th></th><th></th></tr></thead><tbody><tr><td class="is-fill">Parking Policy</td><td>04/15/26</td><td>04/20/26</td><td>1 of 2</td><td><button type="button" class="btn btn--primary btn--small" data-component="Button"><span class="btn__container">Sign</span></button></td><td><div class="table__icons"><img src="../assets/img/print.svg" alt="" width="20" height="20"><img src="../assets/img/file-download.svg" alt="" width="20" height="20"></div></td></tr><tr><td class="is-fill">Utility Service Agreement</td><td>04/20/26</td><td>04/28/26</td><td>0 of 2</td><td><button type="button" class="btn btn--primary btn--small" data-component="Button"><span class="btn__container">Sign</span></button></td><td><div class="table__icons"><img src="../assets/img/print.svg" alt="" width="20" height="20"><img src="../assets/img/file-download.svg" alt="" width="20" height="20"></div></td></tr><tr><td class="is-fill">Pet Policy Update</td><td>05/30/26</td><td>06/02/26</td><td>0 of 1</td><td><button type="button" class="btn btn--primary btn--small" data-component="Button"><span class="btn__container">Sign</span></button></td><td><div class="table__icons"><img src="../assets/img/print.svg" alt="" width="20" height="20"><img src="../assets/img/file-download.svg" alt="" width="20" height="20"></div></td></tr></tbody></table></div>
+    <p style="text-align:right;font-size:14px;line-height:20px;letter-spacing:.28px;color:var(--text-secondary)">3 Total Documents</p>
+  </div>
+</section>
+<div class="footer-buttons" style="justify-content:flex-end" data-component="Footer Buttons"><button type="button" class="btn btn--primary" id="docs-next" data-component="Button" data-href="03-file-upload.html"><span class="btn__container">Next</span></button></div>
+</main>
+<div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
+</div>
+</div>
+<script>
+/* Prototype state: all documents start out signed, so Documents to Sign is already complete. */
+try { var k = 'rmr-step-status', st = JSON.parse(sessionStorage.getItem(k)); if (st && st[0] !== 'done' && !sessionStorage.getItem('rmr-signed-docs')) { st[0] = 'done'; sessionStorage.setItem(k, JSON.stringify(st)); } } catch (e) {}
+</script>
+<script src="../assets/app.js"></script>
+<script>
+/* Sign marks a document signed. "Documents to Sign" only gets its green check once every listed document is signed:
+   Next carries data-step-save (which app.js turns into "done") only while nothing is left to sign. */
+(function () {
+  var KEY = 'rmr-signed-docs', next = document.getElementById('docs-next');
+  function load() { try { return JSON.parse(sessionStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+  var signed = load();
+  if (!sessionStorage.getItem(KEY)) { signed = rows().map(name); try { sessionStorage.setItem(KEY, JSON.stringify(signed)); } catch (e) {} }
+  function mark(tr) {
+    var cells = tr.children, total = (cells[3].textContent.match(/of\s+(\d+)/) || [])[1];
+    if (total) cells[3].textContent = total + ' of ' + total;
+    var b = cells[4].querySelector('button'); if (b) b.disabled = true;
+  }
+  function rows() { return [].filter.call(document.querySelectorAll('.table tbody tr'), function (tr) { return !tr.hidden; }); }
+  function name(tr) { return tr.children[0].textContent.trim(); }
+  function sync() {
+    var all = rows().every(function (tr) { return signed.indexOf(name(tr)) !== -1; });
+    if (all) next.setAttribute('data-step-save', '0'); else next.removeAttribute('data-step-save');
+  }
+  rows().forEach(function (tr) { if (signed.indexOf(name(tr)) !== -1) mark(tr); });
+  document.querySelector('.table tbody').addEventListener('click', function (e) {
+    var btn = e.target.closest('button'); if (!btn) return;
+    var tr = btn.closest('tr'); signed.push(name(tr));
+    try { sessionStorage.setItem(KEY, JSON.stringify(signed)); } catch (er) {}
+    mark(tr); sync();
+  });
+  sync();
+})();
+</script>
+</body>
+</html>

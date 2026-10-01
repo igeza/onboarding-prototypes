@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding – Set up Monthly Payment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/rmr.css">
+<link rel="stylesheet" href="../assets/proto.css">
+</head>
+<body>
+<div class="page">
+<header class="header" data-component="Header">
+  <div class="header__left" data-component="Header Left">
+    <div class="header__logo" data-component="New Logo">
+      <div class="header__logo-mark"><img src="../assets/img/logo-mark.svg" alt=""></div>
+      <div class="header__logo-icon"><img src="../assets/img/logo-icon.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="header__right" data-component="Header Right">
+    <img class="header__icon" src="../assets/img/connect.svg" alt="" width="24" height="24">
+    <div class="header__divider"><div class="header__divider-rot"><div class="header__divider-line"><div><img src="../assets/img/header-divider.svg" alt=""></div></div></div></div>
+    <button type="button" class="user-info" data-component="User Info">
+      <span class="user-info__avatar" aria-hidden="true">WC</span>
+      <span class="user-info__name">Watson Crane</span>
+      <img class="header__icon" src="../assets/img/keyboard-arrow-down.svg" alt="" width="24" height="24">
+    </button>
+  </div>
+</header>
+<div class="content" data-component="Content">
+<nav class="menu" data-component="Menu">
+  <div class="menu__group" data-component="Expanded Menu">
+    <a class="menu-item is-selected" href="01-dashboard.html" data-component="Dashboard"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/dashboard.svg" alt="" width="16" height="16"><span>Dashboard</span></span></a>
+    <a class="menu-item" href="#" data-component="Application"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/application.svg" alt="" width="16" height="16"><span>Application</span></span></a>
+  </div>
+  <div class="menu__footer" data-component="Expanded Menu Item">
+    <div class="menu__footer-line"><div><img src="../assets/img/menu-divider.svg" alt=""></div></div>
+    <a class="menu-item" href="#" data-component="Collapse"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/keyboard-double-arrow-left.svg" alt="" width="16" height="16"><span>Collapse</span></span></a>
+  </div>
+</nav>
+<main class="main" data-component="Main Content">
+<div class="context-bar" data-component="Context Bar">
+  <div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div>
+  <h1 class="context-bar__title">Onboarding</h1>
+</div>
+<div class="stepper" data-component="Stepper Container"><div class="stepper__item" data-href="02-docs-to-sign.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Documents to Sign</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="03-file-upload.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">File Upload</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="04-insurance.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Insurance</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="05-pay-charges.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Pay Charges</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item is-active" data-href="08-setup-monthly-payment.html" data-component="Stepper"><span class="step step--active" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Setup Payment Method</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="10-pet-information.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Additional Information</span></div></div>
+<section class="step-card step-card--fit" data-component="DTS">
+  <div class="step-card__head" data-component="Header"><h2 class="step-card__title">Set up Monthly Payment</h2><p class="step-card__subtitle">Select how you’d like to pay your monthly charges.</p></div>
+  <div class="options" data-route-group data-component="Options Container">
+    <label class="option-card" data-component="Onboarding Cards">
+  <div class="option-card__header"><span class="radio" data-component="Radio Button"><input type="radio" name="monthly" value="autopay" checked><span class="radio__mark"></span></span><span class="option-card__slot" data-component="lozenge"><span class="lozenge" data-component="Lozenge">Recommended</span></span></div>
+  <div class="option-card__body"><p class="option-card__title ">Turn On AutoPay</p><div class="option-card__text"><p>Use your stored account information and we’ll automatically withdrawal your rent on your designated date.</p></div></div>
+</label>
+    <label class="option-card" data-component="Onboarding Cards">
+  <div class="option-card__header"><span class="radio" data-component="Radio Button"><input type="radio" name="monthly" value="flex"><span class="radio__mark"></span></span><span class="option-card__slot" data-component="lozenge"></span></div>
+  <div class="option-card__body"><p class="option-card__title option-card__title--wide">Enroll in Flexible Rent</p><div class="option-card__text"><p>With Flexible Rent, you can split your rent into smaller payments so you can breathe easier each month. <span class="link">View FAQ</span></p></div><div class="powered-by" data-component="powered by"><span>Powered by</span><span class="powered-by__logo" data-component="Ad Image"><img src="../assets/img/ad-flex.png" alt=""></span></div></div>
+</label>
+    <label class="option-card" data-component="Onboarding Cards">
+  <div class="option-card__header"><span class="radio" data-component="Radio Button"><input type="radio" name="monthly" value="manual"><span class="radio__mark"></span></span><span class="option-card__slot" data-component="lozenge"></span></div>
+  <div class="option-card__body"><p class="option-card__title option-card__title--muted option-card__title--wide">Manually Pay Each Month</p><div class="option-card__text"><p>Decide how you’re going to pay each month. Ensure you make a payment before the due date to avoid late fees.</p></div></div>
+</label>
+  </div>
+</section>
+<div class="footer-buttons" data-component="Footer Buttons"><button type="button" class="btn btn--secondary" data-component="Button" data-href="07-setup-payment-method.html"><span class="btn__container">Back</span></button><div style="display:flex;align-items:center;gap:24px"><a class="btn--text" href="10-pet-information.html" data-href="10-pet-information.html" data-step-skip="4" data-component="Button">Skip</a><button type="button" class="btn btn--primary" id="primary-action" data-component="Button" data-href="10-pet-information.html" data-routes="autopay:09-autopay.html,flex:10-pet-information.html,manual:10-pet-information.html"><span class="btn__container">Next</span></button></div></div>
+</main>
+<div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
+</div>
+</div>
+<script src="../assets/app.js"></script>
+<script>
+/* Autopay continues to the autopay screen (Next); Flexible Rent / Manual finish this step (Save). */
+(function () {
+  var btn = document.getElementById('primary-action'), label = btn.querySelector('.btn__container');
+  function sync() {
+    var c = document.querySelector('[data-route-group] input:checked'), last = !(c && c.value === 'autopay');
+    label.textContent = last ? 'Save' : 'Next';
+    if (last) btn.setAttribute('data-step-save', '4'); else btn.removeAttribute('data-step-save');
+  }
+  document.querySelectorAll('[data-route-group] input').forEach(function (r) { r.addEventListener('change', sync); });
+  sync();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding – Set up Automatic Payments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/rmr.css">
+<link rel="stylesheet" href="../assets/proto.css">
+</head>
+<body>
+<div class="page">
+<header class="header" data-component="Header">
+  <div class="header__left" data-component="Header Left">
+    <div class="header__logo" data-component="New Logo">
+      <div class="header__logo-mark"><img src="../assets/img/logo-mark.svg" alt=""></div>
+      <div class="header__logo-icon"><img src="../assets/img/logo-icon.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="header__right" data-component="Header Right">
+    <img class="header__icon" src="../assets/img/connect.svg" alt="" width="24" height="24">
+    <div class="header__divider"><div class="header__divider-rot"><div class="header__divider-line"><div><img src="../assets/img/header-divider.svg" alt=""></div></div></div></div>
+    <button type="button" class="user-info" data-component="User Info">
+      <span class="user-info__avatar" aria-hidden="true">WC</span>
+      <span class="user-info__name">Watson Crane</span>
+      <img class="header__icon" src="../assets/img/keyboard-arrow-down.svg" alt="" width="24" height="24">
+    </button>
+  </div>
+</header>
+<div class="content" data-component="Content">
+<nav class="menu" data-component="Menu">
+  <div class="menu__group" data-component="Expanded Menu">
+    <a class="menu-item is-selected" href="01-dashboard.html" data-component="Dashboard"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/dashboard.svg" alt="" width="16" height="16"><span>Dashboard</span></span></a>
+    <a class="menu-item" href="#" data-component="Application"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/application.svg" alt="" width="16" height="16"><span>Application</span></span></a>
+  </div>
+  <div class="menu__footer" data-component="Expanded Menu Item">
+    <div class="menu__footer-line"><div><img src="../assets/img/menu-divider.svg" alt=""></div></div>
+    <a class="menu-item" href="#" data-component="Collapse"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/keyboard-double-arrow-left.svg" alt="" width="16" height="16"><span>Collapse</span></span></a>
+  </div>
+</nav>
+<main class="main" data-component="Main Content">
+<div class="context-bar" data-component="Context Bar">
+  <div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div>
+  <h1 class="context-bar__title">Onboarding</h1>
+</div>
+<div class="stepper" data-component="Stepper Container"><div class="stepper__item" data-href="02-docs-to-sign.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Documents to Sign</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="03-file-upload.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">File Upload</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="04-insurance.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Insurance</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="05-pay-charges.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Pay Charges</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item is-active" data-href="09-autopay.html" data-component="Stepper"><span class="step step--active" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Setup Payment Method</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="10-pet-information.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Additional Information</span></div></div>
+<section class="step-card step-card--fit" data-component="DTS">
+  <div class="step-card__head" data-component="Header"><h2 class="step-card__title">Set up Automatic Payments</h2><p class="step-card__subtitle">Add a method to use for future payments.</p></div>
+  <div style="display:flex;align-items:stretch;gap:24px;width:100%" data-component="Payment Container">
+    <div class="layout-split__main" data-component="Payment Method">
+      <div class="section" data-component="Payment Info">
+        <h3 class="section__title">Payment Amount</h3>
+        <div style="display:flex;flex-direction:column;gap:16px" data-component="Amount Container">
+          <div style="display:flex;gap:32px;align-items:flex-start" data-component="Amount Options">
+            <div><label class="radio"><input type="radio" name="autopay-amount" value="total" checked><span class="radio__mark"></span><span>Total Balance Due</span></label><div class="tile__meta" style="padding-left:28px">With future charges</div></div>
+            <div><label class="radio"><input type="radio" name="autopay-amount" value="current"><span class="radio__mark"></span><span>Current Balance Due</span></label><div class="tile__meta" style="padding-left:28px">Up to selected date</div></div>
+            <label class="radio"><input type="radio" name="autopay-amount" value="specific"><span class="radio__mark"></span><span>Specific Amount</span></label>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px" data-component="Container">
+            <div class="field" data-component="Input Field" style="width:240px"><div class="field__header"><span>Max Amount</span><img src="../assets/img/info-20.svg" alt="" width="20" height="20"></div><div class="input" data-component="Input field"><input type="text" name="Max Amount" value="$2,000.00" autocomplete="off"></div></div>
+            <p class="tile__meta">*Max Amount applies to your balance only. Any applicable platform fees may cause the total payment to exceed this amount.</p>
+          </div>
+        </div>
+      </div>
+      <div class="section" data-component="Schedule Container">
+        <div style="display:flex;flex-direction:column;gap:4px"><h3 class="section__title">Autopay Schedule</h3><p class="section__desc">Consider scheduling your payment at least one day before its due date.&nbsp;</p></div>
+        <div style="display:flex;gap:16px" data-component="Date Container"><div class="field" data-component="Input Field" style="width:240px"><div class="field__header"><span>Frequency</span></div><div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" aria-haspopup="listbox" aria-expanded="false">Monthly</button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="Frequency" value="Monthly"><div class="dropdown__panel" role="listbox" hidden><div class="dropdown__item is-selected" role="option" data-value="Monthly">Monthly</div><div class="dropdown__item" role="option" data-value="Weekly">Weekly</div></div></div></div><div class="field" data-component="Input Field" style="width:240px"><div class="field__header"><span>Day of Month</span></div><div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" aria-haspopup="listbox" aria-expanded="false">1</button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="Day of Month" value="1"><div class="dropdown__panel" role="listbox" hidden><div class="dropdown__item is-selected" role="option" data-value="1">1</div><div class="dropdown__item" role="option" data-value="2">2</div><div class="dropdown__item" role="option" data-value="3">3</div><div class="dropdown__item" role="option" data-value="4">4</div><div class="dropdown__item" role="option" data-value="5">5</div><div class="dropdown__item" role="option" data-value="6">6</div><div class="dropdown__item" role="option" data-value="7">7</div><div class="dropdown__item" role="option" data-value="8">8</div><div class="dropdown__item" role="option" data-value="9">9</div><div class="dropdown__item" role="option" data-value="10">10</div><div class="dropdown__item" role="option" data-value="11">11</div><div class="dropdown__item" role="option" data-value="12">12</div><div class="dropdown__item" role="option" data-value="13">13</div><div class="dropdown__item" role="option" data-value="14">14</div><div class="dropdown__item" role="option" data-value="15">15</div><div class="dropdown__item" role="option" data-value="16">16</div><div class="dropdown__item" role="option" data-value="17">17</div><div class="dropdown__item" role="option" data-value="18">18</div><div class="dropdown__item" role="option" data-value="19">19</div><div class="dropdown__item" role="option" data-value="20">20</div><div class="dropdown__item" role="option" data-value="21">21</div><div class="dropdown__item" role="option" data-value="22">22</div><div class="dropdown__item" role="option" data-value="23">23</div><div class="dropdown__item" role="option" data-value="24">24</div><div class="dropdown__item" role="option" data-value="25">25</div><div class="dropdown__item" role="option" data-value="26">26</div><div class="dropdown__item" role="option" data-value="27">27</div><div class="dropdown__item" role="option" data-value="28">28</div></div></div></div></div>
+        <div style="display:flex;gap:16px" data-component="Date Container"><div class="field" data-component="Input Field" style="width:240px"><div class="field__header"><span>Start Date</span></div><div class="input" data-component="Input field"><input type="text" name="Start Date" value="11/01/25" autocomplete="off"><img src="../assets/img/calendar-today.svg" alt="" width="20" height="20"></div></div><div class="field" data-component="Input Field" style="width:240px"><div class="field__header"><span>End Date</span></div><div class="input" data-component="Input field"><input type="text" name="End Date" value="11/01/26" autocomplete="off"><img src="../assets/img/calendar-today.svg" alt="" width="20" height="20"></div></div></div>
+      </div>
+      <div class="section" data-component="Payment Method">
+        <h3 class="section__title">Your Payment Method</h3>
+        <div class="tile" style="background:var(--component-selector);border-color:var(--border-button-tertiary);cursor:default" data-component="total balance"><span style="display:flex;flex:1 1 0;align-items:center;gap:8px" data-component="Balance Container"><img src="../assets/img/credit-card-16.svg" alt="" width="16" height="16"><span class="tile__label tile__label--bold">Visa ending in 1234</span></span><img src="../assets/img/edit.svg" alt="" width="20" height="20"></div>
+      </div>
+    </div>
+    <aside class="summary" style="justify-content:space-between" data-component="Summary Container">
+      <div style="display:flex;flex-direction:column;gap:16px;width:100%" data-component="Summary">
+        <div style="display:flex;gap:16px"><div class="summary__item" style="flex:1 1 0"><span class="summary__label">You will pay</span><span class="summary__value" style="line-height:32px">Total Balance Due</span></div><div class="summary__item" style="flex:1 1 0"><span class="summary__label">Up to</span><span class="summary__value" style="line-height:32px">$2,000.00</span></div></div>
+        <div class="summary__item"><span class="summary__label">Every month starting on</span><span class="summary__value">11/01/25</span></div>
+        <div class="summary__item"><span class="summary__label">Pay with</span><span class="summary__value">Visa ending in 1234</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;width:100%" data-component="Summary Footer"><div class="divider-h"></div><p class="summary__note">A platform fee may be added to your payment amount. <span style="white-space:nowrap"><span class="link">View Platform Fees</span> <img src="../assets/img/info-20.svg" alt="" width="16" height="16" style="display:inline-block;vertical-align:text-bottom"></span></p></div>
+    </aside>
+  </div>
+</section>
+<div class="footer-buttons" data-component="Footer Buttons"><button type="button" class="btn btn--secondary" data-component="Button" data-href="08-setup-monthly-payment.html"><span class="btn__container">Back</span></button><div style="display:flex;align-items:center;gap:24px"><a class="btn--text" href="10-pet-information.html" data-href="10-pet-information.html" data-step-skip="4" data-component="Button">Skip</a><button type="button" class="btn btn--primary" data-component="Button" data-href="10-pet-information.html" data-step-save="4"><span class="btn__container">Save</span></button></div></div>
+</main>
+<div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
+</div>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

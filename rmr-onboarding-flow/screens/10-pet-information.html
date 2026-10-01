@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding – Pet Information</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/rmr.css">
+<link rel="stylesheet" href="../assets/proto.css">
+<style>
+/* One left edge (no slot indent), 24px between questions. Text, dropdown and file fields run full width; radios and checkboxes stay compact. */
+.form-grid { display: flex; flex-direction: column; gap: var(--spacing-xl); align-items: stretch; }
+.form-grid .question { padding: 0; gap: 0; }
+.form-grid .question__text { font-weight: 700; letter-spacing: 0; }
+.form-grid .question__hint { margin: 4px 0 0; padding-left: 0; font-size: var(--font-size-xs); line-height: 16px; }
+.form-grid .question__slot { padding-left: 0; margin-top: var(--spacing-xs); }
+.form-grid .question__slot > .input, .form-grid .question__slot > .dropdown, .form-grid .question__slot > .attach { width: 100%; }
+.form-grid .question__slot .dropdown .input { width: 100%; }
+.form-grid .question--row .question__slot { flex-direction: row; gap: var(--spacing-xl); }
+.form-grid .question--checks .question__slot { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-xs) var(--spacing-xl); width: 50%; }
+.input--area { align-items: flex-start; height: 91px; }
+.input--area textarea { flex: 1 1 0; height: 100%; padding: 0; border: 0; outline: 0; resize: none; background: transparent; font-family: inherit; font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; color: var(--text-primary); }
+.input--area textarea::placeholder { font-style: italic; color: var(--text-accent); opacity: 1; }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="header" data-component="Header">
+  <div class="header__left" data-component="Header Left">
+    <div class="header__logo" data-component="New Logo">
+      <div class="header__logo-mark"><img src="../assets/img/logo-mark.svg" alt=""></div>
+      <div class="header__logo-icon"><img src="../assets/img/logo-icon.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="header__right" data-component="Header Right">
+    <img class="header__icon" src="../assets/img/connect.svg" alt="" width="24" height="24">
+    <div class="header__divider"><div class="header__divider-rot"><div class="header__divider-line"><div><img src="../assets/img/header-divider.svg" alt=""></div></div></div></div>
+    <button type="button" class="user-info" data-component="User Info">
+      <span class="user-info__avatar" aria-hidden="true">WC</span>
+      <span class="user-info__name">Watson Crane</span>
+      <img class="header__icon" src="../assets/img/keyboard-arrow-down.svg" alt="" width="24" height="24">
+    </button>
+  </div>
+</header>
+<div class="content" data-component="Content">
+<nav class="menu" data-component="Menu">
+  <div class="menu__group" data-component="Expanded Menu">
+    <a class="menu-item is-selected" href="01-dashboard.html" data-component="Dashboard"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/dashboard.svg" alt="" width="16" height="16"><span>Dashboard</span></span></a>
+    <a class="menu-item" href="#" data-component="Application"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/application.svg" alt="" width="16" height="16"><span>Application</span></span></a>
+  </div>
+  <div class="menu__footer" data-component="Expanded Menu Item">
+    <div class="menu__footer-line"><div><img src="../assets/img/menu-divider.svg" alt=""></div></div>
+    <a class="menu-item" href="#" data-component="Collapse"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/keyboard-double-arrow-left.svg" alt="" width="16" height="16"><span>Collapse</span></span></a>
+  </div>
+</nav>
+<main class="main" data-component="Main Content">
+<div class="context-bar" data-component="Context Bar">
+  <div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div>
+  <h1 class="context-bar__title">Onboarding</h1>
+</div>
+<div class="stepper" data-component="Stepper Container"><div class="stepper__item" data-href="02-docs-to-sign.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Documents to Sign</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="03-file-upload.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">File Upload</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="04-insurance.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Insurance</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="05-pay-charges.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Pay Charges</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="07-setup-payment-method.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Setup Payment Method</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item is-active" data-href="10-pet-information.html" data-component="Stepper"><span class="step step--active" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Additional Information</span></div></div>
+<section class="step-card" data-component="DTS">
+  <div class="step-card__head" data-component="Header"><h2 class="step-card__title">Pet Information &amp; Policy Agreement</h2><p class="step-card__subtitle">Please fill in the below information</p></div>
+  <div class="form-grid" data-component="Form">
+    <div class="question" data-component="Question"><p class="question__text">1. Pet Owner Name *</p><p class="question__hint">Enter your full legal name</p><div class="question__slot"><div class="input" data-component="Input field"><input type="text" name="owner-name" placeholder="Enter your answer" autocomplete="off"></div></div></div>
+    <div class="question" data-component="Question"><p class="question__text">2. Enter your unit number and property address *</p><div class="question__slot"><div class="input" data-component="Input field"><input type="text" name="address" placeholder="Enter your answer" autocomplete="off"></div></div></div>
+    <div class="question" data-component="Question"><p class="question__text">3. Type of Pet *</p><div class="question__slot"><div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" data-placeholder="Select your answer" aria-haspopup="listbox" aria-expanded="false"></button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="pet-type"><div class="dropdown__panel" role="listbox" hidden><div class="dropdown__item" role="option" data-value="Dog">Dog</div><div class="dropdown__item" role="option" data-value="Cat">Cat</div><div class="dropdown__item" role="option" data-value="Other">Other</div></div></div></div></div>
+    <div class="question" data-component="Question"><p class="question__text">4. Pet Details *</p><p class="question__hint">Provide your pet’s name, breed, age, weight, and any distinguishing characteristics.</p><div class="question__slot"><div class="input input--area" data-component="Input field"><textarea name="pet-details" placeholder="Enter your answer"></textarea></div></div></div>
+    <div class="question question--row" data-component="Question"><p class="question__text">5. Is your pet up to date on vaccinations? *</p><div class="question__slot"><label class="radio" data-component="Radio Button"><input type="radio" name="vaccinated" value="yes" checked><span class="radio__mark"></span><span>Yes</span></label><label class="radio" data-component="Radio Button"><input type="radio" name="vaccinated" value="no"><span class="radio__mark"></span><span>No</span></label><label class="radio" data-component="Radio Button"><input type="radio" name="vaccinated" value="unsure"><span class="radio__mark"></span><span>I’m not sure</span></label></div></div>
+    <div class="question question--checks" data-component="Question"><p class="question__text">6. Select all that apply regarding your pet’s behavior.</p><div class="question__slot"><label class="checkbox" data-component="Checkbox"><input type="checkbox" name="behavior-0"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>House-trained/litter-trained</span></label><label class="checkbox" data-component="Checkbox"><input type="checkbox" name="behavior-1"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>Friendly with strangers</span></label><label class="checkbox" data-component="Checkbox"><input type="checkbox" name="behavior-2"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>Good with other animals</span></label><label class="checkbox" data-component="Checkbox"><input type="checkbox" name="behavior-3"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>Has caused property damage before</span></label><label class="checkbox" data-component="Checkbox"><input type="checkbox" name="behavior-4"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>Has shown aggressive behavior</span></label><label class="checkbox" data-component="Checkbox"><input type="checkbox" name="behavior-5"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>None of the above.</span></label></div></div>
+    <div class="question" data-component="Question"><p class="question__text">7. Emergency Contact for Pet</p><p class="question__hint">Provide name and phone number of someone who can care for your pet if needed.</p><div class="question__slot"><div class="input" data-component="Input field"><input type="text" name="emergency-contact" placeholder="Enter your answer" autocomplete="off"></div></div></div>
+    <div class="question" data-component="Question"><p class="question__text">8. Vaccination Records</p><p class="question__hint">Upload a copy of your pet’s vaccination records.</p><div class="question__slot"><label class="attach" data-component="Attach"><input type="file" name="vaccination-records"><img src="../assets/img/file-download.svg" alt="" width="32" height="32"><span class="attach__text"><span class="link">Choose a file</span> or drag it here.</span></label></div></div>
+  </div>
+</section>
+<div class="footer-buttons" data-component="Footer Buttons"><button type="button" class="btn btn--secondary" data-component="Button" data-href="08-setup-monthly-payment.html" data-history><span class="btn__container">Back</span></button><div style="display:flex;align-items:center;gap:24px"><a class="btn--text" href="11-dashboard-complete.html" data-href="11-dashboard-complete.html" data-step-skip="5" data-component="Button">Skip</a><button type="button" class="btn btn--primary" data-component="Button" data-href="11-dashboard-complete.html" data-step-save="5"><span class="btn__container">Save</span></button></div></div>
+</main>
+<div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
+</div>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>
