@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Onboarding – Pet Information</title>
+<title>Forms – New Pet</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -36,10 +36,11 @@
   </div>
   <div class="header__right" data-component="Header Right">
     <img class="header__icon" src="../assets/img/connect.svg" alt="" width="24" height="24">
+    <img class="header__icon" src="../assets/img/notifications.svg" alt="" width="24" height="24" data-component="Bell Notif">
     <div class="header__divider"><div class="header__divider-rot"><div class="header__divider-line"><div><img src="../assets/img/header-divider.svg" alt=""></div></div></div></div>
     <button type="button" class="user-info" data-component="User Info">
-      <span class="user-info__avatar" aria-hidden="true">WC</span>
-      <span class="user-info__name">Watson Crane</span>
+      <img class="user-info__photo" src="../assets/img/avatar-samantha.png" alt="" width="24" height="24">
+      <span class="user-info__name">Samantha Carpenter</span>
       <img class="header__icon" src="../assets/img/keyboard-arrow-down.svg" alt="" width="24" height="24">
     </button>
   </div>
@@ -47,25 +48,33 @@
 <div class="content" data-component="Content">
 <nav class="menu" data-component="Menu">
   <div class="menu__group" data-component="Expanded Menu">
-    <a class="menu-item is-selected" href="01-dashboard.html" data-component="Dashboard"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/dashboard.svg" alt="" width="16" height="16"><span>Dashboard</span></span></a>
-    <a class="menu-item" href="#" data-component="Application"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/application.svg" alt="" width="16" height="16"><span>Application</span></span></a>
+    <a class="menu-item" href="#" data-component="Dashboard"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-dashboard.svg" alt="" width="16" height="16"><span>Dashboard</span></span></a>
+    <a class="menu-item" href="#" data-component="Charges & Payments"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-wallet.svg" alt="" width="16" height="16"><span>Charges &amp; Payments</span></span></a>
+    <a class="menu-item" href="#" data-component="Service Issues"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-wrench.svg" alt="" width="16" height="16"><span>Service Issues</span></span></a>
+    <a class="menu-item" href="#" data-component="Architectural Requests"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-architecture.svg" alt="" width="16" height="16"><span>Architectural Requests</span></span></a>
+    <a class="menu-item" href="#" data-component="Meter Readings"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-meter.svg" alt="" width="16" height="16"><span>Meter Readings</span></span></a>
+    <a class="menu-item" href="#" data-component="Community"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-groups.svg" alt="" width="16" height="16"><span>Community</span></span></a>
+    <a class="menu-item" href="#" data-component="Reservations"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-event-available.svg" alt="" width="16" height="16"><span>Reservations</span></span></a>
+    <a class="menu-item" href="#" data-component="Notes"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-note.svg" alt="" width="16" height="16"><span>Notes</span></span></a>
+    <a class="menu-item is-selected" href="13-forms.html" data-component="Forms"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-form.svg" alt="" width="16" height="16"><span>Forms</span></span></a>
+    <a class="menu-item" href="#" data-component="Polls"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-poll.svg" alt="" width="16" height="16"><span>Polls</span></span></a>
+    <a class="menu-item" href="#" data-component="Violations"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-violation.svg" alt="" width="16" height="16"><span>Violations</span></span></a>
   </div>
   <div class="menu__footer" data-component="Expanded Menu Item">
     <div class="menu__footer-line"><div><img src="../assets/img/menu-divider.svg" alt=""></div></div>
     <a class="menu-item" href="#" data-component="Collapse"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/keyboard-double-arrow-left.svg" alt="" width="16" height="16"><span>Collapse</span></span></a>
   </div>
 </nav>
-<main class="main" data-component="Main Content">
-<div class="context-bar" data-component="Context Bar">
+<main class="main main--forms" data-component="Main Content">
+<div class="context-bar" data-component="Header Image">
   <div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div>
-  <h1 class="context-bar__title">Onboarding</h1><a class="btn btn--secondary context-bar__back" href="01-dashboard.html" data-href="01-dashboard.html" data-component="Button"><span class="btn__container">Back to Dashboard</span></a>
+  <h1 class="context-bar__title">Forms</h1>
 </div>
-<div class="stepper" data-component="Stepper Container"><div class="stepper__item" data-href="02-docs-to-sign.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Documents to Sign</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="03-file-upload.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">File Upload</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="04-insurance.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Insurance</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="05-pay-charges.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Pay Charges</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="07-setup-payment-method.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Setup Payment Method</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item is-active" data-href="10-pet-information.html" data-component="Stepper"><span class="step step--active" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Additional Information</span></div></div>
 <section class="step-card" data-component="DTS">
-  <div class="step-card__head" data-component="Header"><h2 class="step-card__title">Pet Information &amp; Policy Agreement</h2><p class="step-card__subtitle">Please fill in the below information</p></div>
+  <div class="step-card__head" data-component="Header"><h2 class="step-card__title">New Pet</h2><p class="step-card__subtitle">Please fill in the below information</p></div>
   <div class="form-grid" data-component="Form">
     <div class="question" data-component="Question"><p class="question__text">1. Pet Owner Name *</p><p class="question__hint">Enter your full legal name</p><div class="question__slot"><div class="input" data-component="Input field"><input type="text" name="owner-name" placeholder="Enter your answer" autocomplete="off"></div></div></div>
-    <div class="question" data-component="Question"><p class="question__text">2. Enter your unit number and property address *</p><div class="question__slot"><div class="input" data-component="Input field"><input type="text" name="address" placeholder="Enter your answer" autocomplete="off"></div></div></div>
+    <div class="question" data-component="Question"><p class="question__text">2. Enter your unit number and property address *</p><div class="question__slot"><div class="input" data-component="Input field"><input type="text" name="address" placeholder="Enter your answer Number" autocomplete="off"></div></div></div>
     <div class="question" data-component="Question"><p class="question__text">3. Type of Pet *</p><div class="question__slot"><div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" data-placeholder="Select your answer" aria-haspopup="listbox" aria-expanded="false"></button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="pet-type"><div class="dropdown__panel" role="listbox" hidden><div class="dropdown__item" role="option" data-value="Dog">Dog</div><div class="dropdown__item" role="option" data-value="Cat">Cat</div><div class="dropdown__item" role="option" data-value="Other">Other</div></div></div></div></div>
     <div class="question" data-component="Question"><p class="question__text">4. Pet Details *</p><p class="question__hint">Provide your pet’s name, breed, age, weight, and any distinguishing characteristics.</p><div class="question__slot"><div class="input input--area" data-component="Input field"><textarea name="pet-details" placeholder="Enter your answer"></textarea></div></div></div>
     <div class="question question--row" data-component="Question"><p class="question__text">5. Is your pet up to date on vaccinations? *</p><div class="question__slot"><label class="radio" data-component="Radio Button"><input type="radio" name="vaccinated" value="yes" checked><span class="radio__mark"></span><span>Yes</span></label><label class="radio" data-component="Radio Button"><input type="radio" name="vaccinated" value="no"><span class="radio__mark"></span><span>No</span></label><label class="radio" data-component="Radio Button"><input type="radio" name="vaccinated" value="unsure"><span class="radio__mark"></span><span>I’m not sure</span></label></div></div>
@@ -73,12 +82,18 @@
     <div class="question" data-component="Question"><p class="question__text">7. Emergency Contact for Pet</p><p class="question__hint">Provide name and phone number of someone who can care for your pet if needed.</p><div class="question__slot"><div class="input" data-component="Input field"><input type="text" name="emergency-contact" placeholder="Enter your answer" autocomplete="off"></div></div></div>
     <div class="question" data-component="Question"><p class="question__text">8. Vaccination Records</p><p class="question__hint">Upload a copy of your pet’s vaccination records.</p><div class="question__slot"><label class="attach" data-component="Attach"><input type="file" name="vaccination-records"><img src="../assets/img/file-download.svg" alt="" width="32" height="32"><span class="attach__text"><span class="link">Choose a file</span> or drag it here.</span></label></div></div>
   </div>
+  <div class="form-footer" data-component="Footer Buttons"><a class="btn btn--secondary" href="13-forms.html" data-component="Button" data-href="13-forms.html"><span class="btn__container">Cancel</span></a><a class="btn btn--primary" href="14-forms-submitted.html" data-component="Button" data-href="14-forms-submitted.html"><span class="btn__container">Submit</span></a></div>
 </section>
-<div class="footer-buttons" data-component="Footer Buttons"><button type="button" class="btn btn--secondary" data-component="Button" data-href="08-setup-monthly-payment.html" data-history><span class="btn__container">Back</span></button><div style="display:flex;align-items:center;gap:16px"><a class="btn btn--primary" href="13-dashboard-submit.html" data-href="13-dashboard-submit.html" data-step-save="5" data-component="Button"><span class="btn__container">Save</span></a><a class="btn btn--primary" href="11-dashboard-complete.html" data-href="11-dashboard-complete.html" data-step-save="5" data-component="Button"><span class="btn__container">Submit Onboarding</span></a></div></div>
 </main>
 <div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
 </div>
 </div>
 <script src="../assets/app.js"></script>
+<script>
+document.querySelector('.form-footer .btn--primary').addEventListener('click', function () {
+  var d = new Date();
+  try { sessionStorage.setItem('rmr-form-submitted', String(d.getMonth() + 1).padStart(2, '0') + '/' + String(d.getDate()).padStart(2, '0') + '/' + d.getFullYear()); } catch (e) {}
+});
+</script>
 </body>
 </html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forms – Submitted</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/rmr.css">
+<link rel="stylesheet" href="../assets/proto.css">
+</head>
+<body>
+<div class="page">
+<header class="header" data-component="Header">
+  <div class="header__left" data-component="Header Left">
+    <div class="header__logo" data-component="New Logo">
+      <div class="header__logo-mark"><img src="../assets/img/logo-mark.svg" alt=""></div>
+      <div class="header__logo-icon"><img src="../assets/img/logo-icon.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="header__right" data-component="Header Right">
+    <img class="header__icon" src="../assets/img/connect.svg" alt="" width="24" height="24">
+    <img class="header__icon" src="../assets/img/notifications.svg" alt="" width="24" height="24" data-component="Bell Notif">
+    <div class="header__divider"><div class="header__divider-rot"><div class="header__divider-line"><div><img src="../assets/img/header-divider.svg" alt=""></div></div></div></div>
+    <button type="button" class="user-info" data-component="User Info">
+      <img class="user-info__photo" src="../assets/img/avatar-samantha.png" alt="" width="24" height="24">
+      <span class="user-info__name">Samantha Carpenter</span>
+      <img class="header__icon" src="../assets/img/keyboard-arrow-down.svg" alt="" width="24" height="24">
+    </button>
+  </div>
+</header>
+<div class="content" data-component="Content">
+<nav class="menu" data-component="Menu">
+  <div class="menu__group" data-component="Expanded Menu">
+    <a class="menu-item" href="#" data-component="Dashboard"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-dashboard.svg" alt="" width="16" height="16"><span>Dashboard</span></span></a>
+    <a class="menu-item" href="#" data-component="Charges & Payments"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-wallet.svg" alt="" width="16" height="16"><span>Charges &amp; Payments</span></span></a>
+    <a class="menu-item" href="#" data-component="Service Issues"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-wrench.svg" alt="" width="16" height="16"><span>Service Issues</span></span></a>
+    <a class="menu-item" href="#" data-component="Architectural Requests"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-architecture.svg" alt="" width="16" height="16"><span>Architectural Requests</span></span></a>
+    <a class="menu-item" href="#" data-component="Meter Readings"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-meter.svg" alt="" width="16" height="16"><span>Meter Readings</span></span></a>
+    <a class="menu-item" href="#" data-component="Community"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-groups.svg" alt="" width="16" height="16"><span>Community</span></span></a>
+    <a class="menu-item" href="#" data-component="Reservations"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-event-available.svg" alt="" width="16" height="16"><span>Reservations</span></span></a>
+    <a class="menu-item" href="#" data-component="Notes"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-note.svg" alt="" width="16" height="16"><span>Notes</span></span></a>
+    <a class="menu-item is-selected" href="13-forms.html" data-component="Forms"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-form.svg" alt="" width="16" height="16"><span>Forms</span></span></a>
+    <a class="menu-item" href="#" data-component="Polls"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-poll.svg" alt="" width="16" height="16"><span>Polls</span></span></a>
+    <a class="menu-item" href="#" data-component="Violations"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/menu-violation.svg" alt="" width="16" height="16"><span>Violations</span></span></a>
+  </div>
+  <div class="menu__footer" data-component="Expanded Menu Item">
+    <div class="menu__footer-line"><div><img src="../assets/img/menu-divider.svg" alt=""></div></div>
+    <a class="menu-item" href="#" data-component="Collapse"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/keyboard-double-arrow-left.svg" alt="" width="16" height="16"><span>Collapse</span></span></a>
+  </div>
+</nav>
+<main class="main main--forms" data-component="Main Content">
+<div class="context-bar" data-component="Header Image">
+  <div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div>
+  <h1 class="context-bar__title">Forms</h1>
+</div>
+<div class="notice" data-component="Banner"><span class="notice__bar"></span><img src="../assets/img/campaign-blue.svg" alt="" width="24" height="24"><p>Fill out forms as needed</p></div>
+<section class="forms-card" data-component="Cards">
+    <div class="tabs" role="tablist" data-component="Tabs"><a class="tab" role="tab" href="13-forms.html">Available</a><a class="tab is-active" role="tab" href="14-forms-submitted.html">Submitted</a></div>
+    <table class="table forms-table" data-component="Table">
+      <thead><tr><th class="is-fill">Name</th><th class="forms-table__submitted">Submitted</th></tr></thead>
+      <tbody>
+        <tr><td>New Pet</td><td data-submitted></td></tr>
+      </tbody>
+    </table>
+</section>
+</main>
+<div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
+</div>
+</div>
+<script src="../assets/app.js"></script>
+<script>
+/* Prototype: the date the form was submitted in this tab (today when opened directly). */
+(function () {
+  var d = new Date(), t = '';
+  try { t = sessionStorage.getItem('rmr-form-submitted') || ''; } catch (e) {}
+  var f = t || String(d.getMonth() + 1).padStart(2, '0') + '/' + String(d.getDate()).padStart(2, '0') + '/' + d.getFullYear();
+  document.querySelectorAll('[data-submitted]').forEach(function (c) { c.textContent = f; });
+})();
+</script>
+</body>
+</html>

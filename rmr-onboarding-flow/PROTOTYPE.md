@@ -18,6 +18,12 @@ Payment Method / Monthly Payment / Autopay frames are stacked vertically in the 
 The Figma note says the Payment Method fields would be pre-filled if the payment method was saved on Pay Charges (and vice versa
 depending on step order) — not built; fields are empty as in the mock.
 
+## Last step and Submit (Figma "Form" `6070:43065`, "Prospect Dashboard - Submit" `6473:24568`)
+
+- `10-pet-information` (the last step) now ends with Back, **Save** and **Submit Onboarding** (no Skip). Submit Onboarding goes to `11-dashboard-complete`.
+- **Save** marks the step done and goes to `13-dashboard-submit`: the dashboard at 100% with every step "View", `$0.00` balance and a **Submit Onboarding** button, i.e. everything done but not yet submitted. That button goes to `11-dashboard-complete`. Where Save leads is our reading of "this screen appears if they don't submit"; the mocks do not show the link.
+- Every onboarding step screen (02 to 10) has a **Back to Dashboard** button at the right of the Context Bar. It is the secondary button style; there is no mock for it, so its look is assumed. It is hidden in the RMX Portal Preview.
+
 ## What's real vs faked
 
 Real (from Figma): layout, copy, colors, spacing, type, icons/images (`assets/img`, downloaded from the mocks, unedited), the

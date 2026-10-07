@@ -52,15 +52,17 @@
   var n = 0;
   document.getElementById('questions').innerHTML = saved.map(function (f, i) {
     if (f.type === 'tx') return '<div class="question" data-component="Question"><p class="question__text">' + esc(f.title) + '</p></div>';
+    if (f.type === 'at') return '<div class="question" data-component="Question">' + (f.title ? '<p class="question__text">' + esc(f.title) + '</p>' : '') + '<div class="question__slot"><div class="question__fields"><a class="btn--text" href="#" data-component="Button"><img src="../assets/img/file-download.svg" alt="" width="20" height="20"><span>' + esc(f.file || 'No file attached') + '</span></a></div></div></div>';
     n++;
     var o = (f.opts && f.opts[f.type]) || [], name = 'q' + i, slot;
     if (f.type === 'mc') slot = o.map(function (v) { return '<label class="radio" data-component="Radio Button"><input type="radio" name="' + name + '"><span class="radio__mark"></span><span>' + esc(v) + '</span></label>'; }).join('');
     else if (f.type === 'cb') slot = o.map(function (v) { return '<label class="checkbox" data-component="Checkbox"><input type="checkbox" name="' + name + '"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>' + esc(v) + '</span></label>'; }).join('');
     else if (f.type === 'dd') slot = '<div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" aria-haspopup="listbox" aria-expanded="false"></button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="' + name + '"><div class="dropdown__panel" role="listbox" hidden>' + o.map(function (v) { return '<div class="dropdown__item" role="option" data-value="' + esc(v) + '">' + esc(v) + '</div>'; }).join('') + '</div></div>';
     else if (f.type === 'pa') slot = '<div class="question__fields"><div class="input" data-component="Input field"><textarea name="' + name + '" rows="3"></textarea></div></div>';
+    else if (f.type === 'dt') slot = '<div class="question__fields"><div class="input" data-component="Input field"><input type="text" name="' + name + '" autocomplete="off"><img src="../assets/img/calendar-today.svg" alt="" width="20" height="20"></div></div>';
     else if (f.type === 'fl') slot = '<div class="question__fields"><div class="input" data-component="Input field"><input type="file" name="' + name + '"></div></div>';
     else slot = '<div class="question__fields"><div class="input" data-component="Input field"><input type="text" name="' + name + '" autocomplete="off"></div></div>';
-    var title = f.title || f.fallback || (f.type === 'fl' ? 'Untitled Attachment' : 'Untitled Question');
+    var title = f.title || f.fallback || (f.type === 'fl' ? 'Untitled File Upload' : f.type === 'at' ? 'Untitled Attachment' : 'Untitled Question');
     return '<div class="question" data-component="Question"><p class="question__text">' + n + '. ' + esc(title) + (f.required ? '*' : '') + '</p>' +
       (f.help ? '<p class="question__hint">' + esc(f.help) + '</p>' : '') + '<div class="question__slot">' + slot + '</div></div>';
   }).join('');
