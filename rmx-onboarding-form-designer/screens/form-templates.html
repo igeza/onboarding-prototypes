@@ -167,47 +167,60 @@ a.rmx-btn { text-decoration: none; }
         <span class="rmx-field__label">Search</span>
         <div class="rmx-field__box"><svg class="rmx-icon"><use href="#search"></use></svg><input type="text" placeholder="Find a form" data-rmx-filter="#forms"></div>
       </div></div>
-      <div class="ft-w248 ft-selected"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Status</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="ft-value" data-rmx-value>All selected</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="All selected">All selected</button><button type="button" data-value="Active">Active</button><button type="button" data-value="Inactive">Inactive</button></div></div></div>
+      <div class="ft-w248 ft-selected"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Type</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="ft-value" data-rmx-value>All selected</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="All selected">All selected</button><button type="button" data-value="Prospect">Prospect</button><button type="button" data-value="Tenant">Tenant</button></div></div></div>
     </div>
     <button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Add Form is not built in this prototype"><svg class="rmx-icon"><use href="#add-circle"></use></svg><span>Add Form</span></button>
   </div>
 
   <div class="ft-box">
-    <table class="rmx-register" id="forms">
-      <colgroup><col><col><col><col><col class="ft-col-kabob"></colgroup>
+    <table class="rmx-register" data-rmx-rowlinks id="forms">
+      <colgroup><col><col><col><col><col><col class="ft-col-kabob"></colgroup>
       <thead><tr>
-        <th data-sort>Name</th><th data-sort>Create Date</th><th data-sort>Created By</th><th data-sort>Updated By</th>
+        <th data-sort>Name</th><th data-sort>Type</th><th data-sort>Create Date</th><th data-sort>Created By</th><th data-sort>Updated By</th>
         <th class="ft-tight"></th>
       </tr></thead>
       <tbody>
         <tr data-rmx-row>
-          <td>Notice to Vacate</td>
-          <td>03/24/26</td>
-          <td>smathioudakis</td>
-          <td>etruby</td>
-          <td class="ft-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon ft-blue"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
           <td><a class="ft-rowlink" href="form-designer.html">Pet Information</a></td>
+          <td>Prospect</td>
           <td>04/14/26</td>
           <td>lwithey</td>
           <td></td>
-          <td class="ft-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon ft-blue"><use href="#more-vert"></use></svg></button></td>
+          <td class="ft-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-fd-rowkebab aria-haspopup="menu"><svg class="rmx-icon ft-blue"><use href="#more-vert"></use></svg></button></td>
         </tr>
         <tr data-rmx-row>
           <td>Gym Access</td>
+          <td>Tenant</td>
           <td>06/16/26</td>
           <td>etruby</td>
           <td>etruby</td>
-          <td class="ft-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon ft-blue"><use href="#more-vert"></use></svg></button></td>
+          <td class="ft-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-fd-rowkebab aria-haspopup="menu"><svg class="rmx-icon ft-blue"><use href="#more-vert"></use></svg></button></td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="rmx-register__totals"><span data-rmx-count="#forms">3</span> of 3 Form Templates</p>
+  <p class="rmx-register__totals"><span data-rmx-count="#forms">2</span> of 2 Form Templates</p>
 </main>
 
 <script src="../assets/app.js"></script>
 <script src="../assets/megamenu.js"></script>
+<script src="../assets/row-actions.js"></script>
+<script src="../assets/send-form.js"></script>
+<script>
+/* Search and the Type selector filter the register together */
+(function () {
+  var tbl = document.getElementById('forms'), q = document.querySelector('[data-rmx-filter="#forms"]'), type = 'All selected';
+  function apply() {
+    var term = q.value.trim().toLowerCase(), shown = 0;
+    [].forEach.call(tbl.tBodies[0].rows, function (r) {
+      var hit = (!term || r.textContent.toLowerCase().indexOf(term) !== -1) && (type === 'All selected' || r.cells[1].textContent.trim() === type);
+      r.hidden = !hit; if (hit) shown++;
+    });
+    document.querySelector('[data-rmx-count="#forms"]').textContent = shown;
+  }
+  q.addEventListener('input', function () { setTimeout(apply, 0); });
+  document.addEventListener('rmx:select', function (e) { if (e.target.closest('.ft-filterrow')) { type = e.detail.label; apply(); } });
+})();
+</script>
 </body>
 </html>

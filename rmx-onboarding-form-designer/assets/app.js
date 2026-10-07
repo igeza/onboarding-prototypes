@@ -63,6 +63,7 @@
         const open = !menu.hidden;
         closeAllMenus();
         menu.hidden = open;
+        if (!open) portalMenu(dd, menu, trigger);
         dd.dataset.open = String(!open);
       });
 
@@ -82,6 +83,36 @@
         }));
       });
     });
+  }
+
+
+  /* ---------- dropdown menus float above everything ----------
+     A menu used to sit inside its dropdown, so a dialog body (overflow: auto) or the dialog's footer clipped or covered it.
+     While open, the menu now lives in a fixed layer on <body> positioned under its trigger (or above it when there is no
+     room below), so it always shows on top of the screen. Closing it puts it back where it came from. */
+  function portalMenu(dd, menu, trigger) {
+    const r = trigger.getBoundingClientRect();
+    let wrap = menu._rmxWrap;
+    if (!wrap) { wrap = menu._rmxWrap = document.createElement('div'); wrap.className = 'rmx-menu-layer'; }
+    menu._rmxHome = dd;
+    wrap.toggleAttribute('data-rmx-multi', dd.hasAttribute('data-rmx-multi'));
+    wrap.style.cssText = 'position:fixed;z-index:2000;left:' + r.left + 'px;width:' + r.width + 'px;top:' + (r.bottom + 4) + 'px';
+    menu.style.cssText = 'position:static;width:100%;min-width:100%';
+    wrap.appendChild(menu);
+    document.body.appendChild(wrap);
+    const h = menu.offsetHeight, room = window.innerHeight - r.bottom - 12;
+    if (h > room && r.top - 12 > room) { wrap.style.top = Math.max(8, r.top - 4 - h) + 'px'; if (h > r.top - 12) menu.style.maxHeight = (r.top - 12) + 'px'; }
+    else if (h > room) menu.style.maxHeight = Math.max(120, room) + 'px';
+    if (!menu._rmxObs) {
+      menu._rmxObs = new MutationObserver(() => { if (menu.hidden) unportalMenu(menu); });
+      menu._rmxObs.observe(menu, { attributes: true, attributeFilter: ['hidden'] });
+    }
+  }
+  function unportalMenu(menu) {
+    if (!menu._rmxHome || !menu._rmxWrap || menu.parentNode !== menu._rmxWrap) return;
+    menu.removeAttribute('style');
+    menu._rmxHome.appendChild(menu);
+    menu._rmxWrap.remove();
   }
 
   function closeAllMenus() {
@@ -281,8 +312,20 @@
      bundle.mjs rewrites those into inlined symbols when publishing, so the
      same markup works in a repo and in a published page.                  */
 
+  window.addEventListener('scroll', e => { if (!(e.target.closest && e.target.closest('.rmx-menu-layer'))) closeAllMenus(); }, true);
+  window.addEventListener('resize', () => closeAllMenus());
+  /* ---------- whole-row links ----------
+     A list register opts in with data-rmx-rowlinks: clicking anywhere on a row opens the first link in it (the name),
+     except on the row's own buttons, pills, inputs and other links. */
   document.addEventListener('click', e => {
-    if (!e.target.closest('[data-rmx-dropdown]')) closeAllMenus();
+    const tr = e.target.closest('table[data-rmx-rowlinks] tbody tr');
+    if (!tr || e.defaultPrevented || e.target.closest('a, button, input, label, .rmx-pill, [data-rmx-dropdown], [data-rmx-todo]')) return;
+    const a = tr.querySelector('a[href]:not([href="#"])');
+    if (a) window.location.href = a.getAttribute('href');
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('[data-rmx-dropdown]') && !e.target.closest('.rmx-menu-layer')) closeAllMenus();
   });
 
   function init(root) {

@@ -1,38 +1,32 @@
 /* ============================================================
-   RMX Mega Menu. Part of the prototype foundation: every screen gets it,
-   the same way every screen gets rmx.css and app.js.
+   RMX Mega Menu — lifted into the skill 2026-10-01
+   ------------------------------------------------------------
+   Emma's own build, verbatim apart from one marked change: the three
+   hard-coded screen links became window.RMX_MEGAMENU_LINKS, so the menu
+   drops into any prototype instead of one. Everything else — the Figma
+   provenance, the seven categories' content, the sprite, the self-wiring —
+   is hers and is not to be rebuilt.
+
+   Scaffolding links it automatically and the app bar button carries
+   data-rmx-megamenu, so a new prototype has a working menu with no work.
+   See references/megamenu.md.
+   ============================================================ */
+
+/* ============================================================
+   RMX Mega Menu, shared across screens.
 
    Built from the real Figma frame (RMX-Pages 5XEzI94nmZsWE7rQQ7OIHP, node
-   4077:83115) and trued up against that frame's own SVG export. It is
-   injected by script rather than written into a screen's markup because the
-   app bar is on every screen, so its menu icon has to work on every screen.
+   4077:83115) and trued up against that frame's own SVG export. It lives
+   here, injected by script, rather than in one screen's markup because the
+   app bar is on every screen, so its hamburger has to work on every screen.
    Emma's call, 2026-09-10: "it should always be clickable".
 
-   templates/screen.html already links it, so a scaffolded screen needs
-   nothing. A prototype that predates 4.2.0 gets both files, both tags and the
-   button rewired by check.mjs --fix -- there is no manual step.
-   (Tags are not written out here on purpose: this file is inlined into every
-   published screen, and a literal link tag in a comment shows up in any search
-   for un-inlined assets.)
+   Include it after the app bar markup, alongside megamenu.css:
+     <link rel="stylesheet" href="assets/megamenu.css">
+     <script src="assets/megamenu.js"></script>
 
    It wires itself to any button carrying [data-rmx-megamenu] or
    aria-label="Mega Menu", so a screen only has to have the app bar.
-
-   OPT-IN LINKS (this prototype, see PROTOTYPE.md): Rental Info > General > Tenants, Services > Online Listing > Workflow Templates
-   and Communication > Forms > Form Templates
-   link to the onboarding screens. Everything else below still links nowhere.
-
-   NOTHING ELSE IN THIS MENU LINKS ANYWHERE. Not an item, not a header tab, not a
-   footer link. The seven categories carry the real Express structure,
-   transcribed from the frame, so the menu reads as the real thing -- but it
-   is navigation furniture, not navigation. Clicking any of it does nothing,
-   the same as any other data-rmx-todo affordance.
-
-   If a prototype genuinely wants one entry to go somewhere it has built,
-   give that item an object instead of a string in the prototype's own copy --
-   { label: 'Tenants', href: 'tenants.html' } -- and note it in PROTOTYPE.md.
-   Never point an item at a screen that does not exist: a menu of 404s reads
-   as a broken prototype rather than an unfinished one.
 
    Everything the menu draws ships in here: the overlay markup, the seven
    categories' real content, and its own mm-* icon sprite. The sprite is
@@ -43,12 +37,30 @@
 (function () {
   'use strict';
 
-  /* No path-resolution helper here on purpose. Nothing in this menu links
-     anywhere, so there is nothing to resolve. The previous version carried a
-     document.currentScript / new URL() dance to make cross-screen hrefs work
-     at two different depths and on Pages, and it threw when the file was
-     pasted inline rather than linked, which silently killed the whole menu.
-     Removed with the links themselves, 2026-09-23. */
+  /* This file is shared by screens at different depths (/index.html and
+     /screens/tasks.html), and the site is served from / locally but from
+     /my-workspace/ on Pages, so neither a page-relative nor a root-relative
+     href works for both. Resolve against this script's own URL instead:
+     assets/megamenu.js is always one level below the site root. */
+  var ROOT = (function () {
+    var s = document.currentScript;
+    if (!s) {
+      var all = document.getElementsByTagName('script');
+      for (var i = all.length - 1; i >= 0; i--) {
+        if ((all[i].src || '').indexOf('megamenu.js') > -1) { s = all[i]; break; }
+      }
+    }
+    /* s.src is empty when this file has been pasted inline rather than linked,
+       which is how it travels to another prototype. new URL('../', '') throws,
+       and the throw happens before anything is wired, so the menu simply never
+       appears. Fall back to page-relative: the cross-screen links are then
+       relative to wherever the host page sits, which is the best guess
+       available and harmless if those screens do not exist. Found while
+       building the standalone export, 2026-09-15. */
+    try { return s && s.src ? new URL('../', s.src).href : ''; }
+    catch (e) { return ''; }
+  })();
+  function url(path) { return ROOT + path; }
 
   var SPRITE = '<symbol id="mm-workspace" viewBox="0 0 20 20" fill="currentColor" data-figma="Express Icons/Workspace" data-key="c831d806267e70f9844689ae5cbe73b8724d6bbe"><path d="M7.60041 16.8888L5.22443 11.0837L0 8.445L5.22443 5.805L7.60041 0L9.97525 5.805L15.1997 8.44375L9.97525 11.0837L7.60041 16.8888ZM16.1998 20L15.0253 17.0837L12.4007 15.7788L15.0253 14.445L16.1998 11.555L17.4002 14.4438L20 15.7775L17.4002 17.0825L16.1998 20Z"/></symbol>' +
     '<symbol id="mm-dashboard" viewBox="0 0 20 20" fill="currentColor" data-figma="Express Icons/dashboard" data-key="0671a2243610fc76ebf6b1afaacdc9dda5a17b9a"><path d="M9.96576 0.134375C4.49638 0.134375 0.0626327 4.56875 0.0626327 10.0375C0.0626327 15.5062 4.49701 19.9406 9.96576 19.9406C15.4351 19.9406 19.8689 15.5062 19.8689 10.0375C19.8689 4.56875 15.4345 0.134375 9.96576 0.134375ZM9.96576 18.0719C5.52763 18.0719 1.93013 14.4744 1.93013 10.0363C1.93013 5.59813 5.52763 2.00063 9.96576 2.00063C9.96888 2.00063 9.97263 2.00063 9.97638 2.00063C11.6608 2.00063 13.2233 2.52125 14.5114 3.41125C15.1345 3.84188 15.6939 4.35812 16.1733 4.94187C17.3189 6.33 18.0064 8.11 18.0064 10.05C18.0064 14.4856 14.4108 18.0819 9.97576 18.0819C9.97263 18.0819 9.96888 18.0819 9.96576 18.0819V18.0719ZM10.4533 13.2181C10.3714 13.2181 10.2914 13.2238 10.2126 13.235L9.96576 12.6094L8.62826 9.44375C8.55576 9.27312 8.38888 9.15562 8.19576 9.15562C7.93638 9.15562 7.72638 9.36562 7.72638 9.625C7.72638 9.69062 7.73951 9.7525 7.76388 9.80937L9.37576 13.6C8.96513 13.9269 8.70388 14.4269 8.70388 14.9875C8.70388 15.9644 9.49576 16.7556 10.4733 16.7556C11.4508 16.7556 12.2414 15.9637 12.2414 14.9875C12.2414 14.0106 11.4495 13.2181 10.4733 13.2181H10.4533ZM9.96576 4.375H9.94076C7.44076 4.375 5.21576 5.9375 3.92826 8.28437H5.68763C6.73076 6.80937 8.25326 5.8775 9.94326 5.8775H9.96826C11.6501 5.8775 13.1589 6.815 14.1964 8.28437H15.9558C14.6714 5.9375 12.4689 4.375 9.96576 4.375Z"/></symbol>' +
@@ -69,9 +81,12 @@
     '        <span class="megamenu__title">Menu</span>' +
     '      </div>' +
     '      <nav class="megamenu__tabs">' +
-    '        <button class="megamenu__tab" data-rmx-todo="Workspace is not built in this prototype"><svg class="rmx-icon"><use href="#mm-workspace"></use></svg>Workspace</button>' +
+    /* index.html is the one path every scaffolded prototype has, so this tab
+       is real everywhere. The rest stay placeholders unless a prototype maps
+       them (see LINKS below). */
+    '        <a class="megamenu__tab" href="' + url('index.html') + '"><svg class="rmx-icon"><use href="#mm-workspace"></use></svg>Workspace</a>' +
     '        <button class="megamenu__tab" data-rmx-todo="Dashboard is not built in this prototype"><svg class="rmx-icon"><use href="#mm-dashboard"></use></svg>Dashboard</button>' +
-    '        <button class="megamenu__tab" data-rmx-todo="Administration is not built in this prototype"><svg class="rmx-icon"><use href="#mm-admin"></use></svg>Administration</button>' +
+    '        <a class="megamenu__tab" href="administration.html"><svg class="rmx-icon"><use href="#mm-admin"></use></svg>Administration</a>' +
     '        <span class="megamenu__tab megamenu__tab--current"><svg class="rmx-icon"><use href="#mm-map"></use></svg>Full Menu</span>' +
     '        <button class="megamenu__tab" data-rmx-todo="Search is not built in this prototype"><svg class="rmx-icon"><use href="#mm-search"></use></svg>Search</button>' +
     '        <button class="megamenu__tab" data-rmx-todo="Help is not built in this prototype"><svg class="rmx-icon"><use href="#mm-help"></use></svg>Help</button>' +
@@ -86,16 +101,38 @@
     '  </div>' +
     '</div>';
 
-  /* ---- Mega Menu ----
-     Real content transcribed from the Figma frame (see the comment at the top
-     of this file). Every entry is a plain string and renders inert. The object
-     form { label, href } exists only so a prototype can opt one item in; none
-     ship that way. */
+  /* ---- Which items are real ----
+     CHANGED when this was lifted into the skill, 2026-10-01. The original
+     hard-coded three hrefs into one prototype's screens — 'Tenants',
+     'Tenant Register' and 'Tasks' — which is right for that prototype and
+     wrong for every other one. They are plain strings again, and a prototype
+     says which of its screens exist by setting a map BEFORE this script:
+
+       <script>window.RMX_MEGAMENU_LINKS = {
+         'Tenants': 'screens/tenants.html?view=details',
+         'Tenant Register': 'screens/tenants.html',
+         'Tasks': 'screens/tasks.html'
+       };</script>
+       <script src="assets/megamenu.js"></script>
+
+     Keys are the item labels exactly as they read in the menu; values are
+     paths relative to the prototype root. Anything not in the map stays a
+     data-rmx-todo placeholder, which is the right default: a menu of 300
+     links into screens that do not exist is worse than a menu that is honest
+     about what is built.
+
+     Everything else in this structure is the real Figma content, transcribed
+     from the frame (see the comment on #megaMenuOverlay above). Do not edit
+     the labels to suit a prototype — add screens to the map instead. */
+  var LINKS = (typeof window !== 'undefined' && window.RMX_MEGAMENU_LINKS) || {};
   var MEGA_MENU_ORDER = ['rental-info', 'accounting', 'receivables', 'payables', 'owners', 'services', 'communication'];
   var MEGA_MENU = {
     'rental-info': {
       label: 'Rental Info',
       columns: [
+        /* Two entries into one screen: 'Tenants' lands on Tenant Details (the
+           record, with the list in its left rail), 'Tenant Register' on the
+           full register. Same file, told apart by ?view=. */
         { title: 'General', items: [{ label: 'Tenants', href: 'tenants.html' }, 'Prospects', 'Units', 'Properties', 'Unit Types', 'Assets', 'Violations', 'Merge Prospects'] },
         { title: 'Leasing', items: ['Screenings', 'Applications', 'Application Templates', 'Renewal Increases', 'Prospect Leasing Board', 'Create Renewal Offers', 'Lease Renewal Register', 'Lease Renewal Board', 'Export Minnesota CRP'] },
         { title: 'Short Term Rentals', items: ['STR Reservations', 'Check-ins', 'Find Reservation'] },
@@ -241,6 +278,9 @@
   function renderMegaMenuItem(it) {
     if (typeof it === 'object') {
       return '<a class="megamenu__item" href="' + it.href + '">' + it.label + '</a>';
+    }
+    if (Object.prototype.hasOwnProperty.call(LINKS, it)) {
+      return '<a class="megamenu__item" href="' + url(LINKS[it]) + '">' + it + '</a>';
     }
     return '<div class="megamenu__item" data-rmx-todo="' + it + ' is not built in this prototype">' + it + '</div>';
   }

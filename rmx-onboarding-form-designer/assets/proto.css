@@ -93,12 +93,14 @@
 }
 
 /* ---- toasts ---- */
+/* Toasts sit centred at the TOP, below the app bar (48) and context bar (40), as in the Figma toast frame. */
+:root { --rmx-toast-top: 104px; }
 .rmx-toaststack {
   position: fixed;
-  bottom: 24px;
+  top: var(--rmx-toast-top);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
+  z-index: 3000;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs, 8px);
@@ -159,3 +161,80 @@
   outline: 2px solid var(--border-secondary);
   outline-offset: 1px;
 }
+
+/* ---- whole-row links: a register with data-rmx-rowlinks opens a row from anywhere on it ---- */
+table[data-rmx-rowlinks] tbody tr:has(a[href]:not([href="#"])) { cursor: pointer; }
+table[data-rmx-rowlinks] tbody tr:has(a[href]:not([href="#"])):hover td { background: var(--container-tertiary); }
+
+/* Form designer page kebab */
+.fd-page__kebab { display: inline-flex; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+
+/* Form Setup footer: fixed to the bottom of the page once something has changed */
+.fd-footer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 900; }
+.fd-footer[hidden] { display: none; }
+
+/* Form Setup scrolls inside the designer, never the page: the section fills the screen under the context bar
+   (less the footer when it is showing) and the page list and canvas scroll on their own. */
+main.fd { height: calc(100vh - 88px); min-height: 0; overflow: hidden; }
+body.has-fd-footer main.fd { height: calc(100vh - 88px - 52px); }
+main.fd > .fd-top { flex: none; }
+main.fd > .fd-body { min-height: 0; overflow: hidden; }
+main.fd .fd-pages { overflow: auto; }
+main.fd .fd-pane { min-height: 0; }
+main.fd .fd-pane__head { flex: none; }
+main.fd .fd-canvas { min-height: 0; overflow: auto; }
+
+/* Page list: the kebab and drag icons are centred on the page name (the svgs sat on the text baseline, a few px high) */
+.fd-page { align-items: center; }
+.fd-page .rmx-icon { display: block; }
+.fd-page > span:not(.fd-page__name), .fd-page__kebab { display: inline-flex; align-items: center; line-height: 0; }
+.fd-page__name { line-height: 20px; }
+
+/* Page list: only the page on screen looks selected */
+.fd-page { cursor: pointer; }
+.fd-page:not(.is-current) { background: none; border-left-color: transparent; }
+.fd-page:not(.is-current):hover { background: var(--container-tertiary); }
+
+/* Attachment (general field): the file the person filling out the form can open */
+.rmx-field__box.wt-filechip { color: var(--text-link); gap: var(--spacing-xs); }
+.rmx-field__box.wt-attach--pick { cursor: pointer; }
+
+/* Form Templates row menu (Dropdown Menu, Figma Row Actions 6070:47164): white, 4px radius, soft shadow, 8px-padded blue items */
+.fd-rowmenu { min-width: 0; padding: 0; border: 0; border-radius: var(--radius-sm); box-shadow: 0 3px 6px rgba(0, 0, 0, .15); background: var(--container-primary); }
+.fd-rowmenu > [data-value] { display: flex; align-items: center; width: 100%; padding: var(--spacing-xs); border: 0; background: none; text-align: left; font: var(--type-paragraph-s-regular); line-height: 20px; color: var(--text-link); cursor: pointer; white-space: nowrap; }
+.fd-rowmenu > [data-value]:hover { background: var(--container-tertiary); }
+
+/* Send to Tenant / Prospect dialogs (Figma Send to Tenant 6070:46808) */
+.sf__dlg { display: flex; flex-direction: column; max-width: calc(100vw - 32px); }
+.sf__dlg--send { width: 700px; }
+.sf__hicons { margin-left: auto; display: inline-flex; align-items: center; gap: var(--spacing-xs); color: var(--icon-brand); }
+.sf__hicons .fd-close { margin-left: 0; }
+.sf__body { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); min-height: 0; overflow: auto; }
+.sf__lbl { margin: 0; color: var(--text-primary); font: var(--type-paragraph-s-regular); }
+.sf__name { margin: 8px 0 0; color: var(--text-secondary); font: var(--type-paragraph-s-semibold); }
+.sf__form { display: flex; flex-direction: column; }
+.sf__row { display: flex; gap: var(--spacing-md); }
+.sf__grow { flex: 1; min-width: 0; width: auto; }
+.sf__body .rmx-field { width: 100%; }
+.sf__body .rmx-field__label { color: var(--text-primary); }
+.sf__pick { width: 100%; cursor: pointer; text-align: left; font: inherit; }
+.sf__pick > .rmx-icon:first-child { color: var(--icon-brand); }
+.sf__pickval { flex: 1; min-width: 0; color: var(--text-secondary); }
+.sf__pickval.rmx-placeholder { color: var(--text-disabled); font-style: italic; }
+.sf__invalid { border-color: var(--border-error) !important; }
+.sf__msg { height: auto; align-items: flex-start; }
+.sf__msg textarea { all: unset; flex: 1; min-width: 0; min-height: 88px; box-sizing: border-box; font: inherit; color: var(--text-secondary); white-space: pre-wrap; }
+.sf__msg textarea::placeholder { color: var(--text-disabled); font-style: italic; }
+.sf__list { display: flex; flex-direction: column; gap: var(--spacing-xs); height: 216px; padding: var(--spacing-xs); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); overflow: auto; background: var(--container-primary); }
+.sf__chips { display: flex; flex-wrap: wrap; align-content: flex-start; gap: var(--spacing-xs); height: 188px; padding: var(--spacing-xs); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-tertiary); overflow: auto; }
+.sf__chip { display: inline-flex; align-items: center; gap: var(--spacing-xs); height: 24px; padding: 0 var(--spacing-xs); background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); color: var(--text-secondary); }
+.sf__chip button { display: inline-flex; padding: 0; border: 0; background: none; cursor: pointer; color: var(--text-error); }
+.sf__chip .rmx-icon { width: 16px; height: 16px; }
+.sf .fd-close { display: inline-flex; padding: 0; border: 0; background: none; color: var(--icon-brand); cursor: pointer; margin-left: 0; }
+.sf .rmx-check:not([data-checked="true"]) .rmx-check__box > svg, .sf__panel .rmx-check:not([data-checked="true"]) .rmx-check__box > svg { visibility: hidden; }
+
+/* people list under the Tenants / Prospects field */
+.sf__panel { display: flex; flex-direction: column; gap: var(--spacing-xs); padding: var(--spacing-xs); border: 0; box-shadow: 0 3px 6px rgba(0, 0, 0, .15); }
+.sf__panel[hidden] { display: none; }
+.sf__psearch .rmx-field__box { width: 100%; }
+.sf__panel .sf__list { height: auto; max-height: 216px; border: 0; padding: 0; }

@@ -16,11 +16,11 @@ Source: Figma "RMR New Feature – Onboarding Workflow", node `6151:19293` (Onbo
 | [`screens/select-files.html`](screens/select-files.html) | Details screen with the Select Files dialog open (from "Select Files" on the File Upload step) |
 
 Flow: register → Add Workflow Template → Save → designer → Select Files. Clicking a template name on the register also opens the designer.
-Open `flow.html` for the whole flow as one link: all four screens are embedded in a single file, so moving between them never loads a page (browser Back works too). It is generated from `screens/`, so it needs rebuilding after any screen edit. Open `index.html` for the index.
+Open `flow.html` for the whole flow as one link, starting on Administration: every screen is embedded in a single file, so moving between them never loads a page (browser Back works too). It is generated from `screens/`, so it needs rebuilding after any screen edit. Open `index.html` for the index.
 
 ## Connected through the Mega Menu
 
-Two Mega Menu entries are opted in (everything else in the menu still does nothing): **Services > Online Listing > Workflow Templates** opens the Workflow Templates register (`screens/workflow-templates.html`; Add Workflow Template, then the designer, work from there), and **Communication > Forms > Form Templates** opens the Form Templates register in `../rmx-onboarding-form-designer/screens/form-templates.html`. Both prototypes carry the same two links, so you can move between them from any screen's menu. `flow.html` (the one-file bundle) does not include these links; use the screens in `screens/`, served from the parent folder.
+Two Mega Menu entries are opted in (everything else in the menu still does nothing): **Services > Online Listing > Workflow Templates** opens the Workflow Templates register (`screens/workflow-templates.html`; Add Workflow Template, then the designer, work from there), and **Communication > Forms > Form Templates** opens the Form Templates register in `../rmx-onboarding-form-designer/screens/form-templates.html`. Both prototypes carry the same two links, so you can move between them from any screen's menu. The Administration tab and Rental Info > General > Tenants are linked too. In `flow.html` (the one-file bundle) the Administration, Tenants and Workflow Templates links move between its embedded screens, and Form Templates opens the form designer in the same tab (the bundle has to sit next to the `rmx-onboarding-form-designer` folder).
 
 ## Tenants and Prospect (reached from the Mega Menu)
 
@@ -31,6 +31,28 @@ Forms tile rows open the Form Details dialogs from Figma `6363:18800`: Pet Infor
 Icons: `units`, `library-add` and `library-add-filled` were harvested from the mock's own instances into `assets/icons-local.svg`. The Stage field's history button uses the core `schedule` clock glyph instead of the mock's Express history icon, because that glyph could not be harvested (the export returns the library placeholder). Swap it for `prospect-stage-history` (library key `e851774b09449cfbfe0e9316ea49c6487bc4111e`) when it is harvested.
 
 Menu links to these screens are also in `../rmx-onboarding-form-designer/assets/megamenu.js`.
+
+## Administration > Onboarding Templates (second option)
+
+Shown **alongside** the Workflow Templates designer above, so both ways of setting up onboarding can be compared; one will be chosen later. Reached from the Mega Menu's **Administration** tab (Figma `6392:18975`, rmResident Portal section).
+
+| Screen | What it shows |
+|---|---|
+| [`screens/administration.html`](screens/administration.html) | Administration page (3.0.1): category list with rmResident Portal selected, Integrations / Locations / rmResident Portal items, Find an item. **Onboarding Templates** opens the register |
+| [`screens/onboarding-templates.html`](screens/onboarding-templates.html) | Register: Name, Description, Properties, Created By, Updated By, Active. Add Workflow Template opens the Add dialog; a name opens the template |
+| [`screens/add-onboarding-template.html`](screens/add-onboarding-template.html) | Add Onboarding Template dialog (Template Name, Description, Properties). Save opens the empty template; Cancel / X return to the register |
+| [`screens/onboarding-template.html`](screens/onboarding-template.html) | Onboarding Template dialog: General, Onboarding Setup (steps), Onboarding Completion. Add Step / the pencil open Add Step |
+
+- **Add Step** starts empty. Choosing an Action fills Step Name with the Action (until you type your own) and shows that Action's Additional Information: Signable Document and Renters Insurance / Setup Payment Method (multiselects), Form (single select), File Attachment (the Files list with Add File and the file editor, the same editor as Select Files in the Workflow designer; the layout was specified in Figma `6402:17169`), Make a Payment (nothing). Add Step opens over a second dark scrim that also dims the Onboarding Template behind it. Buttons: Save & New (Add only: saves the step and opens a fresh empty Add Step), Save (saves and closes), Cancel; Edit Step has only Save and Cancel; the Add / Edit Step header has no help icon, only Close; the mock's Save & Close was renamed to Save & New on request.
+- Steps can be edited and deleted, and reordered by dragging the row or its handle (the row lifts: it grows slightly, gets a shadow, follows the pointer while the other rows slide out of its way, then settles into its slot on release; it can travel any number of places in one drag), or by focusing the handle and pressing Up / Down. The order is not used by the portal preview. Saving the template writes the choices to the same tab storage the Workflow designer uses, so the rmResident Portal preview follows whichever designer was used last. A saved new template is added to the register for this tab only. Flex is offered in Setup Payment Method but the portal prototype ignores it.
+- Copy kept from the mock: the register button reads "Add Workflow Template" (Figma) although the dialog is "Add Onboarding Template". Totals read "N of N Onboarding Templates" (the mock's "4 of 4 Transactions" is placeholder).
+- Not built: Select Properties, row kebabs, property "+N" lists, Show Inactive, the other Administration categories and items, Help.
+- `--icon-rm12` and `--brand-600` (Figma variables Icon/icon-Rm12 and Light/Brand/600) are defined on the Administration page because `tokens.css` does not carry them yet. Worth raising with Emma. The eight illustrations in `assets/admin/` were exported from the Figma file.
+
+## Dropdown menus and scrollbars (all screens)
+
+- **Dropdown menus always show on top.** While open, a menu is lifted into a fixed layer above everything (above dialogs, their footers and the dimming), lined up under its field, or above it when there is no room below. It closes when the page or dialog scrolls. This lives in `assets/app.js` (`portalMenu`), in both prototypes.
+- **A scrollbar never moves the fields.** Scrolling dialog bodies (Onboarding Template, Add Step, Form Details, Settings, the Files editor) reserve a 12px scrollbar track up front and take it out of their own right padding, so the bar appears in space that was already empty. Rules are at the end of `assets/proto.css`. Dialogs where the whole overlay scrolls (Select Files, Add Workflow Template, the form designer's Add Fields) are not changed.
 
 ## Not real yet
 
@@ -64,6 +86,9 @@ node <skill>/scripts/bundle.mjs .         # self-contained copies for publishing
 | Select Files fields — 32px controls | Fields inside the Select Files dialog are 32px tall, the sidebar header is 44px, list items 36px and the footer buttons are 16px apart. | Measured off Figma Dialog Overlay `6245:11269`; RMX controls are 36px elsewhere. |
 | `control-height` 24px — prospect.html tile header actions | Text buttons (Add Note, Add Quote, Send Form, Cancel, Unit Picker, Move In, open icons) are 24px. | Matches the mock: Tile header action text buttons are compact, not 36px. |
 | `checkbox-checked-colour` — prospect.html Form Details dialogs | Checked response checkboxes are gray (`--text-primary`), not orange. | Matches the mock: the responses are read-only, so the boxes and radios are drawn in the disabled gray. |
+| Pill text colour — all screens | Pill text is `--text-link`; `rmx.css` still sets `--text-secondary`. | Library Pill anatomy (Figma 886:39) is blue text on a white fill with a `--border-secondary` border. Overridden in `proto.css`; worth raising with Emma so `rmx.css` matches. |
+| `bespoke-on-component` — Dialog Overlay (add-onboarding-template, onboarding-template) | The audit sees `is-open` after the page opens the dialog on load. | Same as add-workflow-template: the screen is meant to be shown with the dialog open. |
+| `mostly-bespoke` — administration.html | The Administration page is mostly local CSS (header row, category list, item grid). | The system has no Administration page component; built from Figma 3.0.1. Worth raising with Emma. |
 | Dropdown menus — all dropdowns | Menu is the Figma Dropdown Menu (node `6165:20109`): as wide as its input, no border, 36px items, soft shadow; hover `--container-tertiary`, selected `--container-secondary` with white text. | Requested by Izzy. The hover fill `#f5f8fa` is the Figma value, matched to the nearest token. |
 
 Copy changes from the mock (typos and placeholders):
@@ -88,3 +113,9 @@ Choices are kept in the browser tab and read by `../rmr-onboarding-flow`. A step
 - Select Steps to Include (Setup Payment Method): Payment Method = the payment method screen; Autopay = the monthly payment and autopay screens. Only Payment Method finishes on the first screen (Skip / Save); only Autopay skips it and starts at monthly payments.
 - Renters Insurance options: which cards show on the Insurance step.
 - Select Files (File Upload step): the files saved there become the upload boxes, in order, each with its name as the title, its help text underneath, and several files allowed when "Allow multiple uploads" is ticked. With no files saved, the File Upload step still appears and shows the two default boxes (Profile Photo and Proof of Income).
+
+## Hidden from the index
+
+The workflow flow (Workflow templates, Add workflow template, Workflow template details, Select files) is commented out of `index.html` because onboarding is now set up from Administration. The screens are untouched and their links still work.
+
+- Onboarding Template dialog General section follows Figma `6416:17860` (now named "Template Details"; updated three times): row 1 Template Name and Assign to Property + Select Properties; row 2 Trigger By (Lease Signed), Due Date (7 days) and Description; then Active / Steps must be completed in order. The dialog is 968px wide. The mock shows only the selected values; the option lists (Lease Signed / Application Approved / Move-In Scheduled; 3 / 7 / 14 / 30 days) are carried over from the old workflow designer. They are not saved or used by the portal prototypes.

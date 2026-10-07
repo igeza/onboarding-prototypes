@@ -1,87 +1,124 @@
 /* ============================================================
-   RMX responsive — PROTOTYPE CONVENTIONS, NOT LIBRARY TRUTH
+   RMX responsive — PART LIBRARY TRUTH, PART PROTOTYPE CONVENTION
    ------------------------------------------------------------
-   RMX Foundations defines exactly ONE width: --display-display,
-   1920px. There are no breakpoint tokens and no Mobile / Tablet /
-   Narrow variants on any of the 130 components. Everything in the
-   library is authored at 1920.
+   CORRECTED 2026-10-01. This file used to open by saying Foundations
+   defines exactly one width and has no breakpoint tokens. That was wrong.
+   Foundations has a Breakpoints collection with four modes, and a few
+   values that are authored PER MODE:
 
-   So every rule in this file is a decision taken for prototypes,
-   agreed with Emma on 2026-09-10 — not a value harvested from
-   Figma. If the design system later defines responsive behaviour,
-   THAT wins and this file is replaced.
+     XL Desktop  1920   --display-display   logo 175px
+     LG Tab Land 1366   --display-lg        logo 175px
+     MD Tab Port 1024   --display-md        logo 150px  (--logo-size-md)
+     SM Mobile    390   --display-sm        logo 120px  (--logo-size-sm)
+
+   So the WIDTHS below are library truth, and so is what happens to the
+   logo at each one. The rest — what hides, what wraps, how a register
+   gives up width — is still a prototype decision agreed with Emma on
+   2026-09-10, because no component in the library carries a Mobile or
+   Tablet variant.
+
+   Two things Foundations has that this file deliberately does NOT
+   implement, because they are design decisions for Emma, not defaults:
+     - RESPONSIVE TYPE. Foundations steps several type sizes down in its
+       LG / Tablet Port / Mobile modes (Heading XL goes 24 -> 20 -> 18).
+       Only the XL Desktop sizes are harvested, so type here does not
+       shrink. Ask Emma before changing that.
+     - REGISTER DENSITY. The Registers collection has XL 44 / L 36 /
+       SM 32 / XS 28 cell heights (--cell-height-*). Rows here stay at
+       L (36px) at every width; switching density at a breakpoint would
+       be choosing a density for her.
 
    Read references/responsive.md before changing anything here.
-
-   Breakpoints (named after what they are for, not after devices):
-     >= 1280   desktop   as authored; nothing collapses
-     1024-1279 laptop    fluid, search shrinks, nothing hides
-      768-1023 tablet    secondary chrome hides, page padding drops
-      < 768    phone     single column, app bar reduced to essentials
    ============================================================ */
 
 :root {
-  --bp-laptop: 1280px;
-  --bp-tablet: 1024px;
-  --bp-phone: 768px;
+  /* Named for the Foundations mode each one enters, not for a device. */
+  --bp-lg: 1366px;   /* --display-lg */
+  --bp-md: 1024px;   /* --display-md */
+  --bp-sm:  480px;   /* Foundations authors SM Mobile at 390 (--display-sm);
+                        480 is where this file starts rendering SM values, so
+                        a 375-430px phone gets them. */
 }
 
-/* The bars are full-bleed and fluid at every width. 1920 is what they
-   were measured at, never a floor. */
-.rmx-appbar,
-.rmx-contextbar { min-width: 0; }
+/* ---------- The Action Bar is ALWAYS a right-hand rail ----------
+   Emma, 2026-09-10. An earlier version of this file turned it into a
+   horizontal strip under the context bar at tablet width, reasoning that a
+   40px rail eats too much of a narrow screen. That was wrong: the rail is
+   where people look for it, and moving it changes what the component IS
+   rather than how it fits. It stays vertical, on the right, at every width
+   down to 375 — 40px is affordable even there.
 
-/* ---------- 1024–1279 · laptop ----------
-   Nothing hides. The Command Launch search gives up width first, because
-   it is the only element in the bar with slack. */
-@media (max-width: 1279px) {
+   Do not reintroduce a horizontal variant. If the rail genuinely cannot work
+   at some width, that is a question for Emma, not a layout to invent. */
+.rmx-shell { display: flex; align-items: stretch; }
+.rmx-actionbar {
+  order: 99;                 /* always last in the row = always on the right */
+  flex: none; width: 40px;
+  flex-direction: column;
+}
+
+/* The bars are full-bleed and fluid at every width — they fill the browser,
+   whatever it is. 1920 is the width they were MEASURED at in Figma, never a
+   floor and never a cap. (rmx.css used to carry a 960px min-width that this
+   file then cancelled; two files disagreeing is how a rule quietly stops
+   meaning anything, so the min-width is gone from both.) */
+.rmx-appbar,
+.rmx-contextbar { min-width: 0; max-width: none; }
+
+/* ---------- <= 1366 · LG Tablet Land ----------
+   Nothing hides, and the logo stays 175px: Foundations keeps the full
+   lockup width in LG. The Command Launch search gives up width first,
+   because it is the only element in the bar with slack. */
+@media (max-width: 1366px) {
   .rmx-appbar__search { flex: 0 1 380px; }
 }
 
-/* ---------- 768–1023 · tablet ----------
+/* ---------- <= 1024 · MD Tablet Port ----------
    DECISION: Company Code is the first thing to go. It is reference
    information, not navigation, and it is the widest low-value block in
    the Manage column. The avatar and bell stay — they are wayfinding. */
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
+  /* Library truth: Main Header/LogoSize is 150px in MD. */
+  .rmx-appbar__logo { width: var(--logo-size-md); }
   .rmx-appbar__code { display: none; }
   .rmx-appbar__search { flex: 0 1 280px; }
   .rmx-appbar__manage { gap: var(--spacing-md); }
+  /* DECISION (Emma, 2026-10-01): the three columns stop being equal thirds
+     HERE, not at 480. Equal thirds at ~530px left Command Launch 35px wide —
+     the placeholder rendered as a single "C". Logo and Manage hug their
+     content; Launch takes the rest, and the search still caps at 280. */
+  .rmx-appbar { gap: var(--spacing-md); }
+  .rmx-appbar__leading { flex: 0 0 auto; }
+  .rmx-appbar__launch  { flex: 1 1 auto; }
+  .rmx-appbar__manage  { flex: 0 0 auto; }
   .rmx-page { padding-inline: var(--spacing-md); }
-  .rmx-shell { display: block; }
-
-  /* DECISION: the 40px Action Bar rail becomes a horizontal strip under
-     the context bar rather than a side rail, which would eat a fifth of
-     a tablet's width. */
-  .rmx-actionbar {
-    width: 100%; flex-direction: row; justify-content: flex-end;
-    padding: var(--spacing-xs) var(--spacing-md);
-    border-bottom: 1px solid var(--border-primary);
-  }
 
   /* Tiles stop sitting side by side. */
   .rmx-tilerow, .rmx-fieldgrid { flex-direction: column; }
   .rmx-fieldgrid__col { width: 100%; }
 }
 
-/* ---------- < 768 · phone ----------
+/* ---------- <= 480 · SM Mobile ----------
    DECISION: the app bar keeps logo, search and avatar. The icon cluster
    (Mega Menu / Reports / Favorites) hides — all three are shortcuts that
    also exist elsewhere, and at this width the search is what people use.
-   The three columns stop being equal thirds, because equal thirds at
-   375px leaves the search unusable. */
-@media (max-width: 767px) {
+   (The columns already stopped being equal thirds at 1024.) */
+@media (max-width: 480px) {
   .rmx-appbar { padding-inline: var(--spacing-sm); gap: var(--spacing-xs); }
   .rmx-appbar__icons { display: none; }
-  .rmx-appbar__leading { flex: 0 0 auto; }
-  .rmx-appbar__launch { flex: 1 1 auto; }
-  .rmx-appbar__manage { flex: 0 0 auto; }
-  /* Swap the full lockup for the roof mark. Scaling the 175px lockup down to
-     32 makes an illegible smudge; the mark is the same artwork, cropped. */
-  .rmx-appbar__logo { display: none; }
-  .rmx-appbar__logo--mark[hidden] { display: block !important; width: 32px; }
+  /* CORRECTED 2026-10-01. This used to hide the lockup and swap in the roof
+     mark — an invented behaviour. Foundations authors a SM Mobile logo size
+     of 120px (--logo-size-sm), so the lockup stays and shrinks to the size
+     the library says. The mark element is left in the markup for a screen
+     that genuinely needs it, still hidden. */
+  .rmx-appbar__logo { width: var(--logo-size-sm); }
   .rmx-appbar__search { flex: 1 1 auto; min-width: 0; }
 
   .rmx-contextbar { padding-inline: var(--spacing-sm); }
+  /* Toasts stay top-centred, just tighter to the bars and never wider
+     than the screen. */
+  :root { --rmx-toast-top: 96px; }
+  .rmx-toaststack { width: calc(100vw - 24px); }
   .rmx-page { padding-inline: var(--spacing-sm); }
 
   /* A dialog at 520px does not fit 375. Overlays go near-full-bleed. */
@@ -116,13 +153,19 @@
    to be testable — this reveals the full value without changing layout. */
 .rmx-register td[title]:hover { cursor: help; }
 
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   .rmx-register th,
   .rmx-register td { max-width: 180px; }
 }
-@media (max-width: 767px) {
+@media (max-width: 480px) {
+  /* At SM the cap alone is not enough: four columns at 120px each still add up
+     to more than the screen, and the page scrolls sideways — which the rule
+     above exists to prevent. Fixed layout makes the columns divide the width
+     that exists and truncate, which IS "shrink until they cannot, then
+     truncate" carried to its end. Row height and 14px type are untouched. */
+  .rmx-register { table-layout: fixed; width: 100%; }
   .rmx-register th,
-  .rmx-register td { max-width: 120px; padding-inline: var(--spacing-xs); }
+  .rmx-register td { max-width: none; padding-inline: var(--spacing-xs); }
 }
 
 /* Anything genuinely un-shrinkable scrolls inside its own box rather than

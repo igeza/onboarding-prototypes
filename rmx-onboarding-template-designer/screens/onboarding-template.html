@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="rmx-skill" content="4.5.2">
 <meta name="rmx-tokens" content="a6dff32542cd">
-<title>Tenants — Rent Manager Express</title>
+<title>Onboarding Template — Rent Manager Express</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/tokens.css">
 <link rel="stylesheet" href="../assets/tokens-local.css">
@@ -16,39 +16,93 @@
 <link rel="stylesheet" href="../assets/megamenu.css">
 <style>
 /* Screen-local layout only — every value is a token. */
-.tn-ground { background: var(--background-ui-primary); }
-.tn-page { display: flex; flex-direction: column; gap: var(--spacing-md); min-height: calc(100vh - 88px); padding: var(--spacing-md) var(--spacing-xl); }
-.tn-filterrow { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--spacing-md); }
-.tn-filterrow__lead { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--spacing-xs); }
-.tn-filterrow__trail { display: flex; align-items: center; gap: var(--spacing-xs); }
-.tn-w248 { width: 248px; }
-.tn-w248 .rmx-field { width: 100%; }
-.tn-selected .rmx-field__box { background: var(--component-input-secondary); border-color: var(--border-secondary); }
-.tn-saved { display: flex; align-items: stretch; }
-.tn-saved .rmx-field__box { border-top-right-radius: 0; border-bottom-right-radius: 0; }
-.tn-saved__tune { display: inline-flex; align-items: center; justify-content: center; width: 28px; flex: none; border: 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: var(--background-primary-button); color: var(--text-inverse); cursor: pointer; }
-.tn-bulk { align-self: flex-end; }
-.tn-check { align-self: flex-end; height: 36px; display: flex; align-items: center; }
-.tn-check .rmx-text { color: var(--text-link); }
-.tn-box { flex: 1; background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); overflow: auto; }
-.tn-register td { white-space: nowrap; }
-.tn-register td:first-child { padding: 0; }
-.tn-register td:first-child .rmx-colorblock { margin-left: var(--spacing-xs); width: 10px; }
-.tn-register td:nth-child(2) > span, .tn-register td:nth-child(4) > span { display: flex; align-items: center; gap: var(--spacing-xs); }
-.tn-register td:nth-child(2) > span > b { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--spacing-xs); border-radius: var(--radius-sm); background: var(--text-error); color: var(--text-inverse); font: var(--type-label-m-regular); }
-.tn-register td:nth-child(7) > span { display: inline-flex; align-items: center; gap: var(--spacing-xs); font: var(--type-label-m-italic); }
-.tn-register td:nth-child(7) i { width: 8px; height: 8px; border-radius: 50%; background: var(--icon-success); }
-.tn-register td:nth-child(7) i[data-past] { background: var(--icon-error); }
-.tn-register th:last-child, .tn-register td:last-child { width: 40px; padding-inline: 0; text-align: center; }
-.tn-register a { color: inherit; text-decoration: none; }
-.tn-register tr[data-href] { cursor: pointer; }
-.tn-register tr[data-href]:hover td { background: var(--container-tertiary); }
-.tn-register a:hover { color: var(--text-link); }
+.oa-ground { background: var(--background-ui-primary); }
+.oa-page { display: flex; flex-direction: column; gap: var(--spacing-sm); min-height: calc(100vh - 88px); padding: var(--spacing-md) var(--spacing-xl); }
+.oa-filterrow { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--spacing-md); }
+.oa-filterrow__lead { display: flex; align-items: flex-end; gap: var(--spacing-md); }
+.oa-search .rmx-field { width: 188px; }
+.oa-search .rmx-field__box { background: var(--component-input-secondary); border-color: var(--border-secondary); }
+.oa-box { flex: 1; background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); overflow: auto; }
+#templates td:first-child a { color: inherit; text-decoration: none; }
+#templates td:first-child a:hover { color: var(--text-link); }
+.oa-center { text-align: center; }
+.oa-blue { color: var(--icon-primary); }
+.oa-success { color: var(--icon-success); }
+.oa-tight { width: 36px; padding-inline: 0; text-align: center; }
+#templates th.oa-tight { width: 40px; }
+.oa-count { display: inline-flex; align-items: center; gap: var(--spacing-xs); }
 a.rmx-btn { text-decoration: none; }
-.rmx-field__box .tn-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); }
+/* dialogs */
+.oa-dialog { width: 440px; max-width: calc(100vw - 32px); display: flex; flex-direction: column; }
+.oa-dialog--wide { width: 968px; }
+.oa-dialog--step { width: 743px; }
+.oa-dialog .rmx-overlay__header { flex: none; justify-content: space-between; }
+.oa-dialog .rmx-overlay__footer { flex: none; gap: var(--spacing-xs); }
+.oa-hicons { display: flex; align-items: center; gap: var(--spacing-xs); color: var(--icon-primary); }
+.oa-hicons a, .oa-hicons button { display: inline-flex; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+.rmx-overlay:has(> .oa-dialog).is-open { overflow: hidden; }
+.rmx-overlay.is-open > .oa-dialog { max-height: calc(100vh - 96px); }
+.rmx-check[data-checked="false"] .rmx-check__box > svg { visibility: hidden; }
+.oa-body { flex: 1; display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--container-primary); min-height: 0; overflow: auto; }
+.oa-body .rmx-field { width: 100%; }
+.oa-body .rmx-field__label { color: var(--text-primary); }
+.oa-body .rmx-field__box > input { color: var(--text-secondary); }
+.oa-info { display: inline-flex; align-items: center; gap: var(--spacing-xs); }
+.oa-info .rmx-icon { color: var(--icon-primary); }
+.oa-props { display: flex; align-items: flex-end; gap: var(--spacing-xs); }
+.oa-props > .oa-grow { flex: 1; min-width: 0; }
+.oa-row { display: flex; gap: var(--spacing-md); align-items: flex-end; }
+.oa-row > .oa-grow { flex: 1; min-width: 0; }
+.oa-row > .oa-fixed { flex: none; width: 248px; }
+.oa-row--20 { gap: 20px; }
+.oa-checks { display: flex; align-items: center; gap: var(--spacing-md); }
+.oa-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); }
+.oa-scrim { position: fixed; inset: 0; z-index: 960; background: rgba(0, 0, 0, .32); }
+.oa-scrim[hidden] { display: none; }
+#oa-step-dialog.is-open { z-index: 970; }
+#oa-save-new[hidden] { display: none; }
+.oa-invalid { border-color: var(--border-error) !important; }
 button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: pointer; }
 .rmx-field__box > .rmx-icon:last-child:not(:first-child) { margin-left: auto; }
-.tn-register td:last-child .rmx-icon { color: var(--icon-primary); }
+/* Onboarding Template dialog sections */
+.oa-sec { border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-primary); }
+.oa-sec__head { display: flex; align-items: center; justify-content: space-between; min-height: 36px; padding: 0 var(--spacing-xs); border-bottom: 2px solid var(--container-secondary-dark); font: var(--type-paragraph-s-semibold); color: var(--text-secondary); }
+.oa-sec__body { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); }
+.oa-sec__body--list { background: var(--container-tertiary); gap: var(--spacing-xs); }
+.oa-steps { display: flex; flex-direction: column; gap: var(--spacing-xs); }
+.oa-step { display: flex; align-items: center; gap: var(--spacing-md); min-height: 44px; padding: 0 var(--spacing-xs) 0 var(--spacing-xs); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-primary); }
+.oa-steps { position: relative; }
+.oa-step { position: relative; cursor: grab; }
+.oa-step.is-lifted { z-index: 5; cursor: grabbing; transform: translateY(var(--oa-dy, 0px)) scale(1.02); box-shadow: 0 8px 18px rgba(0, 0, 0, .2); animation: oa-lift .16s cubic-bezier(.2, .8, .2, 1); }
+@keyframes oa-lift { from { transform: translateY(var(--oa-dy, 0px)) scale(1); box-shadow: 0 0 0 rgba(0, 0, 0, 0); } to { transform: translateY(var(--oa-dy, 0px)) scale(1.02); box-shadow: 0 8px 18px rgba(0, 0, 0, .2); } }
+.oa-handle { touch-action: none; }
+.oa-handle:focus-visible { outline: 2px solid var(--border-secondary); outline-offset: 2px; border-radius: var(--radius-sm); }
+.oa-reordering, .oa-reordering * { user-select: none; cursor: grabbing !important; }
+.oa-step__name { flex: none; font: var(--type-paragraph-s-semibold); color: var(--text-secondary); }
+.oa-step__sum { flex: 1; min-width: 0; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: var(--type-paragraph-s-regular); color: var(--text-primary); }
+.oa-step__tools { display: flex; align-items: center; gap: var(--spacing-xs); color: var(--icon-primary); }
+.oa-ico { display: inline-flex; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+.oa-handle { cursor: grab; }
+.oa-empty { margin: 0; padding: var(--spacing-xs); font: var(--type-paragraph-s-italic); color: var(--text-disabled); }
+#oa-add-step { height: 24px; }
+/* Add Step dialog */
+.oa-step-top { display: flex; gap: var(--spacing-md); }
+.oa-step-top > * { flex: 1; min-width: 0; }
+#oa-files { margin: 0; border: 1px solid var(--border-primary); border-radius: var(--radius-sm); overflow: hidden; }
+#oa-files .fm-split { height: 326px; grid-template-columns: 256px minmax(0, 1fr); }
+#oa-files .rmx-sidebar { width: auto; min-width: 0; max-width: none; border-right: 1px solid var(--border-primary); }
+#oa-files .rmx-sidebar__header { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 0; flex: none; height: 36px; padding: 0 var(--spacing-xs); border-bottom: 0; }
+#oa-files .rmx-sidebar__header .rmx-btn { height: 24px; align-self: center; }
+#oa-files .rmx-sidebar-item { font: var(--type-paragraph-s-regular); }
+#oa-files .fm-editor { background: var(--background-ui-primary); }
+.wt-info { display: inline-flex; align-items: center; gap: var(--spacing-xs); }
+.wt-info .rmx-icon { color: var(--icon-primary); }
+.wt-textbox { min-height: 80px; align-items: flex-start; }
+.wt-textarea { all: unset; flex: 1; width: 100%; min-height: 64px; color: var(--text-secondary); font: var(--type-label-m-regular); }
+.wt-blue { color: var(--icon-primary); }
+.fm-heading { font: var(--type-paragraph-s-semibold); color: var(--text-primary); }
+#oa-files[hidden], #oa-addl[hidden] { display: none; }
+@media (max-width: 767px) { .oa-row, .oa-step-top { flex-direction: column; align-items: stretch; } .oa-row > .oa-fixed { width: auto; } .oa-dialog--wide { width: calc(100vw - 32px); } }
 </style>
 <body class="rmx">
 <!-- RMX_ICONS:START - injected from assets/icons.svg, regenerated by check.mjs --fix -->
@@ -127,9 +181,6 @@ button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: po
 <symbol id="drag-indicator" viewBox="0 0 20 20" fill="currentColor"><path d="M0.283125 9.475H19.7081V10.5581H0.283125V9.475Z"/><path d="M10.6581 6.15812V3.04125L12.3331 4.71625C12.4081 4.78312 12.5081 4.82437 12.6081 4.81625C12.7081 4.81625 12.8081 4.77437 12.8831 4.70812C12.9581 4.64187 13.0081 4.54125 13.0081 4.43312C13.0081 4.33312 12.9581 4.23312 12.8913 4.16625L10.3331 1.60812C10.3 1.56625 10.25 1.54125 10.2081 1.51625C10.1163 1.48312 10.0163 1.48312 9.925 1.51625C9.875 1.54125 9.83313 1.56625 9.8 1.60812L7.24187 4.15812C7.16687 4.225 7.13375 4.325 7.13375 4.425C7.14187 4.525 7.17562 4.625 7.24187 4.70812C7.325 4.775 7.425 4.81625 7.525 4.81625C7.625 4.82437 7.725 4.78312 7.79187 4.70812L9.475 3.025V6.15812H0.283125V7.33312H19.7081V6.15812H10.6581Z"/><path d="M19.7169 12.7087H0.28375V13.7919H9.48375V17.025L7.80063 15.3419C7.73375 15.2669 7.63375 15.225 7.53375 15.2337C7.43375 15.2425 7.33375 15.2756 7.25062 15.3419C7.18375 15.425 7.1425 15.5169 7.1425 15.625C7.13438 15.725 7.17562 15.825 7.25062 15.8919L9.80062 18.4419C9.83375 18.4837 9.88375 18.5087 9.92562 18.5337C10.0175 18.5669 10.1175 18.5669 10.2087 18.5337C10.2587 18.5087 10.3006 18.4837 10.3337 18.4419L12.8919 15.8837C12.9669 15.8169 13.0087 15.7169 13.0169 15.6169C13.0169 15.5087 12.975 15.4088 12.8919 15.3419C12.8169 15.2669 12.7169 15.2337 12.6169 15.2337C12.5169 15.2256 12.4169 15.2588 12.3419 15.3338L10.6669 17.0088V13.8006H19.7169V12.7087Z"/></symbol>
 <symbol id="play-arrow" viewBox="0 0 20 20" fill="currentColor"><path d="M5.41667 4.16667V15.8333L14.5833 10L5.41667 4.16667Z"/></symbol>
 <symbol id="view-column" viewBox="0 0 24 24" fill="currentColor"><path d="M14.67 6V18C14.67 18.55 14.22 19 13.67 19H10.34C9.79 19 9.34 18.55 9.34 18V6C9.34 5.45 9.79 5 10.34 5H13.67C14.22 5 14.67 5.45 14.67 6ZM16.67 19H20C20.55 19 21 18.55 21 18V6C21 5.45 20.55 5 20 5H16.67C16.12 5 15.67 5.45 15.67 6V18C15.67 18.55 16.11 19 16.67 19ZM8.33 18V6C8.33 5.45 7.88 5 7.33 5H4C3.45 5 3 5.45 3 6V18C3 18.55 3.45 19 4 19H7.33C7.89 19 8.33 18.55 8.33 18Z"/></symbol>
-<symbol id="units" viewBox="0 0 20 20" fill="currentColor"><path d="M7.05 0V10.1219H11.9219V20H20V0H7.05ZM12.4781 9C12.4781 9.5175 12.0581 9.9375 11.5406 9.9375H10.16C9.64937 9.92813 9.23812 9.5125 9.23812 9V7.60938C9.23812 7.09688 9.64875 6.68125 10.1587 6.67188H11.5631C12.0806 6.67188 12.5006 7.09188 12.5006 7.60938L12.4781 9ZM12.4781 4.35313C12.4781 4.87063 12.0581 5.29063 11.5406 5.29063H10.16C9.64937 5.28125 9.23812 4.86563 9.23812 4.35313V2.95875C9.23812 2.44625 9.64875 2.03063 10.1587 2.02125H11.5631C12.0806 2.02125 12.5006 2.44125 12.5006 2.95875L12.4781 4.35313ZM17.7219 13.6469C17.7219 14.1644 17.3019 14.5844 16.7844 14.5844H15.4037C14.8862 14.5844 14.4662 14.1644 14.4662 13.6469V12.2563C14.4662 11.7388 14.8862 11.3188 15.4037 11.3188H16.7969C17.3144 11.3188 17.7344 11.7388 17.7344 12.2563L17.7219 13.6469ZM17.7219 9C17.7219 9.5175 17.3019 9.9375 16.7844 9.9375H15.4037C14.8862 9.9375 14.4662 9.5175 14.4662 9V7.60938C14.4662 7.09188 14.8862 6.67188 15.4037 6.67188H16.7969C17.3144 6.67188 17.7344 7.09188 17.7344 7.60938L17.7219 9ZM17.7219 4.35313C17.7219 4.87063 17.3019 5.29063 16.7844 5.29063H15.4037C14.8862 5.29063 14.4662 4.87063 14.4662 4.35313V2.95875C14.4662 2.44125 14.8862 2.02125 15.4037 2.02125H16.7969C17.3144 2.02125 17.7344 2.44125 17.7344 2.95875L17.7219 4.35313ZM0 9.18437V20H12.8625V9.18437H0ZM5.41812 16.9681C5.41812 17.4462 5.03062 17.8337 4.5525 17.8337H3.24937C2.7725 17.8337 2.38687 17.4481 2.38687 16.9712V15.6619C2.38687 15.185 2.7725 14.7975 3.24937 14.7962H4.55625C5.03438 14.7981 5.42188 15.1863 5.42188 15.6656L5.41812 16.9681ZM5.41812 12.6406C5.41625 13.1175 5.03 13.5031 4.5525 13.5031H3.24937C2.7725 13.5031 2.38687 13.1175 2.38687 12.6406V11.3344C2.38687 10.8575 2.7725 10.47 3.24937 10.4688H4.55625C5.03438 10.4706 5.42188 10.8588 5.42188 11.3381L5.41812 12.6406ZM10.3125 16.9681C10.3125 17.4462 9.925 17.8337 9.44687 17.8337H8.1525C7.6775 17.8319 7.29312 17.4462 7.29312 16.9712V15.6619C7.29312 15.1862 7.6775 14.8 8.1525 14.7962H9.45938C9.9325 14.8056 10.3125 15.1906 10.3125 15.6644V16.9681ZM10.3125 12.6406C10.3106 13.1175 9.92437 13.5031 9.44687 13.5031H8.1525C7.6775 13.5012 7.29312 13.1156 7.29312 12.6406V11.3344C7.29312 10.8588 7.6775 10.4725 8.1525 10.4688H9.45938C9.9325 10.4781 10.3125 10.8631 10.3125 11.3369V12.6406Z"/></symbol>
-<symbol id="library-add" viewBox="0 0 20 20" fill="currentColor"><path d="M3.33333 5H1.66667V16.6667C1.66667 17.5833 2.41667 18.3333 3.33333 18.3333H15V16.6667H3.33333V5ZM16.6667 1.66667H6.66667C5.75 1.66667 5 2.41667 5 3.33333V13.3333C5 14.25 5.75 15 6.66667 15H16.6667C17.5833 15 18.3333 14.25 18.3333 13.3333V3.33333C18.3333 2.41667 17.5833 1.66667 16.6667 1.66667ZM16.6667 13.3333H6.66667V3.33333H16.6667V13.3333Z"/></symbol>
-<symbol id="library-add-filled" viewBox="0 0 20 20" fill="currentColor"><path d="M3.33333 5H1.66667V16.6667C1.66667 17.5833 2.41667 18.3333 3.33333 18.3333H15V16.6667H3.33333V5ZM16.6667 1.66667H6.66667C5.75 1.66667 5 2.41667 5 3.33333V13.3333C5 14.25 5.75 15 6.66667 15H16.6667C17.5833 15 18.3333 14.25 18.3333 13.3333V3.33333C18.3333 2.41667 17.5833 1.66667 16.6667 1.66667ZM15.8333 9.16667H12.5V12.5H10.8333V9.16667H7.5V7.5H10.8333V4.16667H12.5V7.5H15.8333V9.16667Z"/></symbol>
 </svg>
 <!-- RMX_LOCAL_ICONS:END -->
 
@@ -167,10 +218,9 @@ button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: po
   </div>
 </header>
 
-<!-- Context Bar — Tenants register (Figma RMX Pages 1979:27399). -->
 <div class="rmx-contextbar" data-rmx-component="Context Bar">
   <div class="rmx-contextbar__leading">
-    <span class="rmx-contextbar__title">Tenants</span>
+    <span class="rmx-contextbar__title">Onboarding Templates</span>
   </div>
   <div class="rmx-contextbar__trailing">
     <svg class="rmx-icon" data-rmx-todo="Print is not built in this prototype"><use href="#print"></use></svg>
@@ -179,391 +229,54 @@ button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: po
   </div>
 </div>
 
-<main class="rmx-page tn-ground tn-page">
-  <div class="tn-filterrow">
-    <div class="tn-filterrow__lead">
-      <button type="button" class="rmx-btn rmx-btn--primary tn-bulk" data-rmx-todo="Bulk Actions is not built in this prototype"><span>Bulk Actions</span><svg class="rmx-icon"><use href="#arrow-drop-down"></use></svg></button>
-      <div class="tn-w248 tn-selected"><div class="rmx-field rmx-field--filter" data-rmx-component="Input Field">
+<main class="rmx-page oa-ground oa-page">
+  <div class="oa-filterrow">
+    <div class="oa-filterrow__lead">
+      <div class="oa-search"><div class="rmx-field rmx-field--filter" data-rmx-component="Input Field">
         <span class="rmx-field__label">Search</span>
-        <div class="rmx-field__box"><svg class="rmx-icon"><use href="#search"></use></svg><input type="text" placeholder="Find a tenant" data-rmx-filter="#tenants"><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></div>
+        <div class="rmx-field__box"><svg class="rmx-icon"><use href="#search"></use></svg><input type="text" placeholder="Find a templates" data-rmx-filter="#templates"></div>
       </div></div>
-      <div class="tn-w248 tn-selected"><div class="rmx-field rmx-field--filter" data-rmx-component="Input Field">
-        <span class="rmx-field__label">Saved Filters</span>
-        <div class="tn-saved"><button type="button" class="rmx-field__box" data-rmx-todo="Saved Filters are not built in this prototype"><span class="tn-value">&lt; No Filter &gt;</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><button type="button" class="tn-saved__tune" aria-label="Filter settings" data-rmx-todo="Filter settings are not built in this prototype"><svg class="rmx-icon"><use href="#tune"></use></svg></button></div>
-      </div></div>
-      <div class="tn-w248 tn-selected"><div class="rmx-field rmx-field--filter" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Status</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="tn-value" data-rmx-value>All selected</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="All selected">All selected</button><button type="button" data-value="Current">Current</button><button type="button" data-value="Past">Past</button></div></div></div>
-      <div class="tn-check"><label class="rmx-check rmx-check--blue" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Exclude Subaccounts</span></label></div>
+      <label class="rmx-check rmx-check--blue" data-checked="false" data-rmx-component="Checkbox" style="margin-bottom:var(--spacing-xs)"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Show Inactive</span></label>
     </div>
-    <div class="tn-filterrow__trail">
-      <button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Add Tenant is not built in this prototype"><svg class="rmx-icon"><use href="#add-circle"></use></svg><span>Add Tenant</span></button>
-      <button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Add Guest is not built in this prototype"><svg class="rmx-icon"><use href="#add-circle"></use></svg><span>Add Guest</span></button>
-    </div>
+    <a class="rmx-btn rmx-btn--primary" href="add-onboarding-template.html" data-rmx-component="Button"><svg class="rmx-icon"><use href="#add-circle"></use></svg><span>Add Workflow Template</span></a>
   </div>
-
-  <div class="tn-box">
-    <table class="rmx-register tn-register" data-rmx-rowlinks id="tenants">
-      <colgroup><col style="width:32px"><col><col><col><col style="width:128px"><col style="width:128px"><col style="width:128px"><col style="width:40px"></colgroup>
+  <div class="oa-box">
+    <table class="rmx-register" data-rmx-rowlinks id="templates">
+      <colgroup><col style="width:19%"><col style="width:17%"><col style="width:19%"><col style="width:19%"><col style="width:19%"><col style="width:68px"><col style="width:40px"></colgroup>
       <thead><tr>
-        <th></th><th data-sort>Name</th><th data-sort>Property</th><th data-sort>Unit</th><th data-sort>Lease Start</th><th data-sort>Lease End</th><th data-sort>Status</th>
-        <th><svg class="rmx-icon rmx-icon--24"><use href="#view-column"></use></svg></th>
+        <th data-sort>Name</th><th data-sort>Description</th><th data-sort>Properties</th><th data-sort>Created By</th><th data-sort>Updated By</th><th class="oa-center">Active</th>
+        <th class="oa-tight"><svg class="rmx-icon rmx-icon--24"><use href="#view-column"></use></svg></th>
       </tr></thead>
       <tbody>
-        <tr data-rmx-row data-href="prospect.html">
-          <td><span class="rmx-colorblock" style="background:var(--icon-attention)"></span></td>
-          <td><span><a href="prospect.html">Charlie Apegian</a></span></td>
-          <td>Riverview Apartments</td>
-          <td><span>120B</span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        <tr data-rmx-row>
+          <td><a href="onboarding-template.html?t=Default">Default</a></td><td></td>
+          <td><span class="oa-count">1127 Blackwell<span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Property list is not built in this prototype">+7<svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span></td>
+          <td>wcarey</td><td>panderson</td><td class="oa-center"><svg class="rmx-icon oa-success"><use href="#check-circle-filled"></use></svg></td>
+          <td class="oa-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon oa-blue"><use href="#more-vert"></use></svg></button></td>
         </tr>
         <tr data-rmx-row>
-          <td></td>
-          <td><span>Kiley Donahue</span></td>
-          <td>Clearcreek Condominiums</td>
-          <td><span>C</span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+          <td><a href="onboarding-template.html?t=Residential">Residential</a></td><td></td>
+          <td><span class="oa-count">Riverview Apartments<span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Property list is not built in this prototype">+3<svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span></td>
+          <td>wcarey</td><td>panderson</td><td class="oa-center"><svg class="rmx-icon oa-success"><use href="#check-circle-filled"></use></svg></td>
+          <td class="oa-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon oa-blue"><use href="#more-vert"></use></svg></button></td>
         </tr>
         <tr data-rmx-row>
-          <td></td>
-          <td><span>Jaxon Frami</span></td>
-          <td>Riverview Apartments</td>
-          <td><span>1B</span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Solon Crona</span></td>
-          <td>Buckeye Hall</td>
-          <td><span>4</span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Emelia Toy</span></td>
-          <td>Riverview Apartments</td>
-          <td><span>220D<span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Unit list is not built in this prototype">+1<svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Arlo Swift<b>Notice</b></span></td>
-          <td>Flagstone Manufactured Housing</td>
-          <td><span>Lot A</span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Kenton Emard</span></td>
-          <td>Tri-County Mall</td>
-          <td><span>8</span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td><span class="rmx-colorblock" style="background:var(--icon-error)"></span></td>
-          <td><span>Eli Beer</span></td>
-          <td>Clearcreek Condominiums</td>
-          <td><span>A</span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Shea Trantow</span></td>
-          <td>Riverview Apartments</td>
-          <td><span>080C</span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Doug Pfeffer</span></td>
-          <td>Buckeye Hall</td>
-          <td><span>6</span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Tod Corkery</span></td>
-          <td>Riverview Apartments</td>
-          <td><span>111B<span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Unit list is not built in this prototype">+1<svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2026</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Kobe Bayer</span></td>
-          <td>Flagstone Manufactured Housing</td>
-          <td><span>Lot G</span></td>
-          <td>01/01/2026</td>
-          <td>12/31/2025</td>
-          <td><span><i></i>Current</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Jayson Ankunding</span></td>
-          <td>Tri-County Mall</td>
-          <td><span>3</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td><span class="rmx-colorblock" style="background:var(--icon-primary)"></span></td>
-          <td><span>Gussie Jast</span></td>
-          <td>Clearcreek Condominiums</td>
-          <td><span>F</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td><span class="rmx-colorblock" style="background:var(--icon-success)"></span></td>
-          <td><span>Crystel Crist</span></td>
-          <td>Riverview Apartments</td>
-          <td><span>100E</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Eusebio Crona</span></td>
-          <td>Buckeye Hall</td>
-          <td><span>7</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Elmer Emmerich</span></td>
-          <td>Riverview Apartments</td>
-          <td><span>100E<span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Unit list is not built in this prototype">+2<svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Jalon Franecki</span></td>
-          <td>Flagstone Manufactured Housing</td>
-          <td><span>Lot F</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Coty Quitzon</span></td>
-          <td>Tri-County Mall</td>
-          <td><span>2</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Jalon Franecki</span></td>
-          <td>Clearcreek Condominiums</td>
-          <td><span>G</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Liam Johnson</span></td>
-          <td>Riverview Apartments</td>
-          <td><span>101A<span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Unit list is not built in this prototype">+2<svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Emma Thompson</span></td>
-          <td>Clearcreek Condominiums</td>
-          <td><span>102B</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Noah Williams</span></td>
-          <td>Buckeye Hall</td>
-          <td><span>103C</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Olivia Martinez</span></td>
-          <td>Riverview Apartments</td>
-          <td><span>104A</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Lucas Brown</span></td>
-          <td>Tri-County Mall</td>
-          <td><span>12</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Ava Davis</span></td>
-          <td>Flagstone Manufactured Housing</td>
-          <td><span>Lot B</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Mason Wilson</span></td>
-          <td>Buckeye Hall</td>
-          <td><span>9</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Sophia Moore</span></td>
-          <td>Clearcreek Condominiums</td>
-          <td><span>105D</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Ethan Taylor</span></td>
-          <td>Riverview Apartments</td>
-          <td><span>106B</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Isabella Anderson</span></td>
-          <td>Tri-County Mall</td>
-          <td><span>14</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Logan Thomas</span></td>
-          <td>Buckeye Hall</td>
-          <td><span>11</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Mia Jackson</span></td>
-          <td>Clearcreek Condominiums</td>
-          <td><span>H</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>James White</span></td>
-          <td>Riverview Apartments</td>
-          <td><span>107C</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td></td>
-          <td><span>Harper Lewis</span></td>
-          <td>Buckeye Hall</td>
-          <td><span>15</span></td>
-          <td>06/01/2025</td>
-          <td>12/31/2025</td>
-          <td><span><i data-past></i>Past</span></td>
-          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+          <td><a href="onboarding-template.html?t=Commercial">Commercial</a></td><td></td>
+          <td><span class="oa-count">Black Bear Condominiums<span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Property list is not built in this prototype">+9<svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span></td>
+          <td>wcarey</td><td>panderson</td><td class="oa-center"><svg class="rmx-icon oa-success"><use href="#check-circle-filled"></use></svg></td>
+          <td class="oa-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon oa-blue"><use href="#more-vert"></use></svg></button></td>
         </tr>
       </tbody>
     </table>
   </div>
-  <p class="rmx-register__totals"><span data-rmx-count="#tenants">34</span> of 112 Tenants</p>
+  <p class="rmx-register__totals"><span data-rmx-count="#templates">3</span> of 3 Onboarding Templates</p>
 </main>
-
+<div class="rmx-overlay" id="dialog" hidden role="dialog" aria-modal="true" aria-label="Onboarding Template" data-rmx-component="Dialog Overlay"><div class="oa-dialog oa-dialog--wide"><div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Onboarding Template</span><span class="oa-hicons"><svg class="rmx-icon rmx-icon--24" data-rmx-todo="Help is not built in this prototype"><use href="#help"></use></svg><a href="onboarding-templates.html" aria-label="Close"><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></a></span></div><div class="oa-body"><section class="oa-sec"><div class="oa-sec__head">General</div><div class="oa-sec__body"><div class="oa-row"><div class="oa-fixed"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Template Name*</span><div class="rmx-field__box"><input type="text" id="oa-t-name" aria-label="Template Name"></div></div></div><div class="oa-grow"><div class="oa-props"><div class="oa-grow"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Assign to Property</span><div class="rmx-field__box"><input type="text" id="oa-t-prop" aria-label="Assign to Property"></div></div></div><a class="rmx-btn rmx-btn--primary" href="#" data-rmx-component="Button" data-rmx-todo="Property selection is not built in this prototype">Select Properties</a></div></div></div><div class="oa-row oa-row--20"><div class="oa-fixed"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Trigger By</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>Lease Signed</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Lease Signed">Lease Signed</button><button type="button" data-value="Application Approved">Application Approved</button><button type="button" data-value="Move-In Scheduled">Move-In Scheduled</button></div></div></div><div class="oa-fixed"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Due Date</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>7 days</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="3 days">3 days</button><button type="button" data-value="7 days">7 days</button><button type="button" data-value="14 days">14 days</button><button type="button" data-value="30 days">30 days</button></div></div></div><div class="oa-grow"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Description</span><div class="rmx-field__box"><input type="text" id="oa-t-desc" aria-label="Description"></div></div></div></div><div class="oa-checks"><label class="rmx-check" id="oa-t-active" data-checked="true" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Active</span></label><label class="rmx-check" id="oa-t-order" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Steps must be completed in order</span></label></div></div></section><section class="oa-sec"><div class="oa-sec__head"><span>Onboarding Setup</span><a class="rmx-btn rmx-btn--text" href="#" id="oa-add-step" data-rmx-component="Button"><svg class="rmx-icon"><use href="#add"></use></svg><span class="rmx-btn__label">Add Step</span></a></div><div class="oa-sec__body oa-sec__body--list"><div class="oa-steps" id="oa-steps"></div></div></section><section class="oa-sec"><div class="oa-sec__head">Onboarding Completion</div><div class="oa-sec__body"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Message</span><div class="rmx-field__box"><input type="text" id="oa-t-msg" value="Your property management will be in touch soon for next steps!" aria-label="Message"></div></div></div></section></div><div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="oa-t-save" data-rmx-component="Button">Save</button><a class="rmx-btn rmx-btn--secondary" href="onboarding-templates.html" data-rmx-component="Button">Cancel</a></div></div></div>
+<div class="rmx-overlay" id="oa-step-dialog" hidden role="dialog" aria-modal="true" aria-label="Add Step" data-rmx-component="Dialog Overlay"><div class="oa-dialog oa-dialog--step"><div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular" id="oa-step-title">Add Step</span><span class="oa-hicons"><button type="button" data-rmx-close aria-label="Close"><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></button></span></div><div class="oa-body"><div class="oa-step-top"><div class="rmx-field" id="oa-action" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Action*</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value rmx-placeholder" data-rmx-value></span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Signable Document">Signable Document</button><button type="button" data-value="File Attachment">File Attachment</button><button type="button" data-value="Renters Insurance Selection">Renters Insurance Selection</button><button type="button" data-value="Make a Payment">Make a Payment</button><button type="button" data-value="Setup Payment Method">Setup Payment Method</button><button type="button" data-value="Form">Form</button></div></div><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Step Name*</span><div class="rmx-field__box"><input type="text" id="oa-s-name" aria-label="Step Name"></div></div></div><label class="rmx-check" id="oa-s-req" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Required</span></label><div id="oa-addl"></div><div id="oa-files" hidden><div id="files-root" data-title="Files" data-add-label="Add File" data-untitled="Name"></div></div></div><div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="oa-save-new" data-rmx-component="Button">Save &amp; New</button><button type="button" class="rmx-btn rmx-btn--primary" id="oa-save" data-rmx-component="Button">Save</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div></div></div>
 <script src="../assets/app.js"></script>
 <script src="../assets/megamenu.js"></script>
-<script>
-/* A tenant row with a detail page opens it from anywhere on the row (not from the unit pill or the row menu). */
-document.querySelectorAll('#tenants tr[data-href]').forEach(function (tr) {
-  tr.addEventListener('click', function (e) {
-    if (e.target.closest('button, .rmx-pill, a')) return;
-    window.location.href = tr.getAttribute('data-href');
-  });
-});
-</script>
+<script src="../assets/files-mock.js"></script>
+<script src="../assets/onboarding-admin.js"></script>
+<script>RMX.openOverlay("dialog");</script>
 </body>
 </html>

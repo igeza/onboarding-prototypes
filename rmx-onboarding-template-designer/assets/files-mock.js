@@ -22,7 +22,7 @@
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => [].slice.call((r || document).querySelectorAll(s));
   const find = id => files.find(f => f.id === id);
-  const label = f => f.name ? esc(f.name) : '<span class="rmx-placeholder">Untitled file</span>';
+  const label = f => f.name ? esc(f.name) : (root.dataset.untitled ? esc(root.dataset.untitled) : '<span class="rmx-placeholder">Untitled file</span>');
 
   const trash = () => '<button type="button" class="fm-del wt-blue" data-fm-delete aria-label="Delete file" title="Delete"><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button>';
   const handle = () => '<span class="wt-blue wt-handle" data-fm-handle aria-label="Drag to reorder" title="Drag to reorder"><svg class="rmx-icon"><use href="#drag-indicator"></use></svg></span>';
@@ -44,7 +44,9 @@
   function render() {
     const cur = find(openId) || files[0];
     root.innerHTML = '<div class="fm-split"><aside class="rmx-sidebar" data-rmx-component="Sidebar List">' +
-      '<div class="rmx-sidebar__header"><a class="rmx-btn rmx-btn--text" href="#" data-fm-add data-rmx-component="Button"><svg class="rmx-icon"><use href="#add"></use></svg><span class="rmx-btn__label">Add</span></a></div>' +
+      '<div class="rmx-sidebar__header">' + (root.dataset.title ? '<span class="fm-heading">' + esc(root.dataset.title) + '</span>' : '') +
+      '<a class="rmx-btn rmx-btn--text" href="#" data-fm-add data-rmx-component="Button">' + (root.dataset.title ? '' : '<svg class="rmx-icon"><use href="#add"></use></svg>') +
+      '<span class="rmx-btn__label">' + esc(root.dataset.addLabel || 'Add') + '</span></a></div>' +
       '<div class="rmx-sidebar__list fm-list">' + files.map(f => item(f, cur && f.id === cur.id)).join('') + '</div></aside>' +
       '<div class="fm-editor" data-id="' + (cur ? cur.id : 0) + '">' + (cur ? editor(cur) : '<p class="rmx-text fm-empty">No files yet. Use Add to get started.</p>') + '</div></div>';
     if (window.RMX && RMX.dropdowns) RMX.dropdowns();
@@ -109,6 +111,17 @@
   if (save) save.addEventListener('click', () => {
     try { sessionStorage.setItem('rmx-files', JSON.stringify(files.filter(f => f.name.trim()).map(f => ({ name: f.name.trim(), help: f.help, map: f.map, multi: f.multi })))); } catch (e) {}
   });
+
+  /* The Administration "Add Step" dialog drives this same editor: it loads a step's files and reads them back. */
+  window.RMXFiles = {
+    set(list) {
+      files.length = 0;
+      (list || []).forEach(x => files.push(file(x.name, x.help, x.map, x.multi)));
+      if (!files.length) files.push(file());
+      openId = files[0].id; render();
+    },
+    get() { return files.filter(f => f.name.trim()).map(f => ({ name: f.name.trim(), help: f.help, map: f.map, multi: f.multi })); }
+  };
 
   render();
 })();

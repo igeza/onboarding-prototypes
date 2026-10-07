@@ -1,6 +1,10 @@
 /* ============================================================
    RMX type scale - HARVESTED FROM RMX FOUNDATIONS, DO NOT EDIT BY HAND
    ------------------------------------------------------------
+   Letter spacing is 0 on every RMX web style EXCEPT Web/Label/S/Medium (the
+   register column header), which is 9% — authored as a percentage, so it is
+   written 0.09em here and never approximated in px.
+
    Source of truth: data/text-styles.json. Every style below is a real
    named text style. audit.mjs fails any text that is not one of them.
    ============================================================ */
@@ -41,7 +45,13 @@ html { font-synthesis-weight: none; font-synthesis-style: none; }
   --type-label-s-semibold: 600 12px/normal Roboto, sans-serif;   /* Web/Label/S/SemiBold - Used sparingly */
   --type-label-s-regular: 400 12px/normal Roboto, sans-serif;   /* Web/Label/S/Regular */
   --type-label-s-italic: italic 400 12px/normal Roboto, sans-serif;   /* Web/Label/S/Italic - Used as placeholder text */
-  --type-label-s-medium: 500 12.600000381469727px/normal Roboto, sans-serif;   /* Web/Label/S/Medium - This style is used specifically for the Register Headers. */  /* + letter-spacing: 1.134px */
+  --type-label-s-medium: 500 12.6px/normal Roboto, sans-serif;   /* Web/Label/S/Medium - Register headers ONLY. */  /* + letter-spacing: 0.09em */
+  /* [A] Five further Foundations styles, from the RMXDS artifact 2.8.1. */
+  --type-display-m-semibold: 700 48px/56px Roboto, sans-serif;   /* Web/Display/M/SemiBold - named SemiBold, authored in Bold 700 */
+  --type-display-m-bold: 700 48px/56px Roboto, sans-serif;   /* Web/Display/M/Bold */
+  --type-display-s-bold: 700 40px/48px Roboto, sans-serif;   /* Web/Display/S/Bold */
+  --type-heading-xl-regular: 400 32px/40px Roboto, sans-serif;   /* Web/Heading/XL/Regular */
+  --type-heading-s-medium: 500 18px/24px Roboto, sans-serif;   /* Web/Heading/S/Medium */
 }
 
 /* One class per style. Prefer these over ad-hoc font declarations. */
@@ -75,4 +85,9 @@ html { font-synthesis-weight: none; font-synthesis-style: none; }
 .rmx-type-label-s-semibold { font: var(--type-label-s-semibold); }
 .rmx-type-label-s-regular { font: var(--type-label-s-regular); }
 .rmx-type-label-s-italic { font: var(--type-label-s-italic); }
-.rmx-type-label-s-medium { font: var(--type-label-s-medium); letter-spacing: 1.134px; }
+.rmx-type-label-s-medium { font: var(--type-label-s-medium); letter-spacing: 0.09em; }
+.rmx-type-display-m-semibold { font: var(--type-display-m-semibold); }
+.rmx-type-display-m-bold { font: var(--type-display-m-bold); }
+.rmx-type-display-s-bold { font: var(--type-display-s-bold); }
+.rmx-type-heading-xl-regular { font: var(--type-heading-xl-regular); }
+.rmx-type-heading-s-medium { font: var(--type-heading-s-medium); }

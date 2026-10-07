@@ -285,3 +285,6 @@
   .megamenu__content { overflow-x: auto; padding: 16px 12px; }
   .megamenu__footer { padding: 10px 12px; }
 }
+
+/* The Administration tab is a link in this prototype. */
+a.megamenu__tab { text-decoration: none; color: inherit; }

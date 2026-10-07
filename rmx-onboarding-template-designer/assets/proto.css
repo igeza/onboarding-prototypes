@@ -93,9 +93,17 @@
 }
 
 /* ---- toasts ---- */
+/* Toasts sit centred at the TOP (Emma, 2026-09-10).
+
+   The offset clears the two fixed bars — app bar 48 + context bar 40 = 88,
+   plus 16 — so a toast never covers navigation. A screen without a context
+   bar can override --rmx-toast-top; that is the one number here worth
+   adjusting, and it is a variable so nobody has to edit this rule. */
+:root { --rmx-toast-top: 104px; }
+
 .rmx-toaststack {
   position: fixed;
-  bottom: 24px;
+  top: var(--rmx-toast-top);
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
@@ -146,7 +154,7 @@
 }
 
 .rmx-index__note {
-  color: var(--text-tertiary);
+  color: var(--text-primary);
   margin: var(--spacing-xxs, 4px) 0 0;
 }
 
@@ -159,3 +167,91 @@
   outline: 2px solid var(--border-secondary);
   outline-offset: 1px;
 }
+
+/* Pill text is --text-link per the library (Pill anatomy, Figma 886:39); the
+   foundation rmx.css still sets --text-secondary. Logged in PROTOTYPE.md. */
+.rmx-pill { color: var(--text-link); }
+
+/* ---------- Prototype components carried over from the old rmx.css ----------
+   Dropdown menu, kebab, drag handle, Sidebar List and the Select Files editor.
+   They were hand-added to rmx.css, which check --fix overwrites, so they live
+   here now. ---------- */
+/* Dropdown Menu (Figma: Dropdown Menu 6165:20109) — white container, 4px radius, soft shadow, no border/padding,
+   36px list items with 8px padding and 14px Regular text in --text-secondary. Used by every dropdown; as wide as its input. Hover #f5f8fa, selected #008dd5 with white text (Figma List Item states). */
+.rmx-menu.rmx-menu--list { width: 100%; min-width: 100%; padding: 0; border: 0; border-radius: var(--radius-sm); box-shadow: 0 3px 6px rgba(0, 0, 0, .15); background: var(--container-primary); }
+.rmx-menu.rmx-menu--list > [data-value] { display: flex; align-items: center; height: 36px; line-height: 20px; padding: var(--spacing-xs); font: 400 14px/20px Roboto, sans-serif; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rmx-menu.rmx-menu--list > [data-value]:hover { background: var(--container-tertiary); }
+.rmx-menu.rmx-menu--list > [data-value][aria-selected="true"] { font-weight: 400; color: var(--text-inverse); background: var(--background-brand-primary); }
+
+/* A register cell that holds a dropdown must not clip its menu. */
+.rmx-register td:has([data-rmx-dropdown]) { overflow: visible; }
+
+/* Multiselect menu: each option carries a Checkbox; the menu stays open while options toggle. */
+[data-rmx-multi] .rmx-menu.rmx-menu--list > [data-value] { gap: var(--spacing-xs); text-align: left; }
+
+/* Search bar on top of a menu: sticky, input-shaped, filters the options. */
+.rmx-menu__search { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: var(--spacing-xs); height: 44px; padding: var(--spacing-xs); background: var(--container-primary); border-bottom: 1px solid var(--border-primary); color: var(--icon-primary); }
+.rmx-menu__search input { flex: 1; min-width: 0; height: 28px; padding: 0 var(--spacing-xs); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--component-input-default); font: 400 14px/20px Roboto, sans-serif; color: var(--text-secondary); outline: 0; }
+.rmx-menu__search input:focus { border-color: var(--border-secondary); }
+.rmx-menu__search input::placeholder { font-style: italic; color: var(--text-disabled); }
+.rmx-menu__empty { padding: var(--spacing-xs); font: italic 400 14px/20px Roboto, sans-serif; color: var(--text-disabled); }
+.rmx-menu.rmx-menu--list > [data-value][hidden], .rmx-menu__empty[hidden] { display: none; }
+
+/* Step register: the Required column is hidden for now (markup kept so it can come back). */
+#steps .wt-col-required, #steps th:nth-child(4), #steps td:nth-child(4) { display: none; }
+
+/* Kebab action menu on a step: opens to the left of the icon. */
+.wt-kebab .rmx-menu.rmx-menu--list { left: auto; right: 0; width: auto; min-width: 140px; }
+/* The kebab icon does not flip when its menu opens (only chevrons do). */
+[data-rmx-dropdown].wt-kebab[data-open="true"] [data-rmx-trigger] .rmx-icon, .wt-kebab [data-rmx-trigger] .rmx-icon { transform: none; transition: none; }
+/* Kebab menu items are action links: blue. */
+.wt-kebab .rmx-menu.rmx-menu--list > [data-value] { color: var(--text-link); }
+
+/* Reorder handle and the row being dragged. */
+.wt-handle { display: inline-flex; cursor: grab; touch-action: none; user-select: none; }
+#steps tbody tr.is-dragging { background: var(--container-tertiary); box-shadow: 0 3px 6px rgba(0, 0, 0, .15); position: relative; z-index: 1; }
+#steps tbody tr.is-dragging .wt-handle { cursor: grabbing; }
+
+/* ---------- Sidebar List (RMX: Sidebar List + Sidebar List Item) ---------- */
+.rmx-sidebar { display: flex; flex-direction: column; width: 264px; min-width: 224px; max-width: 296px; background: var(--container-primary); border-right: 1px solid var(--border-primary); }
+.rmx-sidebar__header { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-sm) var(--spacing-xs); border-bottom: 1px solid var(--border-primary); }
+.rmx-sidebar__header .rmx-btn { align-self: flex-start; }
+.rmx-sidebar__list { display: flex; flex-direction: column; flex: 1; overflow: auto; }
+.rmx-sidebar-item { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-xs); min-height: 36px; padding: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) var(--spacing-xs); border-left: 4px solid transparent; cursor: pointer; }
+.rmx-sidebar-item:hover { background: var(--container-tertiary); }
+.rmx-sidebar-item.is-selected { background: var(--component-row-selected); border-left-color: var(--border-secondary); }
+.rmx-sidebar-item__text { flex: 1; min-width: 0; font: 400 14px/20px Roboto, sans-serif; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rmx-sidebar-item__trailing { display: flex; align-items: center; gap: var(--spacing-xs); }
+.rmx-sidebar-item.is-dragging { background: var(--container-tertiary); box-shadow: 0 3px 6px rgba(0, 0, 0, .15); position: relative; z-index: 2; }
+.rmx-sidebar-item.is-dragging .wt-handle { cursor: grabbing; }
+
+/* ---------- Select Files editor (Figma Dialog Overlay 6245:11269) ---------- */
+.fm-split { display: grid; grid-template-columns: 264px minmax(0, 1fr); height: 326px; }
+.fm-split .rmx-sidebar { min-height: 0; }
+.fm-editor { padding: var(--spacing-md); background: var(--container-tertiary); overflow: auto; min-height: 0; }
+.fm-box { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); }
+.fm-box .rmx-field { width: 100%; }
+.fm-empty { color: var(--text-disabled); font-style: italic; }
+.fm-box .wt-textbox { min-height: 48px; }
+.fm-box .wt-textarea { min-height: 32px; }
+
+/* Spacing measured against Figma Dialog Overlay 6245:11269 */
+.rmx-sidebar__header { padding: 12px 8px; }
+.rmx-sidebar__header .rmx-btn { height: 20px; min-height: 0; padding: 0; }
+.rmx-sidebar-item { min-height: 36px; padding: 8px 8px 8px 8px; }
+.rmx-sidebar-item__text { font: 400 14px/16px Roboto, sans-serif; padding-left: 4px; }
+.fm-del { display: inline-flex; padding: 0; border: 0; background: none; cursor: pointer; color: inherit; }
+.fm-box .rmx-field__label { line-height: 20px; }
+.fm-box .wt-textbox { min-height: 56px; }
+.fm-box .wt-textarea { min-height: 40px; }
+.rmx-sidebar { border-right: 0; box-shadow: inset -1px 0 0 var(--border-primary); }
+.rmx-sidebar__header { box-sizing: border-box; height: 44px; }
+.fm-box .rmx-field__box { height: 32px; }
+
+/* "N Selected" plus pencil in the File Attachment cell. */
+.wt-files { display: inline-flex; align-items: center; gap: var(--spacing-xs); }
+.wt-files .rmx-btn { min-width: 0; padding: 0; height: 20px; }
+.wt-files .rmx-text { color: var(--text-link); }
+
+/* With an overlay open the page behind does not scroll (and shows no scrollbar), so overlay margins are even. */
+html:has(.rmx-overlay.is-open), body:has(.rmx-overlay.is-open) { overflow: hidden; }

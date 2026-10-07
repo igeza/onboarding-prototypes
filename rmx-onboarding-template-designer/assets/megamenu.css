@@ -1,4 +1,17 @@
 /* ============================================================
+   RMX Mega Menu — lifted into the skill 2026-10-01
+   ------------------------------------------------------------
+   This file came from Emma's own standalone build, verbatim apart from two
+   marked changes (--mm-blue below, and the link map in megamenu.js). It was
+   built from the real Figma frame and trued against that frame's own SVG
+   export, which is why it is kept rather than rebuilt.
+
+   Everything below this header is hers. Read its comments before changing
+   anything: several of them record a specific finding, and at least one value
+   that looks wrong is deliberate (see megamenu.md).
+   ============================================================ */
+
+/* ============================================================
    Every token below carries its RMX value as a fallback.
    ------------------------------------------------------------
    This file is meant to drop into any prototype, and it was reading seven
@@ -41,7 +54,12 @@
 }
 .megamenu-overlay[hidden] { display: none; }
 .megamenu {
-  --mm-blue: #0071AA;
+  /* Was a bare literal, because the skill had no token for it. RMXDS ships one:
+     --background-megamenu (#0071AA), the Mega Menu ground, which the component
+     anatomy also names as the selected row's fill. Bound here, with the literal
+     kept as the fallback so this file still drops into a page with no tokens.
+     Same colour either way — and still distinct from the usual link blue. */
+  --mm-blue: var(--background-megamenu, #0071AA);
   background: var(--background-card, #ffffff);
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(19, 49, 76, .3);

@@ -386,8 +386,8 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
   </div>
   <div class="fd-body">
     <aside class="fd-pages">
-      <div class="fd-pages__add"><a class="rmx-btn rmx-btn--text" href="#" data-rmx-component="Button" data-rmx-todo="Adding pages is not built in this prototype"><svg class="rmx-icon"><use href="#add"></use></svg><span class="rmx-btn__label">Add Page</span></a></div>
-      <div class="fd-page"><span class="fd-page__name">Basic Info</span><span data-rmx-todo="Page actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></span><span data-rmx-todo="Reordering is not built in this prototype"><svg class="rmx-icon"><use href="#drag-indicator"></use></svg></span></div>
+      <div class="fd-pages__add"><a class="rmx-btn rmx-btn--text" href="#" data-rmx-component="Button" data-fd-addpage><svg class="rmx-icon"><use href="#add"></use></svg><span class="rmx-btn__label">Add Page</span></a></div>
+      <div class="fd-page"><span class="fd-page__name">Basic Info</span><button type="button" class="fd-page__kebab" data-fd-kebab aria-label="Page actions" aria-haspopup="menu"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button><span data-rmx-todo="Reordering is not built in this prototype"><svg class="rmx-icon"><use href="#drag-indicator"></use></svg></span></div>
     </aside>
     <section class="fd-pane">
       <div class="fd-pane__head">
@@ -398,8 +398,9 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     <div class="fd-editor__head"><span class="fd-editor__title" data-fd-qnum>Question 1</span><span class="fd-pager" data-fd-pager hidden><button type="button" data-fd-prev aria-label="Previous question"><svg class="rmx-icon"><use href="#chevron-left"></use></svg></button><span data-fd-count>1/1</span><button type="button" data-fd-next aria-label="Next question"><svg class="rmx-icon"><use href="#chevron-right"></use></svg></button></span></div>
     <div class="fd-editor__row">
       <div class="wt-flex"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label" data-fd-titlelabel>Question Title</span><div class="rmx-field__box"><input type="text" data-fd-title value="Do you have pets?"></div></div></div>
-      <div class="wt-flex" data-fd-type><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Response Type</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>Multiple Choice</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden><button type="button" data-value="Multiple Choice">Multiple Choice</button><button type="button" data-value="Checkboxes">Checkboxes</button><button type="button" data-value="Dropdown">Dropdown</button><button type="button" data-value="Short Answer">Short Answer</button><button type="button" data-value="Paragraph">Paragraph</button><button type="button" data-value="Text Box">Text Box</button><button type="button" data-value="Attachment">Attachment</button></div></div></div>
+      <div class="wt-flex" data-fd-type><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Response Type</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>Yes/No</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden><button type="button" data-value="Date">Date</button><button type="button" data-value="Yes/No">Yes/No</button><button type="button" data-value="Checkboxes">Checkboxes</button><button type="button" data-value="Dropdown">Dropdown</button><button type="button" data-value="File Upload">File Upload</button><button type="button" data-value="Short Answer">Short Answer</button><button type="button" data-value="Paragraph">Paragraph</button><button type="button" data-value="Text Box">Text Box</button><button type="button" data-value="Attachment">Attachment</button></div></div></div>
     </div>
+    <div class="wt-w-fill" data-at-only hidden><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label wt-info">File <svg class="rmx-icon rmx-icon--16"><use href="#info"></use></svg></span><label class="rmx-field__box wt-attach wt-attach--pick"><input type="file" data-fd-file hidden><svg class="rmx-icon"><use href="#attach"></use></svg><span data-fd-filename>Choose a file or drag it here.</span></label></div></div>
     <div class="wt-w-fill" data-not-tx><div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label wt-info">Help Text <svg class="rmx-icon rmx-icon--16"><use href="#info"></use></svg></span><div class="rmx-field__box wt-textbox"><textarea class="wt-textarea" data-fd-help aria-label="Help Text" rows="3"></textarea></div></div></div>
     <div class="wt-w-fill fd-mapwrap" data-not-tx><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Map to Rent Manager Field</span><button type="button" class="rmx-field__box wt-mapfield" data-fd-mapopen aria-haspopup="listbox"><span class="wt-value" data-fd-map></span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button></div><div class="fd-fs" id="field-selector" hidden role="listbox" aria-label="Map to Rent Manager Field">
   <div class="fs__search"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><svg class="rmx-icon"><use href="#search"></use></svg><input type="text" placeholder="Search Fields" data-rmx-filter="#fs-tree"></div></div></div>
@@ -436,7 +437,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 <div class="rmx-overlay" id="add-fields" hidden role="dialog" aria-modal="true" aria-label="Add Fields" data-rmx-component="Dialog Overlay"><div class="af">
   <div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Add Fields</span><button type="button" class="fd-close" data-rmx-close data-af-reset aria-label="Close"><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></button></div>
   <div class="af__panes">
-    <div class="af__avail"><p class="af__title">Available</p><div class="af__grp" data-af-grp><div class="af__grouphead"><button type="button" class="af__group" data-af-group aria-expanded="true"><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg><span>Response Types</span></button><button type="button" class="rmx-btn rmx-btn--text" data-af-selectall data-rmx-component="Button">Select All</button></div><div class="af__items"><button type="button" class="af__item" data-af-item="Multiple Choice"><span>Multiple Choice</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Checkboxes"><span>Checkboxes</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Dropdown"><span>Dropdown</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Short Answer"><span>Short Answer</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Paragraph"><span>Paragraph</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button></div></div><div class="af__grp" data-af-grp><div class="af__grouphead"><button type="button" class="af__group" data-af-group aria-expanded="true"><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg><span>General Fields</span></button><button type="button" class="rmx-btn rmx-btn--text" data-af-selectall data-rmx-component="Button">Select All</button></div><div class="af__items"><button type="button" class="af__item" data-af-item="Text Box"><span>Text Box</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Attachment"><span>Attachment</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button></div></div></div>
+    <div class="af__avail"><p class="af__title">Available</p><div class="af__grp" data-af-grp><div class="af__grouphead"><button type="button" class="af__group" data-af-group aria-expanded="true"><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg><span>Response Types</span></button><button type="button" class="rmx-btn rmx-btn--text" data-af-selectall data-rmx-component="Button">Select All</button></div><div class="af__items"><button type="button" class="af__item" data-af-item="Date"><span>Date</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Yes/No"><span>Yes/No</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Checkboxes"><span>Checkboxes</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Dropdown"><span>Dropdown</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="File Upload"><span>File Upload</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Short Answer"><span>Short Answer</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Paragraph"><span>Paragraph</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button></div></div><div class="af__grp" data-af-grp><div class="af__grouphead"><button type="button" class="af__group" data-af-group aria-expanded="true"><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg><span>General Fields</span></button><button type="button" class="rmx-btn rmx-btn--text" data-af-selectall data-rmx-component="Button">Select All</button></div><div class="af__items"><button type="button" class="af__item" data-af-item="Text Box"><span>Text Box</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button><button type="button" class="af__item" data-af-item="Attachment"><span>Attachment</span><svg class="rmx-icon"><use href="#add-circle"></use></svg></button></div></div></div>
     <div class="af__sel"><div class="af__selhead"><p class="af__title">Selected</p><button type="button" class="rmx-btn rmx-btn--text" data-af-clear data-rmx-component="Button">Clear All</button></div><div class="af__sellist" data-af-sellist></div></div>
   </div>
   <div class="rmx-overlay__footer" data-rmx-component="Overlay Footer">
@@ -446,14 +447,14 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 </div></div>
 <script>
 /* Form designer behaviour: every question is editable. The editor shows settings for the question's type
-   (options for Multiple Choice / Checkboxes / Dropdown, none for Short Answer / Paragraph) and the
+   (options for Yes/No / Checkboxes / Dropdown, none for Short Answer / Paragraph) and the
    question on the canvas updates as the type, title, help text and options change. */
 (function () {
   var stage = document.querySelector('.fd-stage');
   var editor = stage.querySelector('.fd-editor:not(.fd-texteditor)');
   var textEd = stage.querySelector('.fd-texteditor');
-  var TYPES = { 'Multiple Choice': 'mc', 'Checkboxes': 'cb', 'Dropdown': 'dd', 'Short Answer': 'sa', 'Paragraph': 'pa', 'Text Box': 'tx', 'Attachment': 'fl' };
-  var NAMES = { mc: 'Multiple Choice', cb: 'Checkboxes', dd: 'Dropdown', sa: 'Short Answer', pa: 'Paragraph', tx: 'Text Box', fl: 'Attachment' };
+  var TYPES = { 'Yes/No': 'mc', 'Checkboxes': 'cb', 'Dropdown': 'dd', 'Short Answer': 'sa', 'Attachment': 'at', 'Paragraph': 'pa', 'Date': 'dt', 'Text Box': 'tx', 'File Upload': 'fl' };
+  var NAMES = { mc: 'Yes/No', cb: 'Checkboxes', dd: 'Dropdown', sa: 'Short Answer', at: 'Attachment', pa: 'Paragraph', dt: 'Date', tx: 'Text Box', fl: 'File Upload' };
   var MAX = 6, current = null;
   var ARROW = '<svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg>';
   var HEAD = '<div class="fd-q__head"><span class="fd-q__label"></span><span class="fd-q__tools">' +
@@ -471,8 +472,11 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     var f = q._fd, l = q.querySelector('.fd-q__label');
     if (!l) return;
     if (f.type === 'tx') { l.textContent = ''; l.hidden = true; return; }
-    var n = all().filter(function (x) { return x._fd.type !== 'tx'; }).indexOf(q) + 1;
-    l.textContent = n + '. ' + (f.title || f.fallback || (f.type === 'fl' ? 'Untitled Attachment' : 'Untitled Question')) + (f.required ? '*' : '');
+    /* an Attachment is not a question: no number, no asterisk, and no placeholder name */
+    if (f.type === 'at') { l.textContent = f.title || ''; l.hidden = !f.title; l.classList.remove('rmx-placeholder'); return; }
+    l.hidden = false;
+    var n = all().filter(function (x) { return x._fd.type !== 'tx' && x._fd.type !== 'at'; }).indexOf(q) + 1;
+    l.textContent = n + '. ' + (f.title || f.fallback || (f.type === 'fl' ? 'Untitled File Upload' : f.type === 'at' ? 'Untitled Attachment' : 'Untitled Question')) + (f.required ? '*' : '');
     l.classList.toggle('rmx-placeholder', !f.title);
   }
   function renumber() { all().forEach(label); }
@@ -486,7 +490,9 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     if (f.type === 'cb') return checks(o);
     if (f.type === 'dd') return fieldBox('<span class="wt-value rmx-placeholder">' + esc(o[0] || '') + '</span>' + ARROW);
     if (f.type === 'tx') return '<p class="fd-q__text" data-w="' + esc(f.width || 'Full') + '">' + esc(f.title || 'Enter your text here') + '</p>';
+    if (f.type === 'at') return fieldBox('<svg class="rmx-icon"><use href="#attach"></use></svg><span>' + esc(f.file || 'No file attached') + '</span>', ' wt-filechip');
     if (f.type === 'fl') return fieldBox('<svg class="rmx-icon"><use href="#attach"></use></svg><span>Choose a file or drag it here.</span>', ' wt-attach');
+    if (f.type === 'dt') return fieldBox('<input type="text" readonly placeholder="MM/DD/YYYY" aria-label="Answer preview"><svg class="rmx-icon"><use href="#calendar-today"></use></svg>');
     if (f.type === 'pa') return fieldBox('<textarea class="wt-textarea" rows="2" readonly aria-label="Answer preview"></textarea>', ' wt-textbox');
     return fieldBox('<input type="text" readonly aria-label="Answer preview">');
   }
@@ -507,8 +513,10 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     document.getElementById('field-selector').hidden = true;
     $('[data-fd-qnum]').textContent = 'Question ' + (all().indexOf(q) + 1);
     $('[data-fd-title]').value = f.title;
-    $('[data-fd-titlelabel]').textContent = f.type === 'tx' ? 'Text' : 'Question Title';
-    editor.querySelectorAll('[data-not-tx]').forEach(function (x) { x.hidden = f.type === 'tx'; });
+    $('[data-fd-titlelabel]').textContent = f.type === 'tx' ? 'Text' : f.type === 'at' ? 'Attachment Name' : 'Question Title';
+    editor.querySelectorAll('[data-not-tx]').forEach(function (x) { x.hidden = f.type === 'tx' || f.type === 'at'; });
+    editor.querySelectorAll('[data-at-only]').forEach(function (x) { x.hidden = f.type !== 'at'; });
+    $('[data-fd-filename]').textContent = f.file || 'Choose a file or drag it here.';
     $('[data-fd-help]').value = f.help;
     $('[data-fd-type] [data-rmx-value]').textContent = NAMES[f.type];
     $('[data-fd-map]').textContent = f.map;
@@ -564,10 +572,13 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
   function save() {
     if (restoring) return;
     try {
-      sessionStorage.setItem(KEY, JSON.stringify(all().map(function (q) {
+      var ser = function (q) {
         var f = q._fd;
-        return { type: f.type, title: f.title, fallback: f.fallback, help: f.help, required: !!f.required, opts: f.opts, width: f.width || 'Full' };
-      })));
+        return { type: f.type, title: f.title, fallback: f.fallback, help: f.help, required: !!f.required, opts: f.opts, width: f.width || 'Full', file: f.file || '' };
+      };
+      /* with several pages (pages.js) the form is every page's questions, in page order */
+      var qs = (window.FD && FD.pageQs) ? FD.pageQs(all) : all();
+      sessionStorage.setItem(KEY, JSON.stringify(qs.map(ser)));
     } catch (e) {}
   }
   window.addEventListener('pagehide', save);
@@ -585,7 +596,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     save();
     return q;
   }
-  window.FD = { add: add, open: open, types: TYPES, save: save };
+  window.FD = { add: add, open: open, types: TYPES, save: save, closeEditors: closeEditors, renumber: renumber };
 
   /* questions that are already on the page */
   all().forEach(function (q) {
@@ -702,6 +713,14 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     fill(current); place(current);
   });
 
+  editor.addEventListener('change', function (e) {
+    var inp = e.target.closest('[data-fd-file]');
+    if (!inp || !current) return;
+    current._fd.file = inp.files && inp.files[0] ? inp.files[0].name : '';
+    $('[data-fd-filename]').textContent = current._fd.file || 'Choose a file or drag it here.';
+    preview(current); save();
+  });
+
   var deps = editor.querySelector('[data-fd-deps]');
   deps.addEventListener('click', function () {
     var on = deps.getAttribute('aria-checked') !== 'true';
@@ -786,5 +805,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 
 <script src="../assets/app.js"></script>
 <script src="../assets/megamenu.js"></script>
+<script src="../assets/pages.js"></script>
+<script src="../assets/dirty-footer.js"></script>
 </body>
 </html>

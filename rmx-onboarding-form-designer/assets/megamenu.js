@@ -18,7 +18,7 @@
    It wires itself to any button carrying [data-rmx-megamenu] or
    aria-label="Mega Menu", so a screen only has to have the app bar.
 
-   OPT-IN LINKS (this prototype, see PROTOTYPE.md): Rental Info > General > Tenants, Services > Online Listing > Workflow Templates
+   OPT-IN LINKS (this prototype, see PROTOTYPE.md): the Administration tab, Rental Info > General > Tenants, Services > Online Listing > Workflow Templates
    and Communication > Forms > Form Templates
    link to the onboarding screens. Everything else below still links nowhere.
 
@@ -71,7 +71,7 @@
     '      <nav class="megamenu__tabs">' +
     '        <button class="megamenu__tab" data-rmx-todo="Workspace is not built in this prototype"><svg class="rmx-icon"><use href="#mm-workspace"></use></svg>Workspace</button>' +
     '        <button class="megamenu__tab" data-rmx-todo="Dashboard is not built in this prototype"><svg class="rmx-icon"><use href="#mm-dashboard"></use></svg>Dashboard</button>' +
-    '        <button class="megamenu__tab" data-rmx-todo="Administration is not built in this prototype"><svg class="rmx-icon"><use href="#mm-admin"></use></svg>Administration</button>' +
+    '        <a class="megamenu__tab" href="../../rmx-onboarding-template-designer/screens/administration.html"><svg class="rmx-icon"><use href="#mm-admin"></use></svg>Administration</a>' +
     '        <span class="megamenu__tab megamenu__tab--current"><svg class="rmx-icon"><use href="#mm-map"></use></svg>Full Menu</span>' +
     '        <button class="megamenu__tab" data-rmx-todo="Search is not built in this prototype"><svg class="rmx-icon"><use href="#mm-search"></use></svg>Search</button>' +
     '        <button class="megamenu__tab" data-rmx-todo="Help is not built in this prototype"><svg class="rmx-icon"><use href="#mm-help"></use></svg>Help</button>' +

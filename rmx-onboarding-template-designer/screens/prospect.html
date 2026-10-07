@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="rmx-skill" content="4.2.0">
-<meta name="rmx-tokens" content="6144b103c405">
+<meta name="rmx-skill" content="4.5.2">
+<meta name="rmx-tokens" content="a6dff32542cd">
 <title>Prospect — Rent Manager Express</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/tokens-local.css">
 <link rel="stylesheet" href="../assets/type.css">
 <link rel="stylesheet" href="../assets/rmx.css">
 <link rel="stylesheet" href="../assets/proto.css">
@@ -20,21 +21,20 @@
 .pr-ground .rmx-actionbar button { display: inline-flex; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
 /* context bar items */
 .pr-ctx { display: flex; align-items: center; gap: var(--spacing-sm); }
-.pr-ctx__field { display: flex; align-items: center; gap: var(--spacing-xs); width: 248px; height: 32px; padding: 0 var(--spacing-xs); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--container-secondary-dark) 25%, transparent); color: var(--text-inverse); font: var(--type-label-m-regular); }
 .pr-ctx__pager { display: flex; align-items: center; gap: var(--spacing-xs); color: var(--text-inverse); font: var(--type-label-m-regular); }
 .pr-ctx__pager button { display: inline-flex; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
 .pr-chip { display: inline-flex; align-items: center; gap: var(--spacing-xs); height: 24px; padding: 0 var(--spacing-xs); border: 0; border-radius: var(--radius-sm); background: var(--icon-attention); color: var(--text-inverse); font: var(--type-label-m-regular); cursor: pointer; }
 .pr-chip .rmx-icon { width: 16px; height: 16px; }
 /* scoreboard */
 .pr-score .rmx-scoreboard__content { flex-wrap: wrap; padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) var(--spacing-2xl); }
-.pr-avatar { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 64px; height: 64px; border-radius: var(--radius-round); background: var(--container-secondary); color: var(--text-inverse); font: var(--type-heading-l-medium); }
+.pr-avatar { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 64px; height: 64px; border-radius: var(--radius-round); background: var(--background-brand-primary); color: var(--text-inverse); font: var(--type-heading-l-medium); }
 .pr-score__lead { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0; }
 .pr-score__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-md); min-height: 32px; }
 .pr-score__name { font: var(--type-paragraph-l-semibold); color: var(--text-secondary); }
 .pr-score__acct { font: var(--type-paragraph-s-italic); color: var(--text-secondary); }
 .pr-score__acct b { font: var(--type-paragraph-s-italic); margin-left: var(--spacing-xs); }
 .pr-item { display: inline-flex; align-items: center; gap: var(--spacing-xs); font: var(--type-label-m-regular); color: var(--text-secondary); }
-.pr-item .rmx-icon { color: var(--icon-brand); }
+.pr-item .rmx-icon { color: var(--icon-primary); }
 .pr-score__trail { display: grid; grid-template-columns: auto auto auto; align-items: center; column-gap: var(--spacing-md); row-gap: var(--spacing-xs); margin-left: auto; }
 .pr-score__label { text-align: right; font: var(--type-label-m-regular); color: var(--text-secondary); }
 .pr-score__value { font: var(--type-label-m-semibold); color: var(--text-secondary); }
@@ -55,7 +55,6 @@
 .pr-link { color: var(--text-link); text-decoration: none; }
 .pr-field { display: flex; flex-direction: column; gap: var(--spacing-xxs); }
 .pr-field .rmx-field { width: 100%; }
-.pr-field .rmx-field__box { background: var(--container-tertiary); }
 .pr-field__label { font: var(--type-label-m-regular); color: var(--text-primary); }
 .pr-row { display: flex; align-items: flex-end; gap: var(--spacing-xs); }
 .pr-row > .pr-grow { flex: 1; min-width: 0; }
@@ -82,7 +81,7 @@ button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: po
 .pr-ov__name { font: var(--type-paragraph-l-semibold); color: var(--text-secondary); }
 .pr-progress { display: flex; align-items: center; gap: var(--spacing-md); }
 .pr-progress__track { flex: 1; height: 8px; border-radius: var(--radius-sm); background: var(--border-primary); overflow: hidden; }
-.pr-progress__fill { height: 100%; width: 83%; background: var(--container-secondary); }
+.pr-progress__fill { height: 100%; width: 83%; background: var(--background-brand-primary); }
 .pr-progress__text { display: inline-flex; align-items: center; gap: var(--spacing-xs); font: var(--type-label-s-regular); color: var(--text-primary); white-space: nowrap; }
 .pr-steps { display: flex; flex-direction: column; }
 .pr-st { display: grid; grid-template-columns: 24px 1fr; column-gap: var(--spacing-xs); }
@@ -101,7 +100,7 @@ button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: po
 .rmx-overlay[data-pr-dialog] .rmx-overlay__header { justify-content: space-between; flex: none; }
 .rmx-overlay[data-pr-dialog] .rmx-overlay__footer { flex: none; }
 .pr-fd__title { font: var(--type-heading-m-regular); color: var(--text-secondary); margin-right: auto; }
-.pr-fd__icons { display: flex; align-items: center; gap: var(--spacing-xs); color: var(--icon-brand); }
+.pr-fd__icons { display: flex; align-items: center; gap: var(--spacing-xs); color: var(--icon-primary); }
 .pr-fd__icons button { display: inline-flex; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
 .pr-fd__icons .rmx-icon { width: 24px; height: 24px; }
 .pr-fd__body { flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--container-primary); }
@@ -131,7 +130,7 @@ button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: po
 .pr-map { display: grid; grid-template-columns: 248px 296px minmax(0, 1fr); gap: var(--spacing-md); margin-top: var(--spacing-xs); padding: var(--spacing-md); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-primary); }
 .pr-map > div { display: flex; flex-direction: column; gap: var(--spacing-xs); min-width: 0; }
 .pr-map dt { display: flex; align-items: center; gap: var(--spacing-xs); font: var(--type-paragraph-s-regular); color: var(--text-primary); }
-.pr-map dt .rmx-icon { color: var(--icon-brand); }
+.pr-map dt .rmx-icon { color: var(--icon-primary); }
 .pr-map dd { margin: 0; min-height: 20px; font: var(--type-paragraph-s-semibold); color: var(--text-secondary); }
 .pr-fd__textbox { min-height: 126px; margin: var(--spacing-md); padding: var(--spacing-xs); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-tertiary); font: var(--type-paragraph-s-regular); color: var(--text-secondary); resize: none; width: calc(100% - 32px); box-sizing: border-box; }
 @media (max-width: 1279px) { .pr-tiles { grid-template-columns: 1fr; } .pr-flow { flex-wrap: wrap; } }
@@ -258,7 +257,7 @@ button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: po
   <div class="rmx-contextbar__leading">
     <span class="rmx-contextbar__title">Prospect</span>
     <div class="pr-ctx">
-      <span class="pr-ctx__field"><svg class="rmx-icon"><use href="#search"></use></svg><span>Charlie Apegian</span></span>
+      <label class="rmx-field__box rmx-contextbar__search" data-rmx-component="Input Field"><svg class="rmx-icon"><use href="#search"></use></svg><input value="Charlie Apegian" aria-label="Search prospects"></label>
       <span class="pr-ctx__pager"><button type="button" aria-label="Previous" data-rmx-todo="Paging is not built in this prototype"><svg class="rmx-icon"><use href="#chevron-left"></use></svg></button><span>125 of 255</span><button type="button" aria-label="Next" data-rmx-todo="Paging is not built in this prototype"><svg class="rmx-icon"><use href="#chevron-right"></use></svg></button></span>
       <button type="button" class="pr-chip" data-rmx-todo="Filters are not built in this prototype"><svg class="rmx-icon"><use href="#tune"></use></svg><span>1 Filters Applied</span><svg class="rmx-icon"><use href="#close"></use></svg></button>
     </div>
