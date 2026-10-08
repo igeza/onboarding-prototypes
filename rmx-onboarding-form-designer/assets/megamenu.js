@@ -192,7 +192,7 @@
         { title: 'Texting / Phone', items: ['Send Text', 'Text Templates', 'Text Messaging Center', 'rmVoIP Incoming Call History', 'rmVoIP Unlinked Calls', 'Phone Broadcast', 'Text Broadcast'] },
         { title: 'Web Chat', items: ['Manage Queues', 'My Conversations', 'Closed Conversations', 'Unlinked Conversations', 'Offline Conversations'] },
         { title: 'Surveys', items: ['Surveys'] },
-        { title: 'Forms', items: [{ label: 'Form Templates', href: 'form-templates.html' }] }
+        { title: 'Forms', items: [{ label: 'Form Templates', href: 'form-templates.html' }, { label: 'Form Approvals', href: 'form-approvals.html' }] }
       ],
       footer: [
         { icon: 'reports', label: 'Communications Reports' }
