@@ -44,8 +44,57 @@ html, body { height: 100%; overflow: hidden; }
 body { display: flex; flex-direction: column; }
 .ft-page { flex: 1; min-height: 0; }
 .ft-box { min-height: 0; }
+.ft-register tr[data-rmx-open] { cursor: pointer; }
 .ft-register thead th { position: sticky; top: 0; z-index: 1; }
 .ft-page .rmx-register__totals { margin: calc(-1 * var(--spacing-xs)) 0 0; padding: 0; }
+/* Form Details dialogs (same as the prospect Forms tile) */
+.pr-link { color: var(--text-link); text-decoration: none; }
+.rmx-overlay[data-pr-dialog] { width: 968px; max-width: calc(100vw - 32px); }
+.rmx-overlay[data-pr-dialog].is-open { display: flex; flex-direction: column; overflow: hidden; }
+.rmx-overlay[data-pr-dialog="note"] { width: 462px; }
+.rmx-overlay[data-pr-dialog] .rmx-overlay__header { justify-content: space-between; flex: none; }
+.rmx-overlay[data-pr-dialog] .rmx-overlay__footer { flex: none; }
+.pr-fd__title { font: var(--type-heading-m-regular); color: var(--text-secondary); margin-right: auto; }
+.pr-fd__icons { display: flex; align-items: center; gap: var(--spacing-xs); color: var(--icon-primary); }
+.pr-fd__icons button { display: inline-flex; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+.pr-fd__icons .rmx-icon { width: 24px; height: 24px; }
+.pr-fd__body { flex: 1; min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--container-primary); }
+.pr-fd__sec { border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-primary); }
+.pr-fd__sechead { display: flex; align-items: center; min-height: 36px; padding: 0 var(--spacing-xs); border-bottom: 2px solid var(--border-secondary); font: var(--type-paragraph-s-semibold); color: var(--text-secondary); }
+.pr-fd__sum { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--spacing-md); padding: var(--spacing-md); }
+.pr-fd__sum > div { display: flex; flex-direction: column; gap: var(--spacing-xs); min-width: 0; }
+.pr-fd__sum dt { font: var(--type-paragraph-s-regular); color: var(--text-primary); }
+.pr-fd__sum dd { margin: 0; font: var(--type-paragraph-s-semibold); color: var(--text-secondary); display: flex; align-items: center; min-height: 24px; }
+.pr-fd__sum .rmx-lozenge { font-weight: 400; color: var(--text-secondary); }
+.pr-fd__sum .rmx-lozenge::before { display: none; }  /* Form Need Approval (6386:14029): plain status lozenge, no dot */
+.pr-fd__note { grid-column: 1 / -1; margin: 0; font: var(--type-paragraph-s-regular); color: var(--text-primary); }
+.pr-fd__list { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); }
+.pr-q { display: flex; flex-direction: column; gap: var(--spacing-xs); padding: var(--spacing-md); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-primary); }
+.pr-q__head { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-md); font: var(--type-paragraph-s-semibold); color: var(--text-primary); }
+.pr-q__help { margin: 0; font: var(--type-label-s-regular); color: var(--text-primary); }
+.pr-q__value { display: flex; align-items: center; justify-content: space-between; min-height: 36px; padding: var(--spacing-xs); border-radius: var(--radius-sm); background: var(--container-tertiary); font: var(--type-paragraph-s-regular); color: var(--text-primary); }
+.pr-q__opts { display: flex; flex-direction: column; gap: var(--spacing-xs); }
+.pr-q__opts { align-items: flex-start; }
+.pr-q__opts .rmx-radio { display: inline-flex; align-items: center; gap: var(--spacing-xs); }  /* dot and label on one centre line, same 8px pitch as the checkboxes */
+.pr-q__opts:has(.rmx-radio) { flex-direction: row; flex-wrap: wrap; gap: var(--spacing-xs) var(--spacing-xl); }  /* as in the form designer: radios in a row, checkboxes in 2 columns */
+.pr-q__opts:has(.rmx-check) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-xs) var(--spacing-xl); }
+.pr-q__opts .rmx-check .rmx-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pr-q__opts [data-off] { color: var(--text-disabled); }
+.pr-q__opts [data-off] .rmx-radio__dot, .pr-q__opts [data-off] .rmx-check__box { border-color: var(--border-primary); background: var(--container-tertiary); }
+.pr-q__opts .rmx-radio[data-checked="true"] .rmx-radio__dot { border-color: var(--text-primary); }
+.pr-q__opts .rmx-radio[data-checked="true"] .rmx-radio__dot::after { background: var(--text-primary); }
+.pr-q__opts .rmx-check[data-checked="true"] .rmx-check__box { background: var(--text-primary); border-color: var(--text-primary); }
+.pr-q__opts .rmx-check, .pr-q__opts .rmx-radio { cursor: default; }
+.pr-fd__list--n { gap: var(--spacing-md); }
+.pr-nq { display: flex; flex-direction: column; gap: var(--spacing-xs); }
+.pr-nq__title { font: var(--type-paragraph-s-semibold); color: var(--text-secondary); }
+.pr-nq__help { margin: 0; font: var(--type-paragraph-s-italic); color: var(--text-primary); }
+.pr-map { display: grid; grid-template-columns: 248px 296px minmax(0, 1fr); gap: var(--spacing-md); padding: var(--spacing-md); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-primary); }
+.pr-map > div { display: flex; flex-direction: column; gap: var(--spacing-xs); min-width: 0; }
+.pr-map dt { display: flex; align-items: center; gap: var(--spacing-xs); font: var(--type-paragraph-s-regular); color: var(--text-primary); }
+.pr-map dt .rmx-icon { color: var(--icon-primary); }
+.pr-map dd { margin: 0; min-height: 20px; font: var(--type-paragraph-s-semibold); color: var(--text-secondary); }
+.pr-fd__textbox { min-height: 126px; margin: var(--spacing-md); padding: var(--spacing-xs); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-tertiary); font: var(--type-paragraph-s-regular); color: var(--text-secondary); resize: none; width: calc(100% - 32px); box-sizing: border-box; }
 </style>
 </head>
 <body class="rmx">
@@ -201,7 +250,7 @@ body { display: flex; flex-direction: column; }
         <th class="ft-tight"></th>
       </tr></thead>
       <tbody>
-        <tr data-rmx-row>
+        <tr data-rmx-row data-rmx-open="fa-approved">
           <td>Cheyenne Ward</td>
           <td>03/24/26</td>
           <td>Pet Information</td>
@@ -209,7 +258,7 @@ body { display: flex; flex-direction: column; }
           <td>Nick Jones</td>
           <td class="ft-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon ft-blue"><use href="#more-vert"></use></svg></button></td>
         </tr>
-        <tr data-rmx-row>
+        <tr data-rmx-row data-rmx-open="fa-pending">
           <td>Madeline Summers</td>
           <td>04/14/26</td>
           <td>Pet Information</td>
@@ -231,9 +280,28 @@ body { display: flex; flex-direction: column; }
   <p class="rmx-register__totals"><span data-rmx-count="#approvals">3</span> of 3 Form Approvals</p>
 </main>
 
+<div class="rmx-overlay" id="fa-approved" data-pr-dialog="form" data-rmx-component="Dialog Overlay" hidden><div class="rmx-overlay__header"><span class="pr-fd__title">Form Details</span><span class="pr-fd__icons"><button type="button" aria-label="Help" data-rmx-todo="Help is not built in this prototype"><svg class="rmx-icon"><use href="#help"></use></svg></button><button type="button" aria-label="Close" data-rmx-close><svg class="rmx-icon"><use href="#close"></use></svg></button></span></div><div class="pr-fd__body"><section class="pr-fd__sec"><div class="pr-fd__sechead">Summary</div><dl class="pr-fd__sum"><div><dt>Account Name</dt><dd><span data-fa-name></span></dd></div><div><dt>Form Template</dt><dd>Pet Information</dd></div><div><dt>Created Date</dt><dd>02/25/2026</dd></div><div><dt>Status</dt><dd><span class="rmx-lozenge rmx-lozenge--success">Approved</span></dd></div><div><dt>Completed Date</dt><dd>09/01/2026</dd></div></dl></section><section class="pr-fd__sec"><div class="pr-fd__sechead">Responses</div><div class="pr-fd__list pr-fd__list--n"><div class="pr-nq"><div class="pr-nq__title">1. Pet Owner Name</div><p class="pr-nq__help">Enter your full legal name</p><div class="pr-q__value"><span><span data-fa-name></span></span></div></div><div class="pr-nq"><div class="pr-nq__title">2. Enter your unit number and property address</div><div class="pr-q__value"><span>6847 Riverview Ln Apt 34B</span></div></div><div class="pr-nq"><div class="pr-nq__title">3. Type of Pet</div><div class="pr-q__value"><span>Cat</span></div><div class="pr-map"><div><dt>Path <svg class="rmx-icon rmx-icon--16"><use href="#open-in-new"></use></svg></dt><dd>Tenants &gt; Pets &gt; Type</dd></div><div><dt>Current Value</dt><dd></dd></div><div><dt>New Value</dt><dd>Cat</dd></div></div></div><div class="pr-nq"><div class="pr-nq__title">4. Pet Details</div><p class="pr-nq__help">Provide your pet’s name, breed, age, weight, and any distinguishing characteristics.</p><div class="pr-q__value"><span>Casper, 3yo orange and white tabby. 15lbs (huge). He has an orange spot on his chin/neck</span></div><div class="pr-map"><div><dt>Path <svg class="rmx-icon rmx-icon--16"><use href="#open-in-new"></use></svg></dt><dd>Tenants &gt; Pets &gt; Description</dd></div><div><dt>Current Value</dt><dd></dd></div><div><dt>New Value</dt><dd>Casper, 3yo orange and white tabby. 15lbs (huge). He has an orange spot on his chin/neck</dd></div></div></div><div class="pr-nq"><div class="pr-nq__title">5. Is your pet up to date on vaccinations?</div><div class="pr-q__opts"><span class="rmx-radio" data-checked="true"><span class="rmx-radio__dot"></span><span class="rmx-text">Yes</span></span><span class="rmx-radio" data-checked="false" data-off><span class="rmx-radio__dot"></span><span class="rmx-text">No</span></span><span class="rmx-radio" data-checked="false" data-off><span class="rmx-radio__dot"></span><span class="rmx-text">I’m not sure</span></span></div></div><div class="pr-nq"><div class="pr-nq__title">6. Select all that apply regarding your pet’s behavior.</div><div class="pr-q__opts"><span class="rmx-check" data-checked="true"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">House-trained/litter-trained</span></span><span class="rmx-check" data-checked="true"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Friendly with strangers</span></span><span class="rmx-check" data-checked="false" data-off><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Good with other animals</span></span><span class="rmx-check" data-checked="false" data-off><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Has caused property damage before</span></span><span class="rmx-check" data-checked="true"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Has shown aggressive behavior</span></span><span class="rmx-check" data-checked="false" data-off><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">None of the above</span></span></div></div><div class="pr-nq"><div class="pr-nq__title">7. Emergency Contact for Pet</div><p class="pr-nq__help">Provide name and phone number of someone who can care for your pet if needed.</p><div class="pr-q__value"><span>Uncle Joe - (317)-847-8902</span></div></div></div></section></div></div><div class="rmx-overlay" id="fa-pending" data-pr-dialog="form" data-rmx-component="Dialog Overlay" hidden><div class="rmx-overlay__header"><span class="pr-fd__title">Form Details</span><span class="pr-fd__icons"><button type="button" aria-label="Help" data-rmx-todo="Help is not built in this prototype"><svg class="rmx-icon"><use href="#help"></use></svg></button><button type="button" aria-label="Close" data-rmx-close><svg class="rmx-icon"><use href="#close"></use></svg></button></span></div><div class="pr-fd__body"><section class="pr-fd__sec"><div class="pr-fd__sechead">Summary</div><dl class="pr-fd__sum"><div><dt>Account Name</dt><dd><span data-fa-name></span></dd></div><div><dt>Form Template</dt><dd>Pet Information</dd></div><div><dt>Created Date</dt><dd>02/25/2026</dd></div><div><dt>Submitted Date</dt><dd>09/01/2026</dd></div><div><dt>Status</dt><dd><span class="rmx-lozenge rmx-lozenge--caution">Pending Approval</span></dd></div><p class="pr-fd__note">*Form answers will not map to RMX fields until Approved.</p></dl></section><section class="pr-fd__sec"><div class="pr-fd__sechead">Responses</div><div class="pr-fd__list pr-fd__list--n"><div class="pr-nq"><div class="pr-nq__title">1. Pet Owner Name</div><p class="pr-nq__help">Enter your full legal name</p><div class="pr-q__value"><span><span data-fa-name></span></span></div></div><div class="pr-nq"><div class="pr-nq__title">2. Enter your unit number and property address</div><div class="pr-q__value"><span>6847 Riverview Ln Apt 34B</span></div></div><div class="pr-nq"><div class="pr-nq__title">3. Type of Pet</div><div class="pr-q__value"><span>Cat</span></div><div class="pr-map"><div><dt>Path <svg class="rmx-icon rmx-icon--16"><use href="#open-in-new"></use></svg></dt><dd>Tenants &gt; Pets &gt; Type</dd></div><div><dt>Current Value</dt><dd></dd></div><div><dt>New Value</dt><dd>Cat</dd></div></div></div><div class="pr-nq"><div class="pr-nq__title">4. Pet Details</div><p class="pr-nq__help">Provide your pet’s name, breed, age, weight, and any distinguishing characteristics.</p><div class="pr-q__value"><span>Casper, 3yo orange and white tabby. 15lbs (huge). He has an orange spot on his chin/neck</span></div><div class="pr-map"><div><dt>Path <svg class="rmx-icon rmx-icon--16"><use href="#open-in-new"></use></svg></dt><dd>Tenants &gt; Pets &gt; Description</dd></div><div><dt>Current Value</dt><dd></dd></div><div><dt>New Value</dt><dd>Casper, 3yo orange and white tabby. 15lbs (huge). He has an orange spot on his chin/neck</dd></div></div></div></div></section></div><div class="rmx-overlay__footer"><button type="button" class="rmx-btn rmx-btn--primary" id="fa-approve" data-rmx-open="fa-note">Approve</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-todo="Reject is not built in this prototype">Reject</button></div></div><div class="rmx-overlay" id="fa-note" data-pr-dialog="note" data-rmx-component="Dialog Overlay" hidden><div class="rmx-overlay__header"><span class="pr-fd__title">Add Note</span><span class="pr-fd__icons"><button type="button" aria-label="Close" data-rmx-close><svg class="rmx-icon"><use href="#close"></use></svg></button></span></div><textarea class="pr-fd__textbox" id="fa-note-text" aria-label="Note"></textarea><div class="rmx-overlay__footer"><button type="button" class="rmx-btn rmx-btn--primary" id="fa-note-add" data-rmx-close>Add</button></div></div>
+
+
 <script src="../assets/app.js"></script>
 <script src="../assets/megamenu.js"></script>
 <script src="../assets/regsel.js"></script>
+<script>
+/* Each row opens its form: the name in the dialog is the row's name. Approving a pending form (Approve, then Add on the note) marks it Approved. */
+document.addEventListener('click', function (e) {
+  var tr = e.target.closest('tr[data-rmx-open]');
+  if (!tr) return;
+  [].forEach.call(document.querySelectorAll('[data-fa-name]'), function (n) { n.textContent = tr.cells[0].textContent; });
+  window.faRow = tr;
+}, true);
+document.getElementById('fa-note-add').addEventListener('click', function () {
+  var row = window.faRow;
+  document.querySelector('#fa-pending [data-rmx-close]').click();
+  if (row) { row.cells[3].textContent = 'Approved'; row.setAttribute('data-rmx-open', 'fa-approved'); }
+  document.getElementById('fa-note-text').value = '';
+  if (window.RMX && RMX.toast) RMX.toast('Form approved', 'success');
+});
+</script>
 <script src="../assets/overlay-scroll.js"></script>
 </body>
 </html>
