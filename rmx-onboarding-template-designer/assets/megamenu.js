@@ -229,7 +229,7 @@
         { title: 'Texting / Phone', items: ['Send Text', 'Text Templates', 'Text Messaging Center', 'rmVoIP Incoming Call History', 'rmVoIP Unlinked Calls', 'Phone Broadcast', 'Text Broadcast'] },
         { title: 'Web Chat', items: ['Manage Queues', 'My Conversations', 'Closed Conversations', 'Unlinked Conversations', 'Offline Conversations'] },
         { title: 'Surveys', items: ['Surveys'] },
-        { title: 'Forms', items: [{ label: 'Form Templates', href: '../../rmx-onboarding-form-designer/screens/form-templates.html' }, { label: 'Form Approvals', href: '../../rmx-onboarding-form-designer/screens/form-approvals.html' }] }
+        { title: 'Forms', items: [{ label: 'Form Templates', href: '../../rmx-onboarding-form-designer/screens/form-templates.html' }, { label: 'Form', href: '../../rmx-onboarding-form-designer/screens/form-approvals.html' }] }
       ],
       footer: [
         { icon: 'reports', label: 'Communications Reports' }
