@@ -373,11 +373,11 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 <main class="fd">
   <div class="fd-top">
     <div class="fd-top__fields">
-      <div class="wt-w248"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Form Type</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>Prospect</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Prospect">Prospect</button><button type="button" data-value="Tenant">Tenant</button></div></div></div>
-      <div class="wt-w248"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Form Name</span><div class="rmx-field__box"><input type="text" value="Pet Information"></div></div></div>
-      <div class="wt-w248"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Display Name *</span><div class="rmx-field__box"><input type="text" value="Pet Information"></div></div></div>
-      <div class="wt-w248"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Property</span><div class="rmx-field__box"><svg class="rmx-icon"><use href="#search"></use></svg><input type="text" value="Riverview Apartments"></div></div></div>
+      <div class="fd-formtype" data-rmx-component="Text"><span class="rmx-field__label">Form Type</span><span class="fd-formtype__val">Prospect</span></div>
+      <div class="wt-w248"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Template Name *</span><div class="rmx-field__box"><input type="text" value="Pet Information"></div></div></div>
+      <div class="fd-top__prop"><div class="wt-w248"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Assign to Property</span><div class="rmx-field__box"><input type="text" value="Riverview Apartments"></div></div></div><button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Property selection is not built in this prototype">Select Properties</button></div>
       <div class="fd-approval"><label class="rmx-check" data-checked="true" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Require Approval</span></label><span class="fd-tip"><span tabindex="0" aria-label="About Require Approval"><svg class="rmx-icon"><use href="#info"></use></svg></span><span class="fd-tip__box"><div data-rmx-component="Tooltip Text">Approval is required before form answers are mapped to RMX fields.</div></span></span></div>
+      <div class="fd-approval"><label class="rmx-check" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Publish to rmResident Portal</span></label></div>
     </div>
     <div class="fd-top__tail">
       <a class="rmx-btn rmx-btn--text" href="portal-preview.html" data-rmx-component="Button"><svg class="rmx-icon"><use href="#play-arrow"></use></svg><span class="rmx-btn__label">Preview</span></a>
@@ -419,7 +419,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     </div>
     <div class="fd-editor__opts" data-type-panel="dd" hidden>
       <div class="fd-editor__optshead"><span>Response Options</span></div>
-      <div class="fd-chips"><span class="fd-chip">Cat<button type="button" aria-label="Remove Cat" data-fd-rmchip="0"><svg class="rmx-icon"><use href="#close"></use></svg></button></span><span class="fd-chip">Dog<button type="button" aria-label="Remove Dog" data-fd-rmchip="1"><svg class="rmx-icon"><use href="#close"></use></svg></button></span></div>
+      <div class="fd-opt fd-opt--plain"><div class="wt-flex"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text" value="Option 1"></div></div></div><span class="fd-opt__drag" data-fd-optdrag title="Drag to reorder" aria-label="Drag to reorder"><svg class="rmx-icon rmx-icon--24"><use href="#drag-indicator"></use></svg></span></div><div class="fd-opt fd-opt--plain"><div class="wt-flex"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text" value="Option 2"></div></div></div><span class="fd-opt__drag" data-fd-optdrag title="Drag to reorder" aria-label="Drag to reorder"><svg class="rmx-icon rmx-icon--24"><use href="#drag-indicator"></use></svg></span></div><div class="fd-opt fd-opt--plain"><div class="wt-flex"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text" value="Option 3"></div></div></div><span class="fd-opt__drag" data-fd-optdrag title="Drag to reorder" aria-label="Drag to reorder"><svg class="rmx-icon rmx-icon--24"><use href="#drag-indicator"></use></svg></span></div><div class="fd-opt fd-opt--plain"><div class="wt-flex"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text" value="Option 4"></div></div></div><span class="fd-opt__drag" data-fd-optdrag title="Drag to reorder" aria-label="Drag to reorder"><svg class="rmx-icon rmx-icon--24"><use href="#drag-indicator"></use></svg></span></div><div class="fd-opt fd-opt--plain"><div class="wt-flex"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text" value="Option 5"></div></div></div><span class="fd-opt__drag" data-fd-optdrag title="Drag to reorder" aria-label="Drag to reorder"><svg class="rmx-icon rmx-icon--24"><use href="#drag-indicator"></use></svg></span></div><div class="fd-opt fd-opt--plain"><div class="wt-flex"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text" value="Option 6"></div></div></div><span class="fd-opt__drag" data-fd-optdrag title="Drag to reorder" aria-label="Drag to reorder"><svg class="rmx-icon rmx-icon--24"><use href="#drag-indicator"></use></svg></span></div>
       <div><button type="button" class="rmx-btn rmx-btn--text" data-fd-addopt data-rmx-component="Button"><svg class="rmx-icon"><use href="#add"></use></svg><span class="rmx-btn__label">Add Option</span></button></div>
     </div>
     <div data-type-panel="none" hidden></div>
@@ -523,16 +523,15 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     $('[data-fd-required]').dataset.checked = String(!!f.required);
     var p = panelOf(f.type);
     editor.querySelectorAll('[data-type-panel]').forEach(function (x) { x.hidden = x.getAttribute('data-type-panel') !== p; });
-    ['mc', 'cb'].forEach(function (k) {
+    ['mc', 'cb', 'dd'].forEach(function (k) {
       var o = f.opts[k], panel = $('[data-type-panel="' + k + '"]');
       panel.querySelectorAll('.fd-opt').forEach(function (row, i) {
         row.hidden = i >= o.length;
         if (i < o.length) row.querySelector('input[type=text]').value = o[i];
-        row.querySelector('[data-fd-delopt]').hidden = i < 2;
+        var dl = row.querySelector('[data-fd-delopt]'); if (dl) dl.hidden = i < 2;
       });
       panel.querySelector('[data-fd-addopt]').hidden = o.length >= MAX;
     });
-    renderChips(f);
   }
   function edFor(q) { return q._fd.type === 'tx' ? textEd : editor; }
   function closeEditors() { if (window.FD) FD.save(); editor.hidden = true; textEd.hidden = true; current = null; var f = document.getElementById('field-selector'); if (f) f.hidden = true; }
@@ -541,7 +540,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     p.hidden = list.length < 2;
     p.querySelector('[data-fd-count]').textContent = (i + 1) + '/' + list.length;
     p.querySelector('[data-fd-prev]').disabled = i <= 0;
-    p.querySelector('[data-fd-next]').disabled = i >= list.length - 1;
+    p.querySelector('[data-fd-next]').disabled = false;   // at the last question, next goes back to the first
   }
   function place(q) {
     /* Settings overlap the question: top just under the pencil / trash, right edge in line with the pencil. */
@@ -640,6 +639,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     var pv = e.target.closest('[data-fd-prev], [data-fd-next]');
     if (pv && current) {
       var list = all(), ni = list.indexOf(current) + (pv.hasAttribute('data-fd-prev') ? -1 : 1);
+      if (ni >= list.length) ni = 0;   // next from the last question wraps to question 1
       if (list[ni]) open(list[ni]);
       return;
     }
@@ -719,6 +719,39 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     current._fd.file = inp.files && inp.files[0] ? inp.files[0].name : '';
     $('[data-fd-filename]').textContent = current._fd.file || 'Choose a file or drag it here.';
     preview(current); save();
+  });
+
+  /* Dropdown options: drag the handle to reorder; the option moves as the pointer passes over the others. */
+  editor.addEventListener('pointerdown', function (e) {
+    var h = e.target.closest('[data-fd-optdrag]');
+    if (!h || !current) return;
+    e.preventDefault();
+    var panel = h.closest('[data-type-panel]'), kind = panel.getAttribute('data-type-panel'), rows = [].slice.call(panel.querySelectorAll('.fd-opt'));
+    var from = rows.indexOf(h.closest('.fd-opt'));
+    h.setPointerCapture(e.pointerId);
+    rows[from].classList.add('is-dragging');
+    function move(ev) {
+      var vis = rows.filter(function (r) { return !r.hidden; });
+      for (var i = 0; i < vis.length; i++) {
+        var b = vis[i].getBoundingClientRect();
+        if (ev.clientY >= b.top && ev.clientY <= b.bottom) {
+          var to = rows.indexOf(vis[i]);
+          if (to !== from) {
+            var o = current._fd.opts[kind], item = o.splice(from, 1)[0];
+            o.splice(to, 0, item);
+            rows[from].classList.remove('is-dragging'); from = to; rows[from].classList.add('is-dragging');
+            fill(current); preview(current);
+          }
+          break;
+        }
+      }
+    }
+    function end() {
+      rows.forEach(function (r) { r.classList.remove('is-dragging'); });
+      h.removeEventListener('pointermove', move); h.removeEventListener('pointerup', end); h.removeEventListener('pointercancel', end);
+      if (window.FD) FD.save();
+    }
+    h.addEventListener('pointermove', move); h.addEventListener('pointerup', end); h.addEventListener('pointercancel', end);
   });
 
   var deps = editor.querySelector('[data-fd-deps]');

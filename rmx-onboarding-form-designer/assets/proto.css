@@ -238,3 +238,18 @@ main.fd .fd-canvas { min-height: 0; overflow: auto; }
 .sf__panel[hidden] { display: none; }
 .sf__psearch .rmx-field__box { width: 100%; }
 .sf__panel .sf__list { height: auto; max-height: 216px; border: 0; padding: 0; }
+.fd-editor .fd-opt--plain { gap: var(--spacing-xs); }
+.fd-opt__drag { display: inline-flex; flex: none; cursor: grab; touch-action: none; user-select: none; color: var(--icon-brand); }
+.fd-opt.is-dragging .rmx-field__box { border-color: var(--border-secondary); }
+.fd-opt.is-dragging .fd-opt__drag { cursor: grabbing; }
+
+/* Form Setup header (Figma Designer 6070:63251): Form Type is read-only text, then Template Name, Assign to Property + Select Properties, and two checkboxes */
+.fd-formtype { display: flex; flex-direction: column; gap: var(--spacing-xxs); width: 148px; }
+.fd-formtype .rmx-field__label { color: var(--text-primary); }
+.fd-formtype__val { display: flex; align-items: center; height: 36px; font: var(--type-paragraph-s-semibold); color: var(--text-secondary); }
+.fd-top__prop { display: flex; align-items: flex-end; gap: var(--spacing-xs); }
+
+/* Settings button padding (Figma Button 6501:20193): 16px before the label (8 padding + 8 text inset), then the arrow with 8px after it.
+   The tail sits at the right and is centred on the header band, as in the Designer frame. */
+.fd-top > .fd-top__tail { align-self: center; margin-left: auto; }
+.fd-top .fd-settings > .rmx-btn { padding: 0 var(--spacing-xs) 0 var(--spacing-md); gap: var(--spacing-xs); }
