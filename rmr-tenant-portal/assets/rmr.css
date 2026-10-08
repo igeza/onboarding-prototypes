@@ -429,3 +429,6 @@ html, body { height: 100%; overflow: hidden; }
 .btn--table { height: 24px; }
 .main--forms .step-card { width: min(1140px, 100%); }
 .form-footer { display: flex; align-items: center; justify-content: flex-end; gap: var(--spacing-xs); }
+
+/* The page itself paints on a light canvas, so a refresh never flashes black when the browser or Mac is in dark mode. */
+html { background: #f6fafe; color-scheme: light; }

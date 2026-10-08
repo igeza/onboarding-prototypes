@@ -20,8 +20,8 @@ depending on step order) — not built; fields are empty as in the mock.
 
 ## Last step and Submit (Figma "Form" `6070:43065`, "Prospect Dashboard - Submit" `6473:24568`)
 
-- `10-pet-information` (the last step) now ends with Back, **Save** and **Submit Onboarding** (no Skip). Submit Onboarding goes to `11-dashboard-complete`.
-- **Save** marks the step done and goes to `13-dashboard-submit`: the dashboard at 100% with every step "View", `$0.00` balance and a **Submit Onboarding** button, i.e. everything done but not yet submitted. That button goes to `11-dashboard-complete`. Where Save leads is our reading of "this screen appears if they don't submit"; the mocks do not show the link.
+- `10-pet-information` (the last step) now ends with Back, **Mark as Complete** and **Finish Onboarding** (no Skip), as in the Figma Form frame. Finish Onboarding goes to `11-dashboard-complete`.
+- **Mark as Complete** marks the step done and goes to `13-dashboard-submit`: the dashboard at 100% with every step "View", `$0.00` balance and a **Submit Onboarding** button, i.e. everything done but not yet submitted. That button goes to `11-dashboard-complete`. Where Save leads is our reading of "this screen appears if they don't submit"; the mocks do not show the link.
 - Every onboarding step screen (02 to 10) has a **Back to Dashboard** button at the right of the Context Bar. It is the secondary button style; there is no mock for it, so its look is assumed. It is hidden in the RMX Portal Preview.
 
 ## What's real vs faked
@@ -52,3 +52,7 @@ Faked / prototype-only:
 - `02-docs-to-sign` lists only the documents chosen in the designer (key `rmx-documents`). The Setup Payment Method step follows `rmx-payment-steps`: Payment Method = `07`, Autopay = `08` and `09`; only Payment Method makes `07` the last page (Skip / Save), only Autopay redirects `07` to `08`.
 - A step disappears when the designer's choice for it is empty (`rmx-documents`, `rmx-insurance-options`, `rmx-payment-steps`, `rmx-form`): it leaves the stepper and Back / Next / Skip jump over it. With no designer data at all (prototype opened on its own) every step shows.
 - `03-file-upload` builds its upload boxes from the files saved in the designer's Select Files dialog (`rmx-files`); with none saved it shows the default boxes, Profile Photo and Proof of Income.
+
+## Mark as Complete / Update (Figma "RMR Onboarding" section `6095:19091`)
+
+So a resident can tell whether a step is done: a step's main button says **Mark as Complete** until the step is done, and **Update** once it is (Update is our addition; the mocks only show Mark as Complete). Steps with the button: Documents to Sign, File Upload, Insurance, Setup Payment Method (the Autopay page) and Additional Information. Mark as Complete saves the step and goes to the next one; **Update** saves any changes and goes back to the dashboard. **Skip** leaves the step as it was and moves on. On Documents to Sign, as mocked, Mark as Complete stays disabled until every document is signed. The Pay Charges pages and the Payment Method choice screens keep their own Back / Next buttons.

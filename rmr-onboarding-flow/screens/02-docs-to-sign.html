@@ -53,7 +53,7 @@
     <p style="text-align:right;font-size:14px;line-height:20px;letter-spacing:.28px;color:var(--text-secondary)">3 Total Documents</p>
   </div>
 </section>
-<div class="footer-buttons" style="justify-content:flex-end" data-component="Footer Buttons"><button type="button" class="btn btn--primary" id="docs-next" data-component="Button" data-href="03-file-upload.html"><span class="btn__container">Next</span></button></div>
+<div class="footer-buttons" style="justify-content:flex-end" data-component="Footer Buttons"><div style="display:flex;align-items:center;gap:24px"><a class="btn--text" href="03-file-upload.html" data-href="03-file-upload.html" data-step-skip="0" data-component="Button">Skip</a><button type="button" class="btn btn--primary" id="docs-next" data-component="Button" data-href="03-file-upload.html" data-step-btn="0"><span class="btn__container">Mark as Complete</span></button></div></div>
 </main>
 <div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
 </div>
@@ -81,6 +81,7 @@ try { var k = 'rmr-step-status', st = JSON.parse(sessionStorage.getItem(k)); if 
   function sync() {
     var all = rows().every(function (tr) { return signed.indexOf(name(tr)) !== -1; });
     if (all) next.setAttribute('data-step-save', '0'); else next.removeAttribute('data-step-save');
+    next.disabled = !all;   // Mark as Complete waits until every document is signed
   }
   rows().forEach(function (tr) { if (signed.indexOf(name(tr)) !== -1) mark(tr); });
   document.querySelector('.table tbody').addEventListener('click', function (e) {

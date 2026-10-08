@@ -415,3 +415,6 @@ html, body { height: 100%; overflow: hidden; }
 .context-bar__back { position: relative; flex: none; }
 .is-embed .context-bar__back { display: none; }
 .dash-hero__text .btn { align-self: flex-start; margin-top: var(--spacing-xs); }
+
+/* The page itself paints on a light canvas, so a refresh never flashes black when the browser or Mac is in dark mode. */
+html { background: #f6fafe; color-scheme: light; }

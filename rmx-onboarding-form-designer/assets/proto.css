@@ -253,3 +253,62 @@ main.fd .fd-canvas { min-height: 0; overflow: auto; }
    The tail sits at the right and is centred on the header band, as in the Designer frame. */
 .fd-top > .fd-top__tail { align-self: center; margin-left: auto; }
 .fd-top .fd-settings > .rmx-btn { padding: 0 var(--spacing-xs) 0 var(--spacing-md); gap: var(--spacing-xs); }
+
+/* The page itself paints on a light canvas, so a refresh never flashes black when the browser or Mac is in dark mode. */
+html { background: #ffffff; color-scheme: light; }
+
+/* Options on the canvas look like the onboarding form: no indent, Yes/No in a row, checkboxes in two equal columns across the full width, one line per label. */
+.fd-q .fd-q__opts { padding-left: 0; }
+.fd-q .fd-q__opts.fd-q__opts--row { flex-direction: row; flex-wrap: wrap; gap: var(--spacing-xs) var(--spacing-xl); }
+.fd-q .fd-q__opts.fd-q__opts--checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-xs) var(--spacing-xl); width: 100%; }
+.fd-q__opts--checks .rmx-check .rmx-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* "Form Setup" in the context bar goes back to the Form Templates register */
+.rmx-contextbar__title--link { text-decoration: none; cursor: pointer; }
+
+/* Settings menu: wide enough that every line of text stays on one line */
+.rmx-menu-layer .rmx-menu .wt-menuhead, .rmx-menu-layer .rmx-menu .wt-sub { white-space: nowrap; }
+.rmx-menu-layer .rmx-menu .wt-menuhead { height: 36px; padding: 0 var(--spacing-md); }
+.rmx-menu-layer .rmx-menu .wt-sub { padding-left: var(--spacing-xl); padding-right: var(--spacing-md); }
+
+/* Fields above a register use the Input Field "Register" style: white fill, blue border, blue label, and a blue search icon. */
+.rmx-field--filter .rmx-field__box > .rmx-icon:first-child { color: var(--icon-primary, var(--icon-brand)); }
+
+/* Register selector panel (Type above the Form Templates register): Select All beside a search box, a checkbox per option,
+   and a footer with "N selected" and a blue "clear". */
+[hidden].rs-panel { display: none; }
+.rs-panel { box-sizing: border-box; display: flex; flex-direction: column; background: var(--container-primary); border: 0; border-radius: var(--radius-sm); box-shadow: 0 3px 6px rgba(0, 0, 0, .15); overflow: hidden; }
+.rs-top { display: flex; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-xs); border-bottom: 1px solid var(--border-primary); }
+.rs-search { flex: 1; min-width: 0; }
+.rs-search input { width: 100%; box-sizing: border-box; height: 32px; padding: 0 var(--spacing-xs); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--component-input-default); font: italic 400 14px/20px Roboto, sans-serif; color: var(--text-secondary); outline: 0; }
+.rs-search input:not(:placeholder-shown) { font-style: normal; }
+.rs-search input:focus { border: 2px solid var(--border-secondary); padding: 0 7px; }
+.rs-list { display: flex; flex-direction: column; min-height: 72px; max-height: 216px; overflow: auto; }
+.rs-list .rmx-check { padding: var(--spacing-xs); color: var(--text-secondary); }
+.rs-list .rmx-check:hover { background: var(--container-tertiary); }
+.rs-panel .rmx-check:not([data-checked="true"]) .rmx-check__box > svg { visibility: hidden; }
+.rs-foot { display: flex; align-items: center; justify-content: space-between; padding: var(--spacing-xs); border-top: 1px solid var(--border-primary); color: var(--text-primary); }
+.rs-clear { border: 0; background: none; padding: 0; font: inherit; color: var(--text-link); cursor: pointer; }
+
+/* Add Form dialog (Figma Dialog Overlay 6501:20079) */
+.afm { width: 440px; max-width: calc(100vw - 32px); display: flex; flex-direction: column; }
+.afm__body { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); }
+.afm__body .rmx-field { width: 100%; }
+.afm__body .rmx-field__label { line-height: 16px; display: inline-flex; align-items: center; gap: var(--spacing-xs); color: var(--text-primary); }
+.afm__props { display: flex; align-items: flex-end; gap: var(--spacing-xs); }
+.afm__props .rmx-field { flex: 1; min-width: 0; }
+.afm__check { display: flex; align-items: center; gap: var(--spacing-xs); height: 20px; }
+.afm__info { display: inline-flex; color: var(--icon-brand); }
+.afm__info .rmx-icon { width: 20px; height: 20px; }
+.afm .fd-close { display: inline-flex; padding: 0; border: 0; background: none; color: var(--icon-brand); cursor: pointer; margin-left: 0; }
+.afm .rmx-check:not([data-checked="true"]) .rmx-check__box > svg { visibility: hidden; }
+.afm .rmx-field__box > input { color: var(--text-secondary); }
+
+/* Page scrollbar floats over the content (assets/overlay-scroll.js) so it never changes the page width. */
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+.rmx-overlay-scroll { position: fixed; top: 0; left: 0; z-index: 2000; border-radius: 4px; background: var(--icon-disabled); opacity: 0; transition: opacity .2s; cursor: default; }
+.rmx-overlay-scroll.is-visible, .rmx-overlay-scroll:hover, .rmx-overlay-scroll.is-drag { opacity: .8; }
+.rmx-overlay-scroll:hover, .rmx-overlay-scroll.is-drag { background: var(--text-accent); }
+.rmx-overlay-scroll.is-v { width: 8px; left: auto; }
+.rmx-overlay-scroll.is-h { height: 8px; top: auto; }

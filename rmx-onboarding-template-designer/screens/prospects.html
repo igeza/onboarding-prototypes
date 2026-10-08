@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="rmx-skill" content="4.5.2">
 <meta name="rmx-tokens" content="a6dff32542cd">
-<title>Administration — Rent Manager Express</title>
+<title>Prospects — Rent Manager Express</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/tokens.css">
 <link rel="stylesheet" href="../assets/tokens-local.css">
@@ -15,34 +15,49 @@
 <link rel="stylesheet" href="../assets/responsive.css">
 <link rel="stylesheet" href="../assets/megamenu.css">
 <style>
-/* Screen-local layout only. --icon-rm12 and --brand-600 are Figma variables (Icon/icon-Rm12, Light/Brand/600) that tokens.css does not carry yet. */
-:root { --icon-rm12: #3776bc; --brand-600: #0071aa; }
-.ad-ground { background: var(--container-primary); min-height: calc(100vh - 48px); }
-.ad-header { display: flex; align-items: center; gap: var(--spacing-xl); height: 72px; padding: var(--spacing-xs) var(--spacing-xl); background: var(--container-primary); border-bottom: 1px solid var(--border-primary); }
-.ad-header img { width: 40px; height: 40px; flex: none; }
-.ad-title { margin: 0; font: var(--type-heading-l-regular); color: var(--text-secondary); }
-.ad-search { width: 200px; }
-.ad-search .rmx-field { width: 100%; }
-.ad-search .rmx-field__box { border-color: var(--border-secondary); background: var(--component-input-secondary); }
-.ad-body { display: flex; align-items: stretch; }
-.ad-nav { width: 218px; flex: none; display: flex; flex-direction: column; border-right: 1px solid var(--border-primary); padding: var(--spacing-xs) 0; }
-.ad-nav button { display: block; width: 100%; height: 48px; padding: 0 var(--spacing-md); border: 0; background: none; text-align: left; font: var(--type-heading-s-regular); color: var(--icon-rm12); cursor: pointer; }
-.ad-nav button[aria-current="true"] { position: relative; width: 232px; background: var(--brand-600); color: var(--text-inverse); cursor: default; }
-/* The ribbon's fold (Figma Wrap, 13x12): a dark triangle hanging under the right end, its straight edge on the menu's dividing line. */
-.ad-nav button[aria-current="true"]::after { content: ""; position: absolute; right: 0; bottom: -12px; width: 13px; height: 12px; background: var(--container-secondary-dark); clip-path: polygon(0 0, 100% 0, 0 100%); }
-.ad-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-xl); padding: var(--spacing-md) var(--spacing-2xl); }
-.ad-section__title { width: 200px; padding: var(--spacing-xxs) 0; border-bottom: 2px solid var(--icon-rm12); font: var(--type-paragraph-l-semibold); color: var(--icon-rm12); margin: 0; }
-.ad-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--spacing-4xl) var(--spacing-md); padding-top: var(--spacing-md); }
-.ad-item { display: flex; gap: var(--spacing-xs); align-items: flex-start; min-width: 0; text-decoration: none; color: inherit; cursor: default; }
-a.ad-item { cursor: pointer; }
-a.ad-item:hover .ad-item__title { text-decoration: underline; }
-.ad-item img { width: 50px; height: 50px; flex: none; object-fit: contain; object-position: left top; }
-.ad-item__text { display: flex; flex-direction: column; gap: var(--spacing-xs); min-width: 0; max-width: 305px; }
-.ad-item__title { font: var(--type-label-m-regular); color: var(--text-secondary); }
-.ad-item__desc { font: var(--type-label-s-italic); color: var(--text-primary); }
-.ad-item[hidden] { display: none; }
-@media (max-width: 1279px) { .ad-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 767px) { .ad-grid { grid-template-columns: 1fr; } .ad-body { flex-direction: column; } .ad-nav { width: 100%; flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--border-primary); } .ad-nav button { width: auto; white-space: nowrap; } .ad-nav button[aria-current="true"] { width: auto; } .ad-nav button[aria-current="true"]::after { display: none; } .ad-header { flex-wrap: wrap; height: auto; } }
+/* Screen-local layout only — every value is a token. */
+.tn-ground { background: var(--background-ui-primary); }
+.tn-page { display: flex; flex-direction: column; gap: var(--spacing-md); min-height: calc(100vh - 88px); padding: var(--spacing-md) var(--spacing-xl); }
+.tn-filterrow { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--spacing-md); }
+.tn-filterrow__lead { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--spacing-xs); }
+.tn-filterrow__trail { display: flex; align-items: center; gap: var(--spacing-xs); }
+.tn-w248 { width: 248px; }
+.tn-w248 .rmx-field { width: 100%; }
+.tn-selected .rmx-field__box { background: var(--component-input-secondary); border-color: var(--border-secondary); }
+.tn-saved { display: flex; align-items: stretch; }
+.tn-saved .rmx-field__box { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.tn-saved__tune { display: inline-flex; align-items: center; justify-content: center; width: 28px; flex: none; border: 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: var(--background-primary-button); color: var(--text-inverse); cursor: pointer; }
+.tn-bulk { align-self: flex-end; }
+.tn-check { align-self: flex-end; height: 36px; display: flex; align-items: center; }
+.tn-check .rmx-text { color: var(--text-link); }
+.tn-box { flex: 1; background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); overflow: auto; }
+.tn-register td { white-space: nowrap; }
+.tn-register td:first-child { padding: 0; }
+.tn-register td:first-child .rmx-colorblock { margin-left: var(--spacing-xs); width: 10px; }
+.tn-register td:nth-child(2) > span, .tn-register td:nth-child(4) > span { display: flex; align-items: center; gap: var(--spacing-xs); }
+.tn-register td:nth-child(2) > span > b { display: inline-flex; align-items: center; height: 24px; padding: 0 var(--spacing-xs); border-radius: var(--radius-sm); background: var(--text-error); color: var(--text-inverse); font: var(--type-label-m-regular); }
+.tn-register td:nth-child(7) > span { display: inline-flex; align-items: center; gap: var(--spacing-xs); font: var(--type-label-m-italic); }
+.tn-register td:nth-child(7) i { width: 8px; height: 8px; border-radius: 50%; background: var(--icon-success); }
+.tn-register td:nth-child(7) i[data-past] { background: var(--icon-error); }
+.tn-register th:last-child, .tn-register td:last-child { width: 40px; padding-inline: 0; text-align: center; }
+.tn-register a { color: inherit; text-decoration: none; }
+.tn-register tr[data-href] { cursor: pointer; }
+.tn-register tr[data-href]:hover td { background: var(--container-tertiary); }
+.tn-register a:hover { color: var(--text-link); }
+a.rmx-btn { text-decoration: none; }
+.rmx-field__box .tn-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); }
+button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: pointer; }
+.rmx-field__box > .rmx-icon:last-child:not(:first-child) { margin-left: auto; }
+.tn-register td:last-child .rmx-icon { color: var(--icon-primary); }
+/* Prospects register (Figma RMX Pages 2052:38553): colour marker, Name ... Stage, plus Onboarding Status */
+.tn-register td:first-child .rmx-colorblock { margin-left: 0; width: 8px; }
+/* The page itself never scrolls; only the register does. Totals sit 8px under it (Figma Totals Row). */
+html, body { height: 100%; overflow: hidden; }
+body { display: flex; flex-direction: column; }
+.tn-page { flex: 1; min-height: 0; }
+.tn-box { min-height: 0; }
+.tn-register thead th { position: sticky; top: 0; z-index: 1; }
+.tn-page .rmx-register__totals { margin: calc(-1 * var(--spacing-xs)) 0 0; padding: 0; }
 </style>
 <body class="rmx">
 <!-- RMX_ICONS:START - injected from assets/icons.svg, regenerated by check.mjs --fix -->
@@ -121,6 +136,9 @@ a.ad-item:hover .ad-item__title { text-decoration: underline; }
 <symbol id="drag-indicator" viewBox="0 0 20 20" fill="currentColor"><path d="M0.283125 9.475H19.7081V10.5581H0.283125V9.475Z"/><path d="M10.6581 6.15812V3.04125L12.3331 4.71625C12.4081 4.78312 12.5081 4.82437 12.6081 4.81625C12.7081 4.81625 12.8081 4.77437 12.8831 4.70812C12.9581 4.64187 13.0081 4.54125 13.0081 4.43312C13.0081 4.33312 12.9581 4.23312 12.8913 4.16625L10.3331 1.60812C10.3 1.56625 10.25 1.54125 10.2081 1.51625C10.1163 1.48312 10.0163 1.48312 9.925 1.51625C9.875 1.54125 9.83313 1.56625 9.8 1.60812L7.24187 4.15812C7.16687 4.225 7.13375 4.325 7.13375 4.425C7.14187 4.525 7.17562 4.625 7.24187 4.70812C7.325 4.775 7.425 4.81625 7.525 4.81625C7.625 4.82437 7.725 4.78312 7.79187 4.70812L9.475 3.025V6.15812H0.283125V7.33312H19.7081V6.15812H10.6581Z"/><path d="M19.7169 12.7087H0.28375V13.7919H9.48375V17.025L7.80063 15.3419C7.73375 15.2669 7.63375 15.225 7.53375 15.2337C7.43375 15.2425 7.33375 15.2756 7.25062 15.3419C7.18375 15.425 7.1425 15.5169 7.1425 15.625C7.13438 15.725 7.17562 15.825 7.25062 15.8919L9.80062 18.4419C9.83375 18.4837 9.88375 18.5087 9.92562 18.5337C10.0175 18.5669 10.1175 18.5669 10.2087 18.5337C10.2587 18.5087 10.3006 18.4837 10.3337 18.4419L12.8919 15.8837C12.9669 15.8169 13.0087 15.7169 13.0169 15.6169C13.0169 15.5087 12.975 15.4088 12.8919 15.3419C12.8169 15.2669 12.7169 15.2337 12.6169 15.2337C12.5169 15.2256 12.4169 15.2588 12.3419 15.3338L10.6669 17.0088V13.8006H19.7169V12.7087Z"/></symbol>
 <symbol id="play-arrow" viewBox="0 0 20 20" fill="currentColor"><path d="M5.41667 4.16667V15.8333L14.5833 10L5.41667 4.16667Z"/></symbol>
 <symbol id="view-column" viewBox="0 0 24 24" fill="currentColor"><path d="M14.67 6V18C14.67 18.55 14.22 19 13.67 19H10.34C9.79 19 9.34 18.55 9.34 18V6C9.34 5.45 9.79 5 10.34 5H13.67C14.22 5 14.67 5.45 14.67 6ZM16.67 19H20C20.55 19 21 18.55 21 18V6C21 5.45 20.55 5 20 5H16.67C16.12 5 15.67 5.45 15.67 6V18C15.67 18.55 16.11 19 16.67 19ZM8.33 18V6C8.33 5.45 7.88 5 7.33 5H4C3.45 5 3 5.45 3 6V18C3 18.55 3.45 19 4 19H7.33C7.89 19 8.33 18.55 8.33 18Z"/></symbol>
+<symbol id="units" viewBox="0 0 20 20" fill="currentColor"><path d="M7.05 0V10.1219H11.9219V20H20V0H7.05ZM12.4781 9C12.4781 9.5175 12.0581 9.9375 11.5406 9.9375H10.16C9.64937 9.92813 9.23812 9.5125 9.23812 9V7.60938C9.23812 7.09688 9.64875 6.68125 10.1587 6.67188H11.5631C12.0806 6.67188 12.5006 7.09188 12.5006 7.60938L12.4781 9ZM12.4781 4.35313C12.4781 4.87063 12.0581 5.29063 11.5406 5.29063H10.16C9.64937 5.28125 9.23812 4.86563 9.23812 4.35313V2.95875C9.23812 2.44625 9.64875 2.03063 10.1587 2.02125H11.5631C12.0806 2.02125 12.5006 2.44125 12.5006 2.95875L12.4781 4.35313ZM17.7219 13.6469C17.7219 14.1644 17.3019 14.5844 16.7844 14.5844H15.4037C14.8862 14.5844 14.4662 14.1644 14.4662 13.6469V12.2563C14.4662 11.7388 14.8862 11.3188 15.4037 11.3188H16.7969C17.3144 11.3188 17.7344 11.7388 17.7344 12.2563L17.7219 13.6469ZM17.7219 9C17.7219 9.5175 17.3019 9.9375 16.7844 9.9375H15.4037C14.8862 9.9375 14.4662 9.5175 14.4662 9V7.60938C14.4662 7.09188 14.8862 6.67188 15.4037 6.67188H16.7969C17.3144 6.67188 17.7344 7.09188 17.7344 7.60938L17.7219 9ZM17.7219 4.35313C17.7219 4.87063 17.3019 5.29063 16.7844 5.29063H15.4037C14.8862 5.29063 14.4662 4.87063 14.4662 4.35313V2.95875C14.4662 2.44125 14.8862 2.02125 15.4037 2.02125H16.7969C17.3144 2.02125 17.7344 2.44125 17.7344 2.95875L17.7219 4.35313ZM0 9.18437V20H12.8625V9.18437H0ZM5.41812 16.9681C5.41812 17.4462 5.03062 17.8337 4.5525 17.8337H3.24937C2.7725 17.8337 2.38687 17.4481 2.38687 16.9712V15.6619C2.38687 15.185 2.7725 14.7975 3.24937 14.7962H4.55625C5.03438 14.7981 5.42188 15.1863 5.42188 15.6656L5.41812 16.9681ZM5.41812 12.6406C5.41625 13.1175 5.03 13.5031 4.5525 13.5031H3.24937C2.7725 13.5031 2.38687 13.1175 2.38687 12.6406V11.3344C2.38687 10.8575 2.7725 10.47 3.24937 10.4688H4.55625C5.03438 10.4706 5.42188 10.8588 5.42188 11.3381L5.41812 12.6406ZM10.3125 16.9681C10.3125 17.4462 9.925 17.8337 9.44687 17.8337H8.1525C7.6775 17.8319 7.29312 17.4462 7.29312 16.9712V15.6619C7.29312 15.1862 7.6775 14.8 8.1525 14.7962H9.45938C9.9325 14.8056 10.3125 15.1906 10.3125 15.6644V16.9681ZM10.3125 12.6406C10.3106 13.1175 9.92437 13.5031 9.44687 13.5031H8.1525C7.6775 13.5012 7.29312 13.1156 7.29312 12.6406V11.3344C7.29312 10.8588 7.6775 10.4725 8.1525 10.4688H9.45938C9.9325 10.4781 10.3125 10.8631 10.3125 11.3369V12.6406Z"/></symbol>
+<symbol id="library-add" viewBox="0 0 20 20" fill="currentColor"><path d="M3.33333 5H1.66667V16.6667C1.66667 17.5833 2.41667 18.3333 3.33333 18.3333H15V16.6667H3.33333V5ZM16.6667 1.66667H6.66667C5.75 1.66667 5 2.41667 5 3.33333V13.3333C5 14.25 5.75 15 6.66667 15H16.6667C17.5833 15 18.3333 14.25 18.3333 13.3333V3.33333C18.3333 2.41667 17.5833 1.66667 16.6667 1.66667ZM16.6667 13.3333H6.66667V3.33333H16.6667V13.3333Z"/></symbol>
+<symbol id="library-add-filled" viewBox="0 0 20 20" fill="currentColor"><path d="M3.33333 5H1.66667V16.6667C1.66667 17.5833 2.41667 18.3333 3.33333 18.3333H15V16.6667H3.33333V5ZM16.6667 1.66667H6.66667C5.75 1.66667 5 2.41667 5 3.33333V13.3333C5 14.25 5.75 15 6.66667 15H16.6667C17.5833 15 18.3333 14.25 18.3333 13.3333V3.33333C18.3333 2.41667 17.5833 1.66667 16.6667 1.66667ZM15.8333 9.16667H12.5V12.5H10.8333V9.16667H7.5V7.5H10.8333V4.16667H12.5V7.5H15.8333V9.16667Z"/></symbol>
 </svg>
 <!-- RMX_LOCAL_ICONS:END -->
 
@@ -158,29 +176,303 @@ a.ad-item:hover .ad-item__title { text-decoration: underline; }
   </div>
 </header>
 
-<div class="ad-ground">
-<div class="ad-header">
-  <img src="../assets/admin/rmx.svg" alt="">
-  <h1 class="ad-title">Administration</h1>
-  <div class="ad-search"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><svg class="rmx-icon"><use href="#search"></use></svg><input type="text" placeholder="Find an item" id="ad-find" aria-label="Find an item"></div></div></div>
+<!-- Context Bar — Prospects register, built like the Tenants register. -->
+<div class="rmx-contextbar" data-rmx-component="Context Bar">
+  <div class="rmx-contextbar__leading">
+    <span class="rmx-contextbar__title">Prospects</span>
+  </div>
+  <div class="rmx-contextbar__trailing">
+    <svg class="rmx-icon" data-rmx-todo="Print is not built in this prototype"><use href="#print"></use></svg>
+    <svg class="rmx-icon" data-rmx-todo="Refresh is not built in this prototype"><use href="#autorenew"></use></svg>
+    <svg class="rmx-icon" data-rmx-todo="Help is not built in this prototype"><use href="#help"></use></svg>
+  </div>
 </div>
-<div class="ad-body">
-<nav class="ad-nav" aria-label="Administration"><button type="button" data-rmx-todo="Preferences is not built in this prototype">Preferences</button><button type="button" data-rmx-todo="Rental Info is not built in this prototype">Rental Info</button><button type="button" data-rmx-todo="Accounting is not built in this prototype">Accounting</button><button type="button" data-rmx-todo="Owners is not built in this prototype">Owners</button><button type="button" data-rmx-todo="Payables is not built in this prototype">Payables</button><button type="button" data-rmx-todo="Receivables is not built in this prototype">Receivables</button><button type="button" data-rmx-todo="Service is not built in this prototype">Service</button><button type="button" data-rmx-todo="Users is not built in this prototype">Users</button><button type="button" data-rmx-todo="Customization is not built in this prototype">Customization</button><button type="button" data-rmx-todo="Rollback is not built in this prototype">Rollback</button><button type="button" data-rmx-todo="Automation is not built in this prototype">Automation</button><button type="button" data-rmx-todo="Import is not built in this prototype">Import</button><button type="button" data-rmx-todo="Integrations is not built in this prototype">Integrations</button><button type="button" data-rmx-todo="Locations is not built in this prototype">Locations</button><button type="button" aria-current="true">rmResident Portal</button></nav>
-<main class="ad-main">
-  <section><h2 class="ad-section__title">Integrations</h2><div class="ad-grid"><div class="ad-item" data-rmx-todo="Available Integrations is not built in this prototype"><img src="../assets/admin/available-integrations.svg" alt=""><span class="ad-item__text"><span class="ad-item__title">Available Integrations</span><span class="ad-item__desc">Browse available Rent Manager integrations with our partners and directly request activation.</span></span></div><div class="ad-item" data-rmx-todo="My Integrations is not built in this prototype"><img src="../assets/admin/my-integrations.svg" alt=""><span class="ad-item__text"><span class="ad-item__title">My Integrations</span><span class="ad-item__desc">Review your active integrations. Find contact information for vendors, deactivate, or modify associated settings.</span></span></div></div></section>
-  <section><h2 class="ad-section__title">Locations</h2><div class="ad-grid"><div class="ad-item" data-rmx-todo="Manage Locations is not built in this prototype"><img src="../assets/admin/manage-locations.svg" alt=""><span class="ad-item__text"><span class="ad-item__title">Manage Locations</span><span class="ad-item__desc">Add, edit, delete, or switch to additional database locations.</span></span></div><div class="ad-item" data-rmx-todo="Change Locations is not built in this prototype"><img src="../assets/admin/change-locations.svg" alt=""><span class="ad-item__text"><span class="ad-item__title">Change Locations</span><span class="ad-item__desc">Switch to a different database location.</span></span></div></div></section>
-  <section><h2 class="ad-section__title">rmResident Portal</h2><div class="ad-grid"><div class="ad-item" data-rmx-todo="Portal Profiles is not built in this prototype"><img src="../assets/admin/portal-profiles.svg" alt=""><span class="ad-item__text"><span class="ad-item__title">Portal Profiles</span><span class="ad-item__desc">Customize colors, themes, logos, and page settings by property type to match your brand.</span></span></div><div class="ad-item" data-rmx-todo="Portal Login is not built in this prototype"><img src="../assets/admin/portal-login.svg" alt=""><span class="ad-item__text"><span class="ad-item__title">Portal Login</span><span class="ad-item__desc">Customize the login experience for prospects and tenants, and disable portal access by property.</span></span></div><div class="ad-item" data-rmx-todo="Payment Policies is not built in this prototype"><img src="../assets/admin/payment-policies.svg" alt=""><span class="ad-item__text"><span class="ad-item__title">Payment Policies</span><span class="ad-item__desc">Set up payment policies per property</span></span></div><div class="ad-item" data-rmx-todo="rmResident App Settings is not built in this prototype"><img src="../assets/admin/app-settings.svg" alt=""><span class="ad-item__text"><span class="ad-item__title">rmResident App Settings</span><span class="ad-item__desc">Manage rmResident app settings like push notifications, and tenant self-inspections</span></span></div><a class="ad-item" href="onboarding-templates.html"><img src="../assets/admin/onboarding.svg" alt=""><span class="ad-item__text"><span class="ad-item__title">Onboarding Templates</span><span class="ad-item__desc">Create onboarding workflows to send out to your prospects pre-move in.</span></span></a></div></section>
+
+<main class="rmx-page tn-ground tn-page">
+  <div class="tn-filterrow">
+    <div class="tn-filterrow__lead">
+      <button type="button" class="rmx-btn rmx-btn--primary tn-bulk" data-rmx-todo="Bulk Actions is not built in this prototype"><span>Bulk Actions</span><svg class="rmx-icon"><use href="#arrow-drop-down"></use></svg></button>
+      <div class="tn-w248 tn-selected"><div class="rmx-field rmx-field--filter" data-rmx-component="Input Field">
+        <span class="rmx-field__label">Search</span>
+        <div class="rmx-field__box"><svg class="rmx-icon"><use href="#search"></use></svg><input type="text" placeholder="Find a prospect" data-rmx-filter="#prospects"><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></div>
+      </div></div>
+      <div class="tn-w248 tn-selected"><div class="rmx-field rmx-field--filter" data-rmx-component="Input Field">
+        <span class="rmx-field__label">Saved Filters</span>
+        <div class="tn-saved"><button type="button" class="rmx-field__box" data-rmx-todo="Saved Filters are not built in this prototype"><span class="tn-value">&lt; No Filter &gt;</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><button type="button" class="tn-saved__tune" aria-label="Filter settings" data-rmx-todo="Filter settings are not built in this prototype"><svg class="rmx-icon"><use href="#tune"></use></svg></button></div>
+      </div></div>
+                  <div class="tn-w248 tn-selected"><div class="rmx-field rmx-field--filter" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Status</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="tn-value" data-rmx-value>All Selected</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="All Selected">All Selected</button></div></div></div>
+      <div class="tn-w248 tn-selected"><div class="rmx-field rmx-field--filter" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Leasing Agent</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="tn-value" data-rmx-value>All Selected</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="All Selected">All Selected</button></div></div></div>
+    </div>
+    <div class="tn-filterrow__trail">
+      <button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Add Prospect is not built in this prototype"><svg class="rmx-icon"><use href="#add-circle"></use></svg><span>Add Prospect</span></button>
+      <button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Add Guest is not built in this prototype"><svg class="rmx-icon"><use href="#add-circle"></use></svg><span>Add Guest</span></button>
+      <button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Merge is not built in this prototype"><span>Merge</span></button>
+    </div>
+  </div>
+
+  <div class="tn-box">
+    <table class="rmx-register tn-register" data-rmx-rowlinks id="prospects">
+      <colgroup><col style="width:32px"><col><col><col><col><col style="width:72px"><col style="width:112px"><col><col style="width:140px"><col style="width:40px"></colgroup>
+      <thead><tr>
+        <th></th><th data-sort>Name</th><th data-sort>Property</th><th data-sort>Street</th><th data-sort>City</th><th data-sort>State</th><th data-sort>Postal Code</th><th data-sort>Stage</th><th data-sort>Onboarding Status</th>
+        <th><svg class="rmx-icon rmx-icon--24"><use href="#view-column"></use></svg></th>
+      </tr></thead>
+      <tbody>
+        <tr data-rmx-row data-href="prospect.html">
+          <td></td>
+          <td><span><a href="prospect.html">Charlie Apegian</a></span></td>
+          <td>Riverview Apartments</td>
+          <td>1492 Loveland-Madeira Road</td>
+          <td>Loveland</td>
+          <td>OH</td>
+          <td>45140</td>
+          <td>Showing Scheduled</td>
+          <td>Started</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td><span class="rmx-colorblock" style="background:var(--icon-primary)"></span></td>
+          <td><span>Kiley Donahue</span></td>
+          <td>Clearcreek Condominiums</td>
+          <td>3434 Fox Ridge Drive</td>
+          <td>Madeira</td>
+          <td>OH</td>
+          <td>45140</td>
+          <td>Lease Published</td>
+          <td>Submitted</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td><span class="rmx-colorblock" style="background:var(--icon-attention)"></span></td>
+          <td><span>Jaxon Frami</span></td>
+          <td>Riverview Apartments</td>
+          <td>7899 Stillwell Road</td>
+          <td>North Bend</td>
+          <td>OH</td>
+          <td>45040</td>
+          <td>Waitlisted</td>
+          <td>Sent</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Solon Crona</span></td>
+          <td>Buckeye Hall</td>
+          <td>5677 Harrison Avenue</td>
+          <td>Miami Heights</td>
+          <td>OH</td>
+          <td>45052</td>
+          <td>Waitlisted</td>
+          <td>Sent</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Emelia Toy</span></td>
+          <td>Riverview Apartments</td>
+          <td>6789 Winton Road</td>
+          <td>Carthage</td>
+          <td>OH</td>
+          <td>45238</td>
+          <td>Waitlisted</td>
+          <td>Started</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Arlo Swift</span></td>
+          <td>Flagstone Manufactured Housing</td>
+          <td>8901 Reading Road</td>
+          <td>Oakley</td>
+          <td>OH</td>
+          <td>45223</td>
+          <td>New Prospect</td>
+          <td>Sent</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Kenton Emard</span></td>
+          <td>Tri-County Mall</td>
+          <td>4252 Duck Creek Road</td>
+          <td>Newtown</td>
+          <td>OH</td>
+          <td>45237</td>
+          <td>Showing Scheduled</td>
+          <td>Started</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Eli Beer</span></td>
+          <td>Clearcreek Condominiums</td>
+          <td></td>
+          <td>Harrison</td>
+          <td>OH</td>
+          <td>45224</td>
+          <td>New Prospect</td>
+          <td>Sent</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Shea Trantow</span></td>
+          <td>Riverview Apartments</td>
+          <td>2354 Ferguson Road</td>
+          <td>Cheviot</td>
+          <td>OH</td>
+          <td>45211</td>
+          <td>New Prospect</td>
+          <td>Sent</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td><span class="rmx-colorblock" style="background:var(--icon-disabled)"></span></td>
+          <td><span>Doug Pfeffer</span></td>
+          <td>Buckeye Hall</td>
+          <td>2345 Spring Grove Avenue</td>
+          <td>Norwood</td>
+          <td>OH</td>
+          <td>45240</td>
+          <td>Showing Scheduled</td>
+          <td>Started</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td><span class="rmx-colorblock" style="background:var(--icon-success)"></span></td>
+          <td><span>Tod Corkery</span></td>
+          <td>Riverview Apartments</td>
+          <td>1212 Race Street</td>
+          <td>Camp Washington</td>
+          <td>OH</td>
+          <td>45229</td>
+          <td>Waitlisted</td>
+          <td>Submitted</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td><span class="rmx-colorblock" style="background:var(--icon-primary)"></span></td>
+          <td><span>Kobe Bayer</span></td>
+          <td>Flagstone Manufactured Housing</td>
+          <td>1343 West Fork Road</td>
+          <td>North College Hill</td>
+          <td>OH</td>
+          <td>45239</td>
+          <td>Lease Published</td>
+          <td>Submitted</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Jayson Ankunding</span></td>
+          <td>Tri-County Mall</td>
+          <td>7900 Blue Rock Road</td>
+          <td>Delhi</td>
+          <td>OH</td>
+          <td>45231</td>
+          <td>New Prospect</td>
+          <td>Sent</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Gussie Jast</span></td>
+          <td>Clearcreek Condominiums</td>
+          <td>9012 Hamilton Avenue</td>
+          <td>Finneytown</td>
+          <td>OH</td>
+          <td>45014</td>
+          <td>Showing Scheduled</td>
+          <td>Started</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td><span class="rmx-colorblock" style="background:var(--icon-attention)"></span></td>
+          <td><span>Crystel Crist</span></td>
+          <td>Riverview Apartments</td>
+          <td>2352 Derringer Court</td>
+          <td>Northside</td>
+          <td>OH</td>
+          <td>45247</td>
+          <td>New Prospect</td>
+          <td>Sent</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Eusebio Crona</span></td>
+          <td>Buckeye Hall</td>
+          <td>2323 Yellow Creek Road</td>
+          <td>Fairfield</td>
+          <td>OH</td>
+          <td>45230</td>
+          <td>New Prospect</td>
+          <td>Sent</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Elmer Emmerich</span></td>
+          <td>Riverview Apartments</td>
+          <td>9088 Bridgetown Road</td>
+          <td>Cleves</td>
+          <td>OH</td>
+          <td>45215</td>
+          <td>Lease Published</td>
+          <td>Submitted</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td><span class="rmx-colorblock" style="background:var(--icon-error)"></span></td>
+          <td><span>Jalon Franecki</span></td>
+          <td>Flagstone Manufactured Housing</td>
+          <td>4566 Este Avenue</td>
+          <td>Monfort Heights</td>
+          <td>OH</td>
+          <td>45249</td>
+          <td>Waitlisted</td>
+          <td>Started</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Coty Quitzon</span></td>
+          <td>Tri-County Mall</td>
+          <td>5678 Vine Street</td>
+          <td>White Oak</td>
+          <td>OH</td>
+          <td>45202</td>
+          <td>Waitlisted</td>
+          <td>Sent</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+        <tr data-rmx-row>
+          <td></td>
+          <td><span>Jalon Franecki</span></td>
+          <td>Clearcreek Condominiums</td>
+          <td></td>
+          <td>Hartwell</td>
+          <td>OH</td>
+          <td>45241</td>
+          <td>Showing Scheduled</td>
+          <td>Sent</td>
+          <td><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon"><use href="#more-vert"></use></svg></button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="rmx-register__totals"><span data-rmx-count="#prospects">20</span> of 517 Prospects</p>
 </main>
-</div>
-</div>
+
 <script src="../assets/app.js"></script>
 <script src="../assets/megamenu.js"></script>
 <script>
-/* Find an item: filters the items as you type. */
-document.getElementById('ad-find').addEventListener('input', function () {
-  var q = this.value.trim().toLowerCase();
-  document.querySelectorAll('.ad-item').forEach(function (it) { it.hidden = !!q && it.textContent.toLowerCase().indexOf(q) === -1; });
-  document.querySelectorAll('.ad-main section').forEach(function (s) { s.hidden = !!q && !s.querySelector('.ad-item:not([hidden])'); });
+/* A prospect row with a detail page opens its detail page from anywhere on the row (not from the unit pill or the row menu). */
+document.querySelectorAll('#prospects tr[data-href]').forEach(function (tr) {
+  tr.addEventListener('click', function (e) {
+    if (e.target.closest('button, .rmx-pill, a')) return;
+    window.location.href = tr.getAttribute('data-href');
+  });
 });
 </script>
 <script src="../assets/overlay-scroll.js"></script>

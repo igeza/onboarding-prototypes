@@ -255,3 +255,18 @@
 
 /* With an overlay open the page behind does not scroll (and shows no scrollbar), so overlay margins are even. */
 html:has(.rmx-overlay.is-open), body:has(.rmx-overlay.is-open) { overflow: hidden; }
+
+/* The page itself paints on a light canvas, so a refresh never flashes black when the browser or Mac is in dark mode. */
+html { background: #ffffff; color-scheme: light; }
+
+/* Fields above a register use the Input Field "Register" style: white fill, blue border, blue label, and a blue search icon. */
+.rmx-field--filter .rmx-field__box > .rmx-icon:first-child { color: var(--icon-primary, var(--icon-brand)); }
+
+/* Page scrollbar floats over the content (assets/overlay-scroll.js) so it never changes the page width. */
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+.rmx-overlay-scroll { position: fixed; top: 0; left: 0; z-index: 2000; border-radius: 4px; background: var(--icon-disabled); opacity: 0; transition: opacity .2s; cursor: default; }
+.rmx-overlay-scroll.is-visible, .rmx-overlay-scroll:hover, .rmx-overlay-scroll.is-drag { opacity: .8; }
+.rmx-overlay-scroll:hover, .rmx-overlay-scroll.is-drag { background: var(--text-accent); }
+.rmx-overlay-scroll.is-v { width: 8px; left: auto; }
+.rmx-overlay-scroll.is-h { height: 8px; top: auto; }

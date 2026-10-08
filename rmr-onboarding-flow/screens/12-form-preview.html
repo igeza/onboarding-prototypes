@@ -11,11 +11,24 @@
 <link rel="stylesheet" href="../assets/proto.css">
 <style>
 /* Preview-only: the form step shown by the RMX Form Designer's "Portal Preview" (no header or menu). */
-.preview { position: relative; min-height: 100vh; overflow: clip; isolation: isolate; }
+/* The frame is fixed-height and the page does not scroll, so the preview fills it and the form scrolls inside. */
+.preview { position: relative; display: flex; flex-direction: column; height: 100vh; overflow: clip; isolation: isolate; }
+.preview .main { flex: 1 1 auto; min-height: 0; }
 .preview .portal-bg { z-index: 0; }
 .preview .main { z-index: 1; }
-.preview textarea { display: block; width: 100%; border: 0; outline: 0; resize: vertical; font: inherit; color: inherit; background: none; }
-.preview .question__fields { max-width: 480px; }
+/* The questions look exactly like the form in the onboarding (10-pet-information): bold question, hint under it, full-width fields. */
+.form-grid { display: flex; flex-direction: column; gap: var(--spacing-xl); align-items: stretch; }
+.form-grid .question { padding: 0; gap: 0; }
+.form-grid .question__text { font-weight: 700; letter-spacing: 0; }
+.form-grid .question__hint { margin: 4px 0 0; padding-left: 0; font-size: var(--font-size-xs); line-height: 16px; }
+.form-grid .question__slot { padding-left: 0; margin-top: var(--spacing-xs); }
+.form-grid .question__slot > .input, .form-grid .question__slot > .dropdown, .form-grid .question__slot > .attach { width: 100%; }
+.form-grid .question__slot .dropdown .input { width: 100%; }
+.form-grid .question--row .question__slot { flex-direction: row; gap: var(--spacing-xl); }
+.form-grid .question--checks .question__slot { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-xs) var(--spacing-xl); width: 50%; }
+.input--area { align-items: flex-start; height: 91px; }
+.input--area textarea { flex: 1 1 0; height: 100%; padding: 0; border: 0; outline: 0; resize: none; background: transparent; font-family: inherit; font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; color: var(--text-primary); }
+.input--area textarea::placeholder { font-style: italic; color: var(--text-accent); opacity: 1; }
 .btn[disabled] { opacity: 0.5; cursor: default; }
 </style>
 </head>
@@ -25,7 +38,7 @@
 <div class="context-bar" data-component="Context Bar"><div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div><h1 class="context-bar__title">Form</h1></div>
 <section class="step-card step-card--fit" data-component="DTS">
   <div class="step-card__head" data-component="Header"><h2 class="step-card__title">Basic Info</h2><p class="step-card__subtitle">Please fill in the below information</p></div>
-  <div id="questions">
+  <div id="questions" class="form-grid">
   <div class="question" data-component="Question">
     <p class="question__text">1. Do you have pets?*</p>
     <div class="question__slot">
@@ -50,20 +63,21 @@
   if (!saved) return;
   function esc(t) { var d = document.createElement('div'); d.textContent = t == null ? '' : t; return d.innerHTML; }
   var n = 0;
+  var PH = 'Enter your answer';
   document.getElementById('questions').innerHTML = saved.map(function (f, i) {
     if (f.type === 'tx') return '<div class="question" data-component="Question"><p class="question__text">' + esc(f.title) + '</p></div>';
-    if (f.type === 'at') return '<div class="question" data-component="Question">' + (f.title ? '<p class="question__text">' + esc(f.title) + '</p>' : '') + '<div class="question__slot"><div class="question__fields"><a class="btn--text" href="#" data-component="Button"><img src="../assets/img/file-download.svg" alt="" width="20" height="20"><span>' + esc(f.file || 'No file attached') + '</span></a></div></div></div>';
+    if (f.type === 'at') return '<div class="question" data-component="Question">' + (f.title ? '<p class="question__text">' + esc(f.title) + '</p>' : '') + '<div class="question__slot"><a class="btn--text" href="#" data-component="Button"><img src="../assets/img/file-download.svg" alt="" width="20" height="20"><span>' + esc(f.file || 'No file attached') + '</span></a></div></div>';
     n++;
-    var o = (f.opts && f.opts[f.type]) || [], name = 'q' + i, slot;
-    if (f.type === 'mc') slot = o.map(function (v) { return '<label class="radio" data-component="Radio Button"><input type="radio" name="' + name + '"><span class="radio__mark"></span><span>' + esc(v) + '</span></label>'; }).join('');
-    else if (f.type === 'cb') slot = o.map(function (v) { return '<label class="checkbox" data-component="Checkbox"><input type="checkbox" name="' + name + '"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>' + esc(v) + '</span></label>'; }).join('');
-    else if (f.type === 'dd') slot = '<div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" aria-haspopup="listbox" aria-expanded="false"></button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="' + name + '"><div class="dropdown__panel" role="listbox" hidden>' + o.map(function (v) { return '<div class="dropdown__item" role="option" data-value="' + esc(v) + '">' + esc(v) + '</div>'; }).join('') + '</div></div>';
-    else if (f.type === 'pa') slot = '<div class="question__fields"><div class="input" data-component="Input field"><textarea name="' + name + '" rows="3"></textarea></div></div>';
-    else if (f.type === 'dt') slot = '<div class="question__fields"><div class="input" data-component="Input field"><input type="text" name="' + name + '" autocomplete="off"><img src="../assets/img/calendar-today.svg" alt="" width="20" height="20"></div></div>';
-    else if (f.type === 'fl') slot = '<div class="question__fields"><div class="input" data-component="Input field"><input type="file" name="' + name + '"></div></div>';
-    else slot = '<div class="question__fields"><div class="input" data-component="Input field"><input type="text" name="' + name + '" autocomplete="off"></div></div>';
-    var title = f.title || f.fallback || (f.type === 'fl' ? 'Untitled File Upload' : f.type === 'at' ? 'Untitled Attachment' : 'Untitled Question');
-    return '<div class="question" data-component="Question"><p class="question__text">' + n + '. ' + esc(title) + (f.required ? '*' : '') + '</p>' +
+    var o = (f.opts && f.opts[f.type]) || [], name = 'q' + i, slot, cls = '';
+    if (f.type === 'mc') { cls = ' question--row'; slot = o.map(function (v) { return '<label class="radio" data-component="Radio Button"><input type="radio" name="' + name + '"><span class="radio__mark"></span><span>' + esc(v) + '</span></label>'; }).join(''); }
+    else if (f.type === 'cb') { cls = ' question--checks'; slot = o.map(function (v) { return '<label class="checkbox" data-component="Checkbox"><input type="checkbox" name="' + name + '"><span class="checkbox__box"><img src="../assets/img/checkbox-check.svg" alt="" width="20" height="20"></span><span>' + esc(v) + '</span></label>'; }).join(''); }
+    else if (f.type === 'dd') slot = '<div class="dropdown" data-dropdown data-component="Dropdown"><div class="input input--select"><button type="button" class="dropdown__trigger" data-placeholder="Select your answer" aria-haspopup="listbox" aria-expanded="false"></button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><input type="hidden" name="' + name + '"><div class="dropdown__panel" role="listbox" hidden>' + o.map(function (v) { return '<div class="dropdown__item" role="option" data-value="' + esc(v) + '">' + esc(v) + '</div>'; }).join('') + '</div></div>';
+    else if (f.type === 'pa') slot = '<div class="input input--area" data-component="Input field"><textarea name="' + name + '" placeholder="' + PH + '"></textarea></div>';
+    else if (f.type === 'dt') slot = '<div class="input" data-component="Input field"><input type="text" name="' + name + '" placeholder="mm/dd/yyyy" autocomplete="off"><img src="../assets/img/calendar-today.svg" alt="" width="20" height="20"></div>';
+    else if (f.type === 'fl') slot = '<label class="attach" data-component="Attach"><input type="file" name="' + name + '"><img src="../assets/img/file-download.svg" alt="" width="32" height="32"><span class="attach__text"><span class="link">Choose a file</span> or drag it here.</span></label>';
+    else slot = '<div class="input" data-component="Input field"><input type="text" name="' + name + '" placeholder="' + PH + '" autocomplete="off"></div>';
+    var title = f.title || f.fallback || (f.type === 'fl' ? 'Untitled File Upload' : 'Untitled Question');
+    return '<div class="question' + cls + '" data-component="Question"><p class="question__text">' + n + '. ' + esc(title) + (f.required ? ' *' : '') + '</p>' +
       (f.help ? '<p class="question__hint">' + esc(f.help) + '</p>' : '') + '<div class="question__slot">' + slot + '</div></div>';
   }).join('');
 })();

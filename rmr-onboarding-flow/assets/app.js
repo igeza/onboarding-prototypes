@@ -132,6 +132,14 @@
     if (save) setStatus(save.getAttribute('data-step-save'), 'done');
     else if (skip) setStatus(skip.getAttribute('data-step-skip'), 'skipped');
   });
+  /* A step's main button says Mark as Complete until the step is done, then Update. Update saves any changes and goes back to the dashboard. */
+  [].forEach.call(document.querySelectorAll('[data-step-btn]'), function (b) {
+    var i = +b.getAttribute('data-step-btn'), lab = b.querySelector('.btn__container') || b;
+    if (status()[i] === 'done') {
+      lab.textContent = 'Update';
+      b.setAttribute('data-href', '01-dashboard.html'); if (b.tagName === 'A') b.setAttribute('href', '01-dashboard.html');
+    }
+  });
   var st = status();
   items.forEach(function (item, i) {
     var mark = item.querySelector('.step'), img = mark && mark.querySelector('img');

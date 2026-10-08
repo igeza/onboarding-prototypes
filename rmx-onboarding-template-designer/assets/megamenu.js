@@ -133,7 +133,7 @@
         /* Two entries into one screen: 'Tenants' lands on Tenant Details (the
            record, with the list in its left rail), 'Tenant Register' on the
            full register. Same file, told apart by ?view=. */
-        { title: 'General', items: [{ label: 'Tenants', href: 'tenants.html' }, 'Prospects', 'Units', 'Properties', 'Unit Types', 'Assets', 'Violations', 'Merge Prospects'] },
+        { title: 'General', items: [{ label: 'Tenants', href: 'tenants.html' }, { label: 'Prospects', href: 'prospects.html' }, 'Units', 'Properties', 'Unit Types', 'Assets', 'Violations', 'Merge Prospects'] },
         { title: 'Leasing', items: ['Screenings', 'Applications', 'Application Templates', 'Renewal Increases', 'Prospect Leasing Board', 'Create Renewal Offers', 'Lease Renewal Register', 'Lease Renewal Board', 'Export Minnesota CRP'] },
         { title: 'Short Term Rentals', items: ['STR Reservations', 'Check-ins', 'Find Reservation'] },
         { title: 'Online Listing', items: ['Listings'] },

@@ -96,8 +96,13 @@
     if (!wrap) { wrap = menu._rmxWrap = document.createElement('div'); wrap.className = 'rmx-menu-layer'; }
     menu._rmxHome = dd;
     wrap.toggleAttribute('data-rmx-multi', dd.hasAttribute('data-rmx-multi'));
-    wrap.style.cssText = 'position:fixed;z-index:2000;left:' + r.left + 'px;width:' + r.width + 'px;top:' + (r.bottom + 4) + 'px';
-    menu.style.cssText = 'position:static;width:100%;min-width:100%';
+    if (dd.hasAttribute('data-rmx-menu-wide')) {   // a menu wider than its trigger: sized to its text, right edge on the trigger's
+      wrap.style.cssText = 'position:fixed;z-index:2000;right:' + (window.innerWidth - r.right) + 'px;width:max-content;top:' + (r.bottom + 4) + 'px';
+      menu.style.cssText = 'position:static;width:max-content;min-width:' + Math.max(r.width, 280) + 'px';
+    } else {
+      wrap.style.cssText = 'position:fixed;z-index:2000;left:' + r.left + 'px;width:' + r.width + 'px;top:' + (r.bottom + 4) + 'px';
+      menu.style.cssText = 'position:static;width:100%;min-width:100%';
+    }
     wrap.appendChild(menu);
     document.body.appendChild(wrap);
     const h = menu.offsetHeight, room = window.innerHeight - r.bottom - 12;

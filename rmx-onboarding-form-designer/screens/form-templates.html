@@ -167,9 +167,9 @@ a.rmx-btn { text-decoration: none; }
         <span class="rmx-field__label">Search</span>
         <div class="rmx-field__box"><svg class="rmx-icon"><use href="#search"></use></svg><input type="text" placeholder="Find a form" data-rmx-filter="#forms"></div>
       </div></div>
-      <div class="ft-w248 ft-selected"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Type</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="ft-value" data-rmx-value>All selected</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="All selected">All selected</button><button type="button" data-value="Prospect">Prospect</button><button type="button" data-value="Tenant">Tenant</button></div></div></div>
+      <div class="ft-w248 ft-selected"><div class="rmx-field rmx-field--filter" data-rmx-regsel data-rmx-options="Prospect|Tenant" data-rmx-target="#forms" data-rmx-col="1" data-rmx-component="Input Field"><span class="rmx-field__label">Type</span><button type="button" class="rmx-field__box" data-rs-trigger><span class="rs-value ft-value">All selected</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button></div></div>
     </div>
-    <button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Add Form is not built in this prototype"><svg class="rmx-icon"><use href="#add-circle"></use></svg><span>Add Form</span></button>
+    <button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-open="add-form"><svg class="rmx-icon"><use href="#add-circle"></use></svg><span>Add Form</span></button>
   </div>
 
   <div class="ft-box">
@@ -202,25 +202,51 @@ a.rmx-btn { text-decoration: none; }
   <p class="rmx-register__totals"><span data-rmx-count="#forms">2</span> of 2 Form Templates</p>
 </main>
 
+<div class="rmx-overlay" id="add-form" hidden role="dialog" aria-modal="true" aria-label="Add Form" data-rmx-component="Dialog Overlay"><div class="afm">
+  <div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Add Form</span><span class="sf__hicons"><span data-rmx-todo="Help is not built in this prototype"><svg class="rmx-icon rmx-icon--24"><use href="#help"></use></svg></span><button type="button" class="fd-close" data-rmx-close aria-label="Close"><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></button></span></div>
+  <div class="afm__body">
+    <div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field" id="af-type"><span class="rmx-field__label">Form Type</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="ft-value" data-rmx-value>Prospect</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Prospect">Prospect</button><button type="button" data-value="Tenant">Tenant</button></div></div>
+    <div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Template Name *</span><div class="rmx-field__box" id="af-name-box"><input type="text" id="af-name" aria-label="Template Name"></div></div>
+    <div class="afm__props"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Properties</span><div class="rmx-field__box"><input type="text" id="af-props" value="All Properties" readonly aria-label="Properties"></div></div><button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Property selection is not built in this prototype">Select Properties</button></div>
+    <div class="afm__check"><label class="rmx-check" id="af-approval" data-checked="true" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Require Approval</span></label><span class="afm__info" title="Approval is required before form answers are mapped to RMX fields."><svg class="rmx-icon"><use href="#info"></use></svg></span></div>
+    <div class="afm__check"><label class="rmx-check" id="af-publish" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Publish to rmResident Portal</span></label></div>
+  </div>
+  <div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="af-add" data-rmx-component="Button">Add</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>
+</div></div>
 <script src="../assets/app.js"></script>
 <script src="../assets/megamenu.js"></script>
 <script src="../assets/row-actions.js"></script>
 <script src="../assets/send-form.js"></script>
+<script src="../assets/regsel.js"></script>
 <script>
-/* Search and the Type selector filter the register together */
+/* Add Form: Add creates the form (kept for this tab), lists it in the register and opens it in the designer. */
 (function () {
-  var tbl = document.getElementById('forms'), q = document.querySelector('[data-rmx-filter="#forms"]'), type = 'All selected';
-  function apply() {
-    var term = q.value.trim().toLowerCase(), shown = 0;
-    [].forEach.call(tbl.tBodies[0].rows, function (r) {
-      var hit = (!term || r.textContent.toLowerCase().indexOf(term) !== -1) && (type === 'All selected' || r.cells[1].textContent.trim() === type);
-      r.hidden = !hit; if (hit) shown++;
-    });
-    document.querySelector('[data-rmx-count="#forms"]').textContent = shown;
+  var KEY = 'rmx-forms', tbl = document.getElementById('forms');
+  function load() { try { return JSON.parse(sessionStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+  function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+  function row(f, i) {
+    return '<tr data-rmx-row><td><a class="ft-rowlink" href="form-designer.html?f=' + i + '">' + esc(f.name) + '</a></td><td>' + esc(f.type) + '</td><td>' + esc(f.date) + '</td><td>dsmith</td><td></td>' +
+      '<td class="ft-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-fd-rowkebab aria-haspopup="menu"><svg class="rmx-icon ft-blue"><use href="#more-vert"></use></svg></button></td></tr>';
   }
-  q.addEventListener('input', function () { setTimeout(apply, 0); });
-  document.addEventListener('rmx:select', function (e) { if (e.target.closest('.ft-filterrow')) { type = e.detail.label; apply(); } });
+  var forms = load();
+  forms.forEach(function (f, i) { tbl.tBodies[0].insertAdjacentHTML('beforeend', row(f, i)); });
+  var n = tbl.tBodies[0].rows.length, tot = document.querySelector('.rmx-register__totals');
+  if (tot) tot.innerHTML = '<span data-rmx-count="#forms">' + n + '</span> of ' + n + ' Form Templates';
+  document.getElementById('af-add').addEventListener('click', function () {
+    var name = document.getElementById('af-name').value.trim(), box = document.getElementById('af-name-box');
+    if (!name) { box.style.borderColor = 'var(--border-error)'; document.getElementById('af-name').focus(); return; }
+    var d = new Date(), pad = function (x) { return String(x).padStart(2, '0'); };
+    forms.push({
+      name: name, type: document.querySelector('#af-type [data-rmx-value]').textContent.trim(), props: document.getElementById('af-props').value,
+      approval: document.getElementById('af-approval').dataset.checked === 'true', publish: document.getElementById('af-publish').dataset.checked === 'true',
+      date: pad(d.getMonth() + 1) + '/' + pad(d.getDate()) + '/' + String(d.getFullYear()).slice(2)
+    });
+    try { sessionStorage.setItem(KEY, JSON.stringify(forms)); } catch (e) {}
+    window.location.href = 'form-designer.html?f=' + (forms.length - 1);
+  });
+  document.getElementById('af-name').addEventListener('input', function () { document.getElementById('af-name-box').style.borderColor = ''; });
 })();
 </script>
+<script src="../assets/overlay-scroll.js"></script>
 </body>
 </html>
