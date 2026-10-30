@@ -426,12 +426,12 @@
     window.addEventListener('pointerup', end, { once: true });
   });
 
-  /* Step kebab: Copy duplicates the step under itself, Delete removes it. */
+  /* Step kebab: Duplicate duplicates the step under itself, Delete removes it. */
   document.addEventListener('rmx:action', e => {
     const row = e.target.closest('#steps tbody tr');
     if (!row) return;
     if (e.detail.action === 'Delete') { row.remove(); return; }
-    if (e.detail.action === 'Copy') {
+    if (e.detail.action === 'Duplicate') {
       const copy = row.cloneNode(true);
       $$('[data-rmx-store]', copy).forEach(d => d.removeAttribute('data-rmx-store'));   // the copy must not overwrite what the preview reads
       $$('[data-rmx-menu]', copy).forEach(m => { m.hidden = true; });

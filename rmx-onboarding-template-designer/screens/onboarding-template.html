@@ -165,7 +165,10 @@ body { display: flex; flex-direction: column; }
 .otd-textarea textarea { flex: 1; min-height: 48px; padding: var(--spacing-xs); border: 0; background: transparent; resize: vertical; font: var(--type-label-m-regular); color: var(--text-secondary); outline: none; }
 .otd-steps__row { outline-offset: -2px; }
 .otd-kebab { display: inline-flex; cursor: pointer; }
-.otd-kmenu { position: fixed; z-index: 1000; min-width: 140px; }
+.rmx-menu.otd-kmenu { position: fixed; z-index: 2000; width: 160px; min-width: 160px; display: flex; flex-direction: column; padding: 0; border: 0; border-radius: var(--radius-sm); box-shadow: 0 3px 6px rgba(0, 0, 0, .15); background: var(--container-primary); }
+.rmx-menu.otd-kmenu[hidden] { display: none; }
+.rmx-menu.otd-kmenu > button { display: flex; align-items: center; width: 100%; padding: var(--spacing-xs); border: 0; border-radius: 0; background: none; text-align: left; font: var(--type-paragraph-s-regular); line-height: 20px; color: var(--text-link); cursor: pointer; white-space: nowrap; }
+.rmx-menu.otd-kmenu > button:hover { background: var(--container-tertiary); }
 .otd-link:disabled { opacity: .5; cursor: default; }
 .otd-steps { overflow-y: auto; }
 .otd-sect { margin-bottom: calc(-1 * var(--spacing-xs)); }

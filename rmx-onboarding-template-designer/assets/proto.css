@@ -270,3 +270,10 @@ html::-webkit-scrollbar { display: none; }
 .rmx-overlay-scroll:hover, .rmx-overlay-scroll.is-drag { background: var(--text-accent); }
 .rmx-overlay-scroll.is-v { width: 8px; left: auto; }
 .rmx-overlay-scroll.is-h { height: 8px; top: auto; }
+
+/* Kebab menus (step rows, template detail): the RMX row-actions look — 14px text, 8px padding, soft shadow, grey hover. */
+.oa-actionmenu, .otd-kmenu { min-width: 0; padding: 0; border: 0; border-radius: var(--radius-sm); box-shadow: 0 3px 6px rgba(0, 0, 0, .15); background: var(--container-primary); }
+.oa-actionmenu > [data-value], .otd-kmenu > [data-do] { display: flex; align-items: center; width: 100%; padding: var(--spacing-xs); border: 0; background: none; text-align: left; font: var(--type-paragraph-s-regular); line-height: 20px; color: var(--text-link); cursor: pointer; white-space: nowrap; }
+.oa-actionmenu > [data-value]:hover, .otd-kmenu > [data-do]:hover { background: var(--container-tertiary); }
+.rmx-menu-layer:has(> .oa-actionmenu) { width: 160px !important; transform: translateX(-132px); }   /* the kebab is 28px wide; the menu is 160px and ends at the kebab's right edge */
+.rmx-menu.oa-actionmenu > [data-value], .rmx-menu.otd-kmenu > [data-do] { color: var(--text-link); font: var(--type-paragraph-s-regular); }
