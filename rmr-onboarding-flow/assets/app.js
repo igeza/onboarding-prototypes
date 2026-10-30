@@ -18,9 +18,16 @@
     { pages: ['04-insurance.html'], key: 'rmx-insurance-options' },
     { pages: ['05-pay-charges.html', '06-pay-charges-payment.html', '06a-payment-submitted.html'] },
     { pages: ['07-setup-payment-method.html', '08-setup-monthly-payment.html', '09-autopay.html'], key: 'rmx-payment-steps' },
-    { pages: ['10-pet-information.html'], key: 'rmx-form' }
+    { pages: ['10-pet-information.html'], key: 'rmx-form' },
+    { pages: ['14-finish.html'] }
   ];
   STEPS.forEach(function (s) { var v = s.key ? stored(s.key) : null; s.visible = !s.key || v === null || v.length > 0; });
+  /* The last step, Finish, is added to every page's stepper (summary of the steps, and where Finish Onboarding lives). */
+  (function () {
+    var bar = document.querySelector('.stepper');
+    if (!bar || bar.querySelector('[data-href="14-finish.html"]')) return;
+    bar.insertAdjacentHTML('beforeend', '<div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="14-finish.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Finish</span></div>');
+  })();
   window.RMR_STEPS = STEPS;
   var here = location.pathname.split('/').pop();
   function stepOf(name) { for (var i = 0; i < STEPS.length; i++) if (STEPS[i].pages.indexOf(name) !== -1) return i; return -1; }
@@ -116,7 +123,7 @@
   var KEY = 'rmr-step-status';
   var items = [].slice.call(document.querySelectorAll('.stepper__item'));
   function status() {
-    try { var s = JSON.parse(sessionStorage.getItem(KEY)); if (s) return s; } catch (e) {}
+    try { var s = JSON.parse(sessionStorage.getItem(KEY)); if (s) { while (s.length < items.length) s.push('todo'); return s; } } catch (e) {}
     /* Start state: Documents to Sign complete, everything else still to do (same as the dashboard). */
     var seed = items.map(function (it, i) { return i === 0 ? 'done' : 'todo'; });
     if (items.length) { try { sessionStorage.setItem(KEY, JSON.stringify(seed)); } catch (e) {} }
@@ -136,7 +143,7 @@
     if (save) setStatus(save.getAttribute('data-step-save'), 'done');
     else if (skip) setStatus(skip.getAttribute('data-step-skip'), 'skipped');
   });
-  /* A step's main button says Mark as Complete until the step is done, then Update. Update saves any changes and goes back to the dashboard. */
+  /* A step's main button says Submit until the step is done, then Update. Update saves any changes and goes back to the dashboard. */
   [].forEach.call(document.querySelectorAll('[data-step-btn]'), function (b) {
     var i = +b.getAttribute('data-step-btn'), lab = b.querySelector('.btn__container') || b;
     if (status()[i] === 'done') {
@@ -144,11 +151,11 @@
       b.setAttribute('data-href', '01-dashboard.html'); if (b.tagName === 'A') b.setAttribute('href', '01-dashboard.html');
     }
   });
-  /* Mark as Complete waits for the step's required information (every * question answered, plus a page's own window.rmrStepReady rule); Update waits until something is uploaded or changed. */
+  /* Submit waits for the step's required information (every * question answered, plus a page's own window.rmrStepReady rule); Update waits until something is uploaded or changed. */
   (function () {
     var b = document.querySelector('[data-step-btn]'), fin = document.querySelector('[data-finish]');
-    if (!b || document.getElementById('docs-next')) return;   // Documents to Sign has its own signing rule
-    var lab = b.querySelector('.btn__container') || b, isUpdate = lab.textContent.trim() === 'Update', changed = false;
+    if ((!b && !fin) || document.getElementById('docs-next')) return;   // Documents to Sign has its own signing rule
+    var lab = b && (b.querySelector('.btn__container') || b), isUpdate = !!b && lab.textContent.trim() === 'Update', changed = false;
     /* Every question or field marked with * needs an answer (text, a dropdown choice, a chosen radio, an uploaded file). Hidden or switched-off parts do not count. */
     function requiredMet() {
       return [].every.call(document.querySelectorAll('.field, .question'), function (el) {
@@ -166,9 +173,10 @@
     }
     function off(v, el) { el = el || b; if (el.tagName === 'BUTTON') el.disabled = v; else el.setAttribute('aria-disabled', String(v)); }   // a link can't be disabled; it is blocked below
     /* Finish Onboarding: every other step is marked complete and this step's required information is in. */
-    function finishReady() { var st = status(), me = +fin.getAttribute('data-step-save'); return st.every(function (v, i) { return i === me || v === 'done'; }) && requiredMet(); }
+    function finishReady() { var st = status(), me = +fin.getAttribute('data-step-save'); return st.every(function (v, i) { return i === me || (STEPS[i] && !STEPS[i].visible) || v === 'done'; }) && requiredMet(); }
     function refresh() {
       if (fin) off(!finishReady(), fin);
+      if (!b) return;
       if (isUpdate) { off(!changed); return; }
       off(!requiredMet() || (typeof window.rmrStepReady === 'function' && !window.rmrStepReady()));
     }
@@ -205,7 +213,7 @@
   var pay = chosen('rmx-payment-steps');
   if (here === '07-setup-payment-method.html' && pay.length && pay.indexOf('Autopay') === -1) {
     var next = document.querySelector('.footer-buttons .btn--primary');
-    next.parentNode.insertAdjacentHTML('beforeend', '<div style="display:flex;align-items:center;gap:24px"><a class="btn--text" href="10-pet-information.html" data-href="10-pet-information.html" data-step-skip="4" data-component="Button">Skip</a><button type="button" class="btn btn--primary" data-component="Button" data-href="10-pet-information.html" data-step-save="4"><span class="btn__container">Save</span></button></div>');
+    next.parentNode.insertAdjacentHTML('beforeend', '<div style="display:flex;align-items:center;gap:24px"><a class="btn--text" href="10-pet-information.html" data-href="10-pet-information.html" data-step-skip="4" data-component="Button">Skip</a><button type="button" class="btn btn--primary" data-component="Button" data-href="10-pet-information.html" data-step-save="4"><span class="btn__container">Submit</span></button></div>');
     next.remove();
   }
 })();

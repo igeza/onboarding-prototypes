@@ -77,6 +77,26 @@
 <div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
 </div>
 </div>
+<div class="submit-overlay" id="submit-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="submit-title" data-component="Overlays">
+  <div class="submit-modal">
+    <button type="button" class="submit-modal__close" id="submit-close" aria-label="Close"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <span class="submit-modal__check"><img src="../assets/img/check-white.svg" alt="" width="40" height="40"></span>
+    <h2 class="submit-modal__title" id="submit-title">Onboarding Submitted</h2>
+    <p class="submit-modal__desc">Your property management will be in touch soon for next steps!</p>
+  </div>
+</div>
+<script>
+/* Finish Onboarding confirms with the Onboarding Submitted overlay (Figma 6645:24131); closing it opens the completed dashboard. */
+(function () {
+  var btn = document.querySelector('.dash-hero__text a.btn'), ov = document.getElementById('submit-overlay');
+  var done = btn && btn.getAttribute('href');
+  function go() { location.href = done; }
+  btn.addEventListener('click', function (e) { e.preventDefault(); e.stopImmediatePropagation(); ov.hidden = false; document.getElementById('submit-close').focus(); }, true);
+  document.getElementById('submit-close').addEventListener('click', go);
+  ov.addEventListener('click', function (e) { if (e.target === ov) go(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !ov.hidden) go(); });
+})();
+</script>
 <script src="../assets/app.js"></script>
 </body>
 </html>

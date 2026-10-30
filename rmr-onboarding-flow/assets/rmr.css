@@ -430,3 +430,18 @@ html { background: #f6fafe; color-scheme: light; }
 .section[hidden] { display: none; }
 #pm-wrap.is-saved { flex: 1; justify-content: flex-start !important; }
 #pm-wrap.is-saved [data-component="Summary Footer"] { margin-top: auto; }
+
+/* Onboarding Submitted overlay (Figma Overlays 6645:24131) */
+.submit-overlay { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, .6); }
+.submit-overlay[hidden] { display: none; }
+.submit-modal { position: relative; display: flex; flex-direction: column; align-items: center; gap: var(--spacing-md); width: 400px; max-width: calc(100vw - 32px); padding: var(--spacing-xl); background: var(--background-primary); border-radius: var(--radius-container); text-align: center; }
+.submit-modal__close { position: absolute; top: var(--spacing-xl); right: var(--spacing-xl); display: inline-flex; border: 0; background: none; padding: 0; color: var(--text-primary); cursor: pointer; }
+.submit-modal__check { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: var(--status-success); }
+.submit-modal__title { margin: var(--spacing-xs) 0 0; font-size: var(--font-size-xl); line-height: var(--line-height-lg); font-weight: 400; letter-spacing: 0.4px; color: var(--text-primary); }
+.submit-modal__desc { margin: 0; font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; color: var(--text-secondary); }
+
+/* Finish step: summary of the steps */
+.finish-list { display: flex; flex-direction: column; }
+.finish-row { display: flex; align-items: center; gap: var(--spacing-md); min-height: 50px; padding: 0 var(--spacing-xs); border-bottom: 1px solid var(--border); }
+.finish-row__name { flex: 1; font-size: var(--font-size-md); line-height: var(--line-height-lg); letter-spacing: 0.32px; color: var(--text-primary); }
+.finish-row__status { width: 120px; font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; color: var(--text-secondary); }

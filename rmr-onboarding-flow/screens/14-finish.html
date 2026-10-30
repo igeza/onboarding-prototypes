@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding – Finish</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/rmr.css">
+<link rel="stylesheet" href="../assets/proto.css">
+<style>
+/* One left edge (no slot indent), 24px between questions. Text, dropdown and file fields run full width; radios and checkboxes stay compact. */
+.form-grid { display: flex; flex-direction: column; gap: var(--spacing-xl); align-items: stretch; }
+.form-grid .question { padding: 0; gap: 0; }
+.form-grid .question__text { font-weight: 700; letter-spacing: 0; }
+.form-grid .question__hint { margin: 4px 0 0; padding-left: 0; font-size: var(--font-size-xs); line-height: 16px; }
+.form-grid .question__slot { padding-left: 0; margin-top: var(--spacing-xs); }
+.form-grid .question__slot > .input, .form-grid .question__slot > .dropdown, .form-grid .question__slot > .attach { width: 100%; }
+.form-grid .question__slot .dropdown .input { width: 100%; }
+.form-grid .question--row .question__slot { flex-direction: row; gap: var(--spacing-xl); }
+.form-grid .question--checks .question__slot { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-xs) var(--spacing-xl); width: 50%; }
+.input--area { align-items: flex-start; height: 91px; }
+.input--area textarea { flex: 1 1 0; height: 100%; padding: 0; border: 0; outline: 0; resize: none; background: transparent; font-family: inherit; font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; color: var(--text-primary); }
+.input--area textarea::placeholder { font-style: italic; color: var(--text-accent); opacity: 1; }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="header" data-component="Header">
+  <div class="header__left" data-component="Header Left">
+    <div class="header__logo" data-component="New Logo">
+      <div class="header__logo-mark"><img src="../assets/img/logo-mark.svg" alt=""></div>
+      <div class="header__logo-icon"><img src="../assets/img/logo-icon.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="header__right" data-component="Header Right">
+    <img class="header__icon" src="../assets/img/connect.svg" alt="" width="24" height="24">
+    <div class="header__divider"><div class="header__divider-rot"><div class="header__divider-line"><div><img src="../assets/img/header-divider.svg" alt=""></div></div></div></div>
+    <button type="button" class="user-info" data-component="User Info">
+      <span class="user-info__avatar" aria-hidden="true">WC</span>
+      <span class="user-info__name">Watson Crane</span>
+      <img class="header__icon" src="../assets/img/keyboard-arrow-down.svg" alt="" width="24" height="24">
+    </button>
+  </div>
+</header>
+<div class="content" data-component="Content">
+<nav class="menu" data-component="Menu">
+  <div class="menu__group" data-component="Expanded Menu">
+    <a class="menu-item is-selected" href="01-dashboard.html" data-component="Dashboard"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/dashboard.svg" alt="" width="16" height="16"><span>Dashboard</span></span></a>
+    <a class="menu-item" href="#" data-component="Application"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/application.svg" alt="" width="16" height="16"><span>Application</span></span></a>
+  </div>
+  <div class="menu__footer" data-component="Expanded Menu Item">
+    <div class="menu__footer-line"><div><img src="../assets/img/menu-divider.svg" alt=""></div></div>
+    <a class="menu-item" href="#" data-component="Collapse"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/keyboard-double-arrow-left.svg" alt="" width="16" height="16"><span>Collapse</span></span></a>
+  </div>
+</nav>
+<main class="main" data-component="Main Content">
+<div class="context-bar" data-component="Context Bar">
+  <div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div>
+  <h1 class="context-bar__title">Onboarding</h1><a class="btn btn--secondary context-bar__back" href="01-dashboard.html" data-href="01-dashboard.html" data-component="Button"><span class="btn__container">Back to Dashboard</span></a>
+</div>
+<div class="stepper" data-component="Stepper Container"><div class="stepper__item" data-href="02-docs-to-sign.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Documents to Sign</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="03-file-upload.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">File Upload</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="04-insurance.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Insurance</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="05-pay-charges.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Pay Charges</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="07-setup-payment-method.html" data-component="Stepper"><span class="step step--completed" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Setup Payment Method</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="10-pet-information.html" data-component="Stepper"><span class="step step--active" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Additional Information</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item is-active" data-href="14-finish.html" data-component="Stepper"><span class="step step--active" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Finish</span></div></div>
+<section class="step-card" data-component="DTS">
+  <div class="step-card__head" data-component="Header"><h2 class="step-card__title">Finish</h2><p class="step-card__subtitle">Review your onboarding steps. Finish Onboarding opens once every step is complete.</p></div>
+  <div class="finish-list" id="finish-list" data-component="Summary"></div>
+</section>
+<div class="footer-buttons" data-component="Footer Buttons"><button type="button" class="btn btn--secondary" data-component="Button" data-href="10-pet-information.html"><span class="btn__container">Back</span></button><a class="btn btn--primary" href="11-dashboard-complete.html" data-href="11-dashboard-complete.html" data-step-save="6" data-finish id="finish-btn" data-component="Button"><span class="btn__container">Finish Onboarding</span></a></div>
+</main>
+<div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
+</div>
+</div>
+<script src="../assets/app.js"></script>
+<div class="submit-overlay" id="submit-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="submit-title" data-component="Overlays">
+  <div class="submit-modal">
+    <button type="button" class="submit-modal__close" id="submit-close" aria-label="Close"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <span class="submit-modal__check"><img src="../assets/img/check-white.svg" alt="" width="40" height="40"></span>
+    <h2 class="submit-modal__title" id="submit-title">Onboarding Submitted</h2>
+    <p class="submit-modal__desc">Your property management will be in touch soon for next steps!</p>
+  </div>
+</div>
+<script>
+/* Summary of the steps and their status, built from the stepper and the saved status. */
+(function () {
+  var st; try { st = JSON.parse(sessionStorage.getItem('rmr-step-status')); } catch (e) {}
+  st = st || [];
+  var list = document.getElementById('finish-list'), items = [].slice.call(document.querySelectorAll('.stepper__item')), steps = window.RMR_STEPS || [], html = '', left = 0;
+  items.forEach(function (it, i) {
+    if (i === items.length - 1 || (steps[i] && !steps[i].visible)) return;
+    var done = st[i] === 'done', skipped = st[i] === 'skipped', label = it.querySelector('.stepper__label').textContent, href = it.getAttribute('data-href');
+    if (!done) left++;
+    html += '<div class="finish-row"><span class="step ' + (done ? 'step--completed' : 'step--pending') + '"><img src="../assets/img/' + (done ? 'check-white' : 'check-blue') + '.svg" alt="" width="16" height="16"></span><span class="finish-row__name">' + label + '</span><span class="finish-row__status">' + (done ? 'Completed' : skipped ? 'Skipped' : 'Not started') + '</span><a class="btn--text" href="' + href + '" data-href="' + href + '">' + (done ? 'View' : 'Start') + '</a></div>';
+  });
+  list.innerHTML = html;
+  var btn = document.getElementById('finish-btn'), ov = document.getElementById('submit-overlay'), done = btn.getAttribute('href');
+  function go() { location.href = done; }
+  btn.addEventListener('click', function (e) { e.preventDefault(); e.stopImmediatePropagation(); ov.hidden = false; document.getElementById('submit-close').focus(); }, true);
+  document.getElementById('submit-close').addEventListener('click', go);
+  ov.addEventListener('click', function (e) { if (e.target === ov) go(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !ov.hidden) go(); });
+})();
+</script>
+
+</body>
+</html>
