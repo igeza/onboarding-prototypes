@@ -96,3 +96,6 @@ Copy from the mock, unchanged: "Form Published to RMR", "Form Aging". The mock's
 
 
 **Communication > Forms > Forms** opens `screens/form-approvals.html` (Figma Received Forms Register `6214:10605`): Search, Saved Filters, Form Date (inert date pickers), Form and Status selectors (Completed, Pending Approval, Approved, Rejected; Reject on a pending form marks it Rejected) filter the register (Name, Create Date, Form, Status, Approved By); the page never scrolls, only the register. Rows and kebabs are not built.
+
+
+**Question titles are required**: Question Title has an asterisk. Save with an untitled question keeps the footer, turns that question's label and answer field red on the canvas (the question's own border stays as it is), opens it, and shows its Question Title field in the editor in red. Typing a title clears the red; Save works once every question has a title. Text blocks and Attachments are not questions and are not checked.

@@ -221,7 +221,7 @@ main.fd .fd-canvas { min-height: 0; overflow: auto; }
 .sf__pick > .rmx-icon:first-child { color: var(--icon-brand); }
 .sf__pickval { flex: 1; min-width: 0; color: var(--text-secondary); }
 .sf__pickval.rmx-placeholder { color: var(--text-disabled); font-style: italic; }
-.sf__invalid { border-color: var(--border-error) !important; }
+.sf__invalid { border-color: var(--icon-error) !important; }
 .sf__msg { height: auto; align-items: flex-start; }
 .sf__msg textarea { all: unset; flex: 1; min-width: 0; min-height: 88px; box-sizing: border-box; font: inherit; color: var(--text-secondary); white-space: pre-wrap; }
 .sf__msg textarea::placeholder { color: var(--text-disabled); font-style: italic; }

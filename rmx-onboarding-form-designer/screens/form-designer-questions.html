@@ -241,6 +241,10 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 .pp { width: min(1800px, calc(100vw - 32px)); }
 .pp__frame { display: block; width: 100%; height: min(752px, calc(100vh - 140px)); border: 0; background: var(--container-primary); }
 .rmx-overlay__header .fd-close { border: 0; background: none; padding: 0; color: var(--icon-brand); display: inline-flex; cursor: pointer; margin-left: auto; }
+.fd-q--error .fd-q__label { color: var(--text-error); }
+.fd-q.fd-q--error .rmx-field__box { border-color: var(--icon-error); }
+.rmx-field--error .rmx-field__box, .rmx-field--error .rmx-field__box:focus-within { border-color: var(--icon-error); }
+.rmx-field--error .rmx-field__label { color: var(--text-error); }
 </style>
 </head>
 <body class="rmx">
@@ -480,6 +484,13 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     l.classList.toggle('rmx-placeholder', !f.title);
   }
   function renumber() { all().forEach(label); }
+  /* Every question needs a title. Save highlights the ones without one (on the canvas and in the editor) and opens the first. */
+  window.fdValidate = function () {
+    var bad = all().filter(function (q) { var t = q._fd.type; return t !== 'tx' && t !== 'at' && !(q._fd.title || '').trim(); });
+    all().forEach(function (q) { q.classList.toggle('fd-q--error', bad.indexOf(q) !== -1); });
+    if (bad.length) open(bad[0]);
+    return !bad.length;
+  };
 
   function radios(o) { return '<div class="fd-q__opts fd-q__opts--row">' + o.map(function (v) { return '<span class="rmx-radio"><span class="rmx-radio__dot"></span><span class="rmx-text">' + esc(v) + '</span></span>'; }).join('') + '</div>'; }
   function checks(o) { return '<div class="fd-q__opts fd-q__opts--checks">' + o.map(function (v) { return '<span class="rmx-check" data-checked="false"><span class="rmx-check__box"></span><span class="rmx-text">' + esc(v) + '</span></span>'; }).join('') + '</div>'; }
@@ -513,7 +524,8 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     document.getElementById('field-selector').hidden = true;
     $('[data-fd-qnum]').textContent = 'Question ' + (all().indexOf(q) + 1);
     $('[data-fd-title]').value = f.title;
-    $('[data-fd-titlelabel]').textContent = f.type === 'tx' ? 'Text' : f.type === 'at' ? 'Attachment Name' : 'Question Title';
+    $('[data-fd-titlelabel]').textContent = f.type === 'tx' ? 'Text' : f.type === 'at' ? 'Attachment Name' : 'Question Title *';
+    $('[data-fd-title]').closest('.rmx-field').classList.toggle('rmx-field--error', q.classList.contains('fd-q--error'));
     editor.querySelectorAll('[data-not-tx]').forEach(function (x) { x.hidden = f.type === 'tx' || f.type === 'at'; });
     editor.querySelectorAll('[data-at-only]').forEach(function (x) { x.hidden = f.type !== 'at'; });
     $('[data-fd-filename]').textContent = f.file || 'Choose a file or drag it here.';
@@ -689,7 +701,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
   editor.addEventListener('input', function (e) {
     if (!current) return;
     var f = current._fd, t = e.target;
-    if (t.matches('[data-fd-title]')) { f.title = t.value; label(current); if (f.type === 'tx') { preview(current); place(current); } return; }
+    if (t.matches('[data-fd-title]')) { f.title = t.value; if (t.value.trim()) { current.classList.remove('fd-q--error'); t.closest('.rmx-field').classList.remove('rmx-field--error'); } label(current); if (f.type === 'tx') { preview(current); place(current); } return; }
     if (t.matches('[data-fd-help]')) { f.help = t.value; preview(current); place(current); return; }
     var row = t.closest('.fd-opt'), panel = t.closest('[data-type-panel]');
     if (row && panel) {

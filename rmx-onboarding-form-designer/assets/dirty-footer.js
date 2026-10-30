@@ -27,6 +27,7 @@
   document.addEventListener('click', function (e) {
     var t = e.target;
     if (t.closest('[data-fd-save]')) {
+      if (window.fdValidate && !window.fdValidate()) return;   // every question title is required: the footer stays and the empty ones are red
       hide();
       if (window.RMX && RMX.toast) RMX.toast('Form saved', 'success');
       return;
