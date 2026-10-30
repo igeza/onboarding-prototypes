@@ -89,6 +89,15 @@
 <div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
 </div>
 </div>
+<script>
+/* "I've Already Purchased a Policy" needs the interested-party box ticked and every * field filled (including the upload); the other choices need nothing more. */
+window.rmrStepReady = function () {
+  var c = document.querySelector('input[name=insurance]:checked');
+  if (!c || c.value !== 'existing') return true;
+  var party = document.querySelector('input[name=interested-party]');
+  return !!party && party.checked;
+};
+</script>
 <script src="../assets/app.js"></script>
 <script>
 /* The RMX template designer's Renters Insurance step decides which options a resident sees.

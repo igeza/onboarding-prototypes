@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Forms – Available</title>
+<title>Forms – Required</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -56,15 +56,27 @@
   <h1 class="context-bar__title">Forms</h1>
 </div>
 <div class="notice" data-component="Banner"><span class="notice__bar"></span><img src="../assets/img/campaign-blue.svg" alt="" width="24" height="24"><p>Fill out forms as needed</p></div>
+<section class="forms-split">
 <section class="forms-card" data-component="Cards">
-    <div class="tabs" role="tablist" data-component="Tabs"><a class="tab is-active" role="tab" href="13-forms.html">Available</a><a class="tab" role="tab" href="14-forms-submitted.html">Submitted</a></div>
+    <div class="tabs" role="tablist" data-component="Tabs"><a class="tab is-active" role="tab" href="13-forms.html">Required</a><a class="tab" role="tab" href="14-forms-submitted.html">Submitted</a></div>
     <table class="table forms-table" data-component="Table">
-      <thead><tr><th class="is-fill">Name</th><th></th></tr></thead>
+      <thead><tr><th class="is-fill">Name</th><th class="forms-table__due">Due Date</th><th></th></tr></thead>
       <tbody>
-        <tr><td>New Pet</td><td class="forms-table__action"><a class="btn btn--primary btn--table" href="15-form-new-pet.html" data-component="Button" data-href="15-form-new-pet.html"><span class="btn__container">Start</span></a></td></tr>
-        <tr><td>Gym Access</td><td class="forms-table__action"><a class="btn btn--primary btn--table" href="#" data-component="Button" data-href="#"><span class="btn__container">Start</span></a></td></tr>
+        <tr><td>New Pet</td><td>11/01/26</td><td class="forms-table__action"><a class="btn btn--primary btn--table" href="15-form-new-pet.html" data-component="Button" data-href="15-form-new-pet.html"><span class="btn__container">Start</span></a></td></tr>
+        <tr><td>Gym Access</td><td>10/25/26</td><td class="forms-table__action"><a class="btn btn--primary btn--table" href="#" data-component="Button" data-href="#"><span class="btn__container">Start</span></a></td></tr>
       </tbody>
     </table>
+</section>
+<section class="forms-card forms-card--side" data-component="Cards">
+    <div class="forms-side__head"><h2 class="forms-side__title">Available Forms</h2><p class="forms-side__desc">Fill out these forms as needed and your community manager will get back to you.</p></div>
+    <table class="table forms-table" data-component="Table">
+      <thead><tr><th class="is-fill">Name</th><th class="forms-table__last">Last Submitted</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>New Pet</td><td>11/01/25</td><td class="forms-table__action"><a class="btn btn--primary btn--table" href="15-form-new-pet.html" data-component="Button" data-href="15-form-new-pet.html"><span class="btn__container">Start</span></a></td></tr>
+        <tr><td>Gym Access</td><td></td><td class="forms-table__action"><a class="btn btn--primary btn--table" href="#" data-component="Button" data-href="#"><span class="btn__container">Start</span></a></td></tr>
+      </tbody>
+    </table>
+</section>
 </section>
 </main>
 <div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>

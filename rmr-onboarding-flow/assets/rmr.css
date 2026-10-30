@@ -190,7 +190,7 @@ p { margin: 0; }
 }
 .btn__container { display: flex; align-items: center; justify-content: center; padding: 0 8px; }
 /* disabled = the button's own fill at 50% (RMX: --background-brand-primary-disabled) */
-.btn--primary:disabled { background: rgba(27,100,187,.5); cursor: default; filter: none; }
+.btn--primary:disabled, .btn--primary[aria-disabled="true"] { background: rgba(27,100,187,.5); cursor: default; filter: none; }
 .btn--primary { background: var(--component-button-primary); color: var(--text-on-primary); }
 .btn--secondary { background: var(--component-button-secondary); border: 1px solid var(--border-button-tertiary); color: var(--text-blue); }
 .btn--small { height: 24px; min-width: 0; padding: 0 var(--spacing-xs); }
@@ -418,3 +418,15 @@ html, body { height: 100%; overflow: hidden; }
 
 /* The page itself paints on a light canvas, so a refresh never flashes black when the browser or Mac is in dark mode. */
 html { background: #f6fafe; color-scheme: light; }
+
+/* RMX template detail thumbnail: no side menu, no step list */
+.is-thumb .menu, .is-thumb .stepper { display: none; }
+
+/* Saved payment method (Figma Payment Method 6070:42409) */
+.saved-method { display: flex; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-xs) var(--spacing-md); background: var(--component-selector); border: 1px solid var(--border-button-tertiary); border-radius: var(--radius-container); }
+.saved-method[hidden] { display: none; }
+.saved-method__label { flex: 1; font-size: var(--font-size-sm); line-height: var(--line-height-md); font-weight: 700; color: var(--text-primary); }
+.saved-method__edit { display: inline-flex; border: 0; background: none; padding: 0; cursor: pointer; }
+.section[hidden] { display: none; }
+#pm-wrap.is-saved { flex: 1; justify-content: flex-start !important; }
+#pm-wrap.is-saved [data-component="Summary Footer"] { margin-top: auto; }

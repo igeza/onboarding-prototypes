@@ -73,6 +73,10 @@
   });
 })();
 </script>
+<script>
+/* Mark as Complete stays disabled until every file box has a file. */
+window.rmrStepReady = function () { var boxes = document.querySelectorAll('.attach'); return boxes.length > 0 && [].every.call(boxes, function (b) { return b.classList.contains('has-file'); }); };
+</script>
 <script src="../assets/app.js"></script>
 </body>
 </html>

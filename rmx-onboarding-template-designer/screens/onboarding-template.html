@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="rmx-skill" content="4.5.2">
 <meta name="rmx-tokens" content="a6dff32542cd">
-<title>Onboarding Template — Rent Manager Express</title>
+<title>Onboarding Template Detail — Rent Manager Express</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/tokens.css">
 <link rel="stylesheet" href="../assets/tokens-local.css">
@@ -26,7 +26,8 @@
 #templates td:first-child a { color: inherit; text-decoration: none; }
 #templates td:first-child a:hover { color: var(--text-link); }
 .oa-center { text-align: center; }
-.oa-blue { color: var(--icon-primary); }
+.oa-blue, .oa-search .rmx-icon { color: var(--icon-primary); }
+#templates th .rmx-icon { color: var(--text-inverse); display: block; margin-inline: auto; }
 .oa-success { color: var(--icon-success); }
 .oa-tight { width: 36px; padding-inline: 0; text-align: center; }
 #templates th.oa-tight { width: 40px; }
@@ -34,7 +35,7 @@
 a.rmx-btn { text-decoration: none; }
 /* dialogs */
 .oa-dialog { width: 440px; max-width: calc(100vw - 32px); display: flex; flex-direction: column; }
-.oa-dialog--wide { width: 968px; }
+.oa-dialog--wide { width: 974px; }
 .oa-dialog--step { width: 743px; }
 .oa-dialog .rmx-overlay__header { flex: none; justify-content: space-between; }
 .oa-dialog .rmx-overlay__footer { flex: none; gap: var(--spacing-xs); }
@@ -53,14 +54,13 @@ a.rmx-btn { text-decoration: none; }
 .oa-props > .oa-grow { flex: 1; min-width: 0; }
 .oa-row { display: flex; gap: var(--spacing-md); align-items: flex-end; }
 .oa-row > .oa-grow { flex: 1; min-width: 0; }
-.oa-row > .oa-fixed { flex: none; width: 248px; }
-.oa-row--20 { gap: 20px; }
 .oa-checks { display: flex; align-items: center; gap: var(--spacing-md); }
 .oa-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-secondary); }
 .oa-scrim { position: fixed; inset: 0; z-index: 960; background: rgba(0, 0, 0, .32); }
 .oa-scrim[hidden] { display: none; }
 #oa-step-dialog.is-open { z-index: 970; }
 #oa-save-new[hidden] { display: none; }
+#templates td a { color: inherit; text-decoration: none; }   /* the row is the target, the name is plain text */
 .oa-invalid { border-color: var(--border-error) !important; }
 button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: pointer; }
 .rmx-field__box > .rmx-icon:last-child:not(:first-child) { margin-left: auto; }
@@ -102,7 +102,74 @@ button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: po
 .wt-blue { color: var(--icon-primary); }
 .fm-heading { font: var(--type-paragraph-s-semibold); color: var(--text-primary); }
 #oa-files[hidden], #oa-addl[hidden] { display: none; }
-@media (max-width: 767px) { .oa-row, .oa-step-top { flex-direction: column; align-items: stretch; } .oa-row > .oa-fixed { width: auto; } .oa-dialog--wide { width: calc(100vw - 32px); } }
+@media (max-width: 767px) { .oa-row, .oa-step-top { flex-direction: column; align-items: stretch; } .oa-dialog--wide { width: calc(100vw - 32px); } }
+
+/* Onboarding Template Detail (Figma Template Details v3 6636:26622) */
+html, body { height: 100%; overflow: hidden; }
+body { display: flex; flex-direction: column; }
+.otd-ground { background: var(--container-primary); flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.otd-head { display: flex; align-items: flex-end; gap: var(--spacing-md); padding: var(--spacing-md) var(--spacing-xl); flex: none; }
+.otd-head .rmx-field { width: 248px; }
+.otd-head__checks, .otd-prop { white-space: nowrap; flex: none; }
+.otd-col .rmx-field, .otd-action__form .rmx-field { width: 100%; }
+
+.otd-head__checks { display: flex; align-items: center; gap: var(--spacing-md); height: 36px; }
+.otd-prop { display: flex; align-items: center; gap: var(--spacing-xs); height: 36px; font: var(--type-label-m-semibold); color: var(--text-secondary); }
+.otd-prop .rmx-icon { color: var(--icon-primary); }
+.otd-head__spacer { flex: 1; }
+.otd-scroll { flex: 1; min-height: 0; overflow-y: auto; margin: 0 var(--spacing-xl) var(--spacing-md); background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); scrollbar-width: none; }
+.otd-scroll::-webkit-scrollbar { display: none; }
+.otd-main { display: flex; align-items: stretch; min-height: 100%; }
+.otd-steps { flex: none; width: 252px; background: var(--container-primary); border-right: 1px solid var(--border-primary); }
+.otd-steps__head { display: flex; align-items: center; justify-content: space-between; height: 40px; padding: 0 var(--spacing-xs); font: 600 18px/24px Roboto, sans-serif; color: var(--text-secondary); }
+.otd-steps__row { display: flex; align-items: center; gap: var(--spacing-xs); height: 36px; margin-top: 0; padding: 0 var(--spacing-xs); border: 0; border-top: 1px solid var(--border-primary); background: none; width: 100%; text-align: left; font: var(--type-label-m-regular); color: var(--text-secondary); cursor: pointer; }
+.otd-steps__row[aria-current="true"] { background: var(--background-brand-secondary); }
+.otd-steps__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.otd-steps__row .rmx-icon { color: var(--icon-primary); }
+.otd-colwrap { flex: 1; min-width: 0; display: flex; justify-content: center; padding: var(--spacing-md) var(--spacing-xl); background: var(--background-ui-primary); }
+.otd-col { width: 100%; max-width: 1010px; display: flex; flex-direction: column; gap: var(--spacing-md); }
+.otd-card { background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); padding: var(--spacing-md); }
+.otd-action { display: flex; gap: var(--spacing-xl); align-items: stretch; }
+.otd-action__form { flex: none; width: 320px; display: flex; flex-direction: column; gap: var(--spacing-md); }
+.otd-preview { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; padding: var(--spacing-xs); background: var(--background-ui-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); }
+.otd-preview__wrap { width: 100%; aspect-ratio: 2.04 / 1; overflow: hidden; border-radius: var(--radius-sm); background: var(--container-primary); position: relative; }
+.otd-preview__frame { position: absolute; top: 0; left: 0; width: 1500px; height: 735px; border: 0; transform-origin: top left; pointer-events: none; }
+.otd-sect { margin: 0; font: var(--type-label-m-semibold); color: var(--text-secondary); }
+.otd-desc { margin: 0; font: 400 12px/16px Roboto, sans-serif; color: var(--text-primary); }
+.otd-rule { display: grid; grid-template-columns: 1fr 124px 1fr; gap: var(--spacing-xs); }
+.otd-link { display: inline-flex; align-items: center; gap: var(--spacing-xs); border: 0; background: none; padding: 0; color: var(--text-link); font: var(--type-label-m-regular); cursor: pointer; }
+.otd-link .rmx-icon { color: var(--icon-primary); }
+.otd-textarea { min-height: 48px; }
+.otd-switch { display: inline-flex; align-items: center; gap: var(--spacing-xs); cursor: pointer; font: var(--type-label-m-regular); color: var(--text-secondary); border: 0; background: none; padding: 0; }
+.otd-switch__track { position: relative; width: 36px; height: 20px; border-radius: 10px; background: var(--icon-disabled); transition: background .15s; flex: none; }
+.otd-switch__track::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--container-primary); transition: transform .15s; }
+.otd-switch[aria-checked="true"] .otd-switch__track { background: var(--background-primary-button); }
+.otd-switch[aria-checked="true"] .otd-switch__track::after { transform: translateX(16px); }
+.otd-switch__track svg { position: absolute; top: 4px; left: 20px; width: 12px; height: 12px; color: var(--background-primary-button); z-index: 1; display: none; }
+.otd-switch[aria-checked="true"] .otd-switch__track svg { display: block; }
+.otd-branch { width: 20px; height: 20px; }
+.otd-sd__help { margin: 0; font: var(--type-label-m-regular); color: var(--text-primary); }
+.otd-two { display: flex; gap: var(--spacing-md); }
+.otd-two > * { flex: 1; min-width: 0; }
+.otd-radios { display: flex; align-items: center; gap: var(--spacing-md); }
+.otd-radios .rmx-radio { display: inline-flex; align-items: center; gap: var(--spacing-xs); cursor: pointer; }
+.otd-due { display: flex; align-items: flex-end; padding-left: var(--spacing-xl); }
+.otd-due .rmx-field { flex: 1; min-width: 0; }
+.otd-cal { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 36px; flex: none; border: 1px solid var(--border-primary); border-left: 0; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: var(--component-input-secondary); color: var(--icon-primary); cursor: pointer; padding: 0; }
+.otd-due .rmx-field__box { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.oa-dialog--settings { width: 645px; }
+.otd-rule { grid-template-columns: 1fr 124px 1fr; }
+.otd-rule:has(.otd-x) { grid-template-columns: 1fr 124px 1fr 28px; }
+.otd-x { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 36px; border: 0; background: none; color: var(--icon-primary); cursor: pointer; padding: 0; }
+.otd-textarea { padding: 0; align-items: stretch; }
+.otd-textarea textarea { flex: 1; min-height: 48px; padding: var(--spacing-xs); border: 0; background: transparent; resize: vertical; font: var(--type-label-m-regular); color: var(--text-secondary); outline: none; }
+.otd-steps__row { outline-offset: -2px; }
+.otd-kebab { display: inline-flex; cursor: pointer; }
+.otd-kmenu { position: fixed; z-index: 1000; min-width: 140px; }
+.otd-link:disabled { opacity: .5; cursor: default; }
+.otd-steps { overflow-y: auto; }
+.otd-sect { margin-bottom: calc(-1 * var(--spacing-xs)); }
+.otd-desc { margin-bottom: calc(-1 * var(--spacing-xs)); }
 </style>
 <body class="rmx">
 <!-- RMX_ICONS:START - injected from assets/icons.svg, regenerated by check.mjs --fix -->
@@ -218,66 +285,207 @@ button.rmx-field__box { width: 100%; text-align: left; font: inherit; cursor: po
   </div>
 </header>
 
+<!-- Context Bar — Onboarding Template Detail (Figma Template Details v3 6636:26622). -->
 <div class="rmx-contextbar" data-rmx-component="Context Bar">
-  <div class="rmx-contextbar__leading">
-    <span class="rmx-contextbar__title">Onboarding Templates</span>
+  <div class="rmx-contextbar__leading"><span class="rmx-contextbar__title">Onboarding Template Detail</span></div>
+  <div class="rmx-contextbar__trailing"><svg class="rmx-icon" data-rmx-todo="Help is not built in this prototype"><use href="#help"></use></svg></div>
+</div>
+
+<div class="otd-ground">
+  <div class="otd-head">
+    <div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Profile Name *</span><div class="rmx-field__box"><input type="text" value="Riverview Onboarding" id="otd-name" aria-label="Profile Name *"></div></div>
+    <div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Trigger By</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>Account Created</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Account Created">Account Created</button><button type="button" data-value="Lease Signed">Lease Signed</button><button type="button" data-value="Application Approved">Application Approved</button><button type="button" data-value="Move-In Scheduled">Move-In Scheduled</button></div></div>
+    <div class="otd-head__checks"><label class="rmx-check" data-checked="true" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Active</span></label><label class="rmx-check" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Steps must be completed in order</span></label></div>
+    <span class="otd-prop"><svg class="rmx-icon"><use href="#properties"></use></svg><span id="otd-prop-name">Riverview Apartments</span><span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Property list is not built in this prototype"><span id="otd-prop-more">+5</span><svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span>
+    <span class="otd-head__spacer"></span>
+    <button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-open="otd-settings">Settings</button>
   </div>
-  <div class="rmx-contextbar__trailing">
-    <svg class="rmx-icon" data-rmx-todo="Print is not built in this prototype"><use href="#print"></use></svg>
-    <svg class="rmx-icon" data-rmx-todo="Refresh is not built in this prototype"><use href="#autorenew"></use></svg>
-    <svg class="rmx-icon" data-rmx-todo="Help is not built in this prototype"><use href="#help"></use></svg>
+  <div class="otd-scroll" data-overlay-scroll>
+    <div class="otd-main">
+      <aside class="otd-steps" data-rmx-component="Step List">
+        <div class="otd-steps__head"><span>Step</span><button type="button" class="otd-link" id="otd-add-step"><svg class="rmx-icon"><use href="#add"></use></svg>Add</button></div>
+        <button type="button" class="otd-steps__row" data-step="0"><span class="otd-steps__name">Signable Document</span><svg data-branch hidden class="rmx-icon otd-branch" viewBox="0 0 24 24" fill="currentColor"><path d="M14 4l2.29 2.29-2.88 2.88 1.42 1.42 2.88-2.88L20 10V4zm-4 0H4v6l2.29-2.29 4.71 4.7V20h2v-8.41l-5.29-5.3z"/></svg><span aria-label="Actions"><svg class="rmx-icon"><use href="#more-vert"></use></svg></span><svg class="rmx-icon"><use href="#drag-indicator"></use></svg></button><button type="button" class="otd-steps__row" aria-current="true" data-step="1"><span class="otd-steps__name">File Attachments</span><svg data-branch class="rmx-icon otd-branch" viewBox="0 0 24 24" fill="currentColor"><path d="M14 4l2.29 2.29-2.88 2.88 1.42 1.42 2.88-2.88L20 10V4zm-4 0H4v6l2.29-2.29 4.71 4.7V20h2v-8.41l-5.29-5.3z"/></svg><span aria-label="Actions"><svg class="rmx-icon"><use href="#more-vert"></use></svg></span><svg class="rmx-icon"><use href="#drag-indicator"></use></svg></button><button type="button" class="otd-steps__row" data-step="2"><span class="otd-steps__name">Renters Insurance</span><svg data-branch hidden class="rmx-icon otd-branch" viewBox="0 0 24 24" fill="currentColor"><path d="M14 4l2.29 2.29-2.88 2.88 1.42 1.42 2.88-2.88L20 10V4zm-4 0H4v6l2.29-2.29 4.71 4.7V20h2v-8.41l-5.29-5.3z"/></svg><span aria-label="Actions"><svg class="rmx-icon"><use href="#more-vert"></use></svg></span><svg class="rmx-icon"><use href="#drag-indicator"></use></svg></button><button type="button" class="otd-steps__row" data-step="3"><span class="otd-steps__name">Make a Payment</span><svg data-branch hidden class="rmx-icon otd-branch" viewBox="0 0 24 24" fill="currentColor"><path d="M14 4l2.29 2.29-2.88 2.88 1.42 1.42 2.88-2.88L20 10V4zm-4 0H4v6l2.29-2.29 4.71 4.7V20h2v-8.41l-5.29-5.3z"/></svg><span aria-label="Actions"><svg class="rmx-icon"><use href="#more-vert"></use></svg></span><svg class="rmx-icon"><use href="#drag-indicator"></use></svg></button><button type="button" class="otd-steps__row" data-step="4"><span class="otd-steps__name">File Attachment</span><svg data-branch hidden class="rmx-icon otd-branch" viewBox="0 0 24 24" fill="currentColor"><path d="M14 4l2.29 2.29-2.88 2.88 1.42 1.42 2.88-2.88L20 10V4zm-4 0H4v6l2.29-2.29 4.71 4.7V20h2v-8.41l-5.29-5.3z"/></svg><span aria-label="Actions"><svg class="rmx-icon"><use href="#more-vert"></use></svg></span><svg class="rmx-icon"><use href="#drag-indicator"></use></svg></button>
+      </aside>
+      <div class="otd-colwrap"><div class="otd-col">
+        <section class="otd-card otd-action">
+          <div class="otd-action__form">
+            <div class="rmx-field" id="otd-action" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Action*</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>File Upload</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Signable Document">Signable Document</button><button type="button" data-value="File Upload">File Upload</button><button type="button" data-value="Renters Insurance">Renters Insurance</button><button type="button" data-value="Make a Payment">Make a Payment</button><button type="button" data-value="Setup Payment Method">Setup Payment Method</button><button type="button" data-value="Form">Form</button></div></div>
+            <div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Step Name*</span><div class="rmx-field__box"><input type="text" value="File Attachments" id="otd-step-name" aria-label="Step Name*"></div></div>
+            <div class="rmx-field" id="otd-req" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Required Contact Types</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>Primary</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Primary">Primary</button><button type="button" data-value="Secondary">Secondary</button></div></div>
+            <div class="rmx-field" id="otd-opt" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Optional Contact Types</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>Secondary</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Primary">Primary</button><button type="button" data-value="Secondary">Secondary</button></div></div>
+            <label class="rmx-check" id="otd-required" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Required</span></label>
+          </div>
+          <div class="otd-preview"><div class="otd-preview__wrap"><iframe class="otd-preview__frame" name="rmr-thumb" title="Step preview" src="../../rmr-onboarding-flow/screens/03-file-upload.html" tabindex="-1"></iframe></div></div>
+        </section>
+        <h3 class="otd-sect">Display Rules</h3>
+        <section class="otd-card" style="display:flex;flex-direction:column;gap:var(--spacing-md)">
+          <button type="button" class="otd-switch" id="otd-rules-sw" role="switch" aria-checked="true"><span class="otd-switch__track"><svg class="rmx-icon"><use href="#check"></use></svg></span><span>Enable display rules</span></button>
+          <div id="otd-rules" style="display:flex;flex-direction:column;gap:var(--spacing-xs)"></div>
+          <div><button type="button" class="otd-link" id="otd-add-rule"><svg class="rmx-icon"><use href="#add"></use></svg>Add Rule</button></div>
+        </section>
+        <div id="otd-files" style="display:flex;flex-direction:column;gap:var(--spacing-md)">
+          <h3 class="otd-sect">File Requests</h3>
+          <p class="otd-desc">Request a file from the resident, like “Proof of income” or “Pet vaccination records.” They’ll see the file name and help text when uploading.</p>
+          <div id="otd-filelist" style="display:flex;flex-direction:column;gap:var(--spacing-md)"></div>
+          <div><button type="button" class="otd-link" id="otd-add-file"><svg class="rmx-icon"><use href="#add"></use></svg>Add File</button></div>
+        </div>
+      </div></div>
+    </div>
   </div>
 </div>
 
-<main class="rmx-page oa-ground oa-page">
-  <div class="oa-filterrow">
-    <div class="oa-filterrow__lead">
-      <div class="oa-search"><div class="rmx-field rmx-field--filter" data-rmx-component="Input Field">
-        <span class="rmx-field__label">Search</span>
-        <div class="rmx-field__box"><svg class="rmx-icon"><use href="#search"></use></svg><input type="text" placeholder="Find a templates" data-rmx-filter="#templates"></div>
-      </div></div>
-      <label class="rmx-check rmx-check--blue" data-checked="false" data-rmx-component="Checkbox" style="margin-bottom:var(--spacing-xs)"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Show Inactive</span></label>
-    </div>
-    <a class="rmx-btn rmx-btn--primary" href="add-onboarding-template.html" data-rmx-component="Button"><svg class="rmx-icon"><use href="#add-circle"></use></svg><span>Add Workflow Template</span></a>
-  </div>
-  <div class="oa-box">
-    <table class="rmx-register" data-rmx-rowlinks id="templates">
-      <colgroup><col style="width:19%"><col style="width:17%"><col style="width:19%"><col style="width:19%"><col style="width:19%"><col style="width:68px"><col style="width:40px"></colgroup>
-      <thead><tr>
-        <th data-sort>Name</th><th data-sort>Description</th><th data-sort>Properties</th><th data-sort>Created By</th><th data-sort>Updated By</th><th class="oa-center">Active</th>
-        <th class="oa-tight"><svg class="rmx-icon rmx-icon--24"><use href="#view-column"></use></svg></th>
-      </tr></thead>
-      <tbody>
-        <tr data-rmx-row>
-          <td><a href="onboarding-template.html?t=Default">Default</a></td><td></td>
-          <td><span class="oa-count">1127 Blackwell<span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Property list is not built in this prototype">+7<svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span></td>
-          <td>wcarey</td><td>panderson</td><td class="oa-center"><svg class="rmx-icon oa-success"><use href="#check-circle-filled"></use></svg></td>
-          <td class="oa-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon oa-blue"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td><a href="onboarding-template.html?t=Residential">Residential</a></td><td></td>
-          <td><span class="oa-count">Riverview Apartments<span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Property list is not built in this prototype">+3<svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span></td>
-          <td>wcarey</td><td>panderson</td><td class="oa-center"><svg class="rmx-icon oa-success"><use href="#check-circle-filled"></use></svg></td>
-          <td class="oa-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon oa-blue"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-        <tr data-rmx-row>
-          <td><a href="onboarding-template.html?t=Commercial">Commercial</a></td><td></td>
-          <td><span class="oa-count">Black Bear Condominiums<span class="rmx-pill" data-rmx-component="Pill" data-rmx-todo="Property list is not built in this prototype">+9<svg class="rmx-icon rmx-icon--16"><use href="#arrow-drop-down"></use></svg></span></span></td>
-          <td>wcarey</td><td>panderson</td><td class="oa-center"><svg class="rmx-icon oa-success"><use href="#check-circle-filled"></use></svg></td>
-          <td class="oa-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon oa-blue"><use href="#more-vert"></use></svg></button></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <p class="rmx-register__totals"><span data-rmx-count="#templates">3</span> of 3 Onboarding Templates</p>
-</main>
-<div class="rmx-overlay" id="dialog" hidden role="dialog" aria-modal="true" aria-label="Onboarding Template" data-rmx-component="Dialog Overlay"><div class="oa-dialog oa-dialog--wide"><div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Onboarding Template</span><span class="oa-hicons"><svg class="rmx-icon rmx-icon--24" data-rmx-todo="Help is not built in this prototype"><use href="#help"></use></svg><a href="onboarding-templates.html" aria-label="Close"><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></a></span></div><div class="oa-body"><section class="oa-sec"><div class="oa-sec__head">General</div><div class="oa-sec__body"><div class="oa-row"><div class="oa-fixed"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Template Name*</span><div class="rmx-field__box"><input type="text" id="oa-t-name" aria-label="Template Name"></div></div></div><div class="oa-grow"><div class="oa-props"><div class="oa-grow"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Assign to Property</span><div class="rmx-field__box"><input type="text" id="oa-t-prop" aria-label="Assign to Property"></div></div></div><a class="rmx-btn rmx-btn--primary" href="#" data-rmx-component="Button" data-rmx-todo="Property selection is not built in this prototype">Select Properties</a></div></div></div><div class="oa-row oa-row--20"><div class="oa-fixed"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Trigger By</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>Lease Signed</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Lease Signed">Lease Signed</button><button type="button" data-value="Application Approved">Application Approved</button><button type="button" data-value="Move-In Scheduled">Move-In Scheduled</button></div></div></div><div class="oa-fixed"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Due Date</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>7 days</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="3 days">3 days</button><button type="button" data-value="7 days">7 days</button><button type="button" data-value="14 days">14 days</button><button type="button" data-value="30 days">30 days</button></div></div></div><div class="oa-grow"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Description</span><div class="rmx-field__box"><input type="text" id="oa-t-desc" aria-label="Description"></div></div></div></div><div class="oa-checks"><label class="rmx-check" id="oa-t-active" data-checked="true" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Active</span></label><label class="rmx-check" id="oa-t-order" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Steps must be completed in order</span></label></div></div></section><section class="oa-sec"><div class="oa-sec__head"><span>Onboarding Setup</span><a class="rmx-btn rmx-btn--text" href="#" id="oa-add-step" data-rmx-component="Button"><svg class="rmx-icon"><use href="#add"></use></svg><span class="rmx-btn__label">Add Step</span></a></div><div class="oa-sec__body oa-sec__body--list"><div class="oa-steps" id="oa-steps"></div></div></section><section class="oa-sec"><div class="oa-sec__head">Onboarding Completion</div><div class="oa-sec__body"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Message</span><div class="rmx-field__box"><input type="text" id="oa-t-msg" value="Your property management will be in touch soon for next steps!" aria-label="Message"></div></div></div></section></div><div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="oa-t-save" data-rmx-component="Button">Save</button><a class="rmx-btn rmx-btn--secondary" href="onboarding-templates.html" data-rmx-component="Button">Cancel</a></div></div></div>
-<div class="rmx-overlay" id="oa-step-dialog" hidden role="dialog" aria-modal="true" aria-label="Add Step" data-rmx-component="Dialog Overlay"><div class="oa-dialog oa-dialog--step"><div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular" id="oa-step-title">Add Step</span><span class="oa-hicons"><button type="button" data-rmx-close aria-label="Close"><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></button></span></div><div class="oa-body"><div class="oa-step-top"><div class="rmx-field" id="oa-action" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Action*</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value rmx-placeholder" data-rmx-value></span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Signable Document">Signable Document</button><button type="button" data-value="File Attachment">File Attachment</button><button type="button" data-value="Renters Insurance Selection">Renters Insurance Selection</button><button type="button" data-value="Make a Payment">Make a Payment</button><button type="button" data-value="Setup Payment Method">Setup Payment Method</button><button type="button" data-value="Form">Form</button></div></div><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Step Name*</span><div class="rmx-field__box"><input type="text" id="oa-s-name" aria-label="Step Name"></div></div></div><label class="rmx-check" id="oa-s-req" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Required</span></label><div id="oa-addl"></div><div id="oa-files" hidden><div id="files-root" data-title="Files" data-add-label="Add File" data-untitled="Name"></div></div></div><div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="oa-save-new" data-rmx-component="Button">Save &amp; New</button><button type="button" class="rmx-btn rmx-btn--primary" id="oa-save" data-rmx-component="Button">Save</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div></div></div>
+<div class="rmx-overlay" id="otd-settings" hidden role="dialog" aria-modal="true" aria-label="Settings" data-rmx-component="Dialog Overlay"><div class="oa-dialog oa-dialog--settings"><div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Settings</span><span class="oa-hicons"><button type="button" aria-label="Close" data-rmx-close><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></button></span></div><div class="oa-body"><div class="oa-props"><div class="oa-grow"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Assign to Property</span><div class="rmx-field__box"><input type="text" id="otd-s-prop" value="Riverview Apartments" readonly aria-label="Assign to Property"></div></div></div><button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Property selection is not built in this prototype">Select Properties</button></div><p class="otd-sd__help">Select contact types that you want this onboarding flow to be sent to.</p><div class="otd-two"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Required Contact Types</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>Primary</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Primary">Primary</button><button type="button" data-value="Secondary">Secondary</button></div></div><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Optional Contact Types</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>Secondary</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Primary">Primary</button><button type="button" data-value="Secondary">Secondary</button></div></div></div><div class="otd-radios" id="otd-radios"><span class="rmx-radio" data-checked="false" data-rmx-component="Radio Button"><span class="rmx-radio__dot"></span><span class="rmx-text">Set Expiration Date</span></span><span class="rmx-radio" data-checked="true" data-rmx-component="Radio Button"><span class="rmx-radio__dot"></span><span class="rmx-text">Set Due Date</span></span></div><div class="otd-due"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Due Date</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>7 days</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="3 days">3 days</button><button type="button" data-value="7 days">7 days</button><button type="button" data-value="14 days">14 days</button><button type="button" data-value="30 days">30 days</button></div></div><button type="button" class="otd-cal" aria-label="Pick a date" data-rmx-todo="Date picking is not built in this prototype"><svg class="rmx-icon"><use href="#calendar-today"></use></svg></button></div><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Description</span><div class="rmx-field__box"><input type="text" value="" id="otd-s-desc" aria-label="Description"></div></div></div><div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" data-rmx-close data-rmx-component="Button">Save</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div></div></div>
 <script src="../assets/app.js"></script>
 <script src="../assets/megamenu.js"></script>
-<script src="../assets/files-mock.js"></script>
-<script src="../assets/onboarding-admin.js"></script>
-<script>RMX.openOverlay("dialog");</script>
+<script>
+/* Onboarding Template Detail: a new template (?new=1) carries the name from the Add dialog; a register row shows its own name and properties.
+   Steps, rules and file requests are all editable and kept per step; the preview is the real RMR onboarding page for the step's action. */
+(function () {
+  var p = new URLSearchParams(location.search), T = { Default: ['1127 Blackwell', '+7'], Residential: ['Riverview Apartments', '+3'], Commercial: ['Black Bear Condominiums', '+9'] };
+  var name = '', prop = null;
+  try {
+    if (p.get('new') === '1') { var d = JSON.parse(sessionStorage.getItem('rmx-oa-draft') || '{}'); name = d.name || ''; }
+    else if (T[p.get('t')]) { name = p.get('t'); prop = T[name]; }
+  } catch (e) {}
+  if (name) document.getElementById('otd-name').value = name;
+  if (prop) { document.getElementById('otd-prop-name').textContent = prop[0]; document.getElementById('otd-prop-more').textContent = prop[1]; document.getElementById('otd-s-prop').value = prop[0]; }
+  [].forEach.call(document.querySelectorAll('#otd-radios .rmx-radio'), function (r) {
+    r.addEventListener('click', function () { [].forEach.call(document.querySelectorAll('#otd-radios .rmx-radio'), function (o) { o.setAttribute('data-checked', o === r); }); });
+  });
+
+  var $ = function (id) { return document.getElementById(id); };
+  var PAGES = { 'Signable Document': '02-docs-to-sign', 'File Upload': '03-file-upload', 'Renters Insurance': '04-insurance', 'Make a Payment': '05-pay-charges', 'Setup Payment Method': '07-setup-payment-method', 'Form': '10-pet-information' };
+  var CT = ['Primary', 'Secondary'], OPS = ['is equal to', 'is not equal to'], VALS = ['Dog', 'Cat'];
+  function esc(t) { var x = document.createElement('div'); x.textContent = t; return x.innerHTML; }
+  function icon(n, c) { return '<svg class="' + (c || 'rmx-icon') + '"><use href="#' + n + '"></use></svg>'; }
+  function dd(label, val, opts, attrs) {
+    return '<div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field" ' + (attrs || '') + '>' + (label ? '<span class="rmx-field__label">' + label + '</span>' : '') +
+      '<button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>' + esc(val) + '</span>' + icon('keyboard-arrow-down') + '</button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden>' +
+      opts.map(function (o) { return '<button type="button" data-value="' + esc(o) + '">' + esc(o) + '</button>'; }).join('') + '</div></div>';
+  }
+  function blankFile() { return { name: '', help: '', map: '', multi: false }; }
+  var uid = 0;
+  function step(o) { return Object.assign({ id: ++uid, action: 'Signable Document', name: 'New Step', required: false, req: 'Primary', opt: 'Secondary', rulesOn: false, rules: [{ field: 'Pet Type', op: 'is equal to', val: 'Dog' }], files: [] }, o); }
+  var steps = [
+    step({ action: 'Signable Document', name: 'Signable Document' }),
+    step({ action: 'File Upload', name: 'File Attachments', rulesOn: true, files: [
+      { name: 'Profile Photo', help: 'This will be added to your rmResident Portal profile and kept for our records.', map: '', multi: false },
+      { name: 'Proof of Income', help: 'Upload your pay stubs for the past 3 months.', map: '', multi: false }] }),
+    step({ action: 'Renters Insurance', name: 'Renters Insurance' }),
+    step({ action: 'Make a Payment', name: 'Make a Payment' }),
+    step({ action: 'File Upload', name: 'File Attachment', files: [blankFile()] })
+  ];
+  var cur = steps[1].id;
+  function curStep() { return steps.filter(function (s) { return s.id === cur; })[0]; }
+
+  var list = document.querySelector('.otd-steps'), pf = document.querySelector('.otd-preview__frame'), pw = document.querySelector('.otd-preview__wrap');
+  function fit() { pf.style.transform = 'scale(' + (pw.clientWidth / 1500) + ')'; }
+  fit(); window.addEventListener('resize', fit); if (window.ResizeObserver) new ResizeObserver(fit).observe(pw);
+
+  var BRANCH = '<svg class="rmx-icon otd-branch" viewBox="0 0 24 24" fill="currentColor"><path d="M14 4l2.29 2.29-2.88 2.88 1.42 1.42 2.88-2.88L20 10V4zm-4 0H4v6l2.29-2.29 4.71 4.7V20h2v-8.41l-5.29-5.3z"/></svg>';
+  function renderList() {
+    [].forEach.call(list.querySelectorAll('.otd-steps__row'), function (r) { r.remove(); });
+    steps.forEach(function (s) {
+      var b = document.createElement('div');
+      b.className = 'otd-steps__row'; b.setAttribute('role', 'button'); b.tabIndex = 0; b.dataset.id = s.id;
+      if (s.id === cur) b.setAttribute('aria-current', 'true');
+      b.innerHTML = '<span class="otd-steps__name">' + esc(s.name || 'Untitled step') + '</span>' + (s.rulesOn ? BRANCH : '') +
+        '<span class="otd-kebab" data-kebab aria-label="Step actions" aria-haspopup="menu">' + icon('more-vert') + '</span>' + icon('drag-indicator');
+      list.appendChild(b);
+    });
+  }
+  function ruleRow(r, i, n) {
+    return '<div class="otd-rule" data-i="' + i + '">' + dd('', r.field, ['Pet Type'], 'data-k="field"') + dd('', r.op, OPS, 'data-k="op"') + dd('', r.val, VALS, 'data-k="val"') +
+      (n > 1 ? '<button type="button" class="otd-x" data-del-rule="' + i + '" aria-label="Remove rule">' + icon('close') + '</button>' : '') + '</div>';
+  }
+  function fileCard(f, i, n) {
+    return '<section class="otd-card otd-file" data-i="' + i + '" style="display:flex;flex-direction:column;gap:var(--spacing-md)">' +
+      '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">File Name *</span><div class="rmx-field__box"><input type="text" data-k="name" value="' + esc(f.name) + '" aria-label="File Name"></div></div>' +
+      '<div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label oa-info">Help Text ' + icon('info', 'rmx-icon rmx-icon--16') + '</span><div class="rmx-field__box otd-textarea"><textarea data-k="help" aria-label="Help Text">' + esc(f.help) + '</textarea></div></div>' +
+      dd('Map to Rent Manager Field', f.map, ['Tenants > UDFs > Vehicle License Plate'], 'data-k="map"') +
+      '<label class="rmx-check" data-k="multi" data-checked="' + !!f.multi + '" data-rmx-component="Checkbox"><span class="rmx-check__box">' + icon('check', 'rmx-icon rmx-icon--16') + '</span><span class="rmx-text">Allow multiple uploads</span></label>' +
+      (n > 1 ? '<div><button type="button" class="otd-link" data-del-file="' + i + '">' + icon('close') + 'Remove file</button></div>' : '') + '</section>';
+  }
+  function syncPreview() {
+    var s = curStep(), src = '../../rmr-onboarding-flow/screens/' + PAGES[s.action] + '.html';
+    if (s.action === 'File Upload') { try { sessionStorage.setItem('rmx-files', JSON.stringify(s.files.filter(function (f) { return f.name.trim(); }).map(function (f) { return { name: f.name.trim(), help: f.help, map: f.map, multi: !!f.multi }; }))); } catch (e) {} }
+    if (pf.getAttribute('src') !== src) pf.setAttribute('src', src); else if (s.action === 'File Upload') { try { pf.contentWindow.location.reload(); } catch (e) { pf.setAttribute('src', src); } }
+  }
+  var previewTimer;
+  function previewSoon() { clearTimeout(previewTimer); previewTimer = setTimeout(syncPreview, 250); }
+
+  function renderDetail(full) {
+    var s = curStep();
+    document.querySelector('#otd-action [data-rmx-value]').textContent = s.action;
+    $('otd-step-name').value = s.name;
+    document.querySelector('#otd-req [data-rmx-value]').textContent = s.req;
+    document.querySelector('#otd-opt [data-rmx-value]').textContent = s.opt;
+    $('otd-required').dataset.checked = String(s.required);
+    var sw = $('otd-rules-sw'); sw.setAttribute('aria-checked', s.rulesOn);
+    $('otd-rules').innerHTML = s.rules.map(function (r, i) { return ruleRow(r, i, s.rules.length); }).join('');
+    $('otd-rules').style.opacity = s.rulesOn ? '' : '.5'; $('otd-rules').style.pointerEvents = s.rulesOn ? '' : 'none';
+    $('otd-add-rule').disabled = !s.rulesOn;
+    $('otd-files').hidden = s.action !== 'File Upload';
+    $('otd-filelist').innerHTML = s.files.map(function (f, i) { return fileCard(f, i, s.files.length); }).join('');
+    if (window.RMX && RMX.dropdowns) RMX.dropdowns();
+    renderList(); syncPreview();
+  }
+
+  /* step list: select, kebab menu (Duplicate / Delete), Add */
+  var menu = document.createElement('div'); menu.className = 'rmx-menu rmx-menu--list otd-kmenu'; menu.hidden = true;
+  menu.innerHTML = '<button type="button" data-do="dup">Duplicate</button><button type="button" data-do="del">Delete</button>'; document.body.appendChild(menu);
+  var menuFor = null;
+  document.addEventListener('click', function (e) { if (!menu.hidden && !e.target.closest('.otd-kmenu') && !e.target.closest('[data-kebab]')) menu.hidden = true; });
+  list.addEventListener('click', function (e) {
+    var row = e.target.closest('.otd-steps__row'); if (!row) return;
+    var id = +row.dataset.id;
+    if (e.target.closest('[data-kebab]')) {
+      menuFor = id; var r = e.target.closest('[data-kebab]').getBoundingClientRect();
+      menu.style.top = r.bottom + 4 + 'px'; menu.style.left = Math.min(r.left, innerWidth - 160) + 'px'; menu.hidden = false; e.stopPropagation(); return;
+    }
+    cur = id; renderDetail();
+  });
+  menu.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-do]'); if (!a) return; menu.hidden = true;
+    var i = steps.findIndex(function (s) { return s.id === menuFor; });
+    if (a.dataset.do === 'dup') { var c = JSON.parse(JSON.stringify(steps[i])); c.id = ++uid; c.name = steps[i].name + ' Copy'; steps.splice(i + 1, 0, c); cur = c.id; }
+    else if (steps.length > 1) { steps.splice(i, 1); if (cur === menuFor) cur = steps[Math.max(0, i - 1)].id; }
+    else if (window.RMX && RMX.toast) { RMX.toast('A template needs at least one step', 'error'); return; }
+    renderDetail();
+  });
+  $('otd-add-step').addEventListener('click', function () { var s = step({}); steps.push(s); cur = s.id; renderDetail(); list.scrollTop = list.scrollHeight; });
+
+  /* fields of the selected step */
+  $('otd-step-name').addEventListener('input', function () { curStep().name = this.value; var r = list.querySelector('[data-id="' + cur + '"] .otd-steps__name'); if (r) r.textContent = this.value || 'Untitled step'; });
+  document.addEventListener('rmx:select', function (e) {
+    var t = e.target, s = curStep(), v = e.detail.label;
+    if (t.id === 'otd-action') { s.action = v; if (v !== 'File Upload') s.files = s.files; else if (!s.files.length) s.files = [blankFile()]; renderDetail(); return; }
+    if (t.id === 'otd-req') { s.req = v; return; }
+    if (t.id === 'otd-opt') { s.opt = v; return; }
+    var rr = t.closest('.otd-rule'); if (rr) { s.rules[+rr.dataset.i][t.dataset.k] = v; return; }
+    var fc = t.closest('.otd-file'); if (fc && t.dataset.k === 'map') { s.files[+fc.dataset.i].map = v; previewSoon(); }
+  });
+  document.addEventListener('click', function (e) {
+    var c = e.target.closest('label.rmx-check'); if (!c) return;
+    setTimeout(function () {
+      var s = curStep(), on = c.dataset.checked === 'true';
+      if (c.id === 'otd-required') s.required = on;
+      var fc = c.closest('.otd-file'); if (fc && c.dataset.k === 'multi') { s.files[+fc.dataset.i].multi = on; previewSoon(); }
+    }, 0);
+  });
+  $('otd-rules-sw').addEventListener('click', function () { var s = curStep(); s.rulesOn = !s.rulesOn; renderDetail(); });
+  $('otd-add-rule').addEventListener('click', function () { var s = curStep(); s.rules.push({ field: 'Pet Type', op: 'is equal to', val: 'Dog' }); renderDetail(); });
+  $('otd-rules').addEventListener('click', function (e) { var d = e.target.closest('[data-del-rule]'); if (d) { curStep().rules.splice(+d.dataset.delRule, 1); renderDetail(); } });
+  $('otd-add-file').addEventListener('click', function () { curStep().files.push(blankFile()); renderDetail(); });
+  $('otd-filelist').addEventListener('click', function (e) { var d = e.target.closest('[data-del-file]'); if (d) { curStep().files.splice(+d.dataset.delFile, 1); renderDetail(); previewSoon(); } });
+  $('otd-filelist').addEventListener('input', function (e) {
+    var fc = e.target.closest('.otd-file'), k = e.target.dataset.k; if (!fc || !k) return;
+    curStep().files[+fc.dataset.i][k] = e.target.value; previewSoon();
+  });
+
+  renderDetail();
+})();
+</script>
 <script src="../assets/overlay-scroll.js"></script>
 </body>
 </html>

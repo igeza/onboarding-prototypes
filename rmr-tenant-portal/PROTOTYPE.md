@@ -20,3 +20,6 @@ Source: Figma "RMR Forms", file `RGELIjO4RU4FdsjdB2CsbG`, node `6438:20115`. Ope
 
 - `assets/` was copied from `rmr-onboarding-flow` (tokens, buttons, inputs, dropdown, `app.js`); the Forms styles (banner, tabs, forms card) are at the end of `rmr.css`. Icons are the mock's own exports.
 - `app.js` still carries the onboarding step logic; it is inert here (no step pages) but can be trimmed.
+
+
+**Forms (Figma Available Forms `6438:19740`)**: the tabs are now Required and Submitted. Required lists Name, Due Date and Start (New Pet due 11/01/26, Gym Access due 10/25/26). An "Available Forms" card sits beside it (Name, Last Submitted, Start; New Pet last submitted 11/01/25) on both tabs. Gym Access Start is not built.

@@ -5,6 +5,8 @@
 (function () {
   /* Embedded in the RMX Portal Preview (iframe named rmr-embed): just the onboarding steps, no header or menu. */
   if (window.name === 'rmr-embed') document.documentElement.classList.add('is-embed');
+  /* Thumbnail in the RMX Onboarding Template Detail: the page without the side menu and the step list. */
+  if (window.name === 'rmr-thumb') document.documentElement.classList.add('is-thumb');
 
   /* Choices made in the RMX template designer (kept in the browser tab's session storage) decide what a resident sees.
      A step that has a designer choice appears only when something is chosen; with no designer data at all
@@ -127,7 +129,9 @@
     try { sessionStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {}
   }
   document.addEventListener('click', function (e) {
-    if (e.target.closest('[data-payment-submit]')) { try { sessionStorage.setItem(PAID_KEY, '1'); } catch (er) {} }
+    if (e.target.closest('[data-payment-submit]')) {
+      try { sessionStorage.setItem(PAID_KEY, '1'); var keep = document.querySelector('input[name=save-method]'); if (keep && keep.checked) sessionStorage.setItem('rmr-payment-method-saved', '1'); } catch (er) {}
+    }
     var save = e.target.closest('[data-step-save]'), skip = e.target.closest('[data-step-skip]');
     if (save) setStatus(save.getAttribute('data-step-save'), 'done');
     else if (skip) setStatus(skip.getAttribute('data-step-skip'), 'skipped');
@@ -140,6 +144,39 @@
       b.setAttribute('data-href', '01-dashboard.html'); if (b.tagName === 'A') b.setAttribute('href', '01-dashboard.html');
     }
   });
+  /* Mark as Complete waits for the step's required information (every * question answered, plus a page's own window.rmrStepReady rule); Update waits until something is uploaded or changed. */
+  (function () {
+    var b = document.querySelector('[data-step-btn]'), fin = document.querySelector('[data-finish]');
+    if (!b || document.getElementById('docs-next')) return;   // Documents to Sign has its own signing rule
+    var lab = b.querySelector('.btn__container') || b, isUpdate = lab.textContent.trim() === 'Update', changed = false;
+    /* Every question or field marked with * needs an answer (text, a dropdown choice, a chosen radio, an uploaded file). Hidden or switched-off parts do not count. */
+    function requiredMet() {
+      return [].every.call(document.querySelectorAll('.field, .question'), function (el) {
+        var head = el.querySelector('.field__header, .question__text');
+        if (!head || head.textContent.indexOf('*') < 0 || el.closest('[hidden], .is-disabled')) return true;
+        var ins = [].filter.call(el.querySelectorAll('input, textarea'), function (i) { return !i.disabled && i.type !== 'checkbox'; });
+        if (!ins.length) return true;
+        var radios = ins.filter(function (i) { return i.type === 'radio'; });
+        if (radios.length) return radios.some(function (r) { return r.checked; });
+        return ins.every(function (i) {
+          if (i.type === 'file') { var box = i.closest('.attach'); return !!box && box.classList.contains('has-file'); }
+          return i.value.trim() !== '';
+        });
+      });
+    }
+    function off(v, el) { el = el || b; if (el.tagName === 'BUTTON') el.disabled = v; else el.setAttribute('aria-disabled', String(v)); }   // a link can't be disabled; it is blocked below
+    /* Finish Onboarding: every other step is marked complete and this step's required information is in. */
+    function finishReady() { var st = status(), me = +fin.getAttribute('data-step-save'); return st.every(function (v, i) { return i === me || v === 'done'; }) && requiredMet(); }
+    function refresh() {
+      if (fin) off(!finishReady(), fin);
+      if (isUpdate) { off(!changed); return; }
+      off(!requiredMet() || (typeof window.rmrStepReady === 'function' && !window.rmrStepReady()));
+    }
+    document.addEventListener('click', function (e) { if (e.target.closest('[data-step-btn][aria-disabled="true"], [data-finish][aria-disabled="true"]')) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+    ['input', 'change', 'drop'].forEach(function (ev) { document.addEventListener(ev, function () { changed = true; refresh(); }); });
+    document.addEventListener('click', function () { setTimeout(refresh, 0); });
+    window.addEventListener('load', refresh); refresh();
+  })();
   var st = status();
   items.forEach(function (item, i) {
     var mark = item.querySelector('.step'), img = mark && mark.querySelector('img');
