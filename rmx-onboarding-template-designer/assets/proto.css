@@ -277,3 +277,24 @@ html::-webkit-scrollbar { display: none; }
 .oa-actionmenu > [data-value]:hover, .otd-kmenu > [data-do]:hover { background: var(--container-tertiary); }
 .rmx-menu-layer:has(> .oa-actionmenu) { width: 160px !important; transform: translateX(-132px); }   /* the kebab is 28px wide; the menu is 160px and ends at the kebab's right edge */
 .rmx-menu.oa-actionmenu > [data-value], .rmx-menu.otd-kmenu > [data-do] { color: var(--text-link); font: var(--type-paragraph-s-regular); }
+
+/* Date field with the calendar icon inside, and the RMX Date Picker (Style=Calendar). */
+.rmx-date { display: flex; align-items: center; gap: var(--spacing-xs); }
+.rmx-date > input { flex: 1; min-width: 0; border: 0; background: transparent; outline: none; font: var(--type-label-m-regular); color: var(--text-secondary); padding: 0; }
+.rmx-date__btn { display: inline-flex; flex: none; border: 0; background: none; padding: 0; color: var(--text-secondary); cursor: pointer; }
+.rmx-cal { position: fixed; z-index: 2100; width: 288px; padding: var(--spacing-md) var(--spacing-xs); display: flex; flex-direction: column; gap: var(--spacing-xs); background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); box-shadow: 0 3px 6px rgba(0, 0, 0, .15); }
+.rmx-cal__head { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--spacing-xs); height: 24px; }
+.rmx-cal__title { font: var(--type-label-m-semibold); color: var(--text-secondary); }
+.rmx-cal__nav { display: inline-flex; border: 0; background: none; padding: 0; color: var(--icon-tertiary, #666); cursor: pointer; }
+.rmx-cal__nav .rmx-icon { width: 24px; height: 24px; }
+.rmx-cal__days, .rmx-cal__row { display: grid; grid-template-columns: repeat(7, 1fr); }
+.rmx-cal__days { border-bottom: 1px solid var(--border-primary); }
+.rmx-cal__days span { height: 32px; display: flex; align-items: center; justify-content: center; font: var(--type-label-m-semibold); color: var(--text-secondary); }
+.rmx-cal__row:nth-of-type(even) { background: var(--component-input-default, var(--container-tertiary)); }
+.rmx-cal__day { height: 36px; display: flex; align-items: center; justify-content: center; border: 0; background: none; font: var(--type-label-m-regular); color: var(--text-secondary); cursor: pointer; border-radius: var(--radius-sm); }
+.rmx-cal__day:hover { background: var(--background-brand-secondary); }
+.rmx-cal__day.is-other { color: var(--text-disabled); }
+.rmx-cal__day.is-today { font-weight: 600; }
+.rmx-cal__day.is-selected { background: var(--background-primary-button); color: var(--text-inverse); }
+.rmx-cal__foot { display: flex; justify-content: space-between; padding: var(--spacing-xs) var(--spacing-xs) 0; border-top: 1px solid var(--border-primary); }
+.rmx-cal__foot button { border: 0; background: none; padding: 0; font: var(--type-label-m-regular); color: var(--text-link); cursor: pointer; }
