@@ -22,11 +22,11 @@
     { pages: ['14-finish.html'] }
   ];
   STEPS.forEach(function (s) { var v = s.key ? stored(s.key) : null; s.visible = !s.key || v === null || v.length > 0; });
-  /* The last step, Finish, is added to every page's stepper (summary of the steps, and where Finish Onboarding lives). */
+  /* The last step, Review, is added to every page's stepper (summary of the steps, and where Finish Onboarding lives). */
   (function () {
     var bar = document.querySelector('.stepper');
     if (!bar || bar.querySelector('[data-href="14-finish.html"]')) return;
-    bar.insertAdjacentHTML('beforeend', '<div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="14-finish.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Finish</span></div>');
+    bar.insertAdjacentHTML('beforeend', '<div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="14-finish.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Review</span></div>');
   })();
   window.RMR_STEPS = STEPS;
   var here = location.pathname.split('/').pop();

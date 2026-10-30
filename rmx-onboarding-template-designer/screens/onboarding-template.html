@@ -123,7 +123,7 @@ body { display: flex; flex-direction: column; }
 .otd-steps { flex: none; width: 252px; background: var(--container-primary); border-right: 1px solid var(--border-primary); }
 .otd-steps__head { display: flex; align-items: center; justify-content: space-between; height: 40px; padding: 0 var(--spacing-xs); font: 600 18px/24px Roboto, sans-serif; color: var(--text-secondary); }
 .otd-steps__row { display: flex; align-items: center; gap: var(--spacing-xs); height: 36px; margin-top: 0; padding: 0 var(--spacing-xs); border: 0; border-top: 1px solid var(--border-primary); background: none; width: 100%; text-align: left; font: var(--type-label-m-regular); color: var(--text-secondary); cursor: pointer; }
-.otd-steps__row[aria-current="true"] { background: var(--background-brand-secondary); }
+.otd-steps__row[aria-current="true"] { background: var(--background-brand-secondary); box-shadow: inset 3px 0 0 var(--border-secondary); }
 .otd-steps__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .otd-steps__row .rmx-icon { color: var(--icon-primary); }
 .otd-colwrap { flex: 1; min-width: 0; display: flex; justify-content: center; padding: var(--spacing-md) var(--spacing-xl); background: var(--background-ui-primary); }
@@ -324,6 +324,7 @@ body { display: flex; flex-direction: column; }
             <div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Step Name*</span><div class="rmx-field__box"><input type="text" value="File Attachments" id="otd-step-name" aria-label="Step Name*"></div></div>
             <div class="rmx-field" id="otd-req" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Required Contact Types</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>Primary</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Primary">Primary</button><button type="button" data-value="Secondary">Secondary</button></div></div>
             <div class="rmx-field" id="otd-opt" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Optional Contact Types</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>Secondary</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden><button type="button" data-value="Primary">Primary</button><button type="button" data-value="Secondary">Secondary</button></div></div>
+            <div id="otd-extra" style="display:contents"></div>
             <label class="rmx-check" id="otd-required" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Required</span></label>
           </div>
           <div class="otd-preview"><div class="otd-preview__wrap"><iframe class="otd-preview__frame" name="rmr-thumb" title="Step preview" src="../../rmr-onboarding-flow/screens/03-file-upload.html" tabindex="-1"></iframe></div></div>
@@ -382,9 +383,9 @@ body { display: flex; flex-direction: column; }
     step({ action: 'File Upload', name: 'File Attachments', rulesOn: true, files: [
       { name: 'Profile Photo', help: 'This will be added to your rmResident Portal profile and kept for our records.', map: '', multi: false },
       { name: 'Proof of Income', help: 'Upload your pay stubs for the past 3 months.', map: '', multi: false }] }),
-    step({ action: 'Renters Insurance', name: 'Renters Insurance' }),
+    step({ action: 'Renters Insurance', name: 'Renters Insurance', opts: ['Master Policy', 'Purchased Policy', 'LeaseTrack'] }),
     step({ action: 'Make a Payment', name: 'Make a Payment' }),
-    step({ action: 'File Upload', name: 'File Attachment', files: [blankFile()] })
+    step({ action: 'Form', name: 'Form', form: 'Pet Addendum' })
   ];
   var cur = steps[1].id;
   function curStep() { return steps.filter(function (s) { return s.id === cur; })[0]; }
@@ -419,12 +420,26 @@ body { display: flex; flex-direction: column; }
   }
   function syncPreview() {
     var s = curStep(), src = '../../rmr-onboarding-flow/screens/' + PAGES[s.action] + '.html';
+    try {
+      if (s.action === 'Renters Insurance') sessionStorage.setItem('rmx-insurance-options', JSON.stringify((s.opts || []).map(function (o) { return o === 'Purchased Policy' ? 'Upload Policy' : o; })));
+      if (s.action === 'Form') sessionStorage.setItem('rmx-form', JSON.stringify(s.form ? [s.form] : []));
+    } catch (e) {}
     if (s.action === 'File Upload') { try { sessionStorage.setItem('rmx-files', JSON.stringify(s.files.filter(function (f) { return f.name.trim(); }).map(function (f) { return { name: f.name.trim(), help: f.help, map: f.map, multi: !!f.multi }; }))); } catch (e) {} }
-    if (pf.getAttribute('src') !== src) pf.setAttribute('src', src); else if (s.action === 'File Upload') { try { pf.contentWindow.location.reload(); } catch (e) { pf.setAttribute('src', src); } }
+    if (pf.getAttribute('src') !== src) pf.setAttribute('src', src); else if (s.action === 'File Upload' || s.action === 'Renters Insurance' || s.action === 'Form') { try { pf.contentWindow.location.reload(); } catch (e) { pf.setAttribute('src', src); } }
   }
   var previewTimer;
   function previewSoon() { clearTimeout(previewTimer); previewTimer = setTimeout(syncPreview, 250); }
 
+  var INS = ['Master Policy', 'Purchased Policy', 'LeaseTrack'], FORMS = ['Pet Addendum', 'Pet Information', 'Gym Access', 'Notice to Vacate'];
+  function extraHtml(s) {
+    if (s.action === 'Renters Insurance') {
+      var on = s.opts || INS;
+      return '<div class="rmx-field" id="otd-ins" data-rmx-dropdown data-rmx-multi data-rmx-component="Input Field"><span class="rmx-field__label">Select Options to Offer</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value' + (on.length ? '' : ' rmx-placeholder') + '" data-rmx-value>' + esc(on.length ? on.join(', ') : 'Select options') + '</span>' + icon('keyboard-arrow-down') + '</button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden>' +
+        INS.map(function (o) { var c = on.indexOf(o) !== -1; return '<button type="button" data-value="' + o + '" role="option" aria-checked="' + c + '"><span class="rmx-check" data-checked="' + c + '"><span class="rmx-check__box">' + icon('check', 'rmx-icon rmx-icon--16') + '</span></span><span>' + o + '</span></button>'; }).join('') + '</div></div>';
+    }
+    if (s.action === 'Form') return dd('Select Form', s.form || 'Pet Addendum', FORMS, 'id="otd-form"');
+    return '';
+  }
   function renderDetail(full) {
     var s = curStep();
     document.querySelector('#otd-action [data-rmx-value]').textContent = s.action;
@@ -436,6 +451,7 @@ body { display: flex; flex-direction: column; }
     $('otd-rules').innerHTML = s.rules.map(function (r, i) { return ruleRow(r, i, s.rules.length); }).join('');
     $('otd-rules').style.opacity = s.rulesOn ? '' : '.5'; $('otd-rules').style.pointerEvents = s.rulesOn ? '' : 'none';
     $('otd-add-rule').disabled = !s.rulesOn;
+    $('otd-extra').innerHTML = extraHtml(s);
     $('otd-files').hidden = s.action !== 'File Upload';
     $('otd-filelist').innerHTML = s.files.map(function (f, i) { return fileCard(f, i, s.files.length); }).join('');
     if (window.RMX && RMX.dropdowns) RMX.dropdowns();
@@ -470,7 +486,9 @@ body { display: flex; flex-direction: column; }
   $('otd-step-name').addEventListener('input', function () { curStep().name = this.value; var r = list.querySelector('[data-id="' + cur + '"] .otd-steps__name'); if (r) r.textContent = this.value || 'Untitled step'; });
   document.addEventListener('rmx:select', function (e) {
     var t = e.target, s = curStep(), v = e.detail.label;
-    if (t.id === 'otd-action') { s.action = v; if (v !== 'File Upload') s.files = s.files; else if (!s.files.length) s.files = [blankFile()]; renderDetail(); return; }
+    if (t.id === 'otd-ins') { s.opts = e.detail.values || s.opts; previewSoon(); return; }
+    if (t.id === 'otd-form') { s.form = v; syncPreview(); return; }
+    if (t.id === 'otd-action') { s.action = v; if (v === 'Renters Insurance' && !s.opts) s.opts = INS.slice(); if (v === 'Form' && !s.form) s.form = 'Pet Addendum'; if (v !== 'File Upload') s.files = s.files; else if (!s.files.length) s.files = [blankFile()]; renderDetail(); return; }
     if (t.id === 'otd-req') { s.req = v; return; }
     if (t.id === 'otd-opt') { s.opt = v; return; }
     var rr = t.closest('.otd-rule'); if (rr) { s.rules[+rr.dataset.i][t.dataset.k] = v; return; }
