@@ -130,3 +130,6 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 
 
 **Forms in History / Notes**: the Forms tile is gone from Tenant Details and the Prospect page. A form shows in History / Notes instead: "Form Pet Information sent to <name>" and then "…submitted by <name>" (the prospect also has "…approved by James Brown"). Clicking a submitted or approved row opens the Form Details dialog. Sending and approving forms happens from the Forms register.
+
+
+**Settings dialog (Figma `6613:19288`)**: Description is now a multi-line box and there is a new **Message that displays after onboarding is completed** box (default "Your property management will be in touch soon for next steps!"). The fields sit in a white bordered card on the grey dialog body. Save keeps the message for the RMR Onboarding Submitted overlay.

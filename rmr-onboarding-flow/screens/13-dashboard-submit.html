@@ -90,6 +90,7 @@
 (function () {
   var btn = document.querySelector('.dash-hero__text a.btn'), ov = document.getElementById('submit-overlay');
   var done = btn && btn.getAttribute('href');
+  try { var msg = sessionStorage.getItem('rmx-onboarding-message'); if (msg) document.querySelector('.submit-modal__desc').textContent = msg; } catch (e) {}   // the message set in the template designer's Settings
   function go() { location.href = done; }
   btn.addEventListener('click', function (e) { e.preventDefault(); e.stopImmediatePropagation(); ov.hidden = false; document.getElementById('submit-close').focus(); }, true);
   document.getElementById('submit-close').addEventListener('click', go);
