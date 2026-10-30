@@ -127,3 +127,6 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 
 
 **Step pages (Figma frames Renters Insurance `6646:30277`, Make a Payment `6646:31273`, Form `6646:32802`)**: the step list is now Signable Document, File Attachments, Renters Insurance, Make a Payment, Form. Renters Insurance adds **Select Options to Offer** (multi-select: Master Policy, Purchased Policy, LeaseTrack); Form adds **Select Form** (Pet Addendum, Pet Information, Gym Access, Notice to Vacate); Make a Payment has only the shared fields. Each step shows its RMR page in the preview (insurance options and the chosen form feed the preview). The selected step has a blue bar on its left edge. There is no frame for Signable Document, so it keeps the shared fields only.
+
+
+**Forms in History / Notes**: the Forms tile is gone from Tenant Details and the Prospect page. A form shows in History / Notes instead: "Form Pet Information sent to <name>" and then "…submitted by <name>" (the prospect also has "…approved by James Brown"). Clicking a submitted or approved row opens the Form Details dialog. Sending and approving forms happens from the Forms register.
