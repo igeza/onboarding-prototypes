@@ -8,9 +8,10 @@
    Use: <script src="../assets/send-onboarding.js" data-kind="prospect|tenant" data-table="prospects"></script> after app.js and datepicker.js. */
 (function () {
   var me = document.currentScript, kind = (me && me.getAttribute('data-kind')) || 'prospect', tableId = (me && me.getAttribute('data-table')) || 'prospects';
-  var NOUN = kind === 'tenant' ? 'Tenant' : 'Prospect', table = document.getElementById(tableId);
+  var NOUN = kind === 'tenant' ? 'Tenant' : kind === 'property' ? 'Property' : 'Prospect', PLURAL = kind === 'property' ? 'properties' : NOUN.toLowerCase() + 's', table = document.getElementById(tableId);
   var LISTS = {
     prospect: ['Send Email', 'Send Onboarding', 'Send Form', 'Lost', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Send Online Application', 'Write Screening Adverse Action Letter', 'Write Income Verification Adverse Action Letter', 'Add Invoice', 'Show All Invoices', 'Add Estimate', 'Show All Estimates'],
+    property: ['Send Email', 'Send Onboarding', 'Send Form', 'Add Management Inspection', 'Create Service Issue', 'Write Letters', 'Report Writer', 'Add to Phone Broadcasts', 'Add to Text Broadcasts'],
     tenant: ['Send Email', 'Send Onboarding', 'Send Form', 'Send Survey', 'Send Management Inspection', 'Send Tenant Self-Inspection', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Jump To Prospect', 'Create Document Packet', 'Publish Signable Documents', 'Add To Account Groups', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge']
   };
   var FORMS = ['Pet & Policy Agreement', 'Pet Information', 'Gym Access', 'Notice to Vacate'];
@@ -32,6 +33,7 @@
     '.rmx-overlay[data-so] { width: 298px; max-width: calc(100vw - 32px); }' +
     '.rmx-overlay[data-so="form"] { width: 856px; }' +
     '.rmx-overlay[data-so="bulk"] { width: 1038px; }' +
+    '.rmx-overlay[data-so="prop"] { width: 440px; }' +
     '.rmx-overlay[data-so].is-open { display: flex; flex-direction: column; max-height: calc(100vh - 32px); }' +
     '.rmx-overlay[data-so] .rmx-overlay__header { justify-content: space-between; flex: none; }' +
     '.rmx-overlay[data-so] .rmx-overlay__footer { flex: none; }' +
@@ -129,6 +131,21 @@
     if (window.RMX && RMX.toast) RMX.toast('"' + f + '" sent.', 'success');
   });
 
+  /* ---------- Send Form to Property (Figma Send to Property 6070:46986, dialog 6070:47029, 440px) ---------- */
+  var pdlg = document.createElement('div');
+  pdlg.className = 'rmx-overlay'; pdlg.id = 'send-form-prop'; pdlg.hidden = true; pdlg.setAttribute('data-so', 'prop'); pdlg.setAttribute('role', 'dialog'); pdlg.setAttribute('aria-modal', 'true'); pdlg.setAttribute('aria-label', 'Send Form'); pdlg.setAttribute('data-rmx-component', 'Dialog Overlay');
+  pdlg.innerHTML =
+    '<div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Send Form</span><button type="button" aria-label="Close" data-rmx-close>' + ic('close', 'rmx-icon--24') + '</button></div>' +
+    '<div class="so-body"><div><p class="so-label">Form</p><p class="so-val">Pet Info &amp; Policy Agreement</p></div>' +
+    '<div class="rmx-field so-who" data-rmx-component="Input Field"><span class="rmx-field__label">Property</span><div class="rmx-field__box">' + ic('search') + '<input type="text" id="sp-who" readonly aria-label="Property"></div></div>' +
+    '<label class="rmx-check" id="sp-prospects" data-checked="true" data-rmx-component="Checkbox"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span><span class="rmx-text">Include Prospects</span></label>' +
+    '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Set Expiration</span><div class="rmx-field__box rmx-date"><input type="text" id="sp-date" aria-label="Set Expiration" placeholder="MM/DD/YYYY"><button type="button" class="rmx-date__btn" aria-label="Pick a date">' + ic('calendar-today') + '</button></div></div>' +
+    '<div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label">Send Message</span><div class="rmx-field__box"><textarea id="sp-msg" aria-label="Send Message" placeholder="Type message to tenants here"></textarea></div></div></div>' +
+    '<div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="sp-send" data-rmx-close data-rmx-component="Button">Send</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>';
+  document.body.appendChild(pdlg);
+  var openProp = opener('send-form-prop');
+  document.getElementById('sp-send').addEventListener('click', function () { if (window.RMX && RMX.toast) RMX.toast('"Pet Info & Policy Agreement" sent', 'success'); });
+
   /* ---------- row kebab menu ---------- */
   var menu = document.createElement('div');
   menu.className = 'so-menu'; menu.hidden = true; menu.setAttribute('role', 'menu');
@@ -137,7 +154,10 @@
   function close() { menu.hidden = true; }
   function nameOf(tr) { var a = tr.querySelector('a'); if (a) return a.textContent.trim(); var nm = ''; [].some.call(tr.querySelectorAll('td'), function (td) { var t = td.textContent.trim(); if (t) { nm = t; return true; } }); return nm; }
   function startOnboarding() { document.getElementById('so-date').value = inAWeek(); openOnb.click(); }
-  function startForm(names) { buildForm(names); openForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); }
+  function startForm(names) {
+    if (kind === 'property') { document.getElementById('sp-who').value = names.length > 1 ? names.length + ' selected' : names[0]; document.getElementById('sp-date').value = inAWeek(); document.getElementById('sp-msg').value = ''; document.getElementById('sp-prospects').dataset.checked = 'true'; openProp.click(); return; }
+    buildForm(names); openForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns();
+  }
 
   document.addEventListener('click', function (e) {
     var k = e.target.closest('td button[aria-label="Actions"]');
@@ -187,7 +207,8 @@
   var P = kind === 'tenant' ? 'Tenant' : 'Prospect';
   var GROUPS = [['History / Note', ['Add to History >']], ['Service Manager', ['Add Issue']], ['Financial', ['Add Charge']], ['Reports', [P + ' Mailing Labels', 'Report Writer']],
     ['Communication', ['Write Letters', 'Send Email', 'Send Form', 'Send Onboarding', 'Publish Signable Documents', 'Send Text', 'Add to Phone Broadcasts']]];
-  if (kind !== 'tenant') GROUPS.push(['Manage Prospects', ['Set to Lost', 'Change Stage', 'Delete']]);
+  if (kind === 'property') GROUPS = [['Reports', ['Report Writer']], ['Communication', ['Write Letters', 'Send Email', 'Send Form', 'Send Onboarding', 'Add to Phone Broadcasts', 'Add to Text Broadcasts']]];
+  else if (kind !== 'tenant') GROUPS.push(['Manage Prospects', ['Set to Lost', 'Change Stage', 'Delete']]);
   bmenu.className = 'so-menu so-bmenu'; bmenu.hidden = true;
   bmenu.innerHTML = '<button type="button" class="so-mass">' + ic('edit') + '<span>Mass Edit Mode</span><em>F2</em></button><div class="so-sep"></div>' +
     GROUPS.map(function (g) { return '<div class="so-h">' + g[0] + '</div>' + g[1].map(function (n) {
@@ -212,7 +233,7 @@
     /* ticked rows are not tinted: the mocks keep them white, the orange tick is the only mark */
     bar.hidden = !n || !table.classList.contains('so-bulk');
     document.getElementById('so-go').textContent = NAMES[mode];
-    document.getElementById('so-count').textContent = n + ' ' + NOUN.toLowerCase() + (n === 1 ? '' : 's') + ' selected';
+    document.getElementById('so-count').textContent = n + ' ' + (n === 1 ? NOUN.toLowerCase() : PLURAL) + ' selected';
   }
   document.addEventListener('click', function (e) { if (e.target.closest('.so-sel .rmx-check')) setTimeout(refresh, 0); });
   document.addEventListener('rmx:change', function (e) { if (e.target.closest && e.target.closest('.so-sel')) setTimeout(refresh, 0); });
