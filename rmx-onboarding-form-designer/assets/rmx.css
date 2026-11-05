@@ -92,6 +92,8 @@ body.rmx {
   background: var(--icon-attention); border-color: var(--border-attention);
 }
 .rmx-check[data-checked="true"] .rmx-check__box > svg { color: var(--container-primary); }
+/* an unchecked box is empty: the tick only shows once it is checked */
+.rmx-check:not([data-checked="true"]) .rmx-check__box > svg { visibility: hidden; }
 /* State=Blue / State=Register — the select-all above a register */
 .rmx-check--blue[data-checked="true"] .rmx-check__box,
 .rmx-check--register[data-checked="true"] .rmx-check__box {

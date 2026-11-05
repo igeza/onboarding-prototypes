@@ -101,7 +101,7 @@
   function contactsOf(name) { return [[name, 'Primary', true]].concat(CONTACTS[name] || []); }
   function buildForm(names) {
     var many = names.length > 1, cols = many ? 'so-colsn' : 'so-cols1';
-    var head = '<div class="so-tr so-tr--head ' + cols + '">' + (many ? '<span>' + NOUN + '</span>' : '') + '<label class="rmx-check" data-checked="false" data-sf-all><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label><span>Name</span><span>Email Address</span><span>Web User</span><span>Contact Type</span></div>';
+    var head = '<div class="so-tr so-tr--head ' + cols + '">' + (many ? '<span>' + NOUN + '</span>' : '') + '<label class="rmx-check rmx-check--register" data-checked="false" data-sf-all><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label><span>Name</span><span>Email Address</span><span>Web User</span><span>Contact Type</span></div>';
     var rows = names.map(function (n) {
       return contactsOf(n).map(function (c, i) {
         return '<div class="so-tr ' + cols + '">' + (many ? '<span class="so-grp">' + (i === 0 ? ic('keyboard-arrow-down', 'rmx-icon--20') + esc(n) : '') + '</span>' : '') + chk() +
@@ -161,7 +161,7 @@
     }
     if (!e.target.closest('.so-menu')) close();
   }, true);
-  window.addEventListener('scroll', function (e) { if (!(e.target.closest && e.target.closest('.so-menu'))) close(); }, true);
+  window.addEventListener('scroll', function (e) { if (!(e.target.closest && e.target.closest('.so-menu'))) { close(); if (typeof bmenu !== 'undefined') bmenu.hidden = true; } }, true);
   window.addEventListener('resize', close);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   document.getElementById('so-send').addEventListener('click', function () { if (window.RMX && RMX.toast) RMX.toast('Onboarding sent', 'success'); });
@@ -173,7 +173,7 @@
   bar.innerHTML = '<span id="so-count"></span><button type="button" id="so-go" data-so-bar="go"></button><button type="button" class="so-x" data-so-bar="clear" aria-label="Exit bulk mode">' + ic('close', 'rmx-icon--20') + '</button>';
   document.body.appendChild(bar);
   var headCell = table.querySelector('thead th:first-child');
-  if (headCell) headCell.innerHTML = '<div class="so-sel"><label class="rmx-check" data-checked="false" data-rmx-selectall="' + tableId + '" aria-label="Select all"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label></div>';
+  if (headCell) headCell.innerHTML = '<div class="so-sel"><label class="rmx-check rmx-check--register" data-checked="false" data-rmx-selectall="' + tableId + '" aria-label="Select all"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label></div>';
   table.querySelectorAll('tbody tr').forEach(function (tr) {
     var td = tr.querySelector('td:first-child'); if (!td) return;
     td.innerHTML = '<div class="so-sel"><label class="rmx-check" data-checked="false" aria-label="Select row"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label>' + td.innerHTML + '</div>';
@@ -199,7 +199,7 @@
     if (bulk && e.target.closest('.tn-bulk') === bulk) {
       e.preventDefault(); e.stopPropagation();
       if (!bmenu.hidden) { bmenu.hidden = true; return; }
-      var r = bulk.getBoundingClientRect(); bmenu.hidden = false; bmenu.style.left = r.left + 'px'; bmenu.style.top = (r.bottom + 4) + 'px'; bmenu.style.minWidth = r.width + 'px';
+      var r = bulk.getBoundingClientRect(); bmenu.hidden = false; bmenu.style.left = r.left + 'px'; bmenu.style.top = (r.bottom + 4) + 'px'; bmenu.style.minWidth = r.width + 'px'; bmenu.style.maxHeight = Math.max(160, window.innerHeight - r.bottom - 16) + 'px'; bmenu.scrollTop = 0;
       return;
     }
     var m = e.target.closest('[data-so-mode]');
