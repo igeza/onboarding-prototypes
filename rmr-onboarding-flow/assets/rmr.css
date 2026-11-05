@@ -421,6 +421,9 @@ html { background: #f6fafe; color-scheme: light; }
 
 /* RMX template detail thumbnail: no side menu, no step list */
 .is-thumb .menu, .is-thumb .stepper { display: none; }
+.is-thumb .skel { color: transparent !important; background: #dbe1e5; border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.is-thumb .step-card .link, .is-thumb .step-card .attach__text { color: transparent; }
+.is-thumb .step-card input, .is-thumb .step-card .dropdown__trigger { color: transparent; }
 
 /* Saved payment method (Figma Payment Method 6070:42409) */
 .saved-method { display: flex; align-items: center; gap: var(--spacing-xs); padding: var(--spacing-xs) var(--spacing-md); background: var(--component-selector); border: 1px solid var(--border-button-tertiary); border-radius: var(--radius-container); }

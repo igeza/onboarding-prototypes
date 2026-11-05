@@ -1,8 +1,8 @@
 /* Scrollbars that float over the content instead of taking space from it.
-   Scrolls the page, or the element marked data-overlay-scroll when a screen pins its header and scrolls only the body.
+   Scrolls the page, or each element marked data-overlay-scroll when a screen pins its header and scrolls only the body.
    The native bars are hidden in CSS; this draws thumbs in the free space at the element's right and bottom edges. */
 (function () {
-  var marked = document.querySelector('[data-overlay-scroll]');
+  function init(marked) {
   var root = marked || document.documentElement, hideTimer, drag;
   function make(cls) {
     var t = document.createElement('div');
@@ -65,4 +65,8 @@
   window.addEventListener('resize', update);
   new MutationObserver(update).observe(document.body, { childList: true, subtree: true, attributes: true });
   update();
+  }
+  /* every element marked data-overlay-scroll gets its own floating bar; with none marked, the page does */
+  var marks = document.querySelectorAll('[data-overlay-scroll]');
+  if (marks.length) [].forEach.call(marks, init); else init(null);
 })();

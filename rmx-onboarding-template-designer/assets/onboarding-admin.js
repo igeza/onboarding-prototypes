@@ -51,7 +51,7 @@
   const INS = ['Master Policy', 'Lease Track', 'No Insurance', 'Upload Policy'];
   const PAY = ['Payment Method', 'Autopay', 'Flex'];
   const FORMS = ['Pet Information', 'Gym Access', 'Notice to Vacate'];
-  const TEMPLATES = { Default: '1127 Blackwell', Residential: 'Riverview Apartments', Commercial: 'Black Bear Condominiums' };
+  const TEMPLATES = { Default: '1127 Blackwell', Commercial: 'Clear Water Campgrounds', Student: 'Brookline' };
 
   const params = new URLSearchParams(location.search);
   const isNew = params.get('new') === '1';

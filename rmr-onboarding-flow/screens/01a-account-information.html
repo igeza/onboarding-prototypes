@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding – Account Information</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/rmr.css">
+<link rel="stylesheet" href="../assets/proto.css">
+</head>
+<body>
+<div class="page">
+<header class="header" data-component="Header">
+  <div class="header__left" data-component="Header Left">
+    <div class="header__logo" data-component="New Logo">
+      <div class="header__logo-mark"><img src="../assets/img/logo-mark.svg" alt=""></div>
+      <div class="header__logo-icon"><img src="../assets/img/logo-icon.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="header__right" data-component="Header Right">
+    <img class="header__icon" src="../assets/img/connect.svg" alt="" width="24" height="24">
+    <div class="header__divider"><div class="header__divider-rot"><div class="header__divider-line"><div><img src="../assets/img/header-divider.svg" alt=""></div></div></div></div>
+    <button type="button" class="user-info" data-component="User Info">
+      <span class="user-info__avatar" aria-hidden="true">WC</span>
+      <span class="user-info__name">Watson Crane</span>
+      <img class="header__icon" src="../assets/img/keyboard-arrow-down.svg" alt="" width="24" height="24">
+    </button>
+  </div>
+</header>
+<div class="content" data-component="Content">
+<nav class="menu" data-component="Menu">
+  <div class="menu__group" data-component="Expanded Menu">
+    <a class="menu-item is-selected" href="01-dashboard.html" data-component="Dashboard"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/dashboard.svg" alt="" width="16" height="16"><span>Dashboard</span></span></a>
+    <a class="menu-item" href="#" data-component="Application"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/application.svg" alt="" width="16" height="16"><span>Application</span></span></a>
+  </div>
+  <div class="menu__footer" data-component="Expanded Menu Item">
+    <div class="menu__footer-line"><div><img src="../assets/img/menu-divider.svg" alt=""></div></div>
+    <a class="menu-item" href="#" data-component="Collapse"><span class="menu-item__body" data-component="Expanded Menu Icon"><img src="../assets/img/keyboard-double-arrow-left.svg" alt="" width="16" height="16"><span>Collapse</span></span></a>
+  </div>
+</nav>
+<main class="main" data-component="Main Content">
+<div class="context-bar" data-component="Context Bar">
+  <div class="context-bar__bg"><img src="../assets/img/context-bar.png" alt=""></div>
+  <h1 class="context-bar__title">Onboarding</h1><a class="btn btn--secondary context-bar__back" href="01-dashboard.html" data-href="01-dashboard.html" data-component="Button"><span class="btn__container">Back to Dashboard</span></a>
+</div>
+<div class="stepper" data-component="Stepper Container"><div class="stepper__item is-active" data-href="01a-account-information.html" data-component="Stepper"><span class="step step--active" data-component="_Step"><img src="../assets/img/check-white.svg" alt="" width="16" height="16"></span><span class="stepper__label">Account Information</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="03-file-upload.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">File Upload</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="04-insurance.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Insurance</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="05-pay-charges.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Pay Charges</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="07-setup-payment-method.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Setup Payment Method</span></div><div class="stepper__line" data-component="Divider"></div><div class="stepper__item" data-href="10-pet-information.html" data-component="Stepper"><span class="step step--pending" data-component="_Step"><img src="../assets/img/check-blue.svg" alt="" width="16" height="16"></span><span class="stepper__label">Pet Information</span></div></div>
+<style>
+.ai-form { display: flex; flex-direction: column; gap: 24px; width: 100%; }
+.ai-grid { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+.ai-sect { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+.ai-title { display: flex; align-items: center; justify-content: space-between; font-weight: 700; font-size: 16px; line-height: 24px; color: var(--text-primary); }
+.ai-reg { border: 1px solid var(--border); border-radius: 4px; background: #fff; }
+.ai-reg__head, .ai-row { display: grid; grid-template-columns: 1fr 1fr 111px 36px; align-items: center; gap: 8px; padding: 0 8px; }
+.ai-reg__head { height: 40px; border-bottom: 2px solid var(--border); font-size: 14px; color: var(--text-secondary); letter-spacing: .28px; }
+.ai-row { height: 40px; border-bottom: 1px solid var(--border); }
+.ai-row:last-child { border-bottom: 0; }
+.ai-prim { justify-self: center; }
+.ai-del { opacity: .9; }
+.ai-note { margin: 0; font-size: 16px; line-height: 24px; letter-spacing: .32px; color: var(--text-secondary); }
+</style>
+<section class="step-card" data-component="DTS">
+  <div class="step-card__head" data-component="Header"><h2 class="step-card__title">Account Information</h2><p class="step-card__subtitle">Update your account information.</p></div>
+  <div class="ai-form" data-component="Contact Form">
+    <div class="ai-grid" data-component="Personal Information">
+      <div class="form-row" data-component="Form Row"><div class="field" data-component="Input Field"><div class="field__header"><span>First Name*</span></div><div class="input" data-component="Input field"><input type="text" value="Samantha" autocomplete="off"></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Last Name*</span></div><div class="input" data-component="Input field"><input type="text" value="Carpenter" autocomplete="off"></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Email Address</span><a class="btn--text" href="#" style="margin-left:auto" data-component="Button">Manage Subscription</a></div><div class="input" data-component="Input field"><input type="text" value="scarpenter@gmail.com" autocomplete="off"><img src="../assets/img/mark-email-read.svg" alt="" width="20" height="20"></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Employer</span></div><div class="input" data-component="Input field"><input type="text" value="" autocomplete="off"></div></div></div>
+      <div class="field" data-component="Attach"><div class="field__header"><span>Profile Photo</span></div><label class="attach"><input type="file" name="profile-photo"><img src="../assets/img/file-download.svg" alt="" width="32" height="32"><span class="attach__text"><span class="link">Choose a file</span> or drag it here.</span></label></div>
+    </div>
+    <div class="ai-sect" data-component="Phone Numbers">
+      <div class="ai-title"><span>Phone Numbers</span><a class="btn--text" href="#" data-component="Button">+ Add Phone Number</a></div>
+      <div class="ai-reg"><div class="ai-reg__head"><span>Phone Number</span><span>Phone Type</span><span>Primary Phone</span><span></span></div><div class="ai-row"><div class="input"><input type="text" value="324-543-2643" autocomplete="off"></div><div class="input input--select"><button type="button" class="dropdown__trigger" aria-haspopup="listbox">Cell Phone</button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><label class="radio ai-prim"><input type="radio" name="primary-phone" checked><span class="radio__mark"></span></label><img class="ai-del" src="../assets/img/delete.svg" alt="Delete" width="20" height="20"></div><div class="ai-row"><div class="input"><input type="text" value="324-112-5678" autocomplete="off"></div><div class="input input--select"><button type="button" class="dropdown__trigger" aria-haspopup="listbox">Home Phone</button><img src="../assets/img/dropdown-20.svg" alt="" width="20" height="20"></div><label class="radio ai-prim"><input type="radio" name="primary-phone"><span class="radio__mark"></span></label><img class="ai-del" src="../assets/img/delete.svg" alt="Delete" width="20" height="20"></div></div>
+      <p class="ai-note">By providing your phone number, you agree to receive text messages from Premiere Management Company for the purpose of communicating news, urgent notifications, and events. Reply STOP to opt-out or HELP for more information at any time. Message and data rates may apply. Message frequency will vary. For more information, please read our <span class="link">privacy policy</span> and <span class="link">terms of service.</span></p>
+    </div>
+    <div class="ai-sect" data-component="Emergency Contacts">
+      <div class="ai-title"><span>Emergency Contacts</span></div>
+      <div class="form-row"><div class="field" data-component="Input Field"><div class="field__header"><span>Name *</span></div><div class="input" data-component="Input field"><input type="text" value="Mary Carpenter" autocomplete="off"></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Relationship</span></div><div class="input" data-component="Input field"><input type="text" value="Mother" autocomplete="off"></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Email Address</span><a class="btn--text" href="#" style="margin-left:auto" data-component="Button">Manage Subscription</a></div><div class="input" data-component="Input field"><input type="text" value="mcarp@gmail.com" autocomplete="off"><img src="../assets/img/mark-email-read.svg" alt="" width="20" height="20"></div></div><div class="field" data-component="Input Field"><div class="field__header"><span>Phone Number</span></div><div class="input" data-component="Input field"><input type="text" value="324-543-6645" autocomplete="off"></div></div></div>
+    </div>
+  </div>
+</section>
+<div class="footer-buttons" data-component="Footer Buttons"><span></span><div style="display:flex;align-items:center;gap:24px"><a class="btn--text" href="03-file-upload.html" data-href="03-file-upload.html" data-component="Button">Skip</a><button type="button" class="btn btn--primary" data-component="Button" data-href="03-file-upload.html"><span class="btn__container">Submit</span></button></div></div>
+</main>
+<div class="portal-bg" data-component="rmResident Portal Background" aria-hidden="true"><img src="../assets/img/rmrp-bg.svg" alt=""></div>
+</div>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

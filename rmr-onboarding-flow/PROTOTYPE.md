@@ -68,3 +68,10 @@ Finish Onboarding (Pet Information) is disabled until every other step is marked
 **Review step (`14-finish`)**: a last step, Review, is added to every page's stepper. Submit on Additional Information now goes to it. It lists each step (hidden ones left out) with Completed / Skipped / Not started and View / Start links, and holds **Finish Onboarding**, which stays disabled until every step is complete and then opens the Onboarding Submitted overlay (close it to reach the completed dashboard). Finish Onboarding was removed from Pet Information. The 100% dashboard (`13-dashboard-submit`) still has its own Finish Onboarding button.
 
 The Onboarding Submitted overlay shows the message set in the RMX template Settings (Message that displays after onboarding is completed) when one is saved in the same browser tab.
+
+
+## Account Information (Figma `6070:39963`)
+
+`screens/01a-account-information.html` is built from the Account Information frame: First / Last Name, Email Address (Manage Subscription link, mark-email-read icon), Employer, Profile Photo, Phone Numbers register (type dropdown, primary-phone radio, delete icon, Add Phone Number), the text-message consent note, and Emergency Contacts. Skip and Submit both go to File Upload. It is used as the preview for the Account Information step in the RMX template designer and is not yet part of the dashboard's step routing. The mock's stepper has no Documents to Sign; the page's stepper lists Account Information, File Upload, Insurance, Pay Charges, Setup Payment Method, Pet Information. Nothing is validated or saved; the dropdowns, Add Phone Number, delete and Manage Subscription do nothing. `delete.svg` and `mark-email-read.svg` come from the mock.
+
+**Thumbnail mode** (iframe named `rmr-thumb`, used by the RMX designer): text inside the step card is wrapped in `.skel` spans and drawn as rounded gray blocks (`rmr.css`, `app.js`).

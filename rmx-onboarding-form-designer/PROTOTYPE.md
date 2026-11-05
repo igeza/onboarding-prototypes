@@ -102,3 +102,9 @@ Copy from the mock, unchanged: "Form Published to RMR", "Form Aging". The mock's
 
 
 The **Publish to rmResident Portal** checkbox is now **Always Available in rmResident Portal** (no info tip). (The row-menu item is still called Publish to rmResident Portal.)
+
+
+**Add Fields: Pet group and Image Upload (Figma Dialog `6341:15945`, Designer - 2nd field `6070:63364`)**: Add Fields now lists three groups: **Pet** (Type, Breed, Name, Age, Weight, Color, Description, Image), **Response Types** (Date, Yes/No, Checkboxes, Dropdown, File Upload, **Image Upload**, Short Answer, Paragraph) and General Fields (Text Box, Attachment). A Pet field is **predefined**: it shows in the Selected list as "Pet Type" and so on, goes on the form already titled and Required, and its settings panel (header shows the field name, with the 1/N pager) has only Question Title, Help Text and Required: no Response Type, mapping or options. Description shows a paragraph box and Image an image drop box; the rest show a one-line field. Image Upload is a response type like File Upload with "Choose an image or drag it here." (also in the editor's Response Type menu). The Portal Preview (`12-form-preview.html`) shows both. The mock does not say what each Pet field maps to in Rent Manager, so none is mapped. Applied to the five screens that carry the designer script (form-designer, -questions, -edit-question, field-selector, portal-preview).
+
+
+**Settings panels float over the container**: the question and Text Box settings panels and the Map to Rent Manager Field selector are now fixed-position, so they are no longer cut off at the edge of the canvas. They stay inside the window (right edge in line with the pencil, clamped to the window) and scroll inside when there is not enough room below; the field selector opens below its field, or above when there is more room there.

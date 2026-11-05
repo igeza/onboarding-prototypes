@@ -7,6 +7,15 @@
   if (window.name === 'rmr-embed') document.documentElement.classList.add('is-embed');
   /* Thumbnail in the RMX Onboarding Template Detail: the page without the side menu and the step list. */
   if (window.name === 'rmr-thumb') document.documentElement.classList.add('is-thumb');
+  /* In the thumbnail the step's details are drawn as rounded blocks that cover the words, so the preview shows layout, not copy. */
+  if (window.name === 'rmr-thumb') document.addEventListener('DOMContentLoaded', function () {
+    [].forEach.call(document.querySelectorAll('.step-card'), function (card) {
+      var w = document.createTreeWalker(card, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
+        return n.nodeValue.trim() && !/^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; } }), nodes = [];
+      while (w.nextNode()) nodes.push(w.currentNode);
+      nodes.forEach(function (n) { var sp = document.createElement('span'); sp.className = 'skel'; n.parentNode.insertBefore(sp, n); sp.appendChild(n); });
+    });
+  });
 
   /* Choices made in the RMX template designer (kept in the browser tab's session storage) decide what a resident sees.
      A step that has a designer choice appears only when something is chosen; with no designer data at all
