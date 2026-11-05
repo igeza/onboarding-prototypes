@@ -552,7 +552,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     });
   }
   function edFor(q) { return q._fd.type === 'tx' ? textEd : editor; }
-  function closeEditors() { if (window.FD) FD.save(); editor.hidden = true; textEd.hidden = true; current = null; var f = document.getElementById('field-selector'); if (f) f.hidden = true; }
+  function closeEditors() { var c0 = document.querySelector('.fd-canvas'); if (c0) c0.style.paddingBottom = ''; if (window.FD) FD.save(); editor.hidden = true; textEd.hidden = true; current = null; var f = document.getElementById('field-selector'); if (f) f.hidden = true; }
   function pagerUpdate(q) {
     var ed = edFor(q), list = all(), p = ed.querySelector('[data-fd-pager]'), i = list.indexOf(q);
     p.hidden = list.length < 2;
@@ -583,6 +583,9 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     var ed = edFor(q);
     ed.hidden = false;
     if (ed === textEd) { fillText(q); $('[data-fd-text]', textEd).focus(); } else fill(q);
+    /* bring the question to the top of the canvas so the form scrolls to the field being edited */
+    var cv = document.querySelector('.fd-canvas');
+    if (cv) { cv.style.paddingBottom = '520px'; var cr = cv.getBoundingClientRect(), qr = q.getBoundingClientRect(); cv.scrollTop += qr.top - cr.top - 24; }
     pagerUpdate(q);
     place(q);
   }

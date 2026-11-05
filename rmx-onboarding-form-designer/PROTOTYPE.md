@@ -108,3 +108,5 @@ The **Publish to rmResident Portal** checkbox is now **Always Available in rmRes
 
 
 **Settings panels float over the container**: the question and Text Box settings panels and the Map to Rent Manager Field selector are now fixed-position, so they are no longer cut off at the edge of the canvas. They stay inside the window (right edge in line with the pencil, clamped to the window) and scroll inside when there is not enough room below; the field selector opens below its field, or above when there is more room there.
+
+**Form scrolls to the question being edited**: opening a question's settings (pencil, or the pager arrows) scrolls the canvas so that question sits near the top; while a panel is open the canvas has extra room below, so even the last question can reach the top. The room goes away when the panel closes.
