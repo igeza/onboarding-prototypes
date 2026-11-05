@@ -155,4 +155,4 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 - Code: `assets/send-onboarding.js` (loaded by both registers).
 
 
-**Checkboxes**: an unchecked box is empty everywhere (the tick is hidden until checked; rule in `assets/rmx.css`, both RMX prototypes). The checkboxes above a register (Show Inactive, Exclude Subaccounts) and the select-all in the register header turn **blue** when checked (`rmx-check--blue` / `rmx-check--register`); row checkboxes and form checkboxes stay orange. The Bulk Actions menu has a maximum height and scrolls inside.
+**Checkboxes**: an unchecked box is empty everywhere (the tick is hidden until checked; rule in `assets/rmx.css`, both RMX prototypes). The checkboxes above a register (Show Inactive, Exclude Subaccounts) turn **blue** when checked (`rmx-check--blue`); the select-all in a gray register header, row checkboxes and form checkboxes are **orange**. The Bulk Actions menu has a maximum height and scrolls inside.

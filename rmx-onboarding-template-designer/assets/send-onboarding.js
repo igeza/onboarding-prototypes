@@ -101,7 +101,7 @@
   function contactsOf(name) { return [[name, 'Primary', true]].concat(CONTACTS[name] || []); }
   function buildForm(names) {
     var many = names.length > 1, cols = many ? 'so-colsn' : 'so-cols1';
-    var head = '<div class="so-tr so-tr--head ' + cols + '">' + (many ? '<span>' + NOUN + '</span>' : '') + '<label class="rmx-check rmx-check--register" data-checked="false" data-sf-all><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label><span>Name</span><span>Email Address</span><span>Web User</span><span>Contact Type</span></div>';
+    var head = '<div class="so-tr so-tr--head ' + cols + '">' + (many ? '<span>' + NOUN + '</span>' : '') + '<label class="rmx-check" data-checked="false" data-sf-all><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label><span>Name</span><span>Email Address</span><span>Web User</span><span>Contact Type</span></div>';
     var rows = names.map(function (n) {
       return contactsOf(n).map(function (c, i) {
         return '<div class="so-tr ' + cols + '">' + (many ? '<span class="so-grp">' + (i === 0 ? ic('keyboard-arrow-down', 'rmx-icon--20') + esc(n) : '') + '</span>' : '') + chk() +
@@ -173,7 +173,7 @@
   bar.innerHTML = '<span id="so-count"></span><button type="button" id="so-go" data-so-bar="go"></button><button type="button" class="so-x" data-so-bar="clear" aria-label="Exit bulk mode">' + ic('close', 'rmx-icon--20') + '</button>';
   document.body.appendChild(bar);
   var headCell = table.querySelector('thead th:first-child');
-  if (headCell) headCell.innerHTML = '<div class="so-sel"><label class="rmx-check rmx-check--register" data-checked="false" data-rmx-selectall="' + tableId + '" aria-label="Select all"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label></div>';
+  if (headCell) headCell.innerHTML = '<div class="so-sel"><label class="rmx-check" data-checked="false" data-rmx-selectall="' + tableId + '" aria-label="Select all"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label></div>';
   table.querySelectorAll('tbody tr').forEach(function (tr) {
     var td = tr.querySelector('td:first-child'); if (!td) return;
     td.innerHTML = '<div class="so-sel"><label class="rmx-check" data-checked="false" aria-label="Select row"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label>' + td.innerHTML + '</div>';
