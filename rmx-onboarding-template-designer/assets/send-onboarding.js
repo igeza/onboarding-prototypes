@@ -209,8 +209,7 @@
   function selected() { return [].filter.call(table.querySelectorAll('tbody tr'), function (tr) { var c = tr.querySelector('.so-sel .rmx-check'); return c && c.dataset.checked === 'true'; }); }
   function refresh() {
     var rows = selected(), n = rows.length;
-    table.querySelectorAll('tbody tr').forEach(function (tr) { tr.removeAttribute('aria-selected'); });
-    rows.forEach(function (tr) { tr.setAttribute('aria-selected', 'true'); });
+    /* ticked rows are not tinted: the mocks keep them white, the orange tick is the only mark */
     bar.hidden = !n || !table.classList.contains('so-bulk');
     document.getElementById('so-go').textContent = NAMES[mode];
     document.getElementById('so-count').textContent = n + ' ' + NOUN.toLowerCase() + (n === 1 ? '' : 's') + ' selected';
