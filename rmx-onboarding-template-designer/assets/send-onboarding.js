@@ -1,63 +1,137 @@
-/* Row kebab menus on the Prospects and Tenants registers, with Send Onboarding (Figma Send Onboarding section 6752:27975).
-   The menu lists the Rent Manager row actions (long, so it scrolls inside); only Send Onboarding does anything: it opens the
-   Send Onboarding dialog (Dialog Overlay 6768:45238: template, Expiration Date, Send / Cancel). Send closes it with a toast.
-   Send Form opens a Send Form dialog for that one person (adapted from the Send Form to Tenant mock, Figma 6768:37136: the form is picked here and the recipient is the row).
-   Use: <script src="../assets/send-onboarding.js" data-kind="prospect|tenant"></script> after app.js and datepicker.js. */
+/* Prospects and Tenants registers: row kebab menu, selection bar, Send Onboarding and Send Form.
+   Figma: Send Onboarding section 6752:27975 (dialog 6768:45238), Send Form to Tenants 6070:46808 (dialog 6768:37219),
+   Bulk Send Form - Prospects 6768:37603 (bar 6768:43339, dialog 6768:37676). Menu lists are from Izzy's Rent Manager screenshots.
+   - Row kebab: long action list (scrolls inside). Send Onboarding opens the 298px dialog; Send Form opens the Send Form dialog for that person.
+   - Checkboxes in the first column select rows; a blue bar ("3 prospects selected") offers Send Onboarding and Send Form for all of them.
+   - Send Form: Form, Set Expiration, the people's contacts (Name, Email, Web User, Contact Type) with a checkbox each, and a message.
+     One person: a Tenant / Prospect field shows who. Several: the table groups contacts under each selected person.
+   Use: <script src="../assets/send-onboarding.js" data-kind="prospect|tenant" data-table="prospects"></script> after app.js and datepicker.js. */
 (function () {
-  var kind = (document.currentScript && document.currentScript.getAttribute('data-kind')) || 'prospect';
+  var me = document.currentScript, kind = (me && me.getAttribute('data-kind')) || 'prospect', tableId = (me && me.getAttribute('data-table')) || 'prospects';
+  var NOUN = kind === 'tenant' ? 'Tenant' : 'Prospect', table = document.getElementById(tableId);
   var LISTS = {
     prospect: ['Send Email', 'Send Onboarding', 'Send Form', 'Lost', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Send Online Application', 'Write Screening Adverse Action Letter', 'Write Income Verification Adverse Action Letter', 'Add Invoice', 'Show All Invoices', 'Add Estimate', 'Show All Estimates'],
     tenant: ['Send Email', 'Send Onboarding', 'Send Form', 'Send Survey', 'Send Management Inspection', 'Send Tenant Self-Inspection', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Jump To Prospect', 'Create Document Packet', 'Publish Signable Documents', 'Add To Account Groups', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge']
   };
+  var FORMS = ['Pet & Policy Agreement', 'Pet Information', 'Gym Access', 'Notice to Vacate'];
+  /* sample contacts from the mock; anyone else has just the primary contact */
+  var CONTACTS = { 'Charlie Apegian': [['Alfred Pennywise', 'Co-Applicant', false], ['Aaron Greenfield', 'Guarantor', true]], 'Arlo Swift': [['Monica Swift', 'Co-Applicant', false]], 'Eli Beer': [['Percy Adams', 'Co-Applicant', false]] };
+
+  function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+  function pad(n) { return ('0' + n).slice(-2); }
+  function inAWeek() { var d = new Date(); d.setDate(d.getDate() + 7); return pad(d.getMonth() + 1) + '/' + pad(d.getDate()) + '/' + d.getFullYear(); }
+  function ic(n, c) { return '<svg class="rmx-icon' + (c ? ' ' + c : '') + '"><use href="#' + n + '"></use></svg>'; }
+  function opener(id) { var b = document.createElement('button'); b.hidden = true; b.setAttribute('data-rmx-open', id); document.body.appendChild(b); return b; }
+
   var css = document.createElement('style');
   css.textContent =
-    '.so-menu { position: fixed; z-index: 2000; min-width: 220px; width: max-content; max-width: 340px; overflow-y: auto; padding: 0; background: var(--container-primary); border-radius: var(--radius-sm); box-shadow: 0 3px 8px rgba(0,0,0,.18); }' +
+    '.so-menu { position: fixed; z-index: 2000; min-width: 220px; width: max-content; max-width: 340px; overflow-y: auto; background: var(--container-primary); border-radius: var(--radius-sm); box-shadow: 0 3px 8px rgba(0,0,0,.18); }' +
     '.so-menu[hidden] { display: none; }' +
     '.so-menu button { display: block; width: 100%; padding: 8px 16px; border: 0; background: none; text-align: left; font: var(--type-paragraph-s-regular); line-height: 20px; color: var(--text-link); cursor: pointer; white-space: nowrap; }' +
     '.so-menu button:hover, .so-menu button:focus-visible { background: var(--container-tertiary); outline: none; }' +
     '.rmx-overlay[data-so] { width: 298px; max-width: calc(100vw - 32px); }' +
-    '.rmx-overlay[data-so].is-open { display: flex; flex-direction: column; }' +
-    '.rmx-overlay[data-so] .rmx-overlay__header { justify-content: space-between; }' +
-    '.so-body { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--container-primary); }' +
+    '.rmx-overlay[data-so="form"] { width: 856px; }' +
+    '.rmx-overlay[data-so="bulk"] { width: 1038px; }' +
+    '.rmx-overlay[data-so].is-open { display: flex; flex-direction: column; max-height: calc(100vh - 32px); }' +
+    '.rmx-overlay[data-so] .rmx-overlay__header { justify-content: space-between; flex: none; }' +
+    '.rmx-overlay[data-so] .rmx-overlay__footer { flex: none; }' +
+    '.so-hicons { display: inline-flex; align-items: center; gap: var(--spacing-xs); }.so-hicons button, .so-hicons span { display: inline-flex; border: 0; background: none; padding: 0; cursor: pointer; color: var(--icon-primary); }' +
+    '.so-body { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--container-primary); overflow-y: auto; overflow-x: hidden; min-height: 0; }' +
     '.so-label { font: var(--type-label-m-regular); color: var(--text-primary); margin: 0 0 4px; }' +
-    '.rmx-overlay[data-so="form"] { width: 700px; }' +
-    '.so-row { display: flex; gap: var(--spacing-md); }.so-row > * { flex: 1; min-width: 0; }' +
+    '.so-val { font: var(--type-label-m-semibold); color: var(--text-secondary); margin: 0; }' +
+    '.so-row { display: flex; gap: var(--spacing-md); }.so-body .so-row > .rmx-field { flex: none; width: 248px; }.so-body .so-row > .so-wide { width: 280px; }' +
     '.so-body .rmx-field { width: 100%; }' +
     '.so-body .rmx-field__box:has(textarea) { height: auto; min-height: 96px; padding: 0; align-items: stretch; }' +
     '.so-body textarea { flex: 1; width: 100%; min-height: 96px; padding: 8px; border: 0; background: transparent; resize: vertical; font: var(--type-label-m-regular); color: var(--text-secondary); outline: none; }' +
-    '.so-val { font: var(--type-label-m-semibold); color: var(--text-secondary); margin: 0; }';
+    '.so-who .rmx-field__box { color: var(--text-secondary); }' +
+    '.so-tbl { border: 1px solid var(--border-primary); border-radius: var(--radius-sm); overflow: hidden; }' +
+    '.so-tr { display: grid; align-items: center; gap: 8px; padding: 0 8px; min-height: 36px; border-top: 1px solid var(--border-primary); }' +
+    '.so-tr--head { background: var(--container-tertiary-dark); color: #fff; font: var(--type-label-m-semibold); border-top: 0; min-height: 28px; }' +
+    '.so-tr--head .rmx-check__box { background: #fff; }' +
+    '.so-grp { font: var(--type-label-m-semibold); color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }.so-grp .rmx-icon { color: var(--icon-primary); }' +
+    '.so-cell { height: 28px; display: flex; align-items: center; padding: 0 8px; background: var(--component-input-default, #f5f8fa); border-radius: var(--radius-sm); color: var(--text-secondary); font: var(--type-label-m-regular); overflow: hidden; white-space: nowrap; }' +
+    '.so-web { color: var(--icon-success); display: flex; justify-content: center; }' +
+    '.so-ct { font: var(--type-label-m-regular); color: var(--text-primary); }' +
+    '.so-tr--head.so-tr--head span:last-child { text-align: left; }' +
+    '.so-cols1 { grid-template-columns: 24px 1fr 1fr 64px 104px; }' +
+    '.so-colsn { grid-template-columns: 150px 24px 1fr 1fr 64px 104px; }' +
+    '.so-invalid .so-tbl { border-color: var(--border-error); }' +
+    /* selection bar */
+    '.so-bar { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 90; width: 800px; max-width: calc(100vw - 32px); height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; background: var(--background-primary-button); color: #fff; border-radius: var(--radius-sm); box-shadow: 0 4px 12px rgba(0,0,0,.25); font: var(--type-label-m-semibold); }' +
+    '.so-bar[hidden] { display: none; }.so-bar span { flex: 1; }' +
+    '.so-bar button { height: 32px; padding: 0 12px; border: 1px solid #fff; border-radius: var(--radius-sm); background: transparent; color: #fff; font: var(--type-label-m-regular); cursor: pointer; }' +
+    '.so-bar button:hover { background: rgba(255,255,255,.15); }' +
+    '.so-bar .so-x { width: 32px; padding: 0; border: 0; display: inline-flex; align-items: center; justify-content: center; }' +
+    '.so-sel { display: flex; align-items: center; height: var(--cell-height, 36px); padding-left: 8px; gap: 8px; }.so-sel .rmx-colorblock { margin-left: 0 !important; }';
   document.head.appendChild(css);
 
+  /* ---------- Send Onboarding dialog ---------- */
   var dlg = document.createElement('div');
   dlg.className = 'rmx-overlay'; dlg.id = 'send-onboarding'; dlg.hidden = true; dlg.setAttribute('data-so', ''); dlg.setAttribute('role', 'dialog'); dlg.setAttribute('aria-modal', 'true'); dlg.setAttribute('aria-label', 'Send Onboarding'); dlg.setAttribute('data-rmx-component', 'Dialog Overlay');
   dlg.innerHTML =
-    '<div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Send Onboarding</span><button type="button" aria-label="Close" data-rmx-close><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></button></div>' +
+    '<div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Send Onboarding</span><button type="button" aria-label="Close" data-rmx-close>' + ic('close', 'rmx-icon--24') + '</button></div>' +
     '<div class="so-body"><div><p class="so-label">Onboarding Template</p><p class="so-val">Default Onboarding</p></div>' +
-    '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Expiration Date</span><div class="rmx-field__box rmx-date"><input type="text" id="so-date" aria-label="Expiration Date" placeholder="MM/DD/YYYY"><button type="button" class="rmx-date__btn" aria-label="Pick a date"><svg class="rmx-icon"><use href="#calendar-today"></use></svg></button></div></div></div>' +
+    '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Expiration Date</span><div class="rmx-field__box rmx-date"><input type="text" id="so-date" aria-label="Expiration Date" placeholder="MM/DD/YYYY"><button type="button" class="rmx-date__btn" aria-label="Pick a date">' + ic('calendar-today') + '</button></div></div></div>' +
     '<div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="so-send" data-rmx-close data-rmx-component="Button">Send</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>';
   document.body.appendChild(dlg);
-  var FORMS = ['Pet Information', 'Pet Addendum', 'Gym Access', 'Notice to Vacate'];
-  var NOUN = kind === 'tenant' ? 'Tenant' : 'Prospect';
-  var fdlg = document.createElement('div');
-  fdlg.className = 'rmx-overlay'; fdlg.id = 'send-form-row'; fdlg.hidden = true; fdlg.setAttribute('data-so', 'form'); fdlg.setAttribute('role', 'dialog'); fdlg.setAttribute('aria-modal', 'true'); fdlg.setAttribute('aria-label', 'Send Form to ' + NOUN); fdlg.setAttribute('data-rmx-component', 'Dialog Overlay');
-  fdlg.innerHTML =
-    '<div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Send Form to ' + NOUN + '</span><button type="button" aria-label="Close" data-rmx-close><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></button></div>' +
-    '<div class="so-body"><div><p class="so-label">' + NOUN + '</p><p class="so-val" id="sf-who"></p></div>' +
-    '<div class="so-row"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Form</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>Pet Information</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden>' + FORMS.map(function (f) { return '<button type="button" data-value="' + f + '">' + f + '</button>'; }).join('') + '</div></div>' +
-    '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Set Expiration</span><div class="rmx-field__box rmx-date"><input type="text" id="sf-date" aria-label="Set Expiration" placeholder="MM/DD/YYYY"><button type="button" class="rmx-date__btn" aria-label="Pick a date"><svg class="rmx-icon"><use href="#calendar-today"></use></svg></button></div></div></div>' +
-    '<div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label">Send below message with form</span><div class="rmx-field__box"><textarea id="sf-msg" aria-label="Message">Please complete the form by the expiration date.</textarea></div></div></div>' +
-    '<div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="sf-save" data-rmx-close data-rmx-component="Button">Save</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>';
-  document.body.appendChild(fdlg);
-  var fopener = document.createElement('button'); fopener.hidden = true; fopener.setAttribute('data-rmx-open', 'send-form-row'); document.body.appendChild(fopener);
-  var opener = document.createElement('button'); opener.hidden = true; opener.setAttribute('data-rmx-open', 'send-onboarding'); document.body.appendChild(opener);
+  var openOnb = opener('send-onboarding');
 
+  /* ---------- Send Form dialog ---------- */
+  var fdlg = document.createElement('div');
+  fdlg.className = 'rmx-overlay'; fdlg.id = 'send-form-dlg'; fdlg.hidden = true; fdlg.setAttribute('data-so', 'form'); fdlg.setAttribute('role', 'dialog'); fdlg.setAttribute('aria-modal', 'true'); fdlg.setAttribute('aria-label', 'Send Form'); fdlg.setAttribute('data-rmx-component', 'Dialog Overlay');
+  fdlg.innerHTML =
+    '<div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Send Form</span><span class="so-hicons"><span data-rmx-todo="Help is not built in this prototype">' + ic('help', 'rmx-icon--24') + '</span><button type="button" aria-label="Close" data-rmx-close>' + ic('close', 'rmx-icon--24') + '</button></span></div>' +
+    '<div class="so-body"><div class="so-row"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Form</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>' + FORMS[0] + '</span>' + ic('keyboard-arrow-down') + '</button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden>' + FORMS.map(function (f) { return '<button type="button" data-value="' + esc(f) + '">' + esc(f) + '</button>'; }).join('') + '</div></div>' +
+    '<div class="rmx-field so-who so-wide" id="sf-whowrap" data-rmx-component="Input Field"><span class="rmx-field__label">' + NOUN + '</span><div class="rmx-field__box">' + ic('search') + '<input type="text" id="sf-who" readonly aria-label="' + NOUN + '"></div></div>' +
+    '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Set Expiration</span><div class="rmx-field__box rmx-date"><input type="text" id="sf-date" aria-label="Set Expiration" placeholder="MM/DD/YYYY"><button type="button" class="rmx-date__btn" aria-label="Pick a date">' + ic('calendar-today') + '</button></div></div></div>' +
+    '<div class="so-tbl" id="sf-tbl"></div>' +
+    '<div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label">Send Message</span><div class="rmx-field__box"><textarea id="sf-msg" aria-label="Send Message" placeholder="Type message to ' + NOUN.toLowerCase() + 's here"></textarea></div></div></div>' +
+    '<div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="sf-send" data-rmx-component="Button">Send</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>';
+  document.body.appendChild(fdlg);
+  var openForm = opener('send-form-dlg');
+  var WEB = '<span class="so-web"><svg class="rmx-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.67A8.33 8.33 0 1 0 10 18.33 8.33 8.33 0 0 0 10 1.67zm-1.67 12.5L4.17 10l1.17-1.17 2.99 2.98 6.33-6.32 1.17 1.17-7.5 7.5z"/></svg></span>';
+  function chk() { return '<label class="rmx-check" data-checked="false"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label>'; }
+  function contactsOf(name) { return [[name, 'Primary', true]].concat(CONTACTS[name] || []); }
+  function buildForm(names) {
+    var many = names.length > 1, cols = many ? 'so-colsn' : 'so-cols1';
+    var head = '<div class="so-tr so-tr--head ' + cols + '">' + (many ? '<span>' + NOUN + '</span>' : '') + '<label class="rmx-check" data-checked="false" data-sf-all><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label><span>Name</span><span>Email Address</span><span>Web User</span><span>Contact Type</span></div>';
+    var rows = names.map(function (n) {
+      return contactsOf(n).map(function (c, i) {
+        return '<div class="so-tr ' + cols + '">' + (many ? '<span class="so-grp">' + (i === 0 ? ic('keyboard-arrow-down', 'rmx-icon--20') + esc(n) : '') + '</span>' : '') + chk() +
+          '<span class="so-cell">' + esc(c[0]) + '</span><span class="so-cell"></span>' + (c[2] ? WEB : '<span></span>') + '<span class="so-ct">' + c[1] + '</span></div>';
+      }).join('');
+    }).join('');
+    document.getElementById('sf-tbl').innerHTML = head + rows;
+    document.getElementById('sf-whowrap').hidden = many;
+    document.getElementById('sf-who').value = many ? '' : names[0];
+    document.getElementById('sf-date').value = inAWeek();
+    document.getElementById('sf-msg').value = '';
+    fdlg.classList.remove('so-invalid');
+    fdlg.setAttribute('data-so', many ? 'bulk' : 'form');
+  }
+  fdlg.addEventListener('click', function (e) {
+    var all = e.target.closest('[data-sf-all]');
+    if (all) { setTimeout(function () { var on = all.dataset.checked === 'true'; fdlg.querySelectorAll('#sf-tbl .so-tr:not(.so-tr--head) .rmx-check').forEach(function (c) { c.dataset.checked = String(on); }); fdlg.classList.remove('so-invalid'); }, 0); return; }
+    if (e.target.closest('#sf-tbl .rmx-check')) fdlg.classList.remove('so-invalid');
+  });
+  document.getElementById('sf-send').addEventListener('click', function () {
+    var ticked = fdlg.querySelectorAll('#sf-tbl .so-tr:not(.so-tr--head) .rmx-check[data-checked="true"]').length;
+    if (!ticked) { fdlg.classList.add('so-invalid'); if (window.RMX && RMX.toast) RMX.toast('Select at least one contact', 'failure'); return; }
+    var f = (fdlg.querySelector('[data-rmx-value]') || {}).textContent || 'Form';
+    if (window.RMX && RMX.closeOverlay) RMX.closeOverlay(fdlg);
+    if (window.RMX && RMX.toast) RMX.toast('"' + f + '" sent.', 'success');
+  });
+
+  /* ---------- row kebab menu ---------- */
   var menu = document.createElement('div');
   menu.className = 'so-menu'; menu.hidden = true; menu.setAttribute('role', 'menu');
   menu.innerHTML = LISTS[kind].map(function (n) { return '<button type="button" role="menuitem" data-so-item="' + n + '">' + n + '</button>'; }).join('');
   document.body.appendChild(menu);
-
-  function pad(n) { return ('0' + n).slice(-2); }
   function close() { menu.hidden = true; }
+  function nameOf(tr) { var a = tr.querySelector('a'); if (a) return a.textContent.trim(); var nm = ''; [].some.call(tr.querySelectorAll('td'), function (td) { var t = td.textContent.trim(); if (t) { nm = t; return true; } }); return nm; }
+  function startOnboarding() { document.getElementById('so-date').value = inAWeek(); openOnb.click(); }
+  function startForm(names) { buildForm(names); openForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); }
+
   document.addEventListener('click', function (e) {
     var k = e.target.closest('td button[aria-label="Actions"]');
     if (k) {
@@ -73,19 +147,9 @@
     var it = e.target.closest('[data-so-item]');
     if (it) {
       close();
-      if (it.getAttribute('data-so-item') === 'Send Form') {
-        var tr = menu._for && menu._for.closest('tr'), nm = ''; if (tr) { var a = tr.querySelector('a'); if (a) nm = a.textContent.trim(); else [].some.call(tr.querySelectorAll('td'), function (td) { var t = td.textContent.trim(); if (t) { nm = t; return true; } }); }
-        document.getElementById('sf-who').textContent = nm;
-        var d2 = new Date(); d2.setDate(d2.getDate() + 7);
-        document.getElementById('sf-date').value = pad(d2.getMonth() + 1) + '/' + pad(d2.getDate()) + '/' + d2.getFullYear();
-        fopener.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns();
-        return;
-      }
-      if (it.getAttribute('data-so-item') === 'Send Onboarding') {
-        var d = new Date(); d.setDate(d.getDate() + 7);
-        document.getElementById('so-date').value = pad(d.getMonth() + 1) + '/' + pad(d.getDate()) + '/' + d.getFullYear();
-        opener.click();
-      }
+      var what = it.getAttribute('data-so-item'), tr = menu._for && menu._for.closest('tr');
+      if (what === 'Send Onboarding') startOnboarding();
+      else if (what === 'Send Form' && tr) startForm([nameOf(tr)]);
       return;
     }
     if (!e.target.closest('.so-menu')) close();
@@ -93,9 +157,36 @@
   window.addEventListener('scroll', function (e) { if (!(e.target.closest && e.target.closest('.so-menu'))) close(); }, true);
   window.addEventListener('resize', close);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-  document.getElementById('sf-save').addEventListener('click', function () {
-    var f = (fdlg.querySelector('[data-rmx-value]') || {}).textContent || 'Form';
-    if (window.RMX && RMX.toast) RMX.toast('"' + f + '" sent to ' + document.getElementById('sf-who').textContent + '.', 'success');
-  });
   document.getElementById('so-send').addEventListener('click', function () { if (window.RMX && RMX.toast) RMX.toast('Onboarding sent', 'success'); });
+
+  /* ---------- selection column and bar ---------- */
+  if (!table) return;
+  var bar = document.createElement('div');
+  bar.className = 'so-bar'; bar.hidden = true; bar.setAttribute('data-rmx-component', 'Bulk Action');
+  bar.innerHTML = '<span id="so-count"></span><button type="button" data-so-bar="onb">Send Onboarding</button><button type="button" data-so-bar="form">Send Form</button><button type="button" class="so-x" data-so-bar="clear" aria-label="Clear selection">' + ic('close', 'rmx-icon--20') + '</button>';
+  document.body.appendChild(bar);
+  var headCell = table.querySelector('thead th:first-child');
+  if (headCell) headCell.innerHTML = '<div class="so-sel"><label class="rmx-check" data-checked="false" data-rmx-selectall="' + tableId + '" aria-label="Select all"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label></div>';
+  table.querySelectorAll('tbody tr').forEach(function (tr) {
+    var td = tr.querySelector('td:first-child'); if (!td) return;
+    td.innerHTML = '<div class="so-sel"><label class="rmx-check" data-checked="false" aria-label="Select row"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label>' + td.innerHTML + '</div>';
+  });
+  var col = table.querySelector('colgroup col:first-child'); if (col) col.style.width = '64px';
+  function selected() { return [].filter.call(table.querySelectorAll('tbody tr'), function (tr) { var c = tr.querySelector('.so-sel .rmx-check'); return c && c.dataset.checked === 'true'; }); }
+  function refresh() {
+    var rows = selected(), n = rows.length;
+    table.querySelectorAll('tbody tr').forEach(function (tr) { tr.removeAttribute('aria-selected'); });
+    rows.forEach(function (tr) { tr.setAttribute('aria-selected', 'true'); });
+    bar.hidden = !n;
+    document.getElementById('so-count').textContent = n + ' ' + NOUN.toLowerCase() + (n === 1 ? '' : 's') + ' selected';
+  }
+  document.addEventListener('click', function (e) { if (e.target.closest('.so-sel .rmx-check')) setTimeout(refresh, 0); });
+  document.addEventListener('rmx:change', function (e) { if (e.target.closest && e.target.closest('.so-sel')) setTimeout(refresh, 0); });
+  bar.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-so-bar]'); if (!b) return;
+    var rows = selected(), what = b.getAttribute('data-so-bar');
+    if (what === 'clear') { table.querySelectorAll('.so-sel .rmx-check').forEach(function (c) { c.dataset.checked = 'false'; }); refresh(); }
+    else if (what === 'onb') startOnboarding();
+    else if (what === 'form') startForm(rows.map(nameOf));
+  });
 })();

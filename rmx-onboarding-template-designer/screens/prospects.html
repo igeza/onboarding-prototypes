@@ -467,12 +467,12 @@ body { display: flex; flex-direction: column; }
 <script src="../assets/app.js"></script>
 <script src="../assets/megamenu.js"></script>
 <script src="../assets/datepicker.js"></script>
-<script src="../assets/send-onboarding.js" data-kind="prospect"></script>
+<script src="../assets/send-onboarding.js" data-kind="prospect" data-table="prospects"></script>
 <script>
 /* A prospect row with a detail page opens its detail page from anywhere on the row (not from the unit pill or the row menu). */
 document.querySelectorAll('#prospects tr[data-href]').forEach(function (tr) {
   tr.addEventListener('click', function (e) {
-    if (e.target.closest('button, .rmx-pill, a')) return;
+    if (e.target.closest('button, .rmx-pill, a, .rmx-check')) return;
     window.location.href = tr.getAttribute('data-href');
   });
 });
