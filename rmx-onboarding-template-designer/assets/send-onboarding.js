@@ -2,7 +2,7 @@
    Figma: Send Onboarding section 6752:27975 (dialog 6768:45238), Send Form to Tenants 6070:46808 (dialog 6768:37219),
    Bulk Send Form - Prospects 6768:37603 (bar 6768:43339, dialog 6768:37676). Menu lists are from Izzy's Rent Manager screenshots.
    - Row kebab: long action list (scrolls inside). Send Onboarding opens the 298px dialog; Send Form opens the Send Form dialog for that person.
-   - Checkboxes in the first column select rows; a blue bar ("3 prospects selected") offers Send Onboarding and Send Form for all of them.
+   - Bulk mode: Bulk Actions > Send Onboarding / Send Form turns on the first-column checkboxes; a blue bar ("3 prospects selected") then offers that one action. Its x leaves bulk mode.
    - Send Form: Form, Set Expiration, the people's contacts (Name, Email, Web User, Contact Type) with a checkbox each, and a message.
      One person: a Tenant / Prospect field shows who. Several: the table groups contacts under each selected person.
    Use: <script src="../assets/send-onboarding.js" data-kind="prospect|tenant" data-table="prospects"></script> after app.js and datepicker.js. */
@@ -56,6 +56,13 @@
     '.so-cols1 { grid-template-columns: 24px 1fr 1fr 64px 104px; }' +
     '.so-colsn { grid-template-columns: 150px 24px 1fr 1fr 64px 104px; }' +
     '.so-invalid .so-tbl { border-color: var(--border-error); }' +
+    '.so-bmenu { min-width: 224px; padding-bottom: 8px; }.so-bmenu .so-mass { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }.so-bmenu .so-mass .rmx-icon { color: var(--icon-primary); }.so-bmenu .so-mass em { margin-left: auto; font-style: normal; color: var(--text-primary); }' +
+    '.so-sep { height: 1px; background: var(--border-primary); }.so-h { padding: 12px 16px 2px; font: 700 14px/20px Roboto, sans-serif; color: var(--text-secondary); }' +
+    '.so-bmenu .so-it { padding-left: 32px; display: flex; align-items: center; justify-content: space-between; }.so-bmenu .so-sub { transform: rotate(-90deg); color: var(--icon-primary); }' +
+    /* the checkboxes only exist in bulk mode (Bulk Actions > a bulk action) */
+    '.so-sel .rmx-check { display: none; }.so-bulk .so-sel .rmx-check { display: inline-flex; }' +
+    /* an unchecked box is empty: the tick only shows once it is checked */
+    '.so-sel .rmx-check:not([data-checked="true"]) .rmx-check__box > svg, .so-tbl .rmx-check:not([data-checked="true"]) .rmx-check__box > svg { visibility: hidden; }' +
     /* selection bar */
     '.so-bar { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 90; width: 800px; max-width: calc(100vw - 32px); height: 48px; display: flex; align-items: center; gap: 12px; padding: 0 12px; background: var(--background-primary-button); color: #fff; border-radius: var(--radius-sm); box-shadow: 0 4px 12px rgba(0,0,0,.25); font: var(--type-label-m-semibold); }' +
     '.so-bar[hidden] { display: none; }.so-bar span { flex: 1; }' +
@@ -163,7 +170,7 @@
   if (!table) return;
   var bar = document.createElement('div');
   bar.className = 'so-bar'; bar.hidden = true; bar.setAttribute('data-rmx-component', 'Bulk Action');
-  bar.innerHTML = '<span id="so-count"></span><button type="button" data-so-bar="onb">Send Onboarding</button><button type="button" data-so-bar="form">Send Form</button><button type="button" class="so-x" data-so-bar="clear" aria-label="Clear selection">' + ic('close', 'rmx-icon--20') + '</button>';
+  bar.innerHTML = '<span id="so-count"></span><button type="button" id="so-go" data-so-bar="go"></button><button type="button" class="so-x" data-so-bar="clear" aria-label="Exit bulk mode">' + ic('close', 'rmx-icon--20') + '</button>';
   document.body.appendChild(bar);
   var headCell = table.querySelector('thead th:first-child');
   if (headCell) headCell.innerHTML = '<div class="so-sel"><label class="rmx-check" data-checked="false" data-rmx-selectall="' + tableId + '" aria-label="Select all"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label></div>';
@@ -171,13 +178,41 @@
     var td = tr.querySelector('td:first-child'); if (!td) return;
     td.innerHTML = '<div class="so-sel"><label class="rmx-check" data-checked="false" aria-label="Select row"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label>' + td.innerHTML + '</div>';
   });
-  var col = table.querySelector('colgroup col:first-child'); if (col) col.style.width = '64px';
+  var col = table.querySelector('colgroup col:first-child'), colW = col ? col.style.width : '';
+  function bulkMode(on) { table.classList.toggle('so-bulk', on); if (col) col.style.width = on ? '64px' : colW; if (!on) table.querySelectorAll('.so-sel .rmx-check').forEach(function (c) { c.dataset.checked = 'false'; }); refresh(); }
+  /* Bulk mode: Bulk Actions > one bulk action turns the checkboxes on, and the bar then offers just that one action for the ticked rows. */
+  var mode = 'onb', NAMES = { onb: 'Send Onboarding', form: 'Send Form' };
+  var bulk = document.querySelector('.tn-bulk'), bmenu = document.createElement('div');
+  /* the Rent Manager Bulk Actions menu (from Izzy's screenshot of Prospects); Tenants use the same groups, names swapped, and no Manage group */
+  var P = kind === 'tenant' ? 'Tenant' : 'Prospect';
+  var GROUPS = [['History / Note', ['Add to History >']], ['Service Manager', ['Add Issue']], ['Financial', ['Add Charge']], ['Reports', [P + ' Mailing Labels', 'Report Writer']],
+    ['Communication', ['Write Letters', 'Send Email', 'Send Form', 'Send Onboarding', 'Publish Signable Documents', 'Send Text', 'Add to Phone Broadcasts']]];
+  if (kind !== 'tenant') GROUPS.push(['Manage Prospects', ['Set to Lost', 'Change Stage', 'Delete']]);
+  bmenu.className = 'so-menu so-bmenu'; bmenu.hidden = true;
+  bmenu.innerHTML = '<button type="button" class="so-mass">' + ic('edit') + '<span>Mass Edit Mode</span><em>F2</em></button><div class="so-sep"></div>' +
+    GROUPS.map(function (g) { return '<div class="so-h">' + g[0] + '</div>' + g[1].map(function (n) {
+      var mode = n === 'Send Onboarding' ? ' data-so-mode="onb"' : n === 'Send Form' ? ' data-so-mode="form"' : '';
+      return '<button type="button" class="so-it"' + mode + '>' + n.replace(' >', '') + (n.slice(-1) === '>' ? ic('arrow-drop-down', 'so-sub') : '') + '</button>'; }).join(''); }).join('');
+  document.body.appendChild(bmenu);
+  if (bulk) bulk.removeAttribute('data-rmx-todo');
+  document.addEventListener('click', function (e) {
+    if (bulk && e.target.closest('.tn-bulk') === bulk) {
+      e.preventDefault(); e.stopPropagation();
+      if (!bmenu.hidden) { bmenu.hidden = true; return; }
+      var r = bulk.getBoundingClientRect(); bmenu.hidden = false; bmenu.style.left = r.left + 'px'; bmenu.style.top = (r.bottom + 4) + 'px'; bmenu.style.minWidth = r.width + 'px';
+      return;
+    }
+    var m = e.target.closest('[data-so-mode]');
+    if (m) { mode = m.getAttribute('data-so-mode'); bmenu.hidden = true; bulkMode(true); return; }
+    if (!e.target.closest('.so-menu')) bmenu.hidden = true;
+  }, true);
   function selected() { return [].filter.call(table.querySelectorAll('tbody tr'), function (tr) { var c = tr.querySelector('.so-sel .rmx-check'); return c && c.dataset.checked === 'true'; }); }
   function refresh() {
     var rows = selected(), n = rows.length;
     table.querySelectorAll('tbody tr').forEach(function (tr) { tr.removeAttribute('aria-selected'); });
     rows.forEach(function (tr) { tr.setAttribute('aria-selected', 'true'); });
-    bar.hidden = !n;
+    bar.hidden = !n || !table.classList.contains('so-bulk');
+    document.getElementById('so-go').textContent = NAMES[mode];
     document.getElementById('so-count').textContent = n + ' ' + NOUN.toLowerCase() + (n === 1 ? '' : 's') + ' selected';
   }
   document.addEventListener('click', function (e) { if (e.target.closest('.so-sel .rmx-check')) setTimeout(refresh, 0); });
@@ -185,8 +220,7 @@
   bar.addEventListener('click', function (e) {
     var b = e.target.closest('[data-so-bar]'); if (!b) return;
     var rows = selected(), what = b.getAttribute('data-so-bar');
-    if (what === 'clear') { table.querySelectorAll('.so-sel .rmx-check').forEach(function (c) { c.dataset.checked = 'false'; }); refresh(); }
-    else if (what === 'onb') startOnboarding();
-    else if (what === 'form') startForm(rows.map(nameOf));
+    if (what === 'clear') bulkMode(false);
+    else if (what === 'go') { if (mode === 'onb') startOnboarding(); else startForm(rows.map(nameOf)); }
   });
 })();
