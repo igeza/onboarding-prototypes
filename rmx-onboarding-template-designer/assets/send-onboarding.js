@@ -55,6 +55,7 @@
     '.so-tr--head .rmx-check__box { background: #fff; }' +
     '.so-grp { font: var(--type-label-m-semibold); color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }.so-grp .rmx-icon { color: var(--icon-primary); }' +
     '.so-cell { height: 28px; display: flex; align-items: center; padding: 0 8px; background: var(--component-input-default, #f5f8fa); border-radius: var(--radius-sm); color: var(--text-secondary); font: var(--type-label-m-regular); overflow: hidden; white-space: nowrap; }' +
+    '.so-cell--edit { padding: 0; }.so-cell--edit input { flex: 1; min-width: 0; height: 100%; width: 100%; padding: 0 8px; border: 0; border-radius: var(--radius-sm); background: transparent; font: inherit; color: var(--text-secondary); outline: none; }.so-cell--edit:focus-within { box-shadow: inset 0 0 0 1px var(--border-secondary); background: var(--container-primary); }' +
     '.so-web { color: var(--icon-success); display: flex; justify-content: center; }' +
     '.so-ct { font: var(--type-label-m-regular); color: var(--text-primary); }' +
     '.so-tr--head.so-tr--head span:last-child { text-align: left; }' +
@@ -111,7 +112,7 @@
     var rows = names.map(function (n) {
       return contactsOf(n).map(function (c, i) {
         return '<div class="so-tr ' + cols + '">' + (many ? '<span class="so-grp">' + (i === 0 ? ic('keyboard-arrow-down', 'rmx-icon--20') + esc(n) : '') + '</span>' : '') + chk() +
-          '<span class="so-cell">' + esc(c[0]) + '</span><span class="so-cell"></span>' + (c[2] ? WEB : '<span></span>') + '<span class="so-ct">' + c[1] + '</span></div>';
+          '<span class="so-cell">' + esc(c[0]) + '</span><span class="so-cell so-cell--edit"><input type="email" autocomplete="off" aria-label="Email Address for ' + esc(c[0]) + '"></span>' + (c[2] ? WEB : '<span></span>') + '<span class="so-ct">' + c[1] + '</span></div>';
       }).join('');
     }).join('');
     document.getElementById('sf-tbl').innerHTML = head + rows;

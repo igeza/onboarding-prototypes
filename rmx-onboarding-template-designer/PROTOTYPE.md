@@ -175,3 +175,5 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 **Sent forms reach RMR**: a successful Send Form (row menu, bulk bar, or Form Templates) also writes the form name and its expiration date to the browser tab (`rmx-sent-forms`); the RMR Forms page lists them under Required (see `rmr-tenant-portal/PROTOTYPE.md`).
 
 **Payment Setup callout**: the description above Display Rules is a Callout (white, 1px blue border, blue info icon, regular text) instead of plain text.
+
+**Tenant Register and editable emails (Figma Send Form to Tenants)**: the register's title is now **Tenant Register** (as in the Send Form frames); its last visible row from the mock is Olivia Brown (Tri-County Mall, 104D +1). In every Send Form dialog the **Email Address** cell of each contact is a text field you can type in (not saved anywhere; the mock leaves them empty).
