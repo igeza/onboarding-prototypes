@@ -139,8 +139,19 @@ body { display: flex; flex-direction: column; }
 @media (max-width: 1100px) { .otd-body { flex-wrap: wrap; } .otd-body .otd-preview { flex: 1 1 100%; } }
 .otd-body .otd-col { flex: 1; min-width: 0; max-width: 741px; }
 .otd-body .otd-preview { flex: 0 0 506px; align-self: flex-start; }
-.otd-sect--lg { font: 600 16px/24px Roboto, sans-serif; }
-.otd-desc--md { font: var(--type-paragraph-s-regular); }
+.otd-sect.otd-sect--lg { font: 600 16px/24px Roboto, sans-serif; }
+.otd-desc.otd-desc--md { font: var(--type-paragraph-s-regular); }
+/* section rhythm: heading, then its description tight under it, then the card; sections 24px apart */
+.otd-body .otd-col { gap: 0; }
+.otd-body .otd-col > .otd-sect { margin: 0; }
+.otd-body .otd-col > .otd-desc { margin: 2px 0 8px; }
+.otd-body .otd-col > .otd-callout { margin-bottom: var(--spacing-md); }
+#otd-rules:empty { display: none !important; }
+.otd-col > .otd-card > div:last-child { line-height: 0; }
+#otd-files { gap: 0 !important; margin-top: var(--spacing-xl); }
+#otd-files > .otd-sect { margin: 0 !important; }
+#otd-files > .otd-desc { margin: 2px 0 8px; }
+#otd-files > div:last-child { margin-top: var(--spacing-sm); }
 .otd-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--spacing-xs); background: var(--container-primary); font: var(--type-paragraph-l-regular, 400 16px/24px Roboto, sans-serif); color: var(--text-primary); }
 .otd-empty[hidden], .otd-stepbar[hidden], .otd-body[hidden], .otd-empty p { margin: 0; }
 #otd-rules-sw[data-disabled] { opacity: .5; }
