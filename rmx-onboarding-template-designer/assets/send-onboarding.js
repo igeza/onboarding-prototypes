@@ -1,7 +1,7 @@
 /* Prospects and Tenants registers: row kebab menu, selection bar, Send Onboarding and Send Form.
    Figma: Send Onboarding section 6752:27975 (dialog 6768:45238), Send Form to Tenants 6070:46808 (dialog 6768:37219),
    Bulk Send Form - Prospects 6768:37603 (bar 6768:43339, dialog 6768:37676). Menu lists are from Izzy's Rent Manager screenshots.
-   - Row kebab: long action list (scrolls inside). Send Onboarding opens the 298px dialog; Send Form opens the Send Form dialog for that person.
+   - Row kebab: long action list (scrolls inside). Send Onboarding opens the 298px dialog (Figma 6791:27670: Due Date and Expire days); Send Form opens the Send Form dialog for that person.
    - Bulk mode: Bulk Actions > Send Onboarding / Send Form turns on the first-column checkboxes; a blue bar ("3 prospects selected") then offers that one action. Its x leaves bulk mode.
    - Send Form: Form, Set Expiration, the people's contacts (Name, Email, Web User, Contact Type) with a checkbox each, and a message.
      One person: a Tenant / Prospect field shows who. Several: the table groups contacts under each selected person.
@@ -39,6 +39,7 @@
     '.rmx-overlay[data-so].is-open { display: flex; flex-direction: column; max-height: calc(100vh - 32px); }' +
     '.rmx-overlay[data-so] .rmx-overlay__header { justify-content: space-between; flex: none; }' +
     '.rmx-overlay[data-so] .rmx-overlay__footer { flex: none; }' +
+    '.so-expire { display: flex; align-items: center; gap: var(--spacing-xs); }.so-expire .rmx-text { white-space: nowrap; }.so-expire .so-num { width: 32px; height: 32px; padding: 0; justify-content: center; flex: none; }.so-expire .so-num input { width: 100%; text-align: center; border: 0; background: transparent; font: var(--type-label-m-regular); color: var(--text-secondary); outline: none; }.so-expire[data-off] .so-num { opacity: .5; }' +
     '.so-hicons { display: inline-flex; align-items: center; gap: var(--spacing-xs); }.so-hicons button, .so-hicons span { display: inline-flex; border: 0; background: none; padding: 0; cursor: pointer; color: var(--icon-primary); }' +
     '.so-body { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--container-primary); overflow-y: auto; overflow-x: hidden; min-height: 0; }' +
     '.so-label { font: var(--type-label-m-regular); color: var(--text-primary); margin: 0 0 4px; }' +
@@ -82,7 +83,8 @@
   dlg.innerHTML =
     '<div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Send Onboarding</span><button type="button" aria-label="Close" data-rmx-close>' + ic('close', 'rmx-icon--24') + '</button></div>' +
     '<div class="so-body"><div><p class="so-label">Onboarding Template</p><p class="so-val">Default Onboarding</p></div>' +
-    '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Expiration Date</span><div class="rmx-field__box rmx-date"><input type="text" id="so-date" aria-label="Expiration Date" placeholder="MM/DD/YYYY"><button type="button" class="rmx-date__btn" aria-label="Pick a date">' + ic('calendar-today') + '</button></div></div></div>' +
+    '<div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Due Date</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>7 days</span>' + ic('keyboard-arrow-down') + '</button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden>' + ['3 days', '7 days', '14 days', '30 days'].map(function (d) { return '<button type="button" data-value="' + d + '">' + d + '</button>'; }).join('') + '</div></div>' +
+    '<div class="so-expire" data-rmx-component="Expire"><label class="rmx-check" data-checked="true" data-rmx-component="Checkbox"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span><span class="rmx-text">Expire</span></label><div class="rmx-field__box so-num"><input type="text" value="3" inputmode="numeric" maxlength="3" aria-label="Days after due date"></div><span class="rmx-text">days after due date</span></div></div>' +
     '<div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="so-send" data-rmx-close data-rmx-component="Button">Send</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>';
   document.body.appendChild(dlg);
   var openOnb = opener('send-onboarding');
@@ -156,7 +158,7 @@
   document.body.appendChild(menu);
   function close() { menu.hidden = true; }
   function nameOf(tr) { var a = tr.querySelector('a'); if (a) return a.textContent.trim(); var nm = ''; [].some.call(tr.querySelectorAll('td'), function (td) { var t = td.textContent.trim(); if (t) { nm = t; return true; } }); return nm; }
-  function startOnboarding() { document.getElementById('so-date').value = inAWeek(); openOnb.click(); }
+  function startOnboarding() { openOnb.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); }
   function startForm(names) {
     if (kind === 'property') { document.getElementById('sp-who').value = names.length > 1 ? names.length + ' selected' : names[0]; document.getElementById('sp-date').value = inAWeek(); document.getElementById('sp-msg').value = ''; document.getElementById('sp-prospects').dataset.checked = 'true'; openProp.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); return; }
     buildForm(names); openForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns();
@@ -187,6 +189,7 @@
   window.addEventListener('scroll', function (e) { if (!(e.target.closest && e.target.closest('.so-menu'))) { close(); if (typeof bmenu !== 'undefined') bmenu.hidden = true; } }, true);
   window.addEventListener('resize', close);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  document.addEventListener('rmx:change', function (e) { var x = e.target.closest && e.target.closest('.so-expire'); if (!x) return; var on = e.detail && e.detail.checked; x.toggleAttribute('data-off', !on); x.querySelector('input').disabled = !on; });
   document.getElementById('so-send').addEventListener('click', function () { if (window.RMX && RMX.toast) RMX.toast('Onboarding sent', 'success'); });
 
   /* ---------- selection column and bar ---------- */

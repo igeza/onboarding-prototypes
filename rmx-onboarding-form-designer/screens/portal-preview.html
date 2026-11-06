@@ -800,7 +800,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
   /* Map to Rent Manager Field: a panel that drops below (or above) the field, no backdrop */
   var fs = document.getElementById('field-selector');
   function placeFs() {
-    if (fs.hidden) return;
+    if (!fs || fs.hidden) return;
     var m = editor.querySelector('[data-fd-mapopen]').getBoundingClientRect(), below = window.innerHeight - m.bottom - 8, above = m.top - 8;
     var up = below < 260 && above > below;
     fs.style.left = m.left + 'px'; fs.style.width = m.width + 'px'; fs.style.right = 'auto';
