@@ -141,8 +141,6 @@ body { display: flex; flex-direction: column; }
 .otd-body .otd-preview { flex: 0 0 506px; align-self: flex-start; }
 .otd-sect--lg { font: 600 16px/24px Roboto, sans-serif; }
 .otd-desc--md { font: var(--type-paragraph-s-regular); }
-.otd-hint { margin: 0 0 0 28px; font: 400 12px/16px Roboto, sans-serif; color: var(--text-primary); }
-.otd-primary { display: flex; flex-direction: column; gap: 0; }
 .otd-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--spacing-xs); background: var(--container-primary); font: var(--type-paragraph-l-regular, 400 16px/24px Roboto, sans-serif); color: var(--text-primary); }
 .otd-empty[hidden], .otd-stepbar[hidden], .otd-body[hidden], .otd-empty p { margin: 0; }
 #otd-rules-sw[data-disabled] { opacity: .5; }
@@ -357,10 +355,6 @@ body { display: flex; flex-direction: column; }
             <h3 class="otd-sect otd-sect--lg">Display Rules</h3>
             <p class="otd-desc otd-desc--md">When enabled, this step is displayed conditionally, based on the rules below. Otherwise it is shown to everyone, always.</p>
             <section class="otd-card" style="display:flex;flex-direction:column;gap:var(--spacing-xs)">
-              <div class="otd-primary">
-                <label class="rmx-check" id="otd-primary" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Show only to the primary contact</span></label>
-                <p class="otd-hint">If onboarding is sent to multiple contacts, only the primary contact will see and complete this step.</p>
-              </div>
               <label class="rmx-check" id="otd-rules-sw" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Enable display rules</span></label>
               <div id="otd-rules" style="display:flex;flex-direction:column;gap:var(--spacing-xs)"></div>
               <div><button type="button" class="otd-link" id="otd-add-rule"><svg class="rmx-icon"><use href="#add"></use></svg>Add Rule</button></div>
@@ -402,7 +396,7 @@ body { display: flex; flex-direction: column; }
   $('otd-s-save').addEventListener('click', function () { try { sessionStorage.setItem('rmx-onboarding-message', $('otd-s-msg').value); } catch (e) {} });
   var PAGES = { 'Account Information': '01a-account-information', 'Signable Document': '02-docs-to-sign', 'File Upload': '03-file-upload', 'Renters Insurance': '04-insurance', 'Make a Payment': '05-pay-charges', 'Payment Setup': '07-setup-payment-method', 'Form': '10-pet-information' };
   var TYPES = ['Account Information', 'File Upload', 'Renters Insurance', 'Make a Payment', 'Form', 'Payment Setup', 'Signable Document'];
-  var CT = ['Primary', 'Secondary'], OPS = ['is equal to', 'is not equal to'], VALS = ['Dog', 'Cat'];
+  var OPS = ['is equal to', 'is not equal to'], VALS = ['Dog', 'Cat'];
   function esc(t) { var x = document.createElement('div'); x.textContent = t; return x.innerHTML; }
   function icon(n, c) { return '<svg class="' + (c || 'rmx-icon') + '"><use href="#' + n + '"></use></svg>'; }
   function dd(label, val, opts, attrs) {
@@ -412,7 +406,7 @@ body { display: flex; flex-direction: column; }
   }
   function blankFile() { return { name: '', help: '', map: '', multi: false }; }
   var uid = 0;
-  function step(o) { var t = o.action || 'Account Information'; return Object.assign({ id: ++uid, action: t, name: t, required: false, primary: false, rulesOn: false, rules: [{ field: 'Pet Type', op: 'is equal to', val: 'Dog' }], files: t === 'File Upload' ? [blankFile()] : [] }, o); }
+  function step(o) { var t = o.action || 'Account Information'; return Object.assign({ id: ++uid, action: t, name: t, required: false, rulesOn: false, rules: [{ field: 'Pet Type', op: 'is equal to', val: 'Dog' }], files: t === 'File Upload' ? [blankFile()] : [] }, o); }
   var steps = isNew ? [] : [
     step({ action: 'Account Information' }),
     step({ action: 'File Upload' }),
@@ -477,7 +471,6 @@ body { display: flex; flex-direction: column; }
     $('otd-step-name').value = s.name; nameCheck();
     $('otd-required').dataset.checked = String(s.required);
     $('otd-self').hidden = s.action !== 'Renters Insurance'; $('otd-self').dataset.checked = String(!!s.self);
-    $('otd-primary').dataset.checked = String(!!s.primary);
     $('otd-callout').hidden = s.action !== 'Payment Setup';
     var sw = $('otd-rules-sw'); sw.dataset.checked = String(!!s.rulesOn);
     $('otd-rules').innerHTML = s.rulesOn ? s.rules.map(function (r, i) { return ruleRow(r, i, s.rules.length); }).join('') : '';
@@ -539,7 +532,6 @@ body { display: flex; flex-direction: column; }
       if (!s) return;
       if (c.id === 'otd-required') s.required = on;
       if (c.id === 'otd-self') s.self = on;
-      if (c.id === 'otd-primary') { s.primary = on; renderList(); }
       if (c.id === 'otd-rules-sw') { s.rulesOn = on; renderDetail(); }
       var fc = c.closest('.otd-file'); if (fc && c.dataset.k === 'multi') { s.files[+fc.dataset.i].multi = on; previewSoon(); }
     }, 0);
