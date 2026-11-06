@@ -69,7 +69,7 @@
     '        <span class="megamenu__title">Menu</span>' +
     '      </div>' +
     '      <nav class="megamenu__tabs">' +
-    '        <button class="megamenu__tab" data-rmx-todo="Workspace is not built in this prototype"><svg class="rmx-icon"><use href="#mm-workspace"></use></svg>Workspace</button>' +
+    '        <a class="megamenu__tab" href="../../rmx.html"><svg class="rmx-icon"><use href="#mm-workspace"></use></svg>Workspace</a>' +
     '        <button class="megamenu__tab" data-rmx-todo="Dashboard is not built in this prototype"><svg class="rmx-icon"><use href="#mm-dashboard"></use></svg>Dashboard</button>' +
     '        <a class="megamenu__tab" href="../../rmx-onboarding-template-designer/screens/administration.html"><svg class="rmx-icon"><use href="#mm-admin"></use></svg>Administration</a>' +
     '        <span class="megamenu__tab megamenu__tab--current"><svg class="rmx-icon"><use href="#mm-map"></use></svg>Full Menu</span>' +
@@ -96,7 +96,7 @@
     'rental-info': {
       label: 'Rental Info',
       columns: [
-        { title: 'General', items: [{ label: 'Tenants', href: '../../rmx-onboarding-template-designer/screens/tenants.html' }, 'Prospects', 'Units', 'Properties', 'Unit Types', 'Assets', 'Violations', 'Merge Prospects'] },
+        { title: 'General', items: [{ label: 'Tenants', href: '../../rmx-onboarding-template-designer/screens/tenants.html' }, { label: 'Prospects', href: '../../rmx-onboarding-template-designer/screens/prospects.html' }, 'Units', { label: 'Properties', href: '../../rmx-onboarding-template-designer/screens/properties.html' }, 'Unit Types', 'Assets', 'Violations', 'Merge Prospects'] },
         { title: 'Leasing', items: ['Screenings', 'Applications', 'Application Templates', 'Renewal Increases', 'Prospect Leasing Board', 'Create Renewal Offers', 'Lease Renewal Register', 'Lease Renewal Board', 'Export Minnesota CRP'] },
         { title: 'Short Term Rentals', items: ['STR Reservations', 'Check-ins', 'Find Reservation'] },
         { title: 'Online Listing', items: ['Listings'] },

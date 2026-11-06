@@ -84,7 +84,7 @@
     /* index.html is the one path every scaffolded prototype has, so this tab
        is real everywhere. The rest stay placeholders unless a prototype maps
        them (see LINKS below). */
-    '        <a class="megamenu__tab" href="' + url('index.html') + '"><svg class="rmx-icon"><use href="#mm-workspace"></use></svg>Workspace</a>' +
+    '        <a class="megamenu__tab" href="../../rmx.html"><svg class="rmx-icon"><use href="#mm-workspace"></use></svg>Workspace</a>' +
     '        <button class="megamenu__tab" data-rmx-todo="Dashboard is not built in this prototype"><svg class="rmx-icon"><use href="#mm-dashboard"></use></svg>Dashboard</button>' +
     '        <a class="megamenu__tab" href="administration.html"><svg class="rmx-icon"><use href="#mm-admin"></use></svg>Administration</a>' +
     '        <span class="megamenu__tab megamenu__tab--current"><svg class="rmx-icon"><use href="#mm-map"></use></svg>Full Menu</span>' +

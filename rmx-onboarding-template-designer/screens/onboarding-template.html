@@ -130,6 +130,7 @@ body { display: flex; flex-direction: column; }
 .otd-stepbar { display: flex; align-items: flex-end; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--container-primary); border-bottom: 1px solid var(--border-primary); flex: none; }
 .otd-stepbar .rmx-field { width: 248px; }
 .otd-w248 { width: 248px; }
+.otd-editform { height: 36px; align-self: flex-end; white-space: nowrap; }
 .otd-invalid .rmx-field__label { color: var(--text-error); }
 .otd-invalid .rmx-field__box { border-color: var(--border-error); }
 .otd-ro { display: flex; flex-direction: column; gap: var(--spacing-xxs); width: 220px; flex: none; }
@@ -471,7 +472,7 @@ body { display: flex; flex-direction: column; }
 
   var INS = ['Master Policy', 'Purchased Policy', 'LeaseTrack'], FORMS = ['Pet Addendum', 'Pet Information', 'Gym Access', 'Notice to Vacate'];
   function extraHtml(s) {
-    if (s.action === 'Form') return dd('Select Form', s.form || 'Pet Addendum', FORMS, 'id="otd-form"');
+    if (s.action === 'Form') return dd('Select Form', s.form || 'Pet Addendum', FORMS, 'id="otd-form"') + '<a class="otd-link otd-editform" href="../../rmx-onboarding-form-designer/screens/form-templates.html">' + icon('edit') + 'Edit Form</a>';
     return '';
   }
   function renderDetail(full) {
