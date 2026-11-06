@@ -583,9 +583,9 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     var ed = edFor(q);
     ed.hidden = false;
     if (ed === textEd) { fillText(q); $('[data-fd-text]', textEd).focus(); } else fill(q);
-    /* bring the question to the top of the canvas so the form scrolls to the field being edited */
+    /* keep the question on the page: scroll only as far as needed to bring it into view, not to the top */
     var cv = document.querySelector('.fd-canvas');
-    if (cv) { cv.style.paddingBottom = '520px'; var cr = cv.getBoundingClientRect(), qr = q.getBoundingClientRect(); cv.scrollTop += qr.top - cr.top - 24; }
+    if (cv) { var cr = cv.getBoundingClientRect(), qr = q.getBoundingClientRect(); if (qr.top < cr.top + 24) cv.scrollTop += qr.top - cr.top - 24; else if (qr.bottom > cr.bottom - 24) cv.scrollTop += qr.bottom - cr.bottom + 24; }
     pagerUpdate(q);
     place(q);
   }

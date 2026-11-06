@@ -109,7 +109,7 @@ The **Publish to rmResident Portal** checkbox is now **Always Available in rmRes
 
 **Settings panels float over the container**: the question and Text Box settings panels and the Map to Rent Manager Field selector are now fixed-position, so they are no longer cut off at the edge of the canvas. They stay inside the window (right edge in line with the pencil, clamped to the window) and scroll inside when there is not enough room below; the field selector opens below its field, or above when there is more room there.
 
-**Form scrolls to the question being edited**: opening a question's settings (pencil, or the pager arrows) scrolls the canvas so that question sits near the top; while a panel is open the canvas has extra room below, so even the last question can reach the top. The room goes away when the panel closes.
+**Form keeps the edited question on the page**: opening a question's settings (pencil, or the pager arrows) scrolls the canvas only if that question is off the page, and only far enough to bring it into view (it is not moved to the top).
 
 
 **Pet Information has six questions**: Pet Owner Name and "Enter your unit number and property address" were removed from the form designer, the onboarding Pet Information step and the tenant portal New Pet form (the rest renumbered 1 to 6). The Form Details response dialogs on the Prospect, Tenant Details and Forms screens (the Pet Information ones) also drop those two responses and renumber to 1 to 5 (to 4 in the shortened one); the Vehicle Information dialogs are a different form and are unchanged.
