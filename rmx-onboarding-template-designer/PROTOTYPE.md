@@ -177,3 +177,5 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 **Payment Setup callout**: the description above Display Rules is a Callout (white, 1px blue border, blue info icon, regular text) instead of plain text.
 
 **Tenant Register and editable emails (Figma Send Form to Tenants)**: the register's title is now **Tenant Register** (as in the Send Form frames); its last visible row from the mock is Olivia Brown (Tri-County Mall, 104D +1). In every Send Form dialog the **Email Address** cell of each contact is a text field you can type in (not saved anywhere; the mock leaves them empty).
+
+**Send Form dialog matched to the mock (Figma `6768:37219`)**: the top row is Form 248px, then Tenant (or Prospect) and Set Expiration sharing the rest (271px each; bulk has Form and Set Expiration only); the Name and Email Address cells are bordered 32px fields; the dark table header has thin white column dividers; the message placeholder is italic. The mock's title reads "Sent Form"; built as "Send Form".
