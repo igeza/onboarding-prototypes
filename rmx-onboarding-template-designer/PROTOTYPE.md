@@ -173,3 +173,5 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 **All RMX flows are connected**: both prototypes can be entered from `rmx.html` (start on Administration for onboarding, or on Form Templates for forms) and the Mega Menu is wired the same way in both: Workspace (back to `rmx.html`), Administration, Rental Info > General > Tenants / Prospects / Properties, Services > Online Listing > Workflow Templates, Communication > Forms > Form Templates / Forms. So you can start on forms and reach onboarding (Administration > Onboarding Templates > a template) and the other way round. Every other menu item still does nothing.
 
 **Sent forms reach RMR**: a successful Send Form (row menu, bulk bar, or Form Templates) also writes the form name and its expiration date to the browser tab (`rmx-sent-forms`); the RMR Forms page lists them under Required (see `rmr-tenant-portal/PROTOTYPE.md`).
+
+**Payment Setup callout**: the description above Display Rules is a Callout (white, 1px blue border, blue info icon, regular text) instead of plain text.

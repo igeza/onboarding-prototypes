@@ -145,6 +145,9 @@ body { display: flex; flex-direction: column; }
 .otd-body .otd-col { gap: 0; }
 .otd-body .otd-col > .otd-sect { margin: 0; }
 .otd-body .otd-col > .otd-desc { margin: 2px 0 8px; }
+.otd-callout { display: flex; align-items: flex-start; gap: var(--spacing-xs); min-height: 40px; margin: 0 0 var(--spacing-md); padding: var(--spacing-xs) var(--spacing-sm); background: var(--container-primary); border: 1px solid var(--border-secondary); border-radius: var(--radius-sm); font: var(--type-paragraph-s-regular); color: var(--text-secondary); }
+.otd-callout .rmx-icon { flex: none; color: var(--border-secondary); margin-top: 0; }
+.otd-callout[hidden] { display: none; }
 .otd-body .otd-col > .otd-callout { margin-bottom: var(--spacing-md); }
 #otd-rules:empty { display: none !important; }
 .otd-col > .otd-card > div:last-child { line-height: 0; }
@@ -362,7 +365,7 @@ body { display: flex; flex-direction: column; }
         </section>
         <div class="otd-body" id="otd-body" data-overlay-scroll>
           <div class="otd-col">
-            <p class="otd-callout" id="otd-callout" hidden>Payment Setup step displays Payment Method and Auto-pay options based on Payment Policy set for the property.</p>
+            <div class="otd-callout" id="otd-callout" data-rmx-component="Callout" hidden><svg class="rmx-icon"><use href="#info"></use></svg><span>Payment Setup step displays Payment Method and Auto-pay options based on Payment Policy set for the property.</span></div>
             <h3 class="otd-sect otd-sect--lg">Display Rules</h3>
             <p class="otd-desc otd-desc--md">When enabled, this step is displayed conditionally, based on the rules below. Otherwise it is shown to everyone, always.</p>
             <section class="otd-card" style="display:flex;flex-direction:column;gap:var(--spacing-xs)">
