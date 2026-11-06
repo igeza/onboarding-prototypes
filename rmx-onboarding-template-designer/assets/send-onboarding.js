@@ -11,7 +11,7 @@
   var NOUN = kind === 'tenant' ? 'Tenant' : kind === 'property' ? 'Property' : 'Prospect', PLURAL = kind === 'property' ? 'properties' : NOUN.toLowerCase() + 's', table = document.getElementById(tableId);
   var LISTS = {
     prospect: ['Send Email', 'Send Onboarding', 'Send Form', 'Lost', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Send Online Application', 'Write Screening Adverse Action Letter', 'Write Income Verification Adverse Action Letter', 'Add Invoice', 'Show All Invoices', 'Add Estimate', 'Show All Estimates'],
-    property: ['Send Email', 'Send Onboarding', 'Send Form', 'Add Management Inspection', 'Create Service Issue', 'Write Letters', 'Report Writer', 'Add to Phone Broadcasts', 'Add to Text Broadcasts'],
+    property: ['Send Email', 'Send Form', 'Add Management Inspection', 'Create Service Issue', 'Write Letters', 'Report Writer', 'Add to Phone Broadcasts', 'Add to Text Broadcasts'],
     tenant: ['Send Email', 'Send Onboarding', 'Send Form', 'Send Survey', 'Send Management Inspection', 'Send Tenant Self-Inspection', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Jump To Prospect', 'Create Document Packet', 'Publish Signable Documents', 'Add To Account Groups', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge']
   };
   var FORMS = ['Pet Info & Policy Agreement', 'Pet Information', 'Gym Access', 'Notice to Vacate'];
@@ -213,13 +213,13 @@
   var col = table.querySelector('colgroup col:first-child'), colW = col ? col.style.width : '';
   function bulkMode(on) { table.classList.toggle('so-bulk', on); if (col) col.style.width = on ? '64px' : colW; if (!on) table.querySelectorAll('.so-sel .rmx-check').forEach(function (c) { c.dataset.checked = 'false'; }); refresh(); }
   /* Bulk mode: Bulk Actions > one bulk action turns the checkboxes on, and the bar then offers just that one action for the ticked rows. */
-  var mode = 'onb', NAMES = { onb: 'Send Onboarding', form: 'Send Form' };
+  var mode = kind === 'property' ? 'form' : 'onb', NAMES = { onb: 'Send Onboarding', form: 'Send Form' };
   var bulk = document.querySelector('.tn-bulk'), bmenu = document.createElement('div');
   /* the Rent Manager Bulk Actions menu (from Izzy's screenshot of Prospects); Tenants use the same groups, names swapped, and no Manage group */
   var P = kind === 'tenant' ? 'Tenant' : 'Prospect';
   var GROUPS = [['History / Note', ['Add to History >']], ['Service Manager', ['Add Issue']], ['Financial', ['Add Charge']], ['Reports', [P + ' Mailing Labels', 'Report Writer']],
     ['Communication', ['Write Letters', 'Send Email', 'Send Form', 'Send Onboarding', 'Publish Signable Documents', 'Send Text', 'Add to Phone Broadcasts']]];
-  if (kind === 'property') GROUPS = [['Reports', ['Report Writer']], ['Communication', ['Write Letters', 'Send Email', 'Send Form', 'Send Onboarding', 'Add to Phone Broadcasts', 'Add to Text Broadcasts']]];
+  if (kind === 'property') GROUPS = [['Reports', ['Report Writer']], ['Communication', ['Write Letters', 'Send Email', 'Send Form', 'Add to Phone Broadcasts', 'Add to Text Broadcasts']]];
   else if (kind !== 'tenant') GROUPS.push(['Manage Prospects', ['Set to Lost', 'Change Stage', 'Delete']]);
   bmenu.className = 'so-menu so-bmenu'; bmenu.hidden = true;
   bmenu.innerHTML = '<button type="button" class="so-mass">' + ic('edit') + '<span>Mass Edit Mode</span><em>F2</em></button><div class="so-sep"></div>' +
