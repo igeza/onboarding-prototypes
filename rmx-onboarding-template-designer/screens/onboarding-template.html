@@ -408,8 +408,8 @@ body { display: flex; flex-direction: column; }
   /* The message after onboarding is completed is what the resident sees in the Onboarding Submitted overlay. */
   try { var kept = sessionStorage.getItem('rmx-onboarding-message'); if (kept !== null) $('otd-s-msg').value = kept; } catch (e) {}
   $('otd-s-save').addEventListener('click', function () { try { sessionStorage.setItem('rmx-onboarding-message', $('otd-s-msg').value); } catch (e) {} });
-  var PAGES = { 'Account Information': '01a-account-information', 'Signable Document': '02-docs-to-sign', 'File Upload': '03-file-upload', 'Renters Insurance': '04-insurance', 'Make a Payment': '05-pay-charges', 'Payment Setup': '07-setup-payment-method', 'Form': '10-pet-information' };
-  var TYPES = ['Account Information', 'File Upload', 'Renters Insurance', 'Make a Payment', 'Form', 'Payment Setup', 'Signable Document'];
+  var PAGES = { 'Account Information': '01a-account-information', 'File Upload': '03-file-upload', 'Renters Insurance': '04-insurance', 'Make a Payment': '05-pay-charges', 'Payment Setup': '07-setup-payment-method', 'Form': '10-pet-information' };
+  var TYPES = ['Account Information', 'File Upload', 'Renters Insurance', 'Make a Payment', 'Form', 'Payment Setup'];
   var OPS = ['is equal to', 'is not equal to'], VALS = ['Dog', 'Cat'];
   function esc(t) { var x = document.createElement('div'); x.textContent = t; return x.innerHTML; }
   function icon(n, c) { return '<svg class="' + (c || 'rmx-icon') + '"><use href="#' + n + '"></use></svg>'; }
