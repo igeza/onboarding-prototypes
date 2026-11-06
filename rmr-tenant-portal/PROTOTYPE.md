@@ -23,3 +23,6 @@ Source: Figma "RMR Forms", file `RGELIjO4RU4FdsjdB2CsbG`, node `6438:20115`. Ope
 
 
 **Forms (Figma Available Forms `6438:19740`)**: the tabs are now Required and Submitted. Required lists Name, Due Date and Start (New Pet due 11/01/26, Gym Access due 10/25/26). An "Available Forms" card sits beside it (Name, Last Submitted, Start; New Pet last submitted 11/01/25) on both tabs. Gym Access Start is not built.
+
+
+**Forms sent from RMX show up here**: when you Send Form in RMX (Send Form on the Prospects, Tenants and Properties row menus and bulk bar, or Send to Tenant / Prospect on Form Templates), the form is remembered for this browser tab and listed on the **Required** tab (`assets/sent-forms.js`, key `rmx-sent-forms`), with the Set Expiration date as its due date (shown MM/DD/YY). A form already listed (New Pet, Gym Access) just takes the new due date; Pet Information, Pet Addendum and Pet Info & Policy Agreement count as **New Pet**; Notice to Vacate is added as a new row. Only New Pet opens a form (no mock for the others). It works in the same tab only: send from RMX, then open `rmr.html > RMR Tenant Portal` (or `rmr-tenant-portal/screens/13-forms.html`) in that tab. Nothing records who it was sent to, and the Submitted tab and the Available Forms card are unchanged.

@@ -18,6 +18,8 @@
   /* sample contacts from the mock; anyone else has just the primary contact */
   var CONTACTS = { 'Charlie Apegian': [['Alfred Pennywise', 'Co-Applicant', false], ['Aaron Greenfield', 'Guarantor', true]], 'Arlo Swift': [['Monica Swift', 'Co-Applicant', false]], 'Eli Beer': [['Percy Adams', 'Co-Applicant', false]] };
 
+  /* A form that is sent is remembered for this browser tab; the RMR Forms page (rmr-tenant-portal) lists it under Required. */
+  function rec(form, due) { try { var a = JSON.parse(sessionStorage.getItem('rmx-sent-forms') || '[]'); a.push({ form: form, due: due || '' }); sessionStorage.setItem('rmx-sent-forms', JSON.stringify(a)); } catch (e) {} }
   function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
   function pad(n) { return ('0' + n).slice(-2); }
   function inAWeek() { var d = new Date(); d.setDate(d.getDate() + 7); return pad(d.getMonth() + 1) + '/' + pad(d.getDate()) + '/' + d.getFullYear(); }
@@ -127,6 +129,7 @@
     var ticked = fdlg.querySelectorAll('#sf-tbl .so-tr:not(.so-tr--head) .rmx-check[data-checked="true"]').length;
     if (!ticked) { fdlg.classList.add('so-invalid'); if (window.RMX && RMX.toast) RMX.toast('Select at least one contact', 'failure'); return; }
     var f = (fdlg.querySelector('[data-rmx-value]') || {}).textContent || 'Form';
+    rec(f, document.getElementById('sf-date').value);
     if (window.RMX && RMX.closeOverlay) RMX.closeOverlay(fdlg);
     if (window.RMX && RMX.toast) RMX.toast('"' + f + '" sent.', 'success');
   });
@@ -144,7 +147,7 @@
     '<div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="sp-send" data-rmx-close data-rmx-component="Button">Send</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>';
   document.body.appendChild(pdlg);
   var openProp = opener('send-form-prop');
-  document.getElementById('sp-send').addEventListener('click', function () { var f = (pdlg.querySelector('[data-rmx-value]') || {}).textContent || 'Form'; if (window.RMX && RMX.toast) RMX.toast('"' + f + '" sent', 'success'); });
+  document.getElementById('sp-send').addEventListener('click', function () { var f = (pdlg.querySelector('[data-rmx-value]') || {}).textContent || 'Form'; rec(f, document.getElementById('sp-date').value); if (window.RMX && RMX.toast) RMX.toast('"' + f + '" sent', 'success'); });
 
   /* ---------- row kebab menu ---------- */
   var menu = document.createElement('div');

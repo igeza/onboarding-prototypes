@@ -113,6 +113,7 @@
       if (e.target.closest('[data-sf-save]')) {
         if (!picked.length) { $('[data-sf-pick]', send).classList.add('sf__invalid'); return; }
         var n = picked.length, w = noun().toLowerCase() + (n === 1 ? '' : 's');
+        try { var sent = JSON.parse(sessionStorage.getItem('rmx-sent-forms') || '[]'); sent.push({ form: ctx.form, due: $('[data-sf-date]', send).value }); sessionStorage.setItem('rmx-sent-forms', JSON.stringify(sent)); } catch (e) {}
         closeOver(send);
         if (window.RMX && RMX.toast) RMX.toast('"' + ctx.form + '" sent to ' + n + ' ' + w + '.', 'success');
       }
