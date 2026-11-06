@@ -179,3 +179,5 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 **Tenant Register and editable emails (Figma Send Form to Tenants)**: the register's title is now **Tenant Register** (as in the Send Form frames); its last visible row from the mock is Olivia Brown (Tri-County Mall, 104D +1). In every Send Form dialog the **Email Address** cell of each contact is a text field you can type in (not saved anywhere; the mock leaves them empty).
 
 **Send Form dialog matched to the mock (Figma `6768:37219`)**: the top row is Form 248px, then Tenant (or Prospect) and Set Expiration sharing the rest (271px each; bulk has Form and Set Expiration only); the Name cell is plain text and the Email Address cell is a bordered 32px field (editable); the dark table header has thin white column dividers; the message placeholder is italic. The mock's title reads "Sent Form"; built as "Send Form".
+
+**Close icon on the send dialogs**: the X in the Send Onboarding and Send Form to Property dialogs is the same plain blue icon as in the Send Form dialog (24px, no border box). Those two dialogs keep only the X; Send Form also has the help icon beside it.
