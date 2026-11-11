@@ -134,3 +134,5 @@ The **Publish to rmResident Portal** checkbox is now **Always Available in rmRes
 **Question editor opens above the pencil when there is little room below**: it goes under the pencil when it fits; if not and there is more space above, it sits above (bottom edge just over the pencil); otherwise it stays below and scrolls inside.
 
 The above-the-pencil placement only applies when the popup does not fit below **and** the window has more space above the pencil than below it.
+
+The question editor prefers to face down: if it would not fit under the pencil, the canvas scrolls up (with extra room added at its end) until it does, as long as the question stays on screen. It only flips above when that is still not enough and there is more room above.

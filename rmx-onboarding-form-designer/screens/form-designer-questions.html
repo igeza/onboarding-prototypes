@@ -598,6 +598,18 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     /* keep the question on the page: scroll only as far as needed to bring it into view, not to the top */
     var cv = document.querySelector('.fd-canvas');
     if (cv) { var cr = cv.getBoundingClientRect(), qr = q.getBoundingClientRect(); if (qr.top < cr.top + 24) cv.scrollTop += qr.top - cr.top - 24; else if (qr.bottom > cr.bottom - 24) cv.scrollTop += qr.bottom - cr.bottom + 24; }
+    /* prefer a popup that faces down: when it would not fit under the pencil, scroll the canvas up (adding room at its end) so it does */
+    if (cv) {
+      ed.style.maxHeight = '';
+      var pr = q.querySelector('[data-fd-edit]').getBoundingClientRect(), crr = cv.getBoundingClientRect();
+      var want = ed.offsetHeight - (window.innerHeight - 60 - (pr.bottom + 6)), shift = Math.min(want, pr.top - (crr.top + 24));
+      if (shift > 0) {
+        var stg = cv.querySelector('.fd-stage').getBoundingClientRect(), contentEnd = stg.bottom - crr.top + cv.scrollTop;
+        cv.style.paddingBottom = Math.max(8, cv.clientHeight + cv.scrollTop + shift - contentEnd) + 'px';
+        var t0 = cv.scrollTop; cv.scrollTop += shift;
+        if (cv.scrollTop - t0 < shift - 1) window.scrollBy(0, shift - (cv.scrollTop - t0));   /* the page itself scrolls when the canvas grows with its content */
+      }
+    }
     pagerUpdate(q);
     place(q);
   }
