@@ -1,6 +1,6 @@
 /* Form Templates register: the kebab on a row (Figma Row Actions 6070:47164).
    Send to Tenant · Publish to rmResident Portal · Copy Link · Make Inactive · Preview
-   Send to Tenant / Send to Prospect (by the row's Type) opens the send dialog (send-form.js). Preview opens the Portal Preview and
+   Send to Tenant (not offered on Prospect forms, which are sent from the Prospects register) opens the send dialog (send-form.js). Preview opens the Portal Preview and
    Copy Link copies a link, then confirms; Publish and Make Inactive are not built. */
 (function () {
   var ITEMS = ['Send to Tenant', 'Publish to rmResident Portal', 'Copy Link', 'Make Inactive', 'Preview'];
@@ -13,7 +13,7 @@
     menu = document.createElement('div');
     menu.className = 'rmx-menu fd-rowmenu'; menu.setAttribute('role', 'menu');
     var t = typeOf(btn.closest('tr'));
-    menu.innerHTML = ITEMS.map(function (n) { if (n === 'Send to Tenant') n = 'Send to ' + t; return '<button type="button" role="menuitem" data-value="' + n + '">' + n + '</button>'; }).join('');
+    menu.innerHTML = ITEMS.filter(function (n) { return !(n === 'Send to Tenant' && t === 'Prospect'); }).map(function (n) { if (n === 'Send to Tenant') n = 'Send to ' + t; return '<button type="button" role="menuitem" data-value="' + n + '">' + n + '</button>'; }).join('');
     menu.style.cssText = 'position:fixed;z-index:2000;width:216px;top:' + (r.bottom + 4) + 'px;left:' + Math.max(8, r.right - 216) + 'px';
     menu._row = btn.closest('tr');
     document.body.appendChild(menu);
