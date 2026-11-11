@@ -138,3 +138,5 @@ The above-the-pencil placement only applies when the popup does not fit below **
 The question editor prefers to face down: if it would not fit under the pencil, the canvas scrolls up (with extra room added at its end) until it does, as long as the question stays on screen. It only flips above when that is still not enough and there is more room above.
 
 **Questions only depend on Yes/No questions**: the "If" list holds only Yes/No questions, and the answer is Yes or No. Display conditionally appears (for any question type) only when the form has another Yes/No question. This replaces the earlier note that limited it to Yes/No questions only.
+
+The question editor's header ("Question N" and the 1/3 pager) is sticky: it stays at the top while the settings scroll inside the popup.
