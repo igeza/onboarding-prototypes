@@ -214,4 +214,4 @@ Leasing Board: 8px padding inside each swim lane (was 16px), so the cards sit 8p
 
 Leasing Board cards: the labels (Last Contact:, Next Contact:, Agent:, Onboarding Stage:, Onboarding Step:) are semi-bold; their values stay regular.
 
-Leasing Board: the swim lane titles ("Application Sent (2)") are grey (`--text-primary`) and semi-bold; the count in brackets is regular weight.
+Leasing Board: the swim lane titles ("Application Sent (2)") are 14px, grey (`--text-primary`) and semi-bold; the count in brackets is regular weight.
