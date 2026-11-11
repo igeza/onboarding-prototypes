@@ -186,3 +186,5 @@ Question popup stays inside the designer space: it never rises above the top of 
 Add Fields: the group rows (Prospect Fields, User Defined Fields, ...) are 28px apart (the Select All button is 20px high; it was 36px, which spaced them 44px apart).
 
 The page kebab menu items (Duplicate, Delete) are link blue (`--text-link`).
+
+Form Details: 24px between questions (was 16px).
