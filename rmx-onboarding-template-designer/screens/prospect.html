@@ -44,6 +44,7 @@
 .pr-cell > .rmx-tile { flex: 1; min-width: 0; }
 .rmx-tile__header .rmx-btn--text { height: 24px; padding: 0 var(--spacing-xs); }
 .pr-tile--history .rmx-tile__header { border-bottom-color: var(--border-attention); }
+.pr-cell.pr-tile--history { grid-column: span 2; }   /* History / Notes is two columns wide so the notes are readable */
 .pr-tile__body-flush { flex: 1; padding: 0; overflow-x: auto; }
 .pr-reg tr[data-rmx-open] { cursor: pointer; }
 .pr-reg tr[data-rmx-open]:hover td { background: var(--container-tertiary); }

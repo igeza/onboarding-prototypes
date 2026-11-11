@@ -201,3 +201,5 @@ Text areas have no resize grip (`textarea { resize: none }` in `proto.css`, also
 **Form Details responses match the Pet Information form (Figma Form Completed)**: 1. Do you have pets? (Yes/No), 2. Type of Pet, 3. Pet Details, 4. Is your pet up to date on vaccinations? (Yes/No). The read-only radios and checkboxes use the design system's disabled colours (`--icon-disabled` ring/dot/fill, `--text-disabled` labels). The Vehicle Information (Pending Approval) dialog is unchanged.
 
 The help text under a question in the Form Details dialogs is regular, not italic.
+
+**Prospect: History / Notes tile is two columns wide** (was one), so the Note text is no longer cut off; Rent Quotes sits beside it in the third column. Below 1280px the tiles stack as before.
