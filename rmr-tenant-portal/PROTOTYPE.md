@@ -34,3 +34,5 @@ Form question text is regular weight, not bold (pet form, finish page, tenant ne
 **Required vs Available forms**: the Required tab now lists Vehicle Information (due 11/01/26) and Emergency Contact (due 10/25/26); Available Forms lists New Pet, Gym Access and Notice to Vacate. Forms sent from RMX are still added to Required. Only New Pet opens a form mock.
 
 Forms page: the "Available Forms" title is dark text (`--text-primary`); its description stays the secondary grey.
+
+**Pet form fields match the Pet Information template**: 1. Do you have pets? (Yes/No), 2. Type of Pet (dropdown), 3. Pet Details (text), 4. Is your pet up to date on vaccinations? (Yes/No). Questions 2-4 are set to show only when question 1 is Yes (`data-cond-q` / `data-cond-val`). The behavior, emergency contact and vaccination records questions are gone, so this replaces the earlier note about question 6.

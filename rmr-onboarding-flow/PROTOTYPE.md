@@ -81,3 +81,5 @@ The Onboarding Submitted overlay shows the message set in the RMX template Setti
 **Portal Preview**: question text in the form preview (`12-form-preview.html`, the Preview in the form designer) is regular weight, not bold.
 
 Form question text is regular weight, not bold (pet form, finish page, tenant new-pet form and the Portal Preview).
+
+**Pet form fields match the Pet Information template**: 1. Do you have pets? (Yes/No), 2. Type of Pet (dropdown), 3. Pet Details (text), 4. Is your pet up to date on vaccinations? (Yes/No). Questions 2-4 are set to show only when question 1 is Yes (`data-cond-q` / `data-cond-val`). The behavior, emergency contact and vaccination records questions are gone, so this replaces the earlier note about question 6.
