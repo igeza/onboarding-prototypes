@@ -315,3 +315,6 @@ html::-webkit-scrollbar { display: none; }
 
 /* no resize grip on text areas */
 textarea { resize: none; }
+
+/* Page kebab menu (Duplicate / Delete): link blue */
+.fd-page__menu > [data-value] { color: var(--text-link); }

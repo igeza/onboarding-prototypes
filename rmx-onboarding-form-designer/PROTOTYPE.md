@@ -184,3 +184,5 @@ Form designer top bar: Require Approval, its (i) icon and Always Available are a
 Question popup stays inside the designer space: it never rises above the top of the editor area (the canvas) or sinks below its bottom, whichever way it opens; a tall popup (for example the 6-option checkbox question) scrolls inside.
 
 Add Fields: the group rows (Prospect Fields, User Defined Fields, ...) are 28px apart (the Select All button is 20px high; it was 36px, which spaced them 44px apart).
+
+The page kebab menu items (Duplicate, Delete) are link blue (`--text-link`).
