@@ -140,3 +140,5 @@ The question editor prefers to face down: if it would not fit under the pencil, 
 **Questions only depend on Yes/No questions**: the "If" list holds only Yes/No questions, and the answer is Yes or No. Display conditionally appears (for any question type) only when the form has another Yes/No question. This replaces the earlier note that limited it to Yes/No questions only.
 
 The question editor's header ("Question N" and the 1/3 pager) is sticky: it stays at the top while the settings scroll inside the popup.
+
+**Response Options spacing (Figma Forms section)**: 8px between the "Response Options" label, the option rows and Add Option (Dropdown, Checkboxes); Yes/No rows are 16px apart; 16px from the options to Required and from Required to Display conditionally.

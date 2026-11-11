@@ -135,7 +135,9 @@ a.rmx-btn { text-decoration: none; }
 .fd-editor .rmx-field__label { color: var(--text-primary); }
 .fd-editor__row { display: flex; gap: var(--spacing-md); }
 .fd-editor__row > .wt-flex { flex: 1; min-width: 0; }
-.fd-editor__opts { display: flex; flex-direction: column; gap: var(--spacing-md); }
+.fd-editor__opts { display: flex; flex-direction: column; gap: var(--spacing-xs); }   /* Response Options: 8px between the label, the options and Add Option (Figma) */
+.fd-editor__opts[data-type-panel="mc"] .fd-opt + .fd-opt { margin-top: var(--spacing-xs); }   /* Yes/No rows sit 16px apart */
+.fd-editor__opts[data-type-panel="mc"] > div:last-child { display: none; }   /* no Add Option on Yes/No, so no empty gap either */
 .fd-editor__optshead { display: flex; align-items: center; justify-content: space-between; color: var(--text-primary); }
 .fd-opt { display: flex; align-items: center; gap: var(--spacing-xs); }
 .fd-opt .wt-optfield { width: 182px; }
