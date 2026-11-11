@@ -162,3 +162,5 @@ A downward popup can run to the bottom of the editor area (8px short of it), sto
 Add Fields: the group headings (Prospect Fields, Response Types, General Fields) and the "Available" / "Selected" titles are semi-bold (an earlier change to regular weight was reverted).
 
 Add Fields: the "Available" title is sticky; the groups scroll underneath it.
+
+Add Fields: the "Available" and "Selected" titles sit at the same height (Clear All is a 20px button).
