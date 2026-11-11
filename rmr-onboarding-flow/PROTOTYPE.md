@@ -79,3 +79,5 @@ The Onboarding Submitted overlay shows the message set in the RMX template Setti
 **Display conditionally in the pet forms**: question 6 (Vaccination Records) shows only while question 3 (up to date on vaccinations) is answered Yes. Driven by `data-cond-q` / `data-cond-val` on the question and `assets/conditional.js`; the form preview uses the same script for rules set in the designer.
 
 **Portal Preview**: question text in the form preview (`12-form-preview.html`, the Preview in the form designer) is regular weight, not bold.
+
+Form question text is regular weight, not bold (pet form, finish page, tenant new-pet form and the Portal Preview).
