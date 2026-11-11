@@ -124,3 +124,7 @@ The **Publish to rmResident Portal** checkbox is now **Always Available in rmRes
 **Question editor never sits under the Save / Cancel footer**: its max height leaves 60px at the bottom, so every field stays reachable by scrolling inside the panel.
 
 **Example forms use Display conditionally**: the sample form on the Questions and Portal Preview screens is now 1. Do you have any pets? (Yes/No), 2. What type of pet do you have? (Dropdown, required) and 3. What is your pet's name?, with 2 and 3 set to `If 1. Do you have any pets? is Yes`. The RMR form preview (`12-form-preview.html`) hides a conditional question until its rule is met.
+
+**Yes/No is exactly two options**: new Yes/No questions start with Yes and No, the options can be renamed but not added to or deleted (no Add Option, no trash), and any saved form is trimmed to two.
+
+**Yes/No is exactly two options**: new Yes/No questions start with Yes and No, the options can be renamed but not added to or deleted (no Add Option, no trash), and a restored form is trimmed to two.

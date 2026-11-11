@@ -474,7 +474,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
   function $(sel, root) { return (root || editor).querySelector(sel); }
   function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
   function panelOf(t) { return (t === 'mc' || t === 'cb' || t === 'dd') ? t : 'none'; }
-  function defaults() { return { mc: ['Option 1', 'Option 2'], cb: ['Option 1', 'Option 2'], dd: ['Option 1', 'Option 2'] }; }
+  function defaults() { return { mc: ['Yes', 'No'], cb: ['Option 1', 'Option 2'], dd: ['Option 1', 'Option 2'] }; }
 
   function label(q) {
     var f = q._fd, l = q.querySelector('.fd-q__label');
@@ -549,9 +549,9 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
       panel.querySelectorAll('.fd-opt').forEach(function (row, i) {
         row.hidden = i >= o.length;
         if (i < o.length) row.querySelector('input[type=text]').value = o[i];
-        var dl = row.querySelector('[data-fd-delopt]'); if (dl) dl.hidden = i < 2;
+        var dl = row.querySelector('[data-fd-delopt]'); if (dl) dl.hidden = k === 'mc' || i < 2;
       });
-      panel.querySelector('[data-fd-addopt]').hidden = o.length >= MAX;
+      panel.querySelector('[data-fd-addopt]').hidden = k === 'mc' || o.length >= MAX;   /* Yes/No is always exactly two options */
     });
   }
   function edFor(q) { return q._fd.type === 'tx' ? textEd : editor; }
@@ -696,7 +696,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
       var ao = e.target.closest('[data-fd-addopt]');
       if (ao) {
         var k = ao.closest('[data-type-panel]').getAttribute('data-type-panel'), o = current._fd.opts[k];
-        if (o.length < MAX) { o.push('Option ' + (o.length + 1)); fill(current); preview(current); }
+        if (k !== 'mc' && o.length < MAX) { o.push('Option ' + (o.length + 1)); fill(current); preview(current); }
         return;
       }
       var dop = e.target.closest('[data-fd-delopt]');
