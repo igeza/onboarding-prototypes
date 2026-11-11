@@ -161,6 +161,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 .wt-w490 { width: 490px; max-width: 100%; }
 .wt-w490 .rmx-field { width: 100%; }
 .fd-tip { position: relative; display: inline-flex; }
+.fd-tip > span:first-child { display: inline-flex; align-items: center; }   /* the (i) icon sits on the checkbox's centre line */
 .fd-tip__box { display: none; position: absolute; top: calc(100% + var(--spacing-xs)); left: 0; z-index: 10; width: 312px; }
 .fd-tip:hover .fd-tip__box, .fd-tip:focus-within .fd-tip__box { display: block; }
 .fd-tip__box [data-rmx-component="Tooltip Text"] { padding: var(--spacing-md); background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); box-shadow: 0 3px 3px rgba(0, 0, 0, .1); color: var(--text-secondary); }

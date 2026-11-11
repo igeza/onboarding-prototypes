@@ -176,3 +176,5 @@ Add Fields: the "UDFs" group is named **User Defined Fields**, and every group (
 **Form Details responses match the Pet Information form (Figma Form Completed)**: 1. Do you have pets? (Yes/No), 2. Type of Pet, 3. Pet Details, 4. Is your pet up to date on vaccinations? (Yes/No). The read-only radios and checkboxes use the design system's disabled colours (`--icon-disabled` ring/dot/fill, `--text-disabled` labels). The Vehicle Information (Pending Approval) dialog is unchanged.
 
 The help text under a question in the Form Details dialogs is regular, not italic.
+
+Form designer top bar: Require Approval, its (i) icon and Always Available are all centred on one line (the icon was 3px low).
