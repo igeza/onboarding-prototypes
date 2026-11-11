@@ -178,3 +178,5 @@ Add Fields: the "UDFs" group is named **User Defined Fields**, and every group (
 The help text under a question in the Form Details dialogs is regular, not italic.
 
 Form designer top bar: Require Approval, its (i) icon and Always Available are all centred on one line (the icon was 3px low).
+
+**Sample form on the Questions and Portal Preview screens (10 questions)**: Do you have pets? (Yes/No), then the Prospect pet fields Pet Type, Pet Breed, Pet Name, Pet Age, Pet Weight, Pet Color, Pet Description, Pet Image and Is your pet up to date on vaccinations? (Yes/No), each set to `If 1. Do you have pets? is Yes`. The first question is titled "Do you have pets?" (was "Do you have any pets?").

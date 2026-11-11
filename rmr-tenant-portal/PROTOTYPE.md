@@ -35,4 +35,4 @@ Form question text is regular weight, not bold (pet form, finish page, tenant ne
 
 Forms page: the "Available Forms" title is dark text (`--text-primary`); its description stays the secondary grey.
 
-**Pet form fields match the Pet Information template**: 1. Do you have pets? (Yes/No), 2. Type of Pet (dropdown), 3. Pet Details (text), 4. Is your pet up to date on vaccinations? (Yes/No). Questions 2-4 are set to show only when question 1 is Yes (`data-cond-q` / `data-cond-val`). The behavior, emergency contact and vaccination records questions are gone, so this replaces the earlier note about question 6.
+**Pet form fields match the Pet Information template's Prospect Fields (10 questions)**: 1. Do you have pets? (Yes/No), 2. Pet Type, 3. Pet Breed, 4. Pet Name, 5. Pet Age, 6. Pet Weight, 7. Pet Color, 8. Pet Description, 9. Pet Image, 10. Is your pet up to date on vaccinations? (Yes/No). Questions 2-10 show only when question 1 is Yes (`data-cond-q` / `data-cond-val`). This replaces the earlier 4-question version and the note about question 6.
