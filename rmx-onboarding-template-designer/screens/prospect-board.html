@@ -78,7 +78,7 @@ body { display: flex; flex-direction: column; }
 .lb-seg button { height: 34px; padding: 0 var(--spacing-md); border: 0; background: var(--container-primary); color: var(--text-secondary); font: var(--type-label-m-regular); cursor: pointer; }
 .lb-seg button.is-on { background: var(--container-tertiary); box-shadow: inset 0 0 0 1px var(--border-secondary); }
 .lb-sort { color: var(--text-link); font: var(--type-label-m-regular); }
-.lb-cols { flex: 1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; border: 1px solid var(--border-primary); border-radius: var(--radius-sm); overflow: hidden; min-height: 520px; }
+.lb-cols { flex: 1; display: grid; grid-template-columns: repeat(6, minmax(300px, 1fr)); gap: 0; border: 1px solid var(--border-primary); border-radius: var(--radius-sm); overflow-x: auto; overflow-y: hidden; min-height: 520px; }   /* swim lanes keep a minimum width (300px; Figma lanes are 312px pitch, 1888px board, here inside the white panel) so all six fit at 1920px; the board scrolls sideways when the window is narrower */
 .lb-col { display: flex; flex-direction: column; border-right: 1px solid var(--border-primary); min-width: 0; }
 .lb-col:last-child { border-right: 0; }
 .lb-col__head { display: flex; align-items: center; justify-content: center; position: relative; height: 48px; background: var(--container-tertiary); border-bottom: 1px solid var(--border-primary); color: var(--text-secondary); font: var(--type-label-m-regular); font-size: 16px; }
@@ -90,9 +90,9 @@ body { display: flex; flex-direction: column; }
 .lb-card__name:hover { text-decoration: underline; }
 .lb-phone { color: var(--icon-primary); }
 .lb-card__kebab { position: absolute; right: 4px; top: 6px; border: 0; background: none; padding: 0; color: var(--icon-primary); cursor: pointer; display: inline-flex; }
-.lb-card__meta { display: flex; align-items: center; gap: var(--spacing-xs); color: var(--text-secondary); font: var(--type-label-m-regular); }
+.lb-card__meta { display: flex; align-items: center; gap: var(--spacing-xs); color: var(--text-primary); font: var(--type-label-m-regular); }
 .lb-card__meta span { display: inline-flex; align-items: center; gap: 4px; margin-right: 8px; }
-.lb-card__meta .rmx-icon { color: var(--icon-secondary, var(--text-primary)); }
+.lb-card__meta .rmx-icon { color: var(--text-primary); }   /* property and unit icons were white (invisible) */
 .lb-card__line { display: flex; gap: 8px; font: 400 12px/22px Roboto, sans-serif; color: var(--text-primary); }
 .lb-card__line b { font-weight: 400; color: var(--text-secondary); }
 </style>
