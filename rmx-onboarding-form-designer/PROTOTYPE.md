@@ -170,3 +170,5 @@ Add Fields: the "Available" and "Selected" titles sit at the same height (Clear 
 **Prospect user-defined fields**: Add Fields has a **User Defined Fields** group (below Prospect Fields, hidden on Contact forms) listing Permission To Interact on Social Media, Social Media Preference, Social Media Username, Tenant Referral Name, Preferred Contact Method, License Plate, Emergency Contact Name, Emergency Contact Number, Most Recent Paystub, Lease, PET MON, drivers license and prospect hyperlink test (from the Rent Manager prospect user-defined fields). Dropdown ones: Permission, Social Media Preference, Preferred Contact Method; file uploads: License Plate, Most Recent Paystub, Lease, drivers license; the rest are text.
 
 Add Fields: the "UDFs" group is named **User Defined Fields**, and every group (Prospect Fields, User Defined Fields, Response Types, General Fields) starts collapsed.
+
+**Form Details dialog is 1200px wide** (was 968px), per the Figma Form Completed / Form Need Approval / Form Approved dialogs (node `6363:18800`). It still shrinks to the window width on small screens.

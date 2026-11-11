@@ -195,3 +195,5 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 **Property Send Form**: the Include Prospects checkbox is removed; the dialog is Form, Property, Set Expiration and the message.
 The Property field's search icon is blue (`--icon-primary`).
 Text areas have no resize grip (`textarea { resize: none }` in `proto.css`, also in the form designer).
+
+**Form Details dialog is 1200px wide** (was 968px), per the Figma Form Completed / Form Need Approval / Form Approved dialogs (node `6363:18800`). It still shrinks to the window width on small screens.
