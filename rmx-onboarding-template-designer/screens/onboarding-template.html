@@ -149,7 +149,8 @@ body { display: flex; flex-direction: column; }
 .otd-callout .rmx-icon { flex: none; color: var(--border-secondary); margin-top: 0; }
 .otd-callout[hidden] { display: none; }
 .otd-rulessec { margin: 0 0 var(--spacing-xl); }
-.otd-rulessec > .otd-sect { margin: 0 0 var(--spacing-xs); }
+.otd-rules-head { display: flex; align-items: center; justify-content: space-between; margin: 0 0 var(--spacing-xs); }
+.otd-rules-head .otd-sect { margin: 0; }
 .otd-rulescard { display: flex; flex-direction: column; gap: var(--spacing-xs); margin: 0 !important; }
 .otd-body .otd-col { max-width: 889px; }
 .otd-body .otd-preview { flex: 0 0 min(606px, 38%); }
@@ -379,10 +380,9 @@ body { display: flex; flex-direction: column; }
             <div class="otd-callout" id="otd-callout" data-rmx-component="Callout" hidden><svg class="rmx-icon"><use href="#info"></use></svg><span id="otd-callout-t"></span></div>
             <section class="otd-card" id="otd-formcard" data-rmx-component="Card" hidden></section>
             <div class="otd-rulessec" id="otd-rulessec" hidden>
-              <h3 class="otd-sect otd-sect--lg">Display Rules</h3>
+              <div class="otd-rules-head"><h3 class="otd-sect otd-sect--lg">Display Rules</h3><button type="button" class="otd-link" id="otd-add-rule"><svg class="rmx-icon"><use href="#add"></use></svg>Add Rule</button></div>
               <section class="otd-card otd-rulescard" id="otd-rulescard" data-rmx-component="Card">
                 <div id="otd-rules"></div>
-                <div><button type="button" class="otd-link" id="otd-add-rule"><svg class="rmx-icon"><use href="#add"></use></svg>Add Rule</button></div>
               </section>
             </div>
             <div id="otd-files">
