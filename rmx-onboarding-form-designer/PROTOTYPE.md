@@ -142,3 +142,5 @@ The question editor prefers to face down: if it would not fit under the pencil, 
 The question editor's header ("Question N" and the 1/3 pager) is sticky: it stays at the top while the settings scroll inside the popup.
 
 **Response Options spacing (Figma Forms section)**: 8px between the "Response Options" label, the option rows and Add Option (Dropdown, Checkboxes); Yes/No rows are 16px apart; 16px from the options to Required and from Required to Display conditionally.
+
+Yes/No option rows are 8px apart like every other Response Options gap (the earlier 16px for Yes/No is dropped).
