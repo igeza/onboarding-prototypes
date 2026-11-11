@@ -804,11 +804,15 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     if (!current) return;
     var f = current._fd, c = f.cond || (f.cond = { on: false, q: '', val: '' });
     var chk = editor.querySelector('[data-fd-cond]');
+    /* a Yes/No question can only be conditional on another Yes/No question */
+    var canCond = f.type !== 'mc' || all().some(function (x) { return x !== current && x._fd.type === 'mc'; });
+    if (f.type !== 'tx' && f.type !== 'at') chk.hidden = !canCond;
+    if (!canCond) c.on = false;
     chk.dataset.checked = String(!!c.on);
-    var show = c.on && f.type !== 'tx' && f.type !== 'at';
+    var show = c.on && canCond && f.type !== 'tx' && f.type !== 'at';
     condRow.hidden = !show;
     if (!show) return;
-    var others = all().filter(function (x) { return x !== current && x._fd.type !== 'tx' && x._fd.type !== 'at'; });
+    var others = all().filter(function (x) { return x !== current && x._fd.type !== 'tx' && x._fd.type !== 'at' && (f.type !== 'mc' || x._fd.type === 'mc'); });
     var qb = condRow.querySelector('[data-fd-condq]'), vb = condRow.querySelector('[data-fd-condv]');
     fillMenu(qb, others.map(qLabel));
     var tgt = others.filter(function (x) { return qLabel(x) === c.q; })[0] || others[0];

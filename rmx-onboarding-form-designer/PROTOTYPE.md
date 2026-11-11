@@ -128,3 +128,5 @@ The **Publish to rmResident Portal** checkbox is now **Always Available in rmRes
 **Yes/No is exactly two options**: new Yes/No questions start with Yes and No, the options can be renamed but not added to or deleted (no Add Option, no trash), and any saved form is trimmed to two.
 
 **Yes/No is exactly two options**: new Yes/No questions start with Yes and No, the options can be renamed but not added to or deleted (no Add Option, no trash), and a restored form is trimmed to two.
+
+**Yes/No and Display conditionally**: a Yes/No question only offers Display conditionally when the form has another Yes/No question, and its "If" list then holds only the other Yes/No questions. Other question types are unchanged.
