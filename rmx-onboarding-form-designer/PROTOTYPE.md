@@ -144,3 +144,5 @@ The question editor's header ("Question N" and the 1/3 pager) is sticky: it stay
 **Response Options spacing (Figma Forms section)**: 8px between the "Response Options" label, the option rows and Add Option (Dropdown, Checkboxes); Yes/No rows are 16px apart; 16px from the options to Required and from Required to Display conditionally.
 
 Yes/No option rows are 8px apart like every other Response Options gap (the earlier 16px for Yes/No is dropped).
+
+The space between the popup header ("Question N") and Question Title is 8px (the header's own bottom padding; the 16px flex gap is cancelled).
