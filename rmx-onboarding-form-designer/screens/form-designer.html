@@ -611,7 +611,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     ed.style.maxHeight = '';
     var pen0 = q.querySelector('[data-fd-edit]').getBoundingClientRect();
     dirLock = faceDown(pen0, ed.offsetHeight) ? 'down' : 'up';
-    if (cv && !nav && dirLock === 'down') {
+    if (false && cv && !nav && dirLock === 'down') {   /* disabled: opening the popup must not scroll the highlighted question; the popup scrolls inside instead */
       ed.style.maxHeight = '';
       var pr = q.querySelector('[data-fd-edit]').getBoundingClientRect(), crr = cv.getBoundingClientRect();
       var want = ed.offsetHeight - (window.innerHeight - 60 - (pr.bottom + 6)), shift = Math.min(want, pr.top - (crr.top + 24));
