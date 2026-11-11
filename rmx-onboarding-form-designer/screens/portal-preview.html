@@ -565,6 +565,12 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     p.querySelector('[data-fd-prev]').disabled = i <= 0;
     p.querySelector('[data-fd-next]').disabled = false;   // at the last question, next goes back to the first
   }
+  /* Down unless it does not fit and the pencil is in the lower half of the editor area (the canvas): there is less room below it than above it. */
+  function faceDown(pen, need) {
+    var cv = document.querySelector('.fd-canvas'), cr = cv ? cv.getBoundingClientRect() : { top: 0, bottom: window.innerHeight };
+    var above = pen.top - cr.top, below = Math.min(cr.bottom, window.innerHeight - 60) - pen.bottom;
+    return need <= window.innerHeight - 60 - (pen.bottom + 6) || below >= above;
+  }
   function place(q) {
     /* Settings float above everything (they are not clipped by the canvas): top just under the pencil / trash, right edge in line with
        the pencil, kept inside the window; when there is no room below, the panel scrolls inside. */
@@ -572,7 +578,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     /* below the pencil when it fits; otherwise above it when there is more room there; otherwise below, scrolling inside */
     ed.style.maxHeight = '';
     var need = ed.offsetHeight, below = window.innerHeight - 60 - (pen.bottom + 6), above = pen.top - 6 - 8, top;
-    if (dirLock ? dirLock === 'down' : (need <= below || pen.top <= window.innerHeight - pen.bottom)) {   /* above only when it does not fit below AND the window has more room above the pencil than below it */
+    if (dirLock ? dirLock === 'down' : faceDown(pen, need)) {   /* above only when it does not fit below AND the window has more room above the pencil than below it */
       top = Math.max(8, pen.bottom + 6);
       ed.style.maxHeight = Math.max(160, window.innerHeight - top - 60) + 'px';   /* leave room for the Save / Cancel footer */
     } else {
@@ -604,7 +610,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     /* decide up or down from where the pencil is NOW (before any scrolling to make room), then keep that choice */
     ed.style.maxHeight = '';
     var pen0 = q.querySelector('[data-fd-edit]').getBoundingClientRect();
-    dirLock = (ed.offsetHeight <= window.innerHeight - 60 - (pen0.bottom + 6) || pen0.top <= window.innerHeight - pen0.bottom) ? 'down' : 'up';
+    dirLock = faceDown(pen0, ed.offsetHeight) ? 'down' : 'up';
     if (cv && !nav && dirLock === 'down') {
       ed.style.maxHeight = '';
       var pr = q.querySelector('[data-fd-edit]').getBoundingClientRect(), crr = cv.getBoundingClientRect();

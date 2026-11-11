@@ -152,3 +152,5 @@ The popup's first field is labelled **Question *** (was Question Title *), per t
 The pager arrows (previous / next question) never scroll the page to make room for the popup; the page only moves when the question itself would be below the fold. Making room for the popup happens only when it is opened from the pencil.
 
 Popup direction is decided once, when it opens, from where the pencil is then (before any scrolling): up only if there is less room below the pencil than above it; otherwise down, and the page scrolls to make room. Scrolling to make room no longer flips it upward afterwards.
+
+Up/down is measured inside the editor area (the canvas), not the whole window: the popup faces up only when it does not fit below and the pencil is in the lower half of the canvas (less canvas below it than above it); a pencil in the upper half always opens down.
