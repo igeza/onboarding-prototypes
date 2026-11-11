@@ -148,8 +148,12 @@ body { display: flex; flex-direction: column; }
 .otd-callout { display: flex; align-items: flex-start; gap: var(--spacing-xs); min-height: 40px; margin: 0 0 var(--spacing-md); padding: var(--spacing-xs) var(--spacing-sm); background: var(--container-primary); border: 1px solid var(--border-secondary); border-radius: var(--radius-sm); font: var(--type-paragraph-s-regular); color: var(--text-secondary); }
 .otd-callout .rmx-icon { flex: none; color: var(--border-secondary); margin-top: 0; }
 .otd-callout[hidden] { display: none; }
-.otd-rulescard { display: flex; flex-direction: column; gap: var(--spacing-xs); }
-.otd-rulescard .otd-sect { margin: 0; }
+.otd-rulessec { margin: 0 0 var(--spacing-xl); }
+.otd-rulessec > .otd-sect { margin: 0 0 var(--spacing-xs); }
+.otd-rulescard { display: flex; flex-direction: column; gap: var(--spacing-xs); margin: 0 !important; }
+.otd-body .otd-col { max-width: 889px; }
+.otd-body .otd-preview { flex: 0 0 min(606px, 38%); }
+@media (max-width: 1100px) { .otd-body .otd-preview { flex: 1 1 100%; } }
 #otd-rules { display: flex; flex-direction: column; gap: var(--spacing-xs); }
 #otd-rules:empty { display: none; }
 .otd-col > .otd-card, .otd-col > .otd-callout { margin: 0 0 var(--spacing-md); }
@@ -372,13 +376,15 @@ body { display: flex; flex-direction: column; }
         </section>
         <div class="otd-body" id="otd-body" data-overlay-scroll>
           <div class="otd-col">
-            <div class="otd-callout" id="otd-callout" data-rmx-component="Callout" hidden><svg class="rmx-icon"><use href="#info"></use></svg><span>Payment Setup step displays Autopay options based on Charges &amp; Payments settings.</span></div>
+            <div class="otd-callout" id="otd-callout" data-rmx-component="Callout" hidden><svg class="rmx-icon"><use href="#info"></use></svg><span id="otd-callout-t"></span></div>
             <section class="otd-card" id="otd-formcard" data-rmx-component="Card" hidden></section>
-            <section class="otd-card otd-rulescard" id="otd-rulescard" data-rmx-component="Card" hidden>
+            <div class="otd-rulessec" id="otd-rulessec" hidden>
               <h3 class="otd-sect otd-sect--lg">Display Rules</h3>
-              <div id="otd-rules"></div>
-              <div><button type="button" class="otd-link" id="otd-add-rule"><svg class="rmx-icon"><use href="#add"></use></svg>Add Rule</button></div>
-            </section>
+              <section class="otd-card otd-rulescard" id="otd-rulescard" data-rmx-component="Card">
+                <div id="otd-rules"></div>
+                <div><button type="button" class="otd-link" id="otd-add-rule"><svg class="rmx-icon"><use href="#add"></use></svg>Add Rule</button></div>
+              </section>
+            </div>
             <div id="otd-files">
               <h3 class="otd-sect otd-sect--lg">File Requests</h3>
               <p class="otd-desc otd-desc--md">Request a file from the resident. They’ll see the file name and help text when uploading.</p>
@@ -493,9 +499,10 @@ body { display: flex; flex-direction: column; }
     $('otd-step-name').value = s.name; nameCheck();
     $('otd-required').dataset.checked = String(s.required);
     $('otd-self').hidden = s.action !== 'Renters Insurance'; $('otd-self').dataset.checked = String(!!s.self);
-    $('otd-callout').hidden = s.action !== 'Payment Setup';
+    var CALL = { 'Payment Setup': 'Payment Setup step displays Autopay options based on Charges & Payments settings.', 'Make a Payment': 'Make a Payment reflects payment options based on Payment Policies set for each property.' };
+    $('otd-callout').hidden = !CALL[s.action]; $('otd-callout-t').textContent = CALL[s.action] || '';
     $('otd-cond').dataset.checked = String(!!s.rulesOn);
-    $('otd-rulescard').hidden = !s.rulesOn;
+    $('otd-rulessec').hidden = !s.rulesOn;
     $('otd-rules').innerHTML = s.rulesOn ? s.rules.map(function (r, i) { return ruleRow(r, i, s.rules.length); }).join('') : '';
     var fh = extraHtml(s); $('otd-formcard').innerHTML = fh; $('otd-formcard').hidden = !fh;
     $('otd-files').hidden = s.action !== 'File Upload';

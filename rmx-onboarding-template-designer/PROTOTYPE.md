@@ -189,3 +189,5 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 - **Settings dialog**: Assign to Property, Due Date, Description and the completion message only (the Expire row is gone); the fields are 16px apart with 16px padding all round, so the spacing is even.
 - **Add Onboarding Template**: new **Copy from** dropdown first (Blank, Standard, Commercial, Student; not wired), no Expire row; Due Date stays a dropdown.
 - **Register**: the first template is **Standard** (was Default) with a small icon beside the name. Its link and the detail page's template name ("Default Onboarding") are unchanged.
+
+**Display Rules layout (Figma Make a Payment `6646:31273`)**: with Display conditionally ticked, the step page shows the callout, then a **Display Rules** heading *above* a card that holds only the rule row (field, operator, value) and Add Rule. The content column is wider (up to 889px) and the preview is 606px, as in the mock. Make a Payment now also has a callout ("Make a Payment reflects payment options based on Payment Policies set for each property.").
