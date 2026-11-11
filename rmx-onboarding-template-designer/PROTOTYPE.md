@@ -211,3 +211,5 @@ Leasing Board cards: every line of text on a card is grey (`--text-primary`); on
 Leasing Board cards have rounded corners (`--radius-sm`, 4px), including the colour bar on the left.
 
 Leasing Board: 8px padding inside each swim lane (was 16px), so the cards sit 8px from the lane edge as in Figma.
+
+Leasing Board cards: the labels (Last Contact:, Next Contact:, Agent:, Onboarding Stage:, Onboarding Step:) are semi-bold; their values stay regular.
