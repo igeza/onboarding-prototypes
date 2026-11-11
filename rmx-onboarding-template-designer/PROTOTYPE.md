@@ -209,3 +209,5 @@ The help text under a question in the Form Details dialogs is regular, not itali
 Leasing Board cards: every line of text on a card is grey (`--text-primary`); only the prospect name is blue.
 
 Leasing Board cards have rounded corners (`--radius-sm`, 4px), including the colour bar on the left.
+
+Leasing Board: 8px padding inside each swim lane (was 16px), so the cards sit 8px from the lane edge as in Figma.
