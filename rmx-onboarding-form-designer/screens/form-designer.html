@@ -974,10 +974,10 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
   [
     { title: 'Type of Pet', type: 'dd', required: true, opts: { dd: ['Dog', 'Cat', 'Other'] } },
     { title: 'Pet Details', type: 'pa', required: true, help: 'Provide your pet\u2019s name, breed, age, weight, and any distinguishing characteristics.' },
-    { title: 'Is your pet up to date on vaccinations?', type: 'mc', required: true, opts: { mc: ['Yes', 'No', 'I\u2019m not sure'] } },
+    { title: 'Is your pet up to date on vaccinations?', type: 'mc', required: true, opts: { mc: ['Yes', 'No'] } },
     { title: 'Select all that apply regarding your pet\u2019s behavior.', type: 'cb', opts: { cb: ['House-trained/litter-trained', 'Friendly with strangers', 'Good with other animals', 'Has caused property damage before', 'Has shown aggressive behavior', 'None of the above.'] } },
     { title: 'Emergency Contact for Pet', type: 'sa', help: 'Provide name and phone number of someone who can care for your pet if needed.' },
-    { title: 'Vaccination Records', type: 'fl', help: 'Upload a copy of your pet\u2019s vaccination records.' }
+    { title: 'Vaccination Records', type: 'fl', cond: { on: true, q: '3. Is your pet up to date on vaccinations?', val: 'Yes' }, help: 'Upload a copy of your pet\u2019s vaccination records.' }
   ].forEach(function (q) { FD.add(q); });
 })();
 </script>

@@ -82,4 +82,4 @@ The Onboarding Submitted overlay shows the message set in the RMX template Setti
 
 Form question text is regular weight, not bold (pet form, finish page, tenant new-pet form and the Portal Preview).
 
-**Pet form fields match the Pet Information template's Prospect Fields (10 questions)**: 1. Do you have pets? (Yes/No), 2. Pet Type, 3. Pet Breed, 4. Pet Name, 5. Pet Age, 6. Pet Weight, 7. Pet Color, 8. Pet Description, 9. Pet Image, 10. Is your pet up to date on vaccinations? (Yes/No). Questions 2-10 show only when question 1 is Yes (`data-cond-q` / `data-cond-val`). This replaces the earlier 4-question version and the note about question 6.
+**Pet form = the six questions of the Pet Information template**: 1. Type of Pet (dropdown), 2. Pet Details (paragraph), 3. Is your pet up to date on vaccinations? (Yes/No), 4. Behavior (checkboxes), 5. Emergency Contact for Pet (short answer), 6. Vaccination Records (file upload, shown only when question 3 is Yes).

@@ -179,4 +179,4 @@ The help text under a question in the Form Details dialogs is regular, not itali
 
 Form designer top bar: Require Approval, its (i) icon and Always Available are all centred on one line (the icon was 3px low).
 
-**Sample form on the Questions and Portal Preview screens (10 questions)**: Do you have pets? (Yes/No), then the Prospect pet fields Pet Type, Pet Breed, Pet Name, Pet Age, Pet Weight, Pet Color, Pet Description, Pet Image and Is your pet up to date on vaccinations? (Yes/No), each set to `If 1. Do you have pets? is Yes`. The first question is titled "Do you have pets?" (was "Do you have any pets?").
+**Sample form on the Questions and Portal Preview screens = the Pet Information template (6 questions)**: Type of Pet (Dropdown), Pet Details (Paragraph), Is your pet up to date on vaccinations? (Yes/No, exactly two options), behavior (Checkboxes), Emergency Contact for Pet (Short Answer) and Vaccination Records (File Upload, `If 3. … is Yes`). The Pet Information template opened from Form Templates has the same six, with the same rule.
