@@ -156,3 +156,5 @@ Popup direction is decided once, when it opens, from where the pencil is then (b
 Up/down is measured inside the editor area (the canvas), not the whole window: the popup faces up only when it does not fit below and the pencil is in the lower half of the canvas (less canvas below it than above it); a pencil in the upper half always opens down.
 
 Opening the question popup never scrolls the page to make room (the earlier scroll-to-make-room is switched off): the highlighted question stays where it is, and the popup scrolls inside if it does not fit. The page only moves when the question itself is off screen.
+
+A downward popup can run to the bottom of the editor area (8px short of it), stopping above the Save / Cancel footer whenever that is showing; it re-fits when the footer appears or goes away.
