@@ -194,3 +194,5 @@ Form Details: 24px between questions (was 16px).
 Add Fields: a parent field (Primary Address, Phone Numbers, ...) lines up with the other fields; only its sub-items are indented.
 
 Add Fields > Selected: the name, trash and reorder icons are centred on one line (the reorder icon was ~3px high).
+
+Add Fields > Selected: the drag handle rearranges the selected fields (drag a row up or down); the order carries onto the form when you click Add.

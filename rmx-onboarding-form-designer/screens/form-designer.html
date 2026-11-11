@@ -211,7 +211,9 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 .af__selrow { display: flex; align-items: center; justify-content: space-between; padding: 0 6px; color: var(--text-primary); }
 .af__seltools { display: flex; align-items: center; gap: var(--spacing-xxs); color: var(--icon-brand); }
 .af__seltools button { border: 0; background: none; padding: 0; color: inherit; cursor: pointer; display: inline-flex; }
-.af__seltools > span { display: inline-flex; }   /* the reorder icon sits on the same centre line as the trash and the name */
+.af__seltools > span { display: inline-flex; }
+.af__drag { cursor: grab; touch-action: none; }
+.af__selrow.is-dragging { background: var(--container-primary); box-shadow: 0 2px 6px rgba(0, 0, 0, .15); cursor: grabbing; }   /* the reorder icon sits on the same centre line as the trash and the name */
 .fd-texteditor { width: 300px; }
 .fd-editor.fd-texteditor .wt-textbox { min-height: 80px; }
 .fd-texteditor .wt-textarea { height: 64px; }
@@ -920,9 +922,30 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
   var TRASH = '<svg class="rmx-icon"><use href="#delete-filled"></use></svg>', DRAG = '<svg class="rmx-icon"><use href="#drag-indicator"></use></svg>';
   function renderPicked() {
     sellist.innerHTML = picked.map(function (n, i) {
-      return '<div class="af__selrow"><span>' + esc(n) + '</span><span class="af__seltools"><button type="button" aria-label="Remove ' + esc(n) + '" data-af-remove="' + i + '">' + TRASH + '</button><span data-rmx-todo aria-label="Reorder">' + DRAG + '</span></span></div>';
+      return '<div class="af__selrow"><span>' + esc(n) + '</span><span class="af__seltools"><button type="button" aria-label="Remove ' + esc(n) + '" data-af-remove="' + i + '">' + TRASH + '</button><span class="af__drag" data-af-drag aria-label="Drag to reorder" title="Drag to reorder">' + DRAG + '</span></span></div>';
     }).join('');
   }
+  /* Selected: drag the handle to rearrange the fields; the row moves as the pointer passes over the others, and the order is the order they are added to the form. */
+  sellist.addEventListener('pointerdown', function (e) {
+    var h = e.target.closest('[data-af-drag]'); if (!h) return;
+    e.preventDefault();
+    var row = h.closest('.af__selrow'); row.classList.add('is-dragging');
+    function move(ev) {
+      var rows = [].slice.call(sellist.children), idx = rows.indexOf(row);
+      for (var i = 0; i < rows.length; i++) {
+        if (i === idx) continue;
+        var b = rows[i].getBoundingClientRect(), mid = b.top + b.height / 2;
+        if (i < idx && ev.clientY < mid) { sellist.insertBefore(row, rows[i]); break; }
+        if (i > idx && ev.clientY > mid) { sellist.insertBefore(row, rows[i].nextSibling); break; }
+      }
+    }
+    function end() {
+      document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', end); document.removeEventListener('pointercancel', end);
+      picked = [].map.call(sellist.children, function (r) { return r.firstElementChild.textContent; });
+      renderPicked();
+    }
+    document.addEventListener('pointermove', move); document.addEventListener('pointerup', end); document.addEventListener('pointercancel', end);
+  });
   dlg.addEventListener('click', function (e) {
     var g = e.target.closest('[data-af-group]');
     if (g) {
