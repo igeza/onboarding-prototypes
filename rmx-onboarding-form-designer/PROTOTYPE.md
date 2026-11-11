@@ -182,3 +182,5 @@ Form designer top bar: Require Approval, its (i) icon and Always Available are a
 **Sample form on the Questions and Portal Preview screens = the Pet Information template (6 questions)**: Type of Pet (Dropdown), Pet Details (Paragraph), Is your pet up to date on vaccinations? (Yes/No, exactly two options), behavior (Checkboxes), Emergency Contact for Pet (Short Answer) and Vaccination Records (File Upload, `If 3. … is Yes`). The Pet Information template opened from Form Templates has the same six, with the same rule.
 
 Question popup stays inside the designer space: it never rises above the top of the editor area (the canvas) or sinks below its bottom, whichever way it opens; a tall popup (for example the 6-option checkbox question) scrolls inside.
+
+Add Fields: the group rows (Prospect Fields, User Defined Fields, ...) are 28px apart (the Select All button is 20px high; it was 36px, which spaced them 44px apart).
