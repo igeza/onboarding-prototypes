@@ -164,3 +164,5 @@ Add Fields: the group headings (Prospect Fields, Response Types, General Fields)
 Add Fields: the "Available" title is sticky; the groups scroll underneath it.
 
 Add Fields: the "Available" and "Selected" titles sit at the same height (Clear All is a 20px button).
+
+**More Prospect Fields (Preferences, from the Rent Manager prospect screen)**: Add Fields > Prospect Fields now also lists Preferred Unit Types, Preferred Floors, Preferred Amenities, People Count, Rent Min, Rent Max, Move In Date, Move Out Date, Length, Width, Amps and Pull-Through. They are predefined fields like the Pet ones (required, no type picker): dropdowns for the Preferred fields and Amps, date pickers for the two dates, a single checkbox for Pull-Through, text for the rest. The RMR form preview renders each accordingly.
