@@ -148,3 +148,5 @@ Yes/No option rows are 8px apart like every other Response Options gap (the earl
 The space between the popup header ("Question N") and Question Title is 8px (the header's own bottom padding; the 16px flex gap is cancelled).
 
 The popup's first field is labelled **Question *** (was Question Title *), per the Figma Forms section.
+
+The pager arrows (previous / next question) never scroll the page to make room for the popup; the page only moves when the question itself would be below the fold. Making room for the popup happens only when it is opened from the pencil.

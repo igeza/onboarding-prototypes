@@ -591,7 +591,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     $('[data-fd-text]', textEd).value = q._fd.title;
     $('[data-fd-width] [data-rmx-value]', textEd).textContent = q._fd.width || 'Full';
   }
-  function open(q) {
+  function open(q, nav) {
     current = q; activate(q);
     editor.hidden = true; textEd.hidden = true;
     var ed = edFor(q);
@@ -601,7 +601,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     var cv = document.querySelector('.fd-canvas');
     if (cv) { var cr = cv.getBoundingClientRect(), qr = q.getBoundingClientRect(); if (qr.top < cr.top + 24) cv.scrollTop += qr.top - cr.top - 24; else if (qr.bottom > cr.bottom - 24) cv.scrollTop += qr.bottom - cr.bottom + 24; }
     /* prefer a popup that faces down: when it would not fit under the pencil, scroll the canvas up (adding room at its end) so it does */
-    if (cv) {
+    if (cv && !nav) {
       ed.style.maxHeight = '';
       var pr = q.querySelector('[data-fd-edit]').getBoundingClientRect(), crr = cv.getBoundingClientRect();
       var want = ed.offsetHeight - (window.innerHeight - 60 - (pr.bottom + 6)), shift = Math.min(want, pr.top - (crr.top + 24));
@@ -694,7 +694,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     if (pv && current) {
       var list = all(), ni = list.indexOf(current) + (pv.hasAttribute('data-fd-prev') ? -1 : 1);
       if (ni >= list.length) ni = 0;   // next from the last question wraps to question 1
-      if (list[ni]) open(list[ni]);
+      if (list[ni]) open(list[ni], true);   /* paging between questions never scrolls the page for the popup */
       return;
     }
     var ed = e.target.closest('[data-fd-edit]');
