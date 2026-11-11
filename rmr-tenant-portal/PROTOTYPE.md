@@ -30,3 +30,5 @@ Source: Figma "RMR Forms", file `RGELIjO4RU4FdsjdB2CsbG`, node `6438:20115`. Ope
 **Display conditionally in the pet forms**: question 6 (Vaccination Records) shows only while question 3 (up to date on vaccinations) is answered Yes. Driven by `data-cond-q` / `data-cond-val` on the question and `assets/conditional.js`; the form preview uses the same script for rules set in the designer.
 
 Form question text is regular weight, not bold (pet form, finish page, tenant new-pet form and the Portal Preview).
+
+**Required vs Available forms**: the Required tab now lists Vehicle Information (due 11/01/26) and Emergency Contact (due 10/25/26); Available Forms lists New Pet, Gym Access and Notice to Vacate. Forms sent from RMX are still added to Required. Only New Pet opens a form mock.
