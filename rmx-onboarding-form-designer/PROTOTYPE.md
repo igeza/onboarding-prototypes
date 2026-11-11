@@ -146,3 +146,5 @@ The question editor's header ("Question N" and the 1/3 pager) is sticky: it stay
 Yes/No option rows are 8px apart like every other Response Options gap (the earlier 16px for Yes/No is dropped).
 
 The space between the popup header ("Question N") and Question Title is 8px (the header's own bottom padding; the 16px flex gap is cancelled).
+
+The popup's first field is labelled **Question *** (was Question Title *), per the Figma Forms section.

@@ -532,7 +532,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     document.getElementById('field-selector').hidden = true;
     $('[data-fd-qnum]').textContent = f.type === 'pd' ? f.preset : 'Question ' + (all().indexOf(q) + 1);
     $('[data-fd-title]').value = f.title;
-    $('[data-fd-titlelabel]').textContent = f.type === 'tx' ? 'Text' : f.type === 'at' ? 'Attachment Name' : 'Question Title *';
+    $('[data-fd-titlelabel]').textContent = f.type === 'tx' ? 'Text' : f.type === 'at' ? 'Attachment Name' : 'Question *';
     $('[data-fd-title]').closest('.rmx-field').classList.toggle('rmx-field--error', q.classList.contains('fd-q--error'));
     editor.querySelectorAll('[data-not-tx]').forEach(function (x) { x.hidden = f.type === 'tx' || f.type === 'at'; });
     editor.querySelectorAll('.fd-mapwrap').forEach(function (x) { x.hidden = f.type === 'tx' || f.type === 'at' || f.type === 'pd'; });
