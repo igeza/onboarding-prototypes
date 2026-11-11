@@ -194,3 +194,4 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 
 **Property Send Form**: the Include Prospects checkbox is removed; the dialog is Form, Property, Set Expiration and the message.
 The Property field's search icon is blue (`--icon-primary`).
+Text areas have no resize grip (`textarea { resize: none }` in `proto.css`, also in the form designer).

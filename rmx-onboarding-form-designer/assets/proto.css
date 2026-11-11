@@ -312,3 +312,6 @@ html::-webkit-scrollbar { display: none; }
 .rmx-overlay-scroll:hover, .rmx-overlay-scroll.is-drag { background: var(--text-accent); }
 .rmx-overlay-scroll.is-v { width: 8px; left: auto; }
 .rmx-overlay-scroll.is-h { height: 8px; top: auto; }
+
+/* no resize grip on text areas */
+textarea { resize: none; }

@@ -47,7 +47,7 @@
     '.so-row { display: flex; gap: var(--spacing-md); }.so-body .so-row > .rmx-field { flex: none; width: 248px; }.so-body .so-row > .so-wide { width: 280px; }' +
     '.so-body .rmx-field { width: 100%; }' +
     '.so-body .rmx-field__box:has(textarea) { height: auto; min-height: 96px; padding: 0; align-items: stretch; }' +
-    '.so-body textarea { flex: 1; width: 100%; min-height: 96px; padding: 8px; border: 0; background: transparent; resize: vertical; font: var(--type-label-m-regular); color: var(--text-secondary); outline: none; }' +
+    '.so-body textarea { flex: 1; width: 100%; min-height: 96px; padding: 8px; border: 0; background: transparent; resize: none; font: var(--type-label-m-regular); color: var(--text-secondary); outline: none; }' +
     '.so-who .rmx-field__box { color: var(--text-secondary); }' +
     '.so-tbl { border: 1px solid var(--border-primary); border-radius: var(--radius-sm); overflow: hidden; }' +
     '.so-tr { display: grid; align-items: center; gap: 8px; padding: 0 8px; min-height: 36px; border-top: 1px solid var(--border-primary); }' +
