@@ -432,7 +432,7 @@ html, body { height: 100%; overflow: hidden; }
 .forms-split { display: flex; flex: 1 1 auto; align-items: stretch; gap: var(--spacing-md); width: 100%; max-width: 1592px; min-height: 0; }
 .forms-split .forms-card { flex: 1 1 0; width: auto; min-width: 0; }
 .forms-split .forms-card--side { flex: none; width: 436px; gap: var(--spacing-md); padding: var(--spacing-lg); }
-.forms-side__title { margin: 0; font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: 400; color: var(--text-secondary); }
+.forms-side__title { margin: 0; font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: 400; color: var(--text-primary); }
 .forms-side__desc { margin: var(--spacing-xs) 0 0; font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; color: var(--text-secondary); }
 .forms-table__due { width: 142px; }
 .forms-table__last { width: 142px; }
