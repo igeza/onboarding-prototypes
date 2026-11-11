@@ -575,6 +575,8 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     var above = pen.top - cr.top, below = limitBottom() - pen.bottom;
     return need <= limitBottom() - (pen.bottom + 6) || below >= above;
   }
+  /* the popup never goes above the top of the editor area (the canvas), so it stays inside the designer space */
+  function topLimit() { var cv = document.querySelector('.fd-canvas'); return cv ? cv.getBoundingClientRect().top : 0; }
   /* the popup may run to the bottom of the editor area, but stays above the Save / Cancel footer while that is showing */
   function limitBottom() {
     var cv = document.querySelector('.fd-canvas'), cb = cv ? cv.getBoundingClientRect().bottom : window.innerHeight;
@@ -587,14 +589,14 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     var ed = edFor(q), pen = q.querySelector('[data-fd-edit]').getBoundingClientRect();
     /* below the pencil when it fits; otherwise above it when there is more room there; otherwise below, scrolling inside */
     ed.style.maxHeight = '';
-    var need = ed.offsetHeight, below = limitBottom() - (pen.bottom + 6), above = pen.top - 6 - 8, top;
+    var need = ed.offsetHeight, below = limitBottom() - (pen.bottom + 6), above = pen.top - 6 - (topLimit() + 8), top;
     if (dirLock ? dirLock === 'down' : faceDown(pen, need)) {   /* above only when it does not fit below AND the window has more room above the pencil than below it */
       top = Math.max(8, pen.bottom + 6);
       ed.style.maxHeight = Math.max(160, limitBottom() - top) + 'px';   /* to the bottom of the editor area, above the Save / Cancel footer */
     } else {
       var h = Math.min(need, above);
-      top = pen.top - 6 - h;
-      ed.style.maxHeight = above + 'px';
+      top = Math.max(topLimit() + 8, pen.top - 6 - h);
+      ed.style.maxHeight = Math.max(100, above) + 'px';
     }
     ed.style.top = top + 'px';
     if (window.innerWidth <= 1100) { ed.style.left = '0px'; return; }
