@@ -205,3 +205,5 @@ The help text under a question in the Form Details dialogs is regular, not itali
 **Prospect: History / Notes tile is two columns wide** (was one), so the Note text is no longer cut off; Rent Quotes sits beside it in the third column. Below 1280px the tiles stack as before.
 
 **Leasing Board (Figma 6058:33855)**: swim lanes are at least 300px wide (all six fit at 1920px) and the board scrolls horizontally when the window is narrower, instead of squeezing the lanes. The property and unit icons and text on a card are grey (`--text-primary`); the icons were white, so the row looked shifted.
+
+Leasing Board cards: every line of text on a card is grey (`--text-primary`); only the prospect name is blue.
