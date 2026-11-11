@@ -463,7 +463,7 @@ body { display: flex; flex-direction: column; }
   }
   function ruleRow(r, i, n) {
     return '<div class="otd-rule" data-i="' + i + '">' + dd('', r.field, ['Pet Type'], 'data-k="field"') + dd('', r.op, OPS, 'data-k="op"') + dd('', r.val, VALS, 'data-k="val"') +
-      (n > 1 ? '<button type="button" class="otd-x" data-del-rule="' + i + '" aria-label="Remove rule">' + icon('close') + '</button>' : '') + '</div>';
+      (n > 1 ? '<button type="button" class="otd-x" data-del-rule="' + i + '" aria-label="Remove rule">' + icon('delete-filled') + '</button>' : '') + '</div>';
   }
   function fileCard(f, i, n) {
     return '<section class="otd-card otd-file" data-i="' + i + '" data-rmx-component="Card">' +
@@ -472,7 +472,7 @@ body { display: flex; flex-direction: column; }
       '<div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label oa-info">Help Text ' + icon('info', 'rmx-icon rmx-icon--16') + '</span><div class="rmx-field__box otd-textarea"><textarea data-k="help" aria-label="Help Text">' + esc(f.help) + '</textarea></div></div>' +
       '<label class="rmx-check" data-k="req" data-checked="' + !!f.req + '" data-rmx-component="Checkbox"><span class="rmx-check__box">' + icon('check', 'rmx-icon rmx-icon--16') + '</span><span class="rmx-text">Required</span></label>' +
       '<label class="rmx-check" data-k="multi" data-checked="' + !!f.multi + '" data-rmx-component="Checkbox"><span class="rmx-check__box">' + icon('check', 'rmx-icon rmx-icon--16') + '</span><span class="rmx-text">Allow multiple uploads</span></label>' +
-      (n > 1 ? '<div><button type="button" class="otd-link" data-del-file="' + i + '">' + icon('close') + 'Remove file</button></div>' : '') + '</section>';
+      (n > 1 ? '<div><button type="button" class="otd-link" data-del-file="' + i + '">' + icon('delete-filled') + 'Remove file</button></div>' : '') + '</section>';
   }
   function syncPreview() {
     var s = curStep(); if (!s || !PAGES[s.action]) return; var src = '../../rmr-onboarding-flow/screens/' + PAGES[s.action] + '.html';
