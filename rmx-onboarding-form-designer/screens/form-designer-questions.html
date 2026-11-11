@@ -465,7 +465,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
   /* Predefined fields (the Pet group in Add Fields): a fixed question with only a title, help text and Required. */
   var PRESETS = window.FD_PRESETS = {'Pet Type':'sa','Pet Breed':'sa','Pet Name':'sa','Pet Age':'sa','Pet Weight':'sa','Pet Color':'sa','Pet Description':'pa','Pet Image':'iu'};
   var NAMES = { mc: 'Yes/No', cb: 'Checkboxes', dd: 'Dropdown', sa: 'Short Answer', at: 'Attachment', pa: 'Paragraph', dt: 'Date', tx: 'Text Box', fl: 'File Upload', iu: 'Image Upload', pd: 'Predefined' };
-  var MAX = 6, current = null;
+  var MAX = 6, current = null, dirLock = '';
   var ARROW = '<svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg>';
   var HEAD = '<div class="fd-q__head"><span class="fd-q__label"></span><span class="fd-q__tools">' +
     '<button type="button" data-fd-edit aria-label="Edit question"><svg class="rmx-icon"><use href="#edit"></use></svg></button>' +
@@ -572,7 +572,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     /* below the pencil when it fits; otherwise above it when there is more room there; otherwise below, scrolling inside */
     ed.style.maxHeight = '';
     var need = ed.offsetHeight, below = window.innerHeight - 60 - (pen.bottom + 6), above = pen.top - 6 - 8, top;
-    if (need <= below || pen.top <= window.innerHeight - pen.bottom) {   /* above only when it does not fit below AND the window has more room above the pencil than below it */
+    if (dirLock ? dirLock === 'down' : (need <= below || pen.top <= window.innerHeight - pen.bottom)) {   /* above only when it does not fit below AND the window has more room above the pencil than below it */
       top = Math.max(8, pen.bottom + 6);
       ed.style.maxHeight = Math.max(160, window.innerHeight - top - 60) + 'px';   /* leave room for the Save / Cancel footer */
     } else {
@@ -601,7 +601,11 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     var cv = document.querySelector('.fd-canvas');
     if (cv) { var cr = cv.getBoundingClientRect(), qr = q.getBoundingClientRect(); if (qr.top < cr.top + 24) cv.scrollTop += qr.top - cr.top - 24; else if (qr.bottom > cr.bottom - 24) cv.scrollTop += qr.bottom - cr.bottom + 24; }
     /* prefer a popup that faces down: when it would not fit under the pencil, scroll the canvas up (adding room at its end) so it does */
-    if (cv && !nav) {
+    /* decide up or down from where the pencil is NOW (before any scrolling to make room), then keep that choice */
+    ed.style.maxHeight = '';
+    var pen0 = q.querySelector('[data-fd-edit]').getBoundingClientRect();
+    dirLock = (ed.offsetHeight <= window.innerHeight - 60 - (pen0.bottom + 6) || pen0.top <= window.innerHeight - pen0.bottom) ? 'down' : 'up';
+    if (cv && !nav && dirLock === 'down') {
       ed.style.maxHeight = '';
       var pr = q.querySelector('[data-fd-edit]').getBoundingClientRect(), crr = cv.getBoundingClientRect();
       var want = ed.offsetHeight - (window.innerHeight - 60 - (pr.bottom + 6)), shift = Math.min(want, pr.top - (crr.top + 24));

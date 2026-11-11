@@ -150,3 +150,5 @@ The space between the popup header ("Question N") and Question Title is 8px (the
 The popup's first field is labelled **Question *** (was Question Title *), per the Figma Forms section.
 
 The pager arrows (previous / next question) never scroll the page to make room for the popup; the page only moves when the question itself would be below the fold. Making room for the popup happens only when it is opened from the pencil.
+
+Popup direction is decided once, when it opens, from where the pencil is then (before any scrolling): up only if there is less room below the pencil than above it; otherwise down, and the page scrolls to make room. Scrolling to make room no longer flips it upward afterwards.
