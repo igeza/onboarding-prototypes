@@ -202,8 +202,8 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 .af__group .rmx-icon { transition: transform .1s; }
 .af__group[aria-expanded="false"] .rmx-icon { transform: rotate(-90deg); }
 .af__items[hidden] { display: none; }
-.af__subhead { color: var(--text-primary); padding: 0 6px; }   /* a parent with sub-items: label only, its sub-items are indented below */
-.af__item--child { padding-left: var(--spacing-md); }
+.af__subhead { color: var(--text-primary); padding: 0; }   /* a parent with sub-items: label only, its sub-items are indented below */
+.af__items .af__item--child { padding-left: var(--spacing-md); box-sizing: border-box; }   /* only the sub-items are indented; the add icon stays on the right edge */
 .af__items { display: flex; flex-direction: column; gap: var(--spacing-sm); padding: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) 36px; }
 .af__item { display: flex; align-items: center; justify-content: space-between; width: 100%; border: 0; background: none; padding: 0; font: inherit; color: var(--text-primary); cursor: pointer; text-align: left; }
 .af__item .rmx-icon { color: var(--icon-brand); }

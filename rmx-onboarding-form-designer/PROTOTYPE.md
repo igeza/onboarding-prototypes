@@ -190,3 +190,5 @@ The page kebab menu items (Duplicate, Delete) are link blue (`--text-link`).
 Form Details: 24px between questions (was 16px).
 
 **Prospect Fields = Prospect Contact Fields (from the Rent Manager prospect contact)**: the Prospect Fields group in Add Fields now lists Contact Image, First/Middle/Last Name, Email Address, Email Subscriptions (General, Notifications, Confirmations), Birthday, SSN, Employer, Annual Income, License Plate #, Vehicle, Contact Type, Applicant Type, Contact UDFs, Primary Address and Secondary Address (Street, Street2, City, State, Postal Code each), and Phone Numbers (Home, Work, Cell, Pager, Alternate, Fax, Alternate Cell). A field with sub-items is a label with its sub-items indented beneath it; each sub-item is its own question, titled e.g. "Primary Address – Street". The Pet and Preferences fields added earlier are no longer in the group. Contact Image is an image upload, Birthday a date, Contact Type and Applicant Type dropdowns, Email Subscriptions sub-items single checkboxes, the rest text.
+
+Add Fields: a parent field (Primary Address, Phone Numbers, ...) lines up with the other fields; only its sub-items are indented.
