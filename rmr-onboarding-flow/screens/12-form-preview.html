@@ -62,7 +62,9 @@
   try { saved = JSON.parse(sessionStorage.getItem('rmx-onboarding-form') || 'null'); } catch (e) {}
   if (!saved) return;
   function esc(t) { var d = document.createElement('div'); d.textContent = t == null ? '' : t; return d.innerHTML; }
-  var n = 0;
+  var n = 0, labels = {};
+  saved.forEach(function (f, i) { if (f.type === 'tx' || f.type === 'at') return; labels[i] = ++n + '. ' + (f.title || f.fallback || (f.type === 'fl' ? 'Untitled File Upload' : f.type === 'iu' ? 'Untitled Image Upload' : 'Untitled Question')); });
+  n = 0;
   var PH = 'Enter your answer';
   document.getElementById('questions').innerHTML = saved.map(function (f, i) {
     if (f.type === 'tx') return '<div class="question" data-component="Question"><p class="question__text">' + esc(f.title) + '</p></div>';
@@ -79,11 +81,14 @@
     else if (f.type === 'fl') slot = '<label class="attach" data-component="Attach"><input type="file" name="' + name + '"><img src="../assets/img/file-download.svg" alt="" width="32" height="32"><span class="attach__text"><span class="link">Choose a file</span> or drag it here.</span></label>';
     else slot = '<div class="input" data-component="Input field"><input type="text" name="' + name + '" placeholder="' + PH + '" autocomplete="off"></div>';
     var title = f.title || f.fallback || (f.type === 'fl' ? 'Untitled File Upload' : f.type === 'iu' ? 'Untitled Image Upload' : 'Untitled Question');
-    return '<div class="question' + cls + '" data-component="Question"><p class="question__text">' + n + '. ' + esc(title) + (f.required ? ' *' : '') + '</p>' +
+    var cd = '';
+    if (f.cond && f.cond.on) { var qn = ''; Object.keys(labels).forEach(function (k) { if (labels[k] === f.cond.q) qn = labels[k].split('.')[0]; }); if (qn) cd = ' data-cond-q="' + qn + '" data-cond-val="' + esc(f.cond.val) + '"'; }
+    return '<div class="question' + cls + '" data-component="Question"' + cd + '><p class="question__text">' + n + '. ' + esc(title) + (f.required ? ' *' : '') + '</p>' +
       (f.help ? '<p class="question__hint">' + esc(f.help) + '</p>' : '') + '<div class="question__slot">' + slot + '</div></div>';
   }).join('');
 })();
 </script>
 <script src="../assets/app.js"></script>
+<script src="../assets/conditional.js"></script>
 </body>
 </html>

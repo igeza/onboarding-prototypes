@@ -122,3 +122,5 @@ The **Publish to rmResident Portal** checkbox is now **Always Available in rmRes
 **Dependencies replaced by Display conditionally (Figma Forms section `6152:19294`, Nov 2026)**: the Dependencies toggle and the per-option "Show" pickers are gone. Every question editor now has a **Display conditionally** checkbox under Required; ticking it reveals one row, `If [another question] is [answer]`. The question list is the other questions on the form; the answer list is that question's options (Yes/No when it has none). Stored per question as `cond` and saved with the form.
 
 **Question editor never sits under the Save / Cancel footer**: its max height leaves 60px at the bottom, so every field stays reachable by scrolling inside the panel.
+
+**Example forms use Display conditionally**: the sample form on the Questions and Portal Preview screens is now 1. Do you have any pets? (Yes/No), 2. What type of pet do you have? (Dropdown, required) and 3. What is your pet's name?, with 2 and 3 set to `If 1. Do you have any pets? is Yes`. The RMR form preview (`12-form-preview.html`) hides a conditional question until its rule is met.
