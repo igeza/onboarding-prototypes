@@ -81,8 +81,8 @@ body { display: flex; flex-direction: column; }
 .lb-cols { flex: 1; display: grid; grid-template-columns: repeat(6, minmax(300px, 1fr)); gap: 0; border: 1px solid var(--border-primary); border-radius: var(--radius-sm); overflow-x: auto; overflow-y: hidden; min-height: 520px; }   /* swim lanes keep a minimum width (300px; Figma lanes are 312px pitch, 1888px board, here inside the white panel) so all six fit at 1920px; the board scrolls sideways when the window is narrower */
 .lb-col { display: flex; flex-direction: column; border-right: 1px solid var(--border-primary); min-width: 0; }
 .lb-col:last-child { border-right: 0; }
-.lb-col__head { display: flex; align-items: center; justify-content: center; position: relative; height: 48px; background: var(--container-tertiary); border-bottom: 1px solid var(--border-primary); color: var(--text-secondary); font: var(--type-label-m-regular); font-size: 16px; }
-.lb-col__head em { font-style: normal; color: var(--text-primary); }
+.lb-col__head { display: flex; align-items: center; justify-content: center; position: relative; height: 48px; background: var(--container-tertiary); border-bottom: 1px solid var(--border-primary); color: var(--text-primary); font: var(--type-label-m-regular); font-size: 16px; font-weight: 600; }   /* lane titles: grey and semi-bold */
+.lb-col__head em { font-style: normal; color: inherit; font-weight: 600; }
 .lb-col__head button { position: absolute; right: 12px; border: 0; background: none; padding: 0; color: var(--icon-primary); cursor: pointer; display: inline-flex; }
 .lb-col__body { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 8px; background: #d3e4ec; border: 1px solid var(--border-secondary); margin: 16px; }
 .lb-card { position: relative; background: var(--container-primary); border-left: 8px solid var(--border-primary); border-radius: var(--radius-sm); padding: 8px 12px; display: flex; flex-direction: column; gap: 2px; }

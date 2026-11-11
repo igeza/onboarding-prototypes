@@ -213,3 +213,5 @@ Leasing Board cards have rounded corners (`--radius-sm`, 4px), including the col
 Leasing Board: 8px padding inside each swim lane (was 16px), so the cards sit 8px from the lane edge as in Figma.
 
 Leasing Board cards: the labels (Last Contact:, Next Contact:, Agent:, Onboarding Stage:, Onboarding Step:) are semi-bold; their values stay regular.
+
+Leasing Board: the swim lane titles ("Application Sent (2)") are grey (`--text-primary`) and semi-bold, count included.
