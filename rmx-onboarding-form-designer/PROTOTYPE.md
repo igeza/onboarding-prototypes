@@ -136,5 +136,3 @@ The **Publish to rmResident Portal** checkbox is now **Always Available in rmRes
 The above-the-pencil placement only applies when the popup does not fit below **and** the window has more space above the pencil than below it.
 
 The question editor prefers to face down: if it would not fit under the pencil, the canvas scrolls up (with extra room added at its end) until it does, as long as the question stays on screen. It only flips above when that is still not enough and there is more room above.
-
-**No Send to Prospect on the Form Templates row menu**: Prospect forms are sent from the Prospects register (kebab > Send Form), so their row menu starts at Publish to rmResident Portal. Tenant forms keep Send to Tenant.
