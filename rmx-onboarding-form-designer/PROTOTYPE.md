@@ -174,3 +174,5 @@ Add Fields: the "UDFs" group is named **User Defined Fields**, and every group (
 **Form Details dialog is 1200px wide** (was 968px), per the Figma Form Completed / Form Need Approval / Form Approved dialogs (node `6363:18800`). It still shrinks to the window width on small screens.
 
 **Form Details responses match the Pet Information form (Figma Form Completed)**: 1. Do you have pets? (Yes/No), 2. Type of Pet, 3. Pet Details, 4. Is your pet up to date on vaccinations? (Yes/No). The read-only radios and checkboxes use the design system's disabled colours (`--icon-disabled` ring/dot/fill, `--text-disabled` labels). The Vehicle Information (Pending Approval) dialog is unchanged.
+
+The help text under a question in the Form Details dialogs is regular, not italic.
