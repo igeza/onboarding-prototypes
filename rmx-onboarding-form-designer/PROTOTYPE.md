@@ -113,3 +113,8 @@ The **Publish to rmResident Portal** checkbox is now **Always Available in rmRes
 
 
 **Pet Information has six questions**: Pet Owner Name and "Enter your unit number and property address" were removed from the form designer, the onboarding Pet Information step and the tenant portal New Pet form (the rest renumbered 1 to 6). The Form Details response dialogs on the Prospect, Tenant Details and Forms screens (the Pet Information ones) also drop those two responses and renumber to 1 to 5 (to 4 in the shortened one); the Vehicle Information dialogs are a different form and are unchanged.
+
+
+**Add Fields group renamed (Figma Dialog `6341:15945`, Nov 2026)**: the first group is now **Prospect Fields** (was Pet) and its items read in full: Pet Type, Pet Breed, Pet Name, Pet Age, Pet Weight, Pet Color, Pet Description, Pet Image. Behaviour is unchanged.
+
+**Contact form type**: Add Form (and the Type filter on Form Templates) now offers **Contact** next to Prospect and Tenant. A Contact form's designer shows Form Type: Contact, and its Add Fields dialog lists **Contact Fields** (Contact Name, Contact Email, Contact Phone Number, Contact Relationship, Contact Address, Contact Employer) instead of Prospect Fields. They behave like the other predefined fields (titled, Required, only Question Title / Help Text / Required in the settings panel). The field list is our guess (no mock). Send to Tenant / Prospect on a Contact form uses a sample list of contacts. Prospect and Tenant forms still list Prospect Fields.

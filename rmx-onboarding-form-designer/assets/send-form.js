@@ -6,6 +6,7 @@
 (function () {
   var PEOPLE = {
     Tenant: ['Zackary Abernathy', 'Eloise Albright', 'Jamison Blackwood', 'Barnaby Thornton', 'Sullivan Lancaster', 'Alfred Bramhall', 'Kristin Macpherson'],
+    Contact: ['Mary Carpenter', 'Alfred Pennywise', 'Aaron Greenfield', 'Monica Swift', 'Percy Adams', 'Rosa Delgado', 'Henry Okafor'],
     Prospect: ['Charlie Apegian', 'Marisol Vega', 'Devon Whitfield', 'Priya Nair', 'Tobias Lindqvist', 'Hannah Okafor', 'Gabriel Moreau']
   };
   var ctx = null, picked = [];
@@ -41,7 +42,7 @@
   document.body.appendChild(send); document.body.appendChild(sel);
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
-  function noun() { return ctx.type === 'Prospect' ? 'Prospect' : 'Tenant'; }
+  function noun() { return ctx.type === 'Prospect' || ctx.type === 'Contact' ? ctx.type : 'Tenant'; }
 
   function countText() { return picked.length ? picked.length + ' selected' : 'Select ' + noun().toLowerCase() + 's'; }
   function renderSend() {
