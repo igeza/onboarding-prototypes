@@ -160,3 +160,5 @@ Opening the question popup never scrolls the page to make room (the earlier scro
 A downward popup can run to the bottom of the editor area (8px short of it), stopping above the Save / Cancel footer whenever that is showing; it re-fits when the footer appears or goes away.
 
 Add Fields: the group headings (Prospect Fields, Response Types, General Fields) and the "Available" / "Selected" titles are semi-bold (an earlier change to regular weight was reverted).
+
+Add Fields: the "Available" title is sticky; the groups scroll underneath it.

@@ -192,6 +192,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 .af__avail { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-xs); padding: var(--spacing-md); border-right: 1px solid var(--border-primary); background: var(--container-primary); overflow: auto; }
 .af__sel { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--container-tertiary); overflow: auto; }
 .af__title { margin: 0; font-weight: 600; color: var(--text-primary); }
+.af__avail > .af__title { flex: none; position: sticky; top: calc(0px - var(--spacing-md)); z-index: 2; margin: calc(0px - var(--spacing-md)) calc(0px - var(--spacing-md)) 0; padding: var(--spacing-md) var(--spacing-md) var(--spacing-xs); background: var(--container-primary); }   /* "Available" stays put while the list scrolls */
 .af__selhead { display: flex; align-items: center; justify-content: space-between; }
 .af__grouphead { display: flex; align-items: center; justify-content: space-between; }
 .af__group { display: flex; align-items: center; border: 0; background: none; padding: 0; font: inherit; font-weight: 600; color: var(--text-primary); cursor: pointer; }
