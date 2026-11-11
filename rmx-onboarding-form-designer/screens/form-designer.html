@@ -570,7 +570,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     /* below the pencil when it fits; otherwise above it when there is more room there; otherwise below, scrolling inside */
     ed.style.maxHeight = '';
     var need = ed.offsetHeight, below = window.innerHeight - 60 - (pen.bottom + 6), above = pen.top - 6 - 8, top;
-    if (need <= below || above <= below) {
+    if (need <= below || pen.top <= window.innerHeight - pen.bottom) {   /* above only when it does not fit below AND the window has more room above the pencil than below it */
       top = Math.max(8, pen.bottom + 6);
       ed.style.maxHeight = Math.max(160, window.innerHeight - top - 60) + 'px';   /* leave room for the Save / Cancel footer */
     } else {
