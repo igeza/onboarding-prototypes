@@ -139,8 +139,8 @@ a.rmx-btn { text-decoration: none; }
 .fd-opt { display: flex; align-items: center; gap: var(--spacing-xs); }
 .fd-opt .wt-optfield { width: 182px; }
 .fd-opt .wt-optfield .rmx-field { width: 100%; }
-.fd-opt__show { display: flex; align-items: center; gap: var(--spacing-xs); flex: 1; color: var(--text-primary); }
-.fd-opt__show .wt-flex { flex: 1; }
+.fd-cond { display: flex; align-items: center; gap: var(--spacing-xs); color: var(--text-primary); }
+.fd-cond .wt-flex { flex: 1; min-width: 0; }
 .fd-chips { display: flex; gap: var(--spacing-xs); flex-wrap: wrap; }
 .fd-chip { display: inline-flex; align-items: center; gap: var(--spacing-xs); height: 24px; padding: 0 var(--spacing-xs); background: var(--component-row-selected); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); color: var(--text-secondary); }
 .fd-chip .rmx-icon { width: 16px; height: 16px; color: var(--icon-error); }
@@ -412,8 +412,8 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
   <div class="fs__foot" data-fs-foot hidden><strong>Selected:</strong><span class="fd-chip wt-nodot" data-fs-chip><span></span><button type="button" aria-label="Clear selection" data-fs-clear><svg class="rmx-icon"><use href="#close"></use></svg></button></span></div>
 </div></div>
     <div class="fd-editor__opts" data-type-panel="mc" hidden>
-      <div class="fd-editor__optshead"><span>Response Options</span><button type="button" role="switch" aria-checked="false" data-fd-deps data-rmx-component="Toggle Slider"><span data-part="track"><span data-part="handle"><svg class="rmx-icon wt-off"><use href="#remove"></use></svg><svg class="rmx-icon wt-on"><use href="#check"></use></svg></span></span><span>Dependencies</span></button></div>
-      <div class="fd-opt"><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text" value="Option 1"></div></div></div><div class="fd-opt__show" data-fd-dep hidden><span>Show</span><div class="wt-flex"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>2. What type of pet do you have?</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden><button type="button" data-value="2. What type of pet do you have?">2. What type of pet do you have?</button><button type="button" data-value="End of Form">End of Form</button></div></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div><div class="fd-opt"><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text" value="Option 2"></div></div></div><div class="fd-opt__show" data-fd-dep hidden><span>Show</span><div class="wt-flex"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>End of Form</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden><button type="button" data-value="2. What type of pet do you have?">2. What type of pet do you have?</button><button type="button" data-value="End of Form">End of Form</button></div></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div><div class="fd-opt" hidden><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text"></div></div></div><div class="fd-opt__show" data-fd-dep hidden><span>Show</span><div class="wt-flex"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>2. What type of pet do you have?</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden><button type="button" data-value="2. What type of pet do you have?">2. What type of pet do you have?</button><button type="button" data-value="End of Form">End of Form</button></div></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div><div class="fd-opt" hidden><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text"></div></div></div><div class="fd-opt__show" data-fd-dep hidden><span>Show</span><div class="wt-flex"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>End of Form</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden><button type="button" data-value="2. What type of pet do you have?">2. What type of pet do you have?</button><button type="button" data-value="End of Form">End of Form</button></div></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div><div class="fd-opt" hidden><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text"></div></div></div><div class="fd-opt__show" data-fd-dep hidden><span>Show</span><div class="wt-flex"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>2. What type of pet do you have?</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden><button type="button" data-value="2. What type of pet do you have?">2. What type of pet do you have?</button><button type="button" data-value="End of Form">End of Form</button></div></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div><div class="fd-opt" hidden><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text"></div></div></div><div class="fd-opt__show" data-fd-dep hidden><span>Show</span><div class="wt-flex"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>End of Form</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden><button type="button" data-value="2. What type of pet do you have?">2. What type of pet do you have?</button><button type="button" data-value="End of Form">End of Form</button></div></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div>
+      <div class="fd-editor__optshead"><span>Response Options</span></div>
+      <div class="fd-opt"><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text" value="Option 1"></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div><div class="fd-opt"><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text" value="Option 2"></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div><div class="fd-opt" hidden><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text"></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div><div class="fd-opt" hidden><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text"></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div><div class="fd-opt" hidden><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text"></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div><div class="fd-opt" hidden><span class="rmx-radio" data-rmx-component="Radio button"><span class="rmx-radio__dot"></span></span><div class="wt-optfield"><div class="rmx-field" data-rmx-component="Input Field"><div class="rmx-field__box"><input type="text"></div></div></div><button type="button" class="fd-opt__del" data-fd-delopt aria-label="Remove option" hidden><svg class="rmx-icon"><use href="#delete-filled"></use></svg></button></div>
       <div><button type="button" class="rmx-btn rmx-btn--text" data-fd-addopt data-rmx-component="Button"><svg class="rmx-icon"><use href="#add"></use></svg><span class="rmx-btn__label">Add Option</span></button></div>
     </div>
     <div class="fd-editor__opts" data-type-panel="cb" hidden>
@@ -428,6 +428,8 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     </div>
     <div data-type-panel="none"></div>
     <label class="rmx-check" data-fd-required data-not-tx data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Required</span></label>
+    <label class="rmx-check" data-fd-cond data-not-tx data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Display conditionally</span></label>
+    <div class="fd-cond" data-fd-condrow hidden><span>If</span><div class="wt-flex" data-fd-condq><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value></span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden></div></div></div><span>is</span><div class="wt-flex" data-fd-condv><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value></span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden></div></div></div></div>
   </div><div class="fd-editor fd-texteditor" hidden>
     <div class="fd-editor__head"><span class="fd-editor__title">Text Box</span><span class="fd-pager" data-fd-pager hidden><button type="button" data-fd-prev aria-label="Previous question"><svg class="rmx-icon"><use href="#chevron-left"></use></svg></button><span data-fd-count>1/1</span><button type="button" data-fd-next aria-label="Next question"><svg class="rmx-icon"><use href="#chevron-right"></use></svg></button></span></div>
     <div class="wt-w-fill"><div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label">Text</span><div class="rmx-field__box wt-textbox"><textarea class="wt-textarea" data-fd-text rows="4" aria-label="Text"></textarea></div></div></div>
@@ -539,6 +541,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     $('[data-fd-type] [data-rmx-value]').textContent = NAMES[f.type];
     $('[data-fd-map]').textContent = f.map;
     $('[data-fd-required]').dataset.checked = String(!!f.required);
+    syncCond();
     var p = panelOf(f.type);
     editor.querySelectorAll('[data-type-panel]').forEach(function (x) { x.hidden = x.getAttribute('data-type-panel') !== p; });
     ['mc', 'cb', 'dd'].forEach(function (k) {
@@ -598,7 +601,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     try {
       var ser = function (q) {
         var f = q._fd;
-        return { type: f.type, title: f.title, fallback: f.fallback, help: f.help, required: !!f.required, preset: f.preset || '', opts: f.opts, width: f.width || 'Full', file: f.file || '' };
+        return { type: f.type, title: f.title, fallback: f.fallback, help: f.help, required: !!f.required, preset: f.preset || '', opts: f.opts, width: f.width || 'Full', file: f.file || '', cond: f.cond || null };
       };
       /* with several pages (pages.js) the form is every page's questions, in page order */
       var qs = (window.FD && FD.pageQs) ? FD.pageQs(all) : all();
@@ -705,6 +708,8 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
       if (rm) { current._fd.opts.dd.splice(+rm.getAttribute('data-fd-rmchip'), 1); renderChips(current._fd); preview(current); return; }
       var req = e.target.closest('[data-fd-required]');
       if (req) setTimeout(function () { current._fd.required = req.dataset.checked === 'true'; label(current); }, 0);
+      var cd = e.target.closest('[data-fd-cond]');
+      if (cd) setTimeout(function () { var f = current._fd; f.cond = f.cond || { on: false, q: '', val: '' }; f.cond.on = cd.dataset.checked === 'true'; syncCond(); place(current); if (window.FD) FD.save(); }, 0);
       return;
     }
     var qq = e.target.closest('.fd-box .fd-q');
@@ -741,6 +746,8 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
   });
   document.addEventListener('rmx:select', function (e) {
     if (!current) return;
+    var cq = e.target.closest('[data-fd-condq]'), cv = e.target.closest('[data-fd-condv]');
+    if (cq || cv) { var cc = current._fd.cond; if (cq) { cc.q = e.detail.label; cc.val = ''; syncCond(); } else cc.val = e.detail.label; if (window.FD) FD.save(); return; }
     if (e.target.closest('[data-fd-width]')) { current._fd.width = e.detail.label; preview(current); return; }
     if (!e.target.closest('[data-fd-type]')) return;
     current._fd.type = TYPES[e.detail.label] || 'sa';
@@ -790,12 +797,36 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     h.addEventListener('pointermove', move); h.addEventListener('pointerup', end); h.addEventListener('pointercancel', end);
   });
 
-  var deps = editor.querySelector('[data-fd-deps]');
-  deps.addEventListener('click', function () {
-    var on = deps.getAttribute('aria-checked') !== 'true';
-    deps.setAttribute('aria-checked', String(on));
-    editor.querySelectorAll('[data-fd-dep]').forEach(function (el) { el.hidden = !on; });
-  });
+  /* Display conditionally: "If <another question> is <answer>" */
+  var condRow = editor.querySelector('[data-fd-condrow]');
+  function qLabel(q) { var l = q.querySelector('.fd-q__label'); return l ? l.textContent.replace(/\*$/, '') : ''; }
+  function condChoices(f) {
+    var o = f.type === 'mc' || f.type === 'cb' || f.type === 'dd' ? (f.opts[f.type] || []).filter(Boolean) : [];
+    return o.length ? o : ['Yes', 'No'];
+  }
+  function fillMenu(box, items) {
+    var m = box._m || (box._m = box.querySelector('[data-rmx-menu]'));
+    m.innerHTML = items.map(function (v) { return '<button type="button" data-value="' + esc(v) + '">' + esc(v) + '</button>'; }).join('');
+  }
+  function syncCond() {
+    if (!current) return;
+    var f = current._fd, c = f.cond || (f.cond = { on: false, q: '', val: '' });
+    var chk = editor.querySelector('[data-fd-cond]');
+    chk.dataset.checked = String(!!c.on);
+    var show = c.on && f.type !== 'tx' && f.type !== 'at';
+    condRow.hidden = !show;
+    if (!show) return;
+    var others = all().filter(function (x) { return x !== current && x._fd.type !== 'tx' && x._fd.type !== 'at'; });
+    var qb = condRow.querySelector('[data-fd-condq]'), vb = condRow.querySelector('[data-fd-condv]');
+    fillMenu(qb, others.map(qLabel));
+    var tgt = others.filter(function (x) { return qLabel(x) === c.q; })[0] || others[0];
+    c.q = tgt ? qLabel(tgt) : '';
+    qb.querySelector('[data-rmx-value]').textContent = c.q;
+    var ch = tgt ? condChoices(tgt._fd) : ['Yes', 'No'];
+    fillMenu(vb, ch);
+    if (ch.indexOf(c.val) < 0) c.val = ch[0];
+    vb.querySelector('[data-rmx-value]').textContent = c.val;
+  }
 
   /* Map to Rent Manager Field: a panel that drops below (or above) the field, no backdrop */
   var fs = document.getElementById('field-selector');

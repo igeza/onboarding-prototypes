@@ -12,7 +12,7 @@ Source: Figma "RMR New Feature – Onboarding Workflow", node `6152:19294` (Form
 |---|---|
 | `screens/form-designer.html` | Empty form ("Add fields to get started"). Settings menu (Automated Notifications) and Add Field menu work; choosing a question type goes to the next screen |
 | `screens/form-designer-questions.html` | Question 1 added, plus an untitled question 2 (pencil opens the editor) |
-| `screens/form-designer-edit-question.html` | Question editor. Response Type switches the options panel (Multiple Choice, Checkboxes, Dropdown, Short Answer, Paragraph); Dependencies shows the "Show" pickers |
+| `screens/form-designer-edit-question.html` | Question editor. Response Type switches the options panel (Multiple Choice, Checkboxes, Dropdown, Short Answer, Paragraph); Display conditionally (checkbox under Required) shows an "If [question] is [answer]" row |
 | `screens/field-selector.html` | Question settings with the Map to Rent Manager Field selector open: a panel that drops below (or above, if there is no room) the Map field, no backdrop; the chosen field shows highlighted in the tree and as a chip under "Selected:" |
 | `screens/portal-preview.html` | Portal Preview over the designer; embeds `rmr-onboarding-flow/screens/12-form-preview.html` |
 
@@ -118,3 +118,5 @@ The **Publish to rmResident Portal** checkbox is now **Always Available in rmRes
 **Add Fields group renamed (Figma Dialog `6341:15945`, Nov 2026)**: the first group is now **Prospect Fields** (was Pet) and its items read in full: Pet Type, Pet Breed, Pet Name, Pet Age, Pet Weight, Pet Color, Pet Description, Pet Image. Behaviour is unchanged.
 
 **Contact form type**: Add Form (and the Type filter on Form Templates) now offers **Contact** next to Prospect and Tenant. A Contact form's designer shows Form Type: Contact, and its Add Fields dialog lists **Contact Fields** (Contact Name, Contact Email, Contact Phone Number, Contact Relationship, Contact Address, Contact Employer) instead of Prospect Fields. They behave like the other predefined fields (titled, Required, only Question Title / Help Text / Required in the settings panel). The field list is our guess (no mock). Send to Tenant / Prospect on a Contact form uses a sample list of contacts. Prospect and Tenant forms still list Prospect Fields.
+
+**Dependencies replaced by Display conditionally (Figma Forms section `6152:19294`, Nov 2026)**: the Dependencies toggle and the per-option "Show" pickers are gone. Every question editor now has a **Display conditionally** checkbox under Required; ticking it reveals one row, `If [another question] is [answer]`. The question list is the other questions on the form; the answer list is that question's options (Yes/No when it has none). Stored per question as `cond` and saved with the form.
