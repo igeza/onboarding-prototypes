@@ -160,7 +160,7 @@ body { display: flex; flex-direction: column; }
 #otd-filelist { display: flex; flex-direction: column; gap: var(--spacing-md); }
 .otd-file { display: flex; flex-direction: column; gap: var(--spacing-md); }
 .otd-file__title { margin: 0; font: var(--type-label-m-regular); color: var(--text-primary); }
-.otd-tip { position: relative; display: inline-flex; align-items: center; height: 36px; align-self: flex-end; color: var(--border-secondary); cursor: help; }
+.otd-tip { margin-left: calc(var(--spacing-xxs) - var(--spacing-md)); position: relative; display: inline-flex; align-items: center; height: 36px; align-self: flex-end; color: var(--border-secondary); cursor: help; }
 .otd-tip__t { display: none; position: absolute; left: 50%; bottom: calc(100% + 4px); transform: translateX(-50%); width: 296px; padding: var(--spacing-sm) var(--spacing-md); background: var(--container-primary); border-radius: var(--radius-sm); box-shadow: 0 3px 8px rgba(0,0,0,.2); font: var(--type-paragraph-s-regular); color: var(--text-secondary); z-index: 30; }
 .otd-tip:hover .otd-tip__t, .otd-tip:focus .otd-tip__t { display: block; }
 .otd-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--spacing-xs); background: var(--container-primary); font: var(--type-paragraph-l-regular, 400 16px/24px Roboto, sans-serif); color: var(--text-primary); }
