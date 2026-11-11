@@ -160,7 +160,7 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 
 **Properties register and Send Form to Property (Figma Send to Property section `6070:46986`; register `6796:48913`, dialog `6070:47029`)**: `screens/properties.html` (Mega Menu: **Rental Info > General > Properties**). Search, Saved Filters, Show Inactive (blue), Add Property, and the register: color block, Name, Short Name, Email (with envelope), Manager Name, Primary Address, Billing Address, row kebab, "19 of 42 Properties" (sample rows from the mock; long addresses are cut with an ellipsis). Not built: Add Property, Saved Filters, Show Inactive, row links, paging, the other properties.
 - The row kebab lists Send Email, **Send Form**, then the Rent Manager items from Izzy's screenshot (Add Management Inspection, Create Service Issue, Write Letters, Report Writer, Add to Phone Broadcasts, Add to Text Broadcasts).
-- **Send Form** opens the 440px dialog from the mock: Form (a selector: Pet Info & Policy Agreement, Pet Information, Gym Access, Notice to Vacate), Property (the row's property), Include Prospects (checked), Set Expiration (date picker, a week out), Send Message. Send closes it with a toast naming the chosen form, e.g. `"Pet Info & Policy Agreement" sent`. Bulk Send Form shows "3 selected" in the Property field.
+- **Send Form** opens the 440px dialog from the mock: Form (a selector: Pet Info & Policy Agreement, Pet Information, Gym Access, Notice to Vacate), Property (the row's property), Set Expiration (date picker, a week out), Send Message. Send closes it with a toast naming the chosen form, e.g. `"Pet Info & Policy Agreement" sent`. Bulk Send Form shows "3 selected" in the Property field.
 - Bulk mode works as on Prospects and Tenants (Bulk Actions > Send Form, then tick rows); the Bulk Actions menu here has only Reports and Communication (no mock; our guess). There is no Send Onboarding on properties.
 - Code: `assets/send-onboarding.js` with `data-kind="property"`. The table id is `props-register` because `properties` is the id of the Properties icon symbol.
 
@@ -191,3 +191,6 @@ The workflow flow (Workflow templates, Add workflow template, Workflow template 
 - **Register**: the first template is **Standard** (was Default) with a small icon beside the name. Its link and the detail page's template name ("Default Onboarding") are unchanged.
 
 **Display Rules layout (Figma Make a Payment `6646:31273`)**: with Display conditionally ticked, the step page shows the callout, then a **Display Rules** heading *above* a card that holds only the rule rows (field, operator, value); **Add Rule** is a link at the right end of the Display Rules heading. The content column is wider (up to 889px) and the preview is 606px, as in the mock. Make a Payment now also has a callout ("Make a Payment reflects payment options based on Payment Policies set for each property.").
+
+**Property Send Form**: the Include Prospects checkbox is removed; the dialog is Form, Property, Set Expiration and the message.
+The Property field's search icon is blue (`--icon-primary`).

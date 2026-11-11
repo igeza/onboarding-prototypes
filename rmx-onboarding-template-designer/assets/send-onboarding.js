@@ -148,8 +148,7 @@
   pdlg.innerHTML =
     '<div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Send Form</span><span class="so-hicons"><button type="button" aria-label="Close" data-rmx-close>' + ic('close', 'rmx-icon--24') + '</button></span></div>' +
     '<div class="so-body"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Form</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>' + FORMS[0] + '</span>' + ic('keyboard-arrow-down') + '</button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden>' + FORMS.map(function (f) { return '<button type="button" data-value="' + esc(f) + '">' + esc(f) + '</button>'; }).join('') + '</div></div>' +
-    '<div class="rmx-field so-who" data-rmx-component="Input Field"><span class="rmx-field__label">Property</span><div class="rmx-field__box">' + ic('search') + '<input type="text" id="sp-who" readonly aria-label="Property"></div></div>' +
-    '<label class="rmx-check" id="sp-prospects" data-checked="true" data-rmx-component="Checkbox"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span><span class="rmx-text">Include Prospects</span></label>' +
+    '<div class="rmx-field so-who" data-rmx-component="Input Field"><span class="rmx-field__label">Property</span><div class="rmx-field__box">' + ic('search').replace('class="rmx-icon', 'style="color:var(--icon-primary)" class="rmx-icon') + '<input type="text" id="sp-who" readonly aria-label="Property"></div></div>' +
     '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Set Expiration</span><div class="rmx-field__box rmx-date"><input type="text" id="sp-date" aria-label="Set Expiration" placeholder="MM/DD/YYYY"><button type="button" class="rmx-date__btn" aria-label="Pick a date">' + ic('calendar-today') + '</button></div></div>' +
     '<div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label">Send Message</span><div class="rmx-field__box"><textarea id="sp-msg" aria-label="Send Message" placeholder="Type message to tenants here"></textarea></div></div></div>' +
     '<div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="sp-send" data-rmx-close data-rmx-component="Button">Send</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>';
@@ -166,7 +165,7 @@
   function nameOf(tr) { var a = tr.querySelector('a'); if (a) return a.textContent.trim(); var nm = ''; [].some.call(tr.querySelectorAll('td'), function (td) { var t = td.textContent.trim(); if (t) { nm = t; return true; } }); return nm; }
   function startOnboarding() { openOnb.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); }
   function startForm(names) {
-    if (kind === 'property') { document.getElementById('sp-who').value = names.length > 1 ? names.length + ' selected' : names[0]; document.getElementById('sp-date').value = inAWeek(); document.getElementById('sp-msg').value = ''; document.getElementById('sp-prospects').dataset.checked = 'true'; openProp.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); return; }
+    if (kind === 'property') { document.getElementById('sp-who').value = names.length > 1 ? names.length + ' selected' : names[0]; document.getElementById('sp-date').value = inAWeek(); document.getElementById('sp-msg').value = ''; openProp.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); return; }
     buildForm(names); openForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns();
   }
 
