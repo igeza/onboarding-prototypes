@@ -36,3 +36,5 @@ Form question text is regular weight, not bold (pet form, finish page, tenant ne
 Forms page: the "Available Forms" title is dark text (`--text-primary`); its description stays the secondary grey.
 
 **Pet form = the six questions of the Pet Information template**: 1. Type of Pet (dropdown), 2. Pet Details (paragraph), 3. Is your pet up to date on vaccinations? (Yes/No), 4. Behavior (checkboxes), 5. Emergency Contact for Pet (short answer), 6. Vaccination Records (file upload, shown only when question 3 is Yes).
+
+Forms and Submitted pages: the "Fill out forms as needed" banner is 40px high.
