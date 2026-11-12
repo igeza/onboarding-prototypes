@@ -318,3 +318,9 @@ textarea { resize: none; }
 
 /* Page kebab menu (Duplicate / Delete): link blue */
 .fd-page__menu > [data-value] { color: var(--text-link); }
+
+/* Info tooltip (the (i) next to Require Approval): the box floats above the dialog (moved to <body> and fixed while shown), so it never adds scroll to the dialog */
+.afm__info.fd-tip { position: relative; }
+.afm__info.fd-tip > span:first-child { display: inline-flex; align-items: center; }
+.afm-tipbox { display: none; width: 312px; }
+.afm-tipbox [data-rmx-component="Tooltip Text"] { padding: var(--spacing-md); background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); box-shadow: 0 3px 3px rgba(0, 0, 0, .1); color: var(--text-secondary); font: var(--type-paragraph-s-regular); white-space: normal; }

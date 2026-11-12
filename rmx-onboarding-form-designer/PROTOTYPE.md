@@ -196,3 +196,5 @@ Add Fields: a parent field (Primary Address, Phone Numbers, ...) lines up with t
 Add Fields > Selected: the name, trash and reorder icons are centred on one line (the reorder icon was ~3px high).
 
 Add Fields > Selected: the drag handle rearranges the selected fields (drag a row up or down); the order carries onto the form when you click Add.
+
+Add Form: the (i) next to Require Approval shows the same tooltip as in the designer ("Approval is required before form answers are mapped to RMX fields.") on hover or focus, instead of the browser's plain title tooltip. The tooltip box floats above the dialog (fixed on `<body>` while shown), so it never adds scroll to the dialog.
