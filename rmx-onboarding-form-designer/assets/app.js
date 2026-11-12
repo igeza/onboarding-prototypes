@@ -100,13 +100,13 @@
       wrap.style.cssText = 'position:fixed;z-index:2000;right:' + (window.innerWidth - r.right) + 'px;width:max-content;top:' + (r.bottom + 4) + 'px';
       menu.style.cssText = 'position:static;width:max-content;min-width:' + Math.max(r.width, 280) + 'px';
     } else {
-      wrap.style.cssText = 'position:fixed;z-index:2000;left:' + r.left + 'px;width:' + r.width + 'px;top:' + (r.bottom + 4) + 'px';
+      wrap.style.cssText = 'position:fixed;z-index:2000;left:' + r.left + 'px;width:' + r.width + 'px;top:' + r.bottom + 'px';   // a field's menu touches the field
       menu.style.cssText = 'position:static;width:100%;min-width:100%';
     }
     wrap.appendChild(menu);
     document.body.appendChild(wrap);
     const h = menu.offsetHeight, room = window.innerHeight - r.bottom - 12;
-    if (h > room && r.top - 12 > room) { wrap.style.top = Math.max(8, r.top - 4 - h) + 'px'; if (h > r.top - 12) menu.style.maxHeight = (r.top - 12) + 'px'; }
+    if (h > room && r.top - 12 > room) { wrap.style.top = Math.max(8, r.top - (dd.hasAttribute('data-rmx-menu-wide') ? 4 : 0) - h) + 'px'; if (h > r.top - 12) menu.style.maxHeight = (r.top - 12) + 'px'; }
     else if (h > room) menu.style.maxHeight = Math.max(120, room) + 'px';
     if (!menu._rmxObs) {
       menu._rmxObs = new MutationObserver(() => { if (menu.hidden) unportalMenu(menu); });

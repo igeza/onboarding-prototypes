@@ -324,3 +324,7 @@ textarea { resize: none; }
 .afm__info.fd-tip > span:first-child { display: inline-flex; align-items: center; }
 .afm-tipbox { display: none; width: 312px; }
 .afm-tipbox [data-rmx-component="Tooltip Text"] { padding: var(--spacing-md); background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); box-shadow: 0 3px 3px rgba(0, 0, 0, .1); color: var(--text-secondary); font: var(--type-paragraph-s-regular); white-space: normal; }
+
+/* Dropdown field menus: dark blue text (like the field's own value) */
+.rmx-menu-layer .rmx-menu > [data-value] { color: var(--text-secondary); }
+.rmx-menu-layer .rmx-menu > [data-value][aria-selected="true"] { color: var(--text-link); }
