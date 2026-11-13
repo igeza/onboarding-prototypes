@@ -293,3 +293,6 @@ body.ag-resizing { cursor: col-resize; user-select: none; }
 
 /* Icons inside input fields (search, dropdown chevrons) are brand blue in RMX. */
 .rmx-field__box .rmx-icon, .rmx-field__box svg { color: var(--icon-primary); }
+
+/* Nothing selected: no right panel (and no resize divider). */
+.ag-work.is-noinsp .ag-inspector, .ag-work.is-noinsp .ag-resizer { display: none; }

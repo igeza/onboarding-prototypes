@@ -71,7 +71,7 @@
   const paneOnb = $('[data-ag-pane="onboarding"]'), paneStep = $('[data-ag-pane="step"]'), paneTrig = $('[data-ag-pane="trigger"]'), paneCond = $('[data-ag-pane="condition"]'), paneNote = $('[data-ag-pane="notify"]');
   const palSteps = $('.ag-pal-steps');
   let curOnb = N('onb');
-  function showPane(which) { paneOnb.hidden = which !== 'onboarding'; paneStep.hidden = which !== 'step'; paneTrig.hidden = which !== 'trigger'; paneCond.hidden = which !== 'condition'; paneNote.hidden = which !== 'notify'; palSteps.hidden = which !== 'onboarding' && which !== 'step'; }
+  function showPane(which) { paneOnb.hidden = which !== 'onboarding'; paneStep.hidden = which !== 'step'; paneTrig.hidden = which !== 'trigger'; paneCond.hidden = which !== 'condition'; paneNote.hidden = which !== 'notify'; palSteps.hidden = which !== 'onboarding' && which !== 'step'; $('.ag-work').classList.toggle('is-noinsp', which === 'none'); }
   /* The Onboarding steps list is only offered while an Onboarding node (or one of its steps) is selected. */
   function clearSel() { $$('.ag-step, .ag-node').forEach(x => x.classList.remove('is-selected')); }
   function selectOnb(n, stepEl) {

@@ -22,7 +22,7 @@ Source: Figma "RMR New Feature – Onboarding Workflow", node `6941:27114`.
   - Payment Setup and Make a Payment: the template's info text, as a plain section above Settings
   - Form: Select Form (Pet Addendum, Pet Information, Gym Access, Notice to Vacate, plus the step's own form); the card's second line follows the choice
   - File Upload: **File Request**, one file per File Upload step (File Name *, Help Text, Required, Allow multiple uploads); there is no Add File, so a second file means a second File Upload step
-- The palette's Onboarding Steps list only shows while an Onboarding node (or one of its steps) is selected. Selecting a Trigger, Condition or Notify node, or empty canvas, hides it and empties the inspector.
+- The right panel only shows while something is selected (an Onboarding node or step, a Trigger, a Condition or a Notify node); click empty canvas to deselect and the panel hides, giving the canvas the full width. The palette's Onboarding Steps list only shows while an Onboarding node (or one of its steps) is selected.
 - With an Onboarding node (or one of its steps) selected, clicking a step in the palette, or dragging it onto an Onboarding node, adds it to the bottom of that node (if a step is selected, clicking a palette step inserts the new one right after it); the layout and connectors reflow and the new step is selected.
 - Click a Trigger node: the inspector shows a Settings dropdown of onboarding triggers (a lease is signed, onboarding is started / sent / completed, a step is completed, onboarding is overdue, an application is approved, a security deposit is paid, renters insurance is verified, move-in date is reached, a prospect becomes a tenant). Options read without "When" (the canvas adds it back); choosing one renames the trigger on the canvas and in every Connections list. The list of triggers is invented for this prototype (not from the design); confirm it with product.
 - Click a Condition node: the inspector shows the condition's tests (field, is / is not, and a value that is a dropdown for yes/no, status and lease-type fields and free text for Unit and Property), "Add condition", "Remove condition", an "Any / All conditions are true" choice once there is more than one, and a plain-language summary. Editing a test rewrites the condition's title in the inspector, on the canvas and in the Connections lists (e.g. "If prospect has no pet"). The field list and value choices are invented for this prototype.
@@ -35,7 +35,6 @@ Source: Figma "RMR New Feature – Onboarding Workflow", node `6941:27114`.
 ## Not real yet
 
 - Dragging steps from the Step Library, moving or reordering nodes and steps, Undo, Reset and the Health Findings tab.
-- Trigger, Condition and Notify nodes have no inspector designed, so selecting one just clears the selection and leaves the inspector empty.
 - Nothing saves; step settings reset on reload. The Rent Manager field mapping for file requests is not shown, as in the template.
 - The checklist has four steps (as in the Figma "Step edit" frame, which drops the duplicate Renters Insurance that the main frame still shows).
 
