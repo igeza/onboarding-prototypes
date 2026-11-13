@@ -72,14 +72,14 @@
 .ag-zoom__sep { width: 1px; height: 18px; background: var(--border-primary); }
 .ag-zoom .ag-zoom__fit { width: 46px; color: var(--text-primary); }
 
-.ag-stage { position: relative; width: 1340px; padding: 112px 0 99px; transform-origin: 0 0; }
+.ag-stage { position: relative; width: 1340px; padding: 118px 0 99px; transform-origin: 0 0; }
 .ag-wires { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .ag-wires path { fill: none; stroke: var(--icon-primary); stroke-width: 1.5; stroke-dasharray: 5 4; }
 .ag-flow { position: relative; display: flex; flex-direction: column; }
 .ag-row { display: flex; align-items: flex-start; }
 .ag-row--t1 { padding-left: 563px; }
 .ag-row--onb { padding-left: 475px; margin-top: 45px; }
-.ag-row--branches { margin-top: 71px; padding-left: 27px; gap: 72px; }
+.ag-row--branches { margin-top: 65px; padding-left: 27px; gap: 72px; }
 .ag-row--t2 { padding-left: 557px; margin-top: 115px; }
 .ag-row--notify { padding-left: 557px; margin-top: 45px; }
 .ag-col { display: flex; flex-direction: column; width: 376px; flex: none; }
@@ -296,3 +296,73 @@ body.ag-resizing { cursor: col-resize; user-select: none; }
 
 /* Nothing selected: no right panel (and no resize divider). */
 .ag-work.is-noinsp .ag-inspector, .ag-work.is-noinsp .ag-resizer { display: none; }
+
+/* Palette now starts with the step library (no Onboarding Steps list). */
+.ag-lib { border-top: 0; }
+
+/* The Onboarding Steps list in the inspector: gray bar and a count for steps already in this onboarding. */
+.ag-desc2 { margin: 0; color: var(--text-primary); }
+.ag-pal-step__body { justify-content: space-between; gap: 10px; }
+.ag-pal-step.is-used .ag-pal-step__bar { background: var(--icon-disabled); }
+.ag-pal-step.is-used .ag-pal-step__body { color: var(--text-primary); }
+.ag-pal-step__n { color: var(--text-primary); font-weight: 400; }
+
+/* RMR groups: steps sent together share a colour and a letter. */
+:root { --ag-g-a: var(--border-secondary); --ag-g-b: var(--icon-attention); --ag-g-c: var(--icon-success); --ag-g-d: var(--ag-condition); --ag-g-e: var(--ag-wait); --ag-g-f: var(--ag-assign); }
+.ag-node[data-group="A"] { --grp: var(--ag-g-a); } .ag-node[data-group="B"] { --grp: var(--ag-g-b); } .ag-node[data-group="C"] { --grp: var(--ag-g-c); }
+.ag-node[data-group="D"] { --grp: var(--ag-g-d); } .ag-node[data-group="E"] { --grp: var(--ag-g-e); } .ag-node[data-group="F"] { --grp: var(--ag-g-f); }
+.ag-node { position: relative; }
+.ag-node[data-group]::before { content: ""; position: absolute; left: -1px; top: -1px; bottom: -1px; width: 4px; background: var(--grp); border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+.ag-tag { position: relative; }
+.ag-gchip { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--grp); color: var(--text-inverse); display: grid; place-items: center; line-height: 1; font-style: normal; letter-spacing: 0; cursor: default; }
+.ag-node.is-grouphl { outline: 2px solid var(--grp); outline-offset: 3px; }
+
+/* Group with */
+.ag-divider { height: 1px; background: var(--border-primary); }
+.ag-group .rmx-field { width: 100%; }
+.ag-gmenu { padding: var(--spacing-xxs) 0; }
+.ag-gmenu .rmx-check { display: flex; align-items: center; gap: var(--spacing-xs); width: 100%; padding: 6px var(--spacing-sm); color: var(--text-primary); cursor: pointer; }
+.ag-gmenu .rmx-check:hover { background: var(--background-ui-primary); }
+.ag-gsum { display: flex; align-items: flex-start; gap: var(--spacing-xs); color: var(--text-primary); }
+.ag-gsum__chip { flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--grp); color: var(--text-inverse); display: grid; place-items: center; line-height: 1; }
+.ag-pal-step__body[aria-disabled="true"] { cursor: not-allowed; }
+
+/* Nodes added from the step library start here, unconnected, until you connect them. */
+.ag-row--extra { flex-wrap: wrap; gap: var(--spacing-lg); padding-left: 27px; margin-top: 45px; }
+.ag-row--extra:empty { display: none; }
+
+/* Undo and Reset: grey until there is something to undo. */
+.ag-pal-foot button:not(.is-off):not([aria-disabled="true"]) { color: var(--text-primary); }
+.ag-pal-foot button:not(.is-off):not([aria-disabled="true"]) .rmx-icon { color: var(--icon-primary); }
+.ag-pal-foot button:hover:not([aria-disabled="true"]) { background: var(--background-row-hover); }
+.ag-pal-foot button[aria-disabled="true"] { cursor: default; }
+
+.ag-gsum__text { display: flex; flex-direction: column; gap: var(--spacing-xxxs); min-width: 0; }
+.ag-gsum__name { color: var(--text-secondary); }
+
+/* Group summary: the group name sits on the same line as the letter circle, the description under the name. */
+.ag-gsum__grid { display: grid; grid-template-columns: 24px minmax(0, 1fr); column-gap: var(--spacing-xs); row-gap: var(--spacing-xxxs); align-items: center; width: 100%; }
+.ag-gsum__grid .ag-gsum__name { grid-column: 2; grid-row: 1; }
+.ag-gsum__grid .ag-gsum__chip { grid-column: 1; grid-row: 1; }
+.ag-gsum__grid .ag-gsum__desc { grid-column: 2; grid-row: 2; }
+
+/* Menu rows stay on one line; very long labels are cut with an ellipsis. */
+[data-ag-menu] > [data-value], [data-ag-gmenu] .rmx-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Floating action bar above the selected step or node: move up, move down, delete. */
+.ag-bar { position: absolute; z-index: 6; display: flex; align-items: center; gap: var(--spacing-xxs); padding: var(--spacing-xxs) var(--spacing-xs); background: var(--container-secondary-dark); border-radius: var(--radius-sm); box-shadow: var(--dropshadow-md); }
+.ag-bar[hidden] { display: none; }
+.ag-bar button { display: grid; place-items: center; width: 28px; height: 28px; padding: 0; background: none; border: 0; border-radius: var(--radius-sm); color: var(--icon-ondark); cursor: pointer; }
+.ag-bar button .rmx-icon { width: 20px; height: 20px; }
+.ag-bar button:hover:not([aria-disabled="true"]) { background: var(--container-secondary-light); }
+.ag-bar button[aria-disabled="true"] { color: var(--icon-disabled); cursor: default; }
+.ag-bar__sep { width: 1px; height: 20px; background: var(--container-secondary-light); margin: 0 var(--spacing-xxs); }
+
+.ag-gact { display: flex; justify-content: space-between; padding: var(--spacing-xxs) var(--spacing-sm) var(--spacing-xs); border-bottom: 1px solid var(--border-primary); margin-bottom: var(--spacing-xxs); }
+.ag-gact button { background: none; border: 0; padding: 0; color: var(--text-link); cursor: pointer; font: inherit; }
+
+/* Steps already in another group: shown, not tickable, tagged with that group's colour. */
+.ag-gmenu .rmx-check.is-taken { color: var(--text-disabled); cursor: not-allowed; }
+.ag-gmenu .rmx-check.is-taken:hover { background: none; }
+.ag-gmenu .rmx-check.is-taken .rmx-check__box { background: var(--background-disabled); border-color: var(--border-disabled); }
+.ag-gtag { margin-left: auto; padding: 0 var(--spacing-xs); border-radius: var(--radius-lg); background: var(--grp); color: var(--text-inverse); white-space: nowrap; }

@@ -3,6 +3,7 @@
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const stage = $('[data-ag-stage]'), svg = $('[data-ag-wires]'), val = $('[data-ag-zoomval]');
   let z = 100;
+  let barEl = null;   /* the floating action bar on the selected step or node */
 
   /* ---- connectors: drawn from the real node positions, so collapsing a node reflows them ---- */
   const N = id => $('[data-node="' + id + '"]');
@@ -17,23 +18,24 @@
     if (lo <= hi) { const x = Math.min(hi, Math.max(lo, A.cx)); return 'M' + x + ' ' + y1 + 'V' + y2; }
     /* otherwise: down, across, down (two bends with rounded corners). Lines merging into one node bend just above it, so they join together. */
     const x1 = A.cx, x2 = B.cx, sx = x2 > x1 ? 1 : -1;
-    const merging = edges.filter(e => e.b === b && !e.loop).length > 1;
+    const merging = edges.filter(e => e.b === b && !e.loop && !e.hidden).length > 1;
     const ym = merging ? y2 - 36 : y1 + d / 2;
     const r = Math.max(0, Math.min(12, Math.abs(x2 - x1) / 2, ym - y1, y2 - ym));
     return 'M' + x1 + ' ' + y1 + 'V' + (ym - r) + 'Q' + x1 + ' ' + ym + ' ' + (x1 + sx * r) + ' ' + ym + 'H' + (x2 - sx * r) + 'Q' + x2 + ' ' + ym + ' ' + x2 + ' ' + (ym + r) + 'V' + y2;
   }
   /* the workflow's connections: what the chart draws AND what the inspector lists */
-  const edges = [['t1', 'onb'], ['onb', 'c1'], ['onb', 'c2'], ['onb', 'c3'], ['c1', 'a1'], ['c2', 'a2'], ['c3', 'a3'], ['a1', 't2'], ['a2', 't2'], ['a3', 't2'], ['t2', 'n']]
-    .map(e => ({ a: e[0], b: e[1], loop: e[2] === 'loop' }));
+  const edges = [['t1', 'onb'], ['onb', 'c1'], ['onb', 'c2'], ['onb', 'c3'], ['c1', 'a1'], ['c2', 'a2'], ['c3', 'a3'], ['a1', 't2'], ['a2', 't2'], ['a3', 't2'], ['t2', 'n'], ['onb', 't2', 'hidden']]
+    .map(e => ({ a: e[0], b: e[1], loop: e[2] === 'loop', hidden: e[2] === 'hidden' }));   /* hidden: a real connection that is listed but not drawn */
   function draw() {
     let d = edges.map(e => {
+      if (e.hidden) return '';
       if (!e.loop) return '<path d="' + link(e.a, e.b) + '"/>';
       const O = box(N(e.a)), T = box(N(e.b));   /* the dashed loop from the checklist round to the closing trigger */
       const y0 = O.t + Math.min(252, (O.b - O.t) / 2), r = 12;   /* out of the checklist, left, down, back in: two rounded bends */
       return '<path d="M' + O.l + ' ' + y0 + 'H' + (13 + r) + 'Q13 ' + y0 + ' 13 ' + (y0 + r) + 'V' + (T.cy - r) + 'Q13 ' + T.cy + ' ' + (13 + r) + ' ' + T.cy + 'H' + T.l + '"/>';
     }).join('');
     svg.innerHTML = d;
-    sizeWrap();
+    sizeWrap(); updateBar();
   }
   /* the stage is scaled with a transform, so a wrapper carries its scaled size and the canvas scrolls (and shrinks) with the zoom */
   const canvas = $('.ag-canvas'), wrap = document.createElement('div');
@@ -69,52 +71,54 @@
 
   /* ---- select / collapse Onboarding nodes; select a step ---- */
   const paneOnb = $('[data-ag-pane="onboarding"]'), paneStep = $('[data-ag-pane="step"]'), paneTrig = $('[data-ag-pane="trigger"]'), paneCond = $('[data-ag-pane="condition"]'), paneNote = $('[data-ag-pane="notify"]');
-  const palSteps = $('.ag-pal-steps');
   let curOnb = N('onb');
-  function showPane(which) { paneOnb.hidden = which !== 'onboarding'; paneStep.hidden = which !== 'step'; paneTrig.hidden = which !== 'trigger'; paneCond.hidden = which !== 'condition'; paneNote.hidden = which !== 'notify'; palSteps.hidden = which !== 'onboarding' && which !== 'step'; $('.ag-work').classList.toggle('is-noinsp', which === 'none'); }
-  /* The Onboarding steps list is only offered while an Onboarding node (or one of its steps) is selected. */
+  function showPane(which) { paneOnb.hidden = which !== 'onboarding'; paneStep.hidden = which !== 'step'; paneTrig.hidden = which !== 'trigger'; paneCond.hidden = which !== 'condition'; paneNote.hidden = which !== 'notify'; $('.ag-work').classList.toggle('is-noinsp', which === 'none'); updateBar(); }
   function clearSel() { $$('.ag-step, .ag-node').forEach(x => x.classList.remove('is-selected')); }
   function selectOnb(n, stepEl) {
-    curOnb = n; if (!stepEl) { renderConns(n); const ht = $('.ag-insp__title', paneOnb); if (ht) ht.textContent = $('.ag-node__text', n).textContent.trim(); }
+    curOnb = n; if (!stepEl) renderOnbPane(n);
     $$('.ag-step').forEach(x => x.classList.toggle('is-selected', x === stepEl));
     $$('.ag-node').forEach(o => o.classList.toggle('is-selected', !stepEl && o === n));
     if (stepEl) { renderStep(stepEl); showPane('step'); } else showPane('onboarding');
   }
-  $$('[data-ag-onb]').forEach(n => n.addEventListener('click', e => {
+  /* clicks on nodes are delegated, so nodes added from the step library work like the ones the page starts with */
+  stage.addEventListener('click', e => {
+    const n = e.target.closest('.ag-node[data-node]'); if (!n) return;
     e.stopPropagation();
-    if (e.target.closest('[data-ag-chev]')) { n.classList.toggle('is-collapsed'); draw(); return; }
-    selectOnb(n, e.target.closest('.ag-step'));
-  }));
-  /* any other node, or empty canvas, deselects Onboarding */
-  $$('.ag-node[data-node]:not([data-ag-onb])').forEach(n => n.addEventListener('click', e => {
-    e.stopPropagation(); clearSel();
+    if (n.hasAttribute('data-ag-onb')) {
+      if (e.target.closest('[data-ag-chev]')) { n.classList.toggle('is-collapsed'); draw(); return; }
+      selectOnb(n, e.target.closest('.ag-step')); return;
+    }
+    clearSel();
     if (n.classList.contains('ag-node--trigger')) { n.classList.add('is-selected'); renderTrigger(n); showPane('trigger'); }
     else if (n.classList.contains('ag-node--condition')) { n.classList.add('is-selected'); renderCondition(n); showPane('condition'); }
     else if (n.classList.contains('ag-node--notify')) { n.classList.add('is-selected'); renderNotify(n); showPane('notify'); }
     else { n.classList.add('is-selected'); showPane('none'); }
-  }));
+  });
   $('.ag-canvas').addEventListener('click', () => { clearSel(); showPane('none'); });
 
   /* ---- add a step to the bottom of an Onboarding node: click it in the palette, or drag it onto a node ---- */
   const SUBS = { 'Account Information': 'Name, phone, email, and mailing address', 'Payment Setup': 'Save a payment method and setup autopay', 'Make a Payment': 'Based on property payment policies', 'Renters Insurance': 'Allow enrollment in master policy', 'Form': 'Pet Addendum', 'File Upload': 'New File' };
+  /* the first four can be added once per RMR step; Form and File Upload as many times as needed */
+  const SINGLE = new Set(['Account Information', 'Payment Setup', 'Make a Payment', 'Renters Insurance']);
+  const hasType = (node, t) => $$('.ag-step', node).some(x => x.dataset.stype === t);
   let stepSeq = 100;
   function addStep(type, node) {
     /* clicked from the palette with a step selected: the new step goes right after it; otherwise to the bottom of the node */
     const after = !node ? $('.ag-step.is-selected') : null;
     node = node || (after && after.closest('[data-ag-onb]')) || curOnb; if (!node || !SUBS[type]) return;
+    if (SINGLE.has(type) && hasType(node, type)) return;
     const el = document.createElement('div');
     el.className = 'ag-step'; el.draggable = true; el.dataset.step = 's' + (++stepSeq); el.dataset.stype = type;
     el.innerHTML = '<div class="ag-step__text"><span class="ag-step__title rmx-type-paragraph-s-semibold"></span><span class="ag-step__sub rmx-type-label-s-regular"></span></div><svg class="rmx-icon"><use href="#drag-dots"></use></svg>';
-    $('.ag-step__title', el).textContent = type; $('.ag-step__sub', el).textContent = SUBS[type];
+    $('.ag-step__title', el).textContent = type; $('.ag-step__sub', el).textContent = SUBS[type]; stateOf(el);
     if (after && after.parentNode === $('.ag-node__steps', node)) after.after(el); else $('.ag-node__steps', node).appendChild(el);
     node.classList.remove('is-collapsed');
     selectOnb(node, el); draw();
     el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
-  $$('[data-pal]').forEach(b => {
-    b.addEventListener('click', () => addStep(b.dataset.pal));
-    b.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', b.dataset.pal); e.dataTransfer.effectAllowed = 'copy'; });
-  });
+  /* the Onboarding Steps list lives in the inspector, so it is rendered on demand: delegate click and drag */
+  document.addEventListener('click', e => { const b = e.target.closest('[data-pal]'); if (b) addStep(b.dataset.pal); });
+  document.addEventListener('dragstart', e => { const b = e.target.closest && e.target.closest('[data-pal]'); if (b) { e.dataTransfer.setData('text/plain', b.dataset.pal); e.dataTransfer.effectAllowed = 'copy'; } });
   /* ---- move a step within its Onboarding node, or into another one, by dragging it ---- */
   let dragStep = null;
   const line = document.createElement('div'); line.className = 'ag-drop-line';
@@ -128,22 +132,87 @@
     setTimeout(() => s.classList.add('is-dragging'), 0);
   });
   stage.addEventListener('dragend', () => { if (dragStep) dragStep.classList.remove('is-dragging'); dragStep = null; line.remove(); $$('.is-droptarget').forEach(n => n.classList.remove('is-droptarget')); });
-  $$('[data-ag-onb]').forEach(n => {
-    n.addEventListener('dragover', e => {
-      e.preventDefault(); e.dataTransfer.dropEffect = dragStep ? 'move' : 'copy'; n.classList.add('is-droptarget');
-      if (dragStep && !n.classList.contains('is-collapsed')) { const box = $('.ag-node__steps', n), ref = dropRef(n, e.clientY); if (ref) box.insertBefore(line, ref); else box.appendChild(line); }
-    });
-    n.addEventListener('dragleave', e => { if (!n.contains(e.relatedTarget)) { n.classList.remove('is-droptarget'); line.remove(); } });
-    n.addEventListener('drop', e => {
-      e.preventDefault(); e.stopPropagation(); n.classList.remove('is-droptarget');
-      if (dragStep) {
-        const box = $('.ag-node__steps', n), ref = n.classList.contains('is-collapsed') ? null : dropRef(n, e.clientY), s = dragStep;
-        line.remove(); box.insertBefore(s, ref); s.classList.remove('is-dragging'); dragStep = null;
-        selectOnb(n, s); draw(); return;
-      }
-      addStep(e.dataTransfer.getData('text/plain'), n);
-    });
+  const onbOf = e => e.target.closest && e.target.closest('[data-ag-onb]');
+  stage.addEventListener('dragover', e => {
+    const n = onbOf(e); if (!n || libDrag) return;
+    e.preventDefault(); e.dataTransfer.dropEffect = dragStep ? 'move' : 'copy'; n.classList.add('is-droptarget');
+    if (dragStep && !n.classList.contains('is-collapsed')) { const box = $('.ag-node__steps', n), ref = dropRef(n, e.clientY); if (ref) box.insertBefore(line, ref); else box.appendChild(line); }
   });
+  stage.addEventListener('dragleave', e => { const n = onbOf(e); if (n && !n.contains(e.relatedTarget)) { n.classList.remove('is-droptarget'); line.remove(); } });
+  stage.addEventListener('drop', e => {
+    const n = onbOf(e); if (!n || libDrag) return;
+    e.preventDefault(); e.stopPropagation(); n.classList.remove('is-droptarget');
+    if (dragStep) {
+      if (SINGLE.has(dragStep.dataset.stype) && dragStep.closest('[data-ag-onb]') !== n && hasType(n, dragStep.dataset.stype)) { line.remove(); dragStep.classList.remove('is-dragging'); dragStep = null; return; }
+      const box = $('.ag-node__steps', n), ref = n.classList.contains('is-collapsed') ? null : dropRef(n, e.clientY), s = dragStep;
+      line.remove(); box.insertBefore(s, ref); s.classList.remove('is-dragging'); dragStep = null;
+      selectOnb(n, s); draw(); return;
+    }
+    addStep(e.dataTransfer.getData('text/plain'), n);
+  });
+
+  /* ---- delete a node: its connections, group membership and settings go with it ---- */
+  function deleteNode(node) {
+    if (!node) return;
+    const id = node.dataset.node, g = groupOf.get(id);
+    for (let i = edges.length - 1; i >= 0; i--) if (edges[i].a === id || edges[i].b === id) edges.splice(i, 1);
+    groupOf.delete(id); if (g && membersOf(g).length < 2) membersOf(g).forEach(i => groupOf.delete(i));
+    condState.delete(node); noteState.delete(node); notePeople.delete(node); noteMsg.delete(node);
+    let parent = node.parentElement; node.remove();
+    while (parent && parent.matches('.ag-col, .ag-col__cond, .ag-row, .ag-ins') && !parent.hasAttribute('data-ag-extra') && !parent.children.length) { const up = parent.parentElement; parent.remove(); parent = up; }
+    if (curOnb === node) curOnb = $('[data-ag-onb]');
+    clearSel(); showPane('none'); refreshGroupUI(); draw();
+    RMX.toast('Step deleted');
+  }
+  document.addEventListener('click', e => { const b = e.target.closest('[data-act="del-node"]'); if (b) deleteNode(N(b.dataset.del)); });
+
+  /* ---- add a node from the step library: click it, or drag it onto the canvas ---- */
+  let libDrag = null, nodeSeq = 0;
+  const LIBNODES = {
+    Trigger: { cls: 'trigger', icon: 'schedule', tag: 'Trigger', text: 'When onboarding is started' },
+    Condition: { cls: 'condition', icon: 'call-split', tag: 'Conditions', text: 'If record status is Active' },
+    Notify: { cls: 'notify', icon: 'campaign-outline', tag: 'Notify', text: 'Notify the PM that onboarding was completed' },
+    RMR: { cls: 'onboarding', icon: 'onboarding-mark', tag: 'RMR', text: 'New Onboarding' }
+  };
+  function insertAfterNode(S, N) {
+    const sid = S.dataset.node, nid = N.dataset.node, cx = box(S).cx;
+    if (S.parentElement.hasAttribute('data-ag-extra')) { S.after(N); return; }   /* in the bottom row: next to it, unconnected */
+    const col = S.closest('.ag-col');
+    if (col) {
+      const wrap = document.createElement('div'); wrap.className = 'ag-ins'; wrap.appendChild(N); S.closest('.ag-col > *').after(wrap);
+      wrap.style.marginLeft = Math.max(0, cx - box(col).l - N.offsetWidth / 2) + 'px'; wrap.style.marginBottom = '45px';
+    } else {
+      const r = document.createElement('div'); r.className = 'ag-row ag-row--ins'; r.appendChild(N); S.closest('.ag-row').after(r);
+      r.style.paddingLeft = Math.max(0, cx - N.offsetWidth / 2) + 'px'; r.style.marginTop = '45px';
+    }
+    edges.forEach(e => { if (e.a === sid && !e.hidden && !e.loop) e.a = nid; });   /* the new step takes over S's outgoing connections… */
+    edges.push({ a: sid, b: nid, loop: false });                                    /* …and S connects to it */
+  }
+  function addNode(type) {
+    const d = LIBNODES[type]; if (!d) return;
+    const id = 'x' + (++nodeSeq), el = document.createElement('div');
+    el.className = 'ag-node ag-node--' + d.cls; el.dataset.node = id;
+    const tagrow = '<div class="ag-node__tagrow">' + ic(d.icon, '') + '<span class="ag-tag ag-tag--' + d.cls + ' rmx-type-label-s-medium">' + d.tag + '</span>' + (d.cls === 'onboarding' ? '<button type="button" class="ag-chev" aria-label="Collapse or expand" data-ag-chev>' + ic('keyboard-arrow-down') + '</button>' : '') + '</div>';
+    if (d.cls === 'onboarding') {
+      el.setAttribute('data-ag-onb', '');
+      el.innerHTML = tagrow + '<div class="ag-node__titles"><span class="ag-node__text rmx-type-paragraph-s-semibold">' + d.text + '</span><span class="ag-node__sub rmx-type-label-s-regular">Sent to rmResident Portal</span></div><div class="ag-node__steps"></div>';
+    } else el.innerHTML = tagrow + '<span class="ag-node__text rmx-type-paragraph-s-semibold">' + d.text + '</span>';
+    /* with something selected, the new step goes in line directly after it, taking over its outgoing connections; with nothing selected it waits at the bottom */
+    const sStep = $('.ag-step.is-selected'), sel = (sStep && sStep.closest('.ag-node')) || $('.ag-node.is-selected');
+    /* with nothing selected it goes to the end of the main line, in line with the bottom steps */
+    const lastRow = $$('.ag-row--t1, .ag-row--onb, .ag-row--t2, .ag-row--notify, .ag-row--ins').pop(), last = lastRow && $('.ag-node', lastRow);
+    if (sel) insertAfterNode(sel, el); else if (last) insertAfterNode(last, el); else $('[data-ag-extra]').appendChild(el);
+    if (d.cls === 'condition') $('.ag-node__text', el).textContent = condLabel(condOf(el));
+    if (d.cls === 'notify') $('.ag-node__text', el).textContent = notifyLabel(notifySet(el), peopleOf(el));
+    refreshGroupUI(); draw();
+    el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    el.click();
+  }
+  document.addEventListener('click', e => { const b = e.target.closest('[data-lib-add]'); if (b) addNode(b.dataset.libAdd); });
+  document.addEventListener('dragstart', e => { const b = e.target.closest && e.target.closest('[data-lib-add]'); if (b) { libDrag = b.dataset.libAdd; e.dataTransfer.setData('text/plain', 'lib:' + libDrag); e.dataTransfer.effectAllowed = 'copy'; } });
+  document.addEventListener('dragend', () => { libDrag = null; });
+  canvas.addEventListener('dragover', e => { if (libDrag) { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; } });
+  canvas.addEventListener('drop', e => { if (libDrag) { e.preventDefault(); const t = libDrag; libDrag = null; addNode(t); } });
 
   /* ---- step settings: the same settings the Onboarding Template designer offers per step type ---- */
   const FORMS = ['Pet Addendum', 'Pet Information', 'Gym Access', 'Notice to Vacate'];
@@ -155,7 +224,7 @@
   function headHtml(icon, tone, kind, title, btn) {
     return '<div class="ag-insp__head ag-insp__head--two ag-insp__head--' + tone + '">' + ic(icon, 'ag-insp__ico ag-insp__ico--' + tone) + '<div class="ag-insp__titles"><span class="ag-insp__kind rmx-type-label-s-regular">' + esc(kind) + '</span><span class="ag-insp__title rmx-type-paragraph-s-semibold" data-ag-headname>' + esc(title) + '</span></div><button type="button" class="ag-trash" aria-label="Delete ' + esc(kind.toLowerCase()) + '" ' + btn + '>' + ic('delete-filled') + '</button></div>';
   }
-  const TODO_DEL = k => 'data-rmx-todo="Deleting ' + k + ' is not built in this prototype"';
+  const delAttr = n => 'data-act="del-node" data-del="' + n.dataset.node + '"';
   function stateOf(el) {
     if (!state.has(el)) {
       const type = el.dataset.stype, sub = $('.ag-step__sub', el).textContent;
@@ -192,6 +261,7 @@
         '<div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label">Help Text ' + ic('info', 'rmx-icon rmx-icon--16') + '</span><div class="rmx-field__box ag-textarea"><textarea data-k="file-help" aria-label="Help Text">' + esc(f.help) + '</textarea></div></div>' +
         chk('file-req', 'Required', f.req) + chk('file-multi', 'Allow multiple uploads', f.multi) + '</div></div></div>';
     }
+    h += stepsSection(el.closest('[data-ag-onb]'), false);
     paneStep.innerHTML = h;
   }
   function syncCard(el) {
@@ -260,7 +330,8 @@
       rows.map(r => '<div class="ag-conn rmx-type-paragraph-s-regular" data-ag-conn data-edge="' + edges.indexOf(r.e) + '"><span class="ag-conn__kind rmx-type-label-s-regular">' + r.kind + '</span><span class="ag-conn__val">' + esc(labelOf(r.to)) + '</span><button type="button" class="ag-conn__x" aria-label="Remove connection" data-ag-rmconn>' + ic('close') + '</button></div>').join('') +
       '</div><div class="ag-connect"><div class="rmx-field" data-ag-dd data-k="target" data-rmx-component="Input Field"><button type="button" class="rmx-field__box" data-ag-trigger><span class="rmx-placeholder" data-ag-value>Connect to</span>' + ic('keyboard-arrow-down') + '</button><div class="rmx-menu rmx-menu--list" data-ag-menu hidden>' +
       opts.map(o => '<button type="button" data-value="' + o + '">' + esc(nodeName(o)) + '</button>').join('') +
-      '</div></div><button type="button" class="rmx-btn rmx-btn--secondary" data-ag-connect data-rmx-component="Button">Connect</button></div></div>';
+      '</div></div><button type="button" class="rmx-btn rmx-btn--secondary" data-ag-connect data-rmx-component="Button">Connect</button></div>' +
+      (node.hasAttribute('data-ag-onb') ? groupHtml(node) : '') + '</div>';
   }
   const closeConnMenus = () => $$('[data-ag-connsec] [data-ag-menu]').forEach(m => { m.hidden = true; m.closest('[data-ag-dd]').dataset.open = 'false'; });
   [paneOnb, paneTrig, paneCond, paneNote].forEach(pane => pane.addEventListener('click', e => {
@@ -277,8 +348,102 @@
     }
   }));
   document.addEventListener('click', e => { if (!e.target.closest('[data-ag-dd]')) closeConnMenus(); });
-  paneOnb.querySelector('.ag-insp__head').outerHTML = headHtml('onboarding-mark', 'onb', 'Onboarding', labelOf('onb'), TODO_DEL('an Onboarding node'));
-  renderConns(curOnb);
+  /* ---- RMR groups: steps that are sent together share a letter and a colour ---- */
+  const GLETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
+  const groupOf = new Map([['onb', 'A'], ['a1', 'A'], ['a2', 'A'], ['a3', 'A']]);
+  const rmrIds = () => $$('[data-ag-onb]').map(n => n.dataset.node);
+  const membersOf = g => rmrIds().filter(id => groupOf.get(id) === g);
+  function refreshGroupUI() {
+    $$('[data-ag-onb]').forEach(n => {
+      const g = groupOf.get(n.dataset.node), tag = $('.ag-tag', n); let chip = $('.ag-gchip', n);
+      if (g) {
+        n.dataset.group = g;
+        if (!chip) { chip = document.createElement('i'); chip.className = 'ag-gchip rmx-type-label-s-semibold'; chip.setAttribute('data-ag-gchip', ''); tag.after(chip); }
+        chip.textContent = g; chip.setAttribute('aria-label', 'Group ' + g + ', sent together'); chip.title = 'Group ' + g + ': sent together';
+      } else { delete n.dataset.group; if (chip) chip.remove(); }
+    });
+  }
+  const gLabel = n => n ? n + ' selected' : 'Select steps';
+  function gSummary(node) {
+    const id = node.dataset.node, g = groupOf.get(id);
+    if (!g) return '<span class="rmx-type-label-s-regular">Not grouped. This step is sent on its own.</span>';
+    const names = membersOf(g).filter(x => x !== id).map(x => labelOf(x));
+    return '<div class="ag-gsum__grid" style="--grp:var(--ag-g-' + g.toLowerCase() + ')"><span class="ag-gsum__chip rmx-type-label-s-semibold">' + g + '</span><span class="ag-gsum__name rmx-type-paragraph-s-semibold">Group ' + g + '</span><span class="ag-gsum__desc rmx-type-label-s-regular">Sent together with ' + esc(names.join(', ')) + '</span></div>';
+  }
+  /* the menu rows: one checkbox per other RMR step */
+  function gOptions(node) {
+    const id = node.dataset.node, g = groupOf.get(id);
+    return rmrIds().filter(x => x !== id).map(x => '<label class="rmx-check" data-gid="' + x + '" data-checked="' + (!!g && groupOf.get(x) === g) + '" data-rmx-component="Checkbox"><span class="rmx-check__box">' + ic('check', 'rmx-icon rmx-icon--16') + '</span><span class="rmx-text">' + esc(labelOf(x)) + '</span></label>').join('');
+  }
+  function groupHtml(node) {
+    const id = node.dataset.node, g = groupOf.get(id), sel = rmrIds().filter(x => x !== id && g && groupOf.get(x) === g);
+    return '<div class="ag-divider"></div><div class="ag-group" data-ag-groupfield><span class="rmx-field__label">Group with</span>' +
+      '<div class="rmx-field" data-ag-gdd data-rmx-component="Input Field"><button type="button" class="rmx-field__box" data-ag-gtrigger><span data-ag-gval>' + gLabel(sel.length) + '</span>' + ic('keyboard-arrow-down') + '</button>' +
+      '<div class="rmx-menu ag-gmenu" data-ag-gmenu hidden>' + gOptions(node) + '</div></div>' +
+      '<div class="ag-gsum" data-ag-gsum>' + gSummary(node) + '</div></div>';
+  }
+  /* ticking a step joins it (and its group) to this step's group; unticking removes just that step; a group left with one step dissolves */
+  function toggleMember(cur, other, on) {
+    let g = groupOf.get(cur);
+    if (on) {
+      const og = groupOf.get(other);
+      if (!g) g = og || GLETTERS.find(l => !rmrIds().some(i => groupOf.get(i) === l));
+      if (og && og !== g) membersOf(og).forEach(i => groupOf.set(i, g));
+      groupOf.set(cur, g); groupOf.set(other, g);
+    } else {
+      groupOf.delete(other);
+      if (g && membersOf(g).length < 2) membersOf(g).forEach(i => groupOf.delete(i));
+    }
+  }
+  function syncGroupField(node) {
+    const id = node.dataset.node, g = groupOf.get(id), sel = rmrIds().filter(x => x !== id && g && groupOf.get(x) === g);
+    const m = $('[data-ag-gmenu]', paneOnb); if (m) m.innerHTML = gOptions(node);
+    const v = $('[data-ag-gval]', paneOnb), s = $('[data-ag-gsum]', paneOnb);
+    if (v) v.textContent = gLabel(sel.length); if (s) s.innerHTML = gSummary(node);
+  }
+  const hl = (g, on) => $$('[data-ag-onb]').forEach(n => n.classList.toggle('is-grouphl', !!on && groupOf.get(n.dataset.node) === g));
+  document.addEventListener('mouseover', e => { const c = e.target.closest && e.target.closest('[data-ag-gchip], [data-ag-gsum]'); if (!c) return; const g = c.matches('[data-ag-gchip]') ? c.textContent.trim() : groupOf.get(curOnb.dataset.node); if (g) hl(g, true); });
+  document.addEventListener('mouseout', e => { if (e.target.closest && e.target.closest('[data-ag-gchip], [data-ag-gsum]')) hl(null, false); });
+
+  /* ---- the RMR inspector: settings, the steps it contains, connections and grouping ---- */
+  function stepsSection(node, withOrder) {
+    const counts = {}; $$('.ag-step', node).forEach(s => { counts[s.dataset.stype] = (counts[s.dataset.stype] || 0) + 1; });
+    return '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Onboarding Steps</div><div class="ag-sec__body"><p class="ag-desc2 rmx-type-paragraph-s-regular">Drag and drop available steps or click on them to add them to onboarding.</p><div class="ag-pal-list">' +
+      Object.keys(SUBS).map(t => { const used = SINGLE.has(t) && counts[t] > 0; return '<div class="ag-pal-step' + (used ? ' is-used' : '') + '"><span class="ag-pal-step__bar"></span><button type="button" class="ag-pal-step__body rmx-type-paragraph-s-semibold" ' + (used ? 'aria-disabled="true" title="Already added. This step can only be added once."' : 'draggable="true" data-pal="' + t + '"') + '><span>' + t + '</span>' + (counts[t] ? '<span class="ag-pal-step__n rmx-type-paragraph-s-regular">' + counts[t] + '</span>' : '') + '</button></div>'; }).join('') + '</div>' +
+      (withOrder ? chk('order', 'Steps must be completed in order', node.dataset.order === 'true') : '') + '</div></div>';
+  }
+  function renderOnbPane(node) {
+    const id = node.dataset.node, name = labelOf(id), st = 'Onboarding';   /* the only step type for now */
+    paneOnb.innerHTML = headHtml('onboarding-mark', 'onb', 'RMR', name, delAttr(node)) +
+      '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Settings</div><div class="ag-sec__body">' + dd('Step Type', st, ['Onboarding'], 'steptype') +
+      '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Onboarding Name</span><div class="rmx-field__box"><input type="text" data-k="onb-name" value="' + esc(name) + '" aria-label="Onboarding Name"></div></div></div></div>' +
+      stepsSection(node, true) + '<div class="ag-sec" data-ag-connsec></div>';
+    renderConns(node, $('[data-ag-connsec]', paneOnb));
+  }
+  paneOnb.addEventListener('input', e => {
+    if (e.target.dataset.k !== 'onb-name') return;
+    const v = e.target.value.trim() || 'Untitled onboarding';
+    $('.ag-node__text', curOnb).textContent = v; $('.ag-insp__title', paneOnb).textContent = v; draw();
+  });
+  paneOnb.addEventListener('click', e => {
+    if (e.target.closest('[data-ag-connsec] [data-ag-trigger], [data-ag-connsec] [data-ag-menu]')) return;
+    const gt = e.target.closest('[data-ag-gtrigger]');
+    if (gt) { e.stopPropagation(); const m = $('[data-ag-gmenu]', paneOnb); m.hidden = !m.hidden; gt.closest('[data-ag-gdd]').dataset.open = String(!m.hidden); return; }
+    const lab = e.target.closest('[data-ag-gmenu] label.rmx-check');
+    if (lab) { setTimeout(() => { toggleMember(curOnb.dataset.node, lab.dataset.gid, lab.dataset.checked === 'true'); refreshGroupUI(); syncGroupField(curOnb); }, 0); return; }
+    const t = e.target.closest('[data-ag-trigger]');
+    if (t && !t.closest('[data-ag-connsec]')) { e.stopPropagation(); const d = t.closest('[data-ag-dd]'), m = $('[data-ag-menu]', d), open = !m.hidden; m.hidden = open; d.dataset.open = String(!open); return; }
+    const o = e.target.closest('[data-ag-menu] [data-value]');
+    if (o && !o.closest('[data-ag-connsec]')) { const d = o.closest('[data-ag-dd]'); $('[data-ag-value]', d).textContent = o.dataset.value; curOnb.dataset.steptype = o.dataset.value; $('[data-ag-menu]', d).hidden = true; d.dataset.open = 'false'; return; }
+    const c = e.target.closest('label.rmx-check[data-k="order"]');
+    if (c) setTimeout(() => { curOnb.dataset.order = c.dataset.checked; }, 0);
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('[data-ag-gdd]')) { const m = $('[data-ag-gmenu]', paneOnb); if (m) { m.hidden = true; } }
+    if (!e.target.closest('[data-ag-dd]')) $$('[data-ag-menu]', paneOnb).forEach(m => { if (!m.closest('[data-ag-connsec]')) { m.hidden = true; m.closest('[data-ag-dd]').dataset.open = 'false'; } });
+  });
+  refreshGroupUI();
+  renderOnbPane(curOnb);
 
   /* ---- trigger: pick which onboarding event this trigger waits for ---- */
   const TRIGGERS = ['A lease is signed', 'Onboarding is started', 'Onboarding is sent', 'Onboarding is completed', 'A step is completed', 'Onboarding is overdue', 'An application is approved', 'A security deposit is paid', 'Renters insurance is verified', 'Move-in date is reached', 'A prospect becomes a tenant'];
@@ -287,7 +452,7 @@
   let curTrig = null;
   function renderTrigger(node) {
     curTrig = node; const cur = trigOpt($('.ag-node__text', node).textContent.trim());
-    paneTrig.innerHTML = headHtml('schedule', 'trig', 'Trigger', $('.ag-node__text', node).textContent.trim(), TODO_DEL('a trigger')) +
+    paneTrig.innerHTML = headHtml('schedule', 'trig', 'Trigger', $('.ag-node__text', node).textContent.trim(), delAttr(node)) +
       '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Settings</div><div class="ag-sec__body">' + dd('Trigger', cur, TRIGGERS.includes(cur) ? TRIGGERS : TRIGGERS.concat(cur), 'trigger') + '</div></div>' +
       '<div class="ag-sec" data-ag-connsec></div>';
     renderConns(node, $('[data-ag-connsec]', paneTrig));
@@ -319,7 +484,7 @@
   }
   function renderNotify(node) {
     curNote = node; const set = notifySet(node);
-    paneNote.innerHTML = headHtml('campaign-outline', 'note', 'Notify', $('.ag-node__text', node).textContent.trim(), TODO_DEL('a notification')) +
+    paneNote.innerHTML = headHtml('campaign-outline', 'note', 'Notify', $('.ag-node__text', node).textContent.trim(), delAttr(node)) +
       '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Settings</div><div class="ag-sec__body"><div class="ag-group"><span class="rmx-field__label">Who to notify</span><div class="ag-checks">' +
       WHO.map(w => chk('who:' + w[0], w[0], set.has(w[0]))).join('') + '</div></div>' +
       '<div class="ag-group"><span class="rmx-field__label">Specific person</span><div class="rmx-field ag-people" data-ag-people data-rmx-component="Input Field"><div class="rmx-field__box">' + ic('search') + '<input type="text" data-k="people-q" placeholder="Search people" autocomplete="off" aria-label="Search people"></div><div class="rmx-menu rmx-menu--list" data-ag-people-menu hidden></div></div><div class="ag-chips" data-ag-chips>' + chipsHtml(node) + '</div></div>' +
@@ -400,7 +565,7 @@
   const condSummary = c => 'Goes on to the next step when ' + c.tests.map(phrase).join(c.match === 'any' ? ' or ' : ' and ') + '. Otherwise this branch is skipped.';
   function renderCondition(node) {
     curCond = node; const c = condOf(node), text = $('.ag-node__text', node).textContent.trim();
-    paneCond.innerHTML = headHtml('call-split', 'cond', 'Condition', text, TODO_DEL('a condition')) +
+    paneCond.innerHTML = headHtml('call-split', 'cond', 'Condition', text, delAttr(node)) +
       '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Condition</div><div class="ag-sec__body">' +
       (c.tests.length > 1 ? dd('Goes on when', CMATCH[c.match], Object.values(CMATCH), 'match') : '') +
       c.tests.map((t, i) => '<div class="ag-test" data-i="' + i + '">' + dd('', t.field, CFIELDS.includes(t.field) ? CFIELDS : CFIELDS.concat(t.field), 'field') +
@@ -444,6 +609,121 @@
   });
   document.addEventListener('click', e => { if (!e.target.closest('[data-ag-dd]')) $$('[data-ag-menu]', paneCond).forEach(m => { m.hidden = true; m.closest('[data-ag-dd]').dataset.open = 'false'; }); });
   $('[data-ag-save]').addEventListener('click', () => RMX.toast('Workflow saved'));
+
+  /* ---- undo and reset: snapshots of the whole workflow (nodes, steps, settings, connections, groups) ---- */
+  const flow = $('[data-ag-flow]');
+  const TRANSIENT = / (is-selected|is-droptarget|is-grouphl|is-dragging)(?=[ "])/g;
+  const clone = v => JSON.parse(JSON.stringify(v));
+  function snapshot() {
+    const steps = [], conds = [], notes = [], people = [], msgs = [];
+    state.forEach((v, el) => { if (el.isConnected) steps.push([el.dataset.step, clone(v)]); });
+    condState.forEach((v, n) => { if (n.isConnected) conds.push([n.dataset.node, clone(v)]); });
+    noteState.forEach((v, n) => { if (n.isConnected) notes.push([n.dataset.node, [...v]]); });
+    notePeople.forEach((v, n) => { if (n.isConnected) people.push([n.dataset.node, v.slice()]); });
+    noteMsg.forEach((v, n) => { if (n.isConnected) msgs.push([n.dataset.node, v]); });
+    return JSON.stringify({ html: flow.innerHTML.replace(TRANSIENT, ''), edges, groups: [...groupOf], steps, conds, notes, people, msgs, stepSeq, nodeSeq });
+  }
+  function restore(str) {
+    const d = JSON.parse(str);
+    flow.innerHTML = d.html;
+    edges.splice(0, edges.length, ...d.edges);
+    groupOf.clear(); d.groups.forEach(g => groupOf.set(g[0], g[1]));
+    state.clear(); d.steps.forEach(([id, v]) => { const el = $('[data-step="' + id + '"]'); if (el) state.set(el, v); });
+    condState.clear(); d.conds.forEach(([id, v]) => { const n = N(id); if (n) condState.set(n, v); });
+    noteState.clear(); d.notes.forEach(([id, v]) => { const n = N(id); if (n) noteState.set(n, new Set(v)); });
+    notePeople.clear(); d.people.forEach(([id, v]) => { const n = N(id); if (n) notePeople.set(n, v); });
+    noteMsg.clear(); d.msgs.forEach(([id, v]) => { const n = N(id); if (n) noteMsg.set(n, v); });
+    stepSeq = d.stepSeq; nodeSeq = d.nodeSeq;
+    curEl = curTrig = curCond = curNote = null; curOnb = $('[data-ag-onb]');
+    clearSel(); showPane('none'); refreshGroupUI(); draw();
+  }
+  /* give every step, condition and notification its settings up front, so merely selecting one is not a change */
+  $$('.ag-step').forEach(stateOf); $$('.ag-node--condition').forEach(condOf); $$('.ag-node--notify').forEach(n => { notifySet(n); peopleOf(n); });
+  const hist = [snapshot()], initial = hist[0]; let hi = 0, busy = false;
+  const undoBtn = $('[data-ag-undo]'), resetBtn = $('[data-ag-reset]');
+  function syncHist() {
+    undoBtn.classList.toggle('is-off', hi === 0); undoBtn.setAttribute('aria-disabled', String(hi === 0));
+    resetBtn.classList.toggle('is-off', hist[hi] === initial); resetBtn.setAttribute('aria-disabled', String(hist[hi] === initial));
+  }
+  function commit() {
+    if (busy) return;
+    const s = snapshot(); if (s === hist[hi]) return;
+    hist.splice(hi + 1); hist.push(s); hi = hist.length - 1;
+    if (hist.length > 100) { hist.shift(); hi--; }
+    syncHist();
+  }
+  function undo() { if (hi === 0) return; busy = true; hi--; restore(hist[hi]); busy = false; syncHist(); }
+  function reset() { if (hist[hi] === initial) return; busy = true; restore(initial); hist.splice(hi + 1); hist.push(initial); hi = hist.length - 1; busy = false; syncHist(); }
+  let ct; const schedule = ms => { clearTimeout(ct); ct = setTimeout(commit, ms); };
+  ['click', 'drop', 'change'].forEach(t => document.addEventListener(t, e => { if (e.target.closest && e.target.closest('[data-ag-undo], [data-ag-reset]')) return; schedule(80); }, true));
+  document.addEventListener('input', () => schedule(500), true);
+  undoBtn.addEventListener('click', () => { clearTimeout(ct); commit(); undo(); });
+  resetBtn.addEventListener('click', () => { clearTimeout(ct); commit(); reset(); });
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && !e.shiftKey && e.key.toLowerCase() === 'z' && !/^(INPUT|TEXTAREA)$/.test((e.target.tagName || ''))) { e.preventDefault(); clearTimeout(ct); commit(); undo(); }
+  });
+  syncHist();
+
+  /* ---- the floating action bar above the selected step or node: move up, move down, delete ---- */
+  function deleteStepEl(el) { const node = el.closest('[data-ag-onb]'); state.delete(el); el.remove(); selectOnb(node); draw(); }
+  barEl = document.createElement('div'); barEl.className = 'ag-bar'; barEl.setAttribute('role', 'toolbar'); barEl.setAttribute('aria-label', 'Actions'); barEl.hidden = true;
+  barEl.innerHTML = '<button type="button" data-bar="up" aria-label="Move up">' + ic('arrow-upward') + '</button><button type="button" data-bar="down" aria-label="Move down">' + ic('arrow-downward') + '</button><span class="ag-bar__sep"></span><button type="button" data-bar="del" aria-label="Delete">' + ic('delete-filled') + '</button>';
+  stage.appendChild(barEl);
+  /* what can this item swap with? steps: their neighbours in the RMR step; nodes on the main line (not part of a branch): their neighbours on the line; added nodes: their neighbours in the bottom row */
+  function moveTargets(el) {
+    if (el.classList.contains('ag-step') || (el.parentElement && el.parentElement.hasAttribute('data-ag-extra'))) return { up: el.previousElementSibling, down: el.nextElementSibling };
+    const rows = $$('.ag-row--t1, .ag-row--onb, .ag-row--t2, .ag-row--notify, .ag-row--ins'), i = rows.indexOf(el.parentElement);
+    if (i < 0) return { up: null, down: null };
+    const at = k => (rows[k] ? $('.ag-node', rows[k]) : null);
+    return { up: i > 0 ? at(i - 1) : null, down: i < rows.length - 1 ? at(i + 1) : null };
+  }
+  function updateBar() {
+    if (!barEl) return;
+    const el = $('.ag-step.is-selected') || $('.ag-node.is-selected');
+    if (!el || !el.offsetParent) { barEl.hidden = true; return; }
+    const t = moveTargets(el);
+    $('[data-bar="up"]', barEl).setAttribute('aria-disabled', String(!t.up));
+    $('[data-bar="down"]', barEl).setAttribute('aria-disabled', String(!t.down));
+    barEl.hidden = false;
+    const b = box(el);
+    barEl.style.left = Math.max(4, b.r - barEl.offsetWidth) + 'px'; barEl.style.top = (b.t - barEl.offsetHeight - 8) + 'px';
+  }
+  barEl.addEventListener('click', e => {
+    e.stopPropagation();
+    const b = e.target.closest('[data-bar]'); if (!b || b.getAttribute('aria-disabled') === 'true') return;
+    const step = $('.ag-step.is-selected'), node = $('.ag-node.is-selected'), el = step || node;
+    if (b.dataset.bar === 'del') { if (step) deleteStepEl(step); else if (node) deleteNode(node); return; }
+    if (!el) return;
+    const t = moveTargets(el), to = t[b.dataset.bar]; if (!to) return;
+    if (el.classList.contains('ag-step') || el.parentElement.hasAttribute('data-ag-extra')) {
+      if (b.dataset.bar === 'up') el.parentNode.insertBefore(el, to); else el.parentNode.insertBefore(to, el);
+    } else {
+      /* a node on the main line trades places with its neighbour on the line; the branches stay where they are */
+      const ra = el.parentElement, rb = to.parentElement; ra.appendChild(to); rb.appendChild(el);
+      [ra, rb].forEach(r => { r.style.paddingLeft = Math.max(0, 664 - $('.ag-node', r).offsetWidth / 2) + 'px'; });
+    }
+    draw();
+  });
+
+  /* ---- dropdown menus float over the page and always fit on screen: they open downward, or upward when there is more room above, and scroll if they are still too tall ---- */
+  const MENUS = '[data-ag-menu], [data-ag-gmenu], [data-ag-people-menu], [data-ag-tpl-menu]';
+  function placeMenu(m) {
+    const a = m.parentElement; if (!a) return;
+    const r = a.getBoundingClientRect(), vh = window.innerHeight, gap = 4, margin = 8;
+    const below = vh - r.bottom - gap - margin, above = r.top - gap - margin, want = Math.min(m.scrollHeight, 320);
+    const up = below < want && above > below;
+    const w = m.hasAttribute('data-ag-tpl-menu') ? Math.max(240, r.width) : r.width;
+    m.style.position = 'fixed'; m.style.width = 'auto'; m.style.minWidth = w + 'px'; m.style.maxWidth = Math.min(380, window.innerWidth - 2 * margin) + 'px';
+    const mw = Math.max(w, m.offsetWidth);
+    m.style.left = Math.max(margin, Math.min(m.hasAttribute('data-ag-tpl-menu') ? r.right - mw : r.left, window.innerWidth - mw - margin)) + 'px'; m.style.right = 'auto';
+    m.style.maxHeight = Math.max(96, up ? above : below) + 'px';
+    if (up) { m.style.top = 'auto'; m.style.bottom = (vh - r.top + gap) + 'px'; } else { m.style.bottom = 'auto'; m.style.top = (r.bottom + gap) + 'px'; }
+  }
+  new MutationObserver(list => list.forEach(mu => { const t = mu.target; if (t.matches && t.matches(MENUS) && !t.hidden) placeMenu(t); }))
+    .observe(document.body, { attributes: true, attributeFilter: ['hidden'], subtree: true });
+  const replaceOpen = () => $$(MENUS).forEach(m => { if (!m.hidden) placeMenu(m); });
+  window.addEventListener('resize', replaceOpen);
+  $('.ag-inspector').addEventListener('scroll', replaceOpen, true);
 
   /* ---- resizable inspector ---- */
   const rz = $('[data-ag-resizer]'), work = $('.ag-work'), MIN = 280, MAX = 720;
