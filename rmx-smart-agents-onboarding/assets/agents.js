@@ -23,7 +23,7 @@
     return 'M' + x1 + ' ' + y1 + 'V' + (ym - r) + 'Q' + x1 + ' ' + ym + ' ' + (x1 + sx * r) + ' ' + ym + 'H' + (x2 - sx * r) + 'Q' + x2 + ' ' + ym + ' ' + x2 + ' ' + (ym + r) + 'V' + y2;
   }
   /* the workflow's connections: what the chart draws AND what the inspector lists */
-  const edges = [['t1', 'onb'], ['onb', 'c1'], ['onb', 'c2'], ['onb', 'c3'], ['c1', 'a1'], ['c2', 'a2'], ['c3', 'a3'], ['a1', 't2'], ['a2', 't2'], ['a3', 't2'], ['t2', 'n'], ['onb', 't2', 'loop']]
+  const edges = [['t1', 'onb'], ['onb', 'c1'], ['onb', 'c2'], ['onb', 'c3'], ['c1', 'a1'], ['c2', 'a2'], ['c3', 'a3'], ['a1', 't2'], ['a2', 't2'], ['a3', 't2'], ['t2', 'n']]
     .map(e => ({ a: e[0], b: e[1], loop: e[2] === 'loop' }));
   function draw() {
     let d = edges.map(e => {
@@ -68,14 +68,14 @@
   canvas.addEventListener('gesturechange', e => { e.preventDefault(); const r = canvas.getBoundingClientRect(); setZoom(z0 * e.scale, e.clientX - r.left, e.clientY - r.top); });
 
   /* ---- select / collapse Onboarding nodes; select a step ---- */
-  const paneOnb = $('[data-ag-pane="onboarding"]'), paneStep = $('[data-ag-pane="step"]'), paneTrig = $('[data-ag-pane="trigger"]'), paneCond = $('[data-ag-pane="condition"]');
+  const paneOnb = $('[data-ag-pane="onboarding"]'), paneStep = $('[data-ag-pane="step"]'), paneTrig = $('[data-ag-pane="trigger"]'), paneCond = $('[data-ag-pane="condition"]'), paneNote = $('[data-ag-pane="notify"]');
   const palSteps = $('.ag-pal-steps');
   let curOnb = N('onb');
-  function showPane(which) { paneOnb.hidden = which !== 'onboarding'; paneStep.hidden = which !== 'step'; paneTrig.hidden = which !== 'trigger'; paneCond.hidden = which !== 'condition'; palSteps.hidden = which !== 'onboarding' && which !== 'step'; }
+  function showPane(which) { paneOnb.hidden = which !== 'onboarding'; paneStep.hidden = which !== 'step'; paneTrig.hidden = which !== 'trigger'; paneCond.hidden = which !== 'condition'; paneNote.hidden = which !== 'notify'; palSteps.hidden = which !== 'onboarding' && which !== 'step'; }
   /* The Onboarding steps list is only offered while an Onboarding node (or one of its steps) is selected. */
   function clearSel() { $$('.ag-step, .ag-node').forEach(x => x.classList.remove('is-selected')); }
   function selectOnb(n, stepEl) {
-    curOnb = n; if (!stepEl) renderConns(n);
+    curOnb = n; if (!stepEl) { renderConns(n); const ht = $('.ag-insp__title', paneOnb); if (ht) ht.textContent = $('.ag-node__text', n).textContent.trim(); }
     $$('.ag-step').forEach(x => x.classList.toggle('is-selected', x === stepEl));
     $$('.ag-node').forEach(o => o.classList.toggle('is-selected', !stepEl && o === n));
     if (stepEl) { renderStep(stepEl); showPane('step'); } else showPane('onboarding');
@@ -90,6 +90,7 @@
     e.stopPropagation(); clearSel();
     if (n.classList.contains('ag-node--trigger')) { n.classList.add('is-selected'); renderTrigger(n); showPane('trigger'); }
     else if (n.classList.contains('ag-node--condition')) { n.classList.add('is-selected'); renderCondition(n); showPane('condition'); }
+    else if (n.classList.contains('ag-node--notify')) { n.classList.add('is-selected'); renderNotify(n); showPane('notify'); }
     else { n.classList.add('is-selected'); showPane('none'); }
   }));
   $('.ag-canvas').addEventListener('click', () => { clearSel(); showPane('none'); });
@@ -150,6 +151,11 @@
   const state = new Map(); let curEl = null;
   const esc = t => { const d = document.createElement('div'); d.textContent = t == null ? '' : t; return d.innerHTML; };
   const ic = (n, c) => '<svg class="' + (c || 'rmx-icon') + '"><use href="#' + n + '"></use></svg>';
+  /* one header for every inspector: icon, small grey type label, bold title, delete */
+  function headHtml(icon, tone, kind, title, btn) {
+    return '<div class="ag-insp__head ag-insp__head--two ag-insp__head--' + tone + '">' + ic(icon, 'ag-insp__ico ag-insp__ico--' + tone) + '<div class="ag-insp__titles"><span class="ag-insp__kind rmx-type-label-s-regular">' + esc(kind) + '</span><span class="ag-insp__title rmx-type-paragraph-s-semibold" data-ag-headname>' + esc(title) + '</span></div><button type="button" class="ag-trash" aria-label="Delete ' + esc(kind.toLowerCase()) + '" ' + btn + '>' + ic('delete-filled') + '</button></div>';
+  }
+  const TODO_DEL = k => 'data-rmx-todo="Deleting ' + k + ' is not built in this prototype"';
   function stateOf(el) {
     if (!state.has(el)) {
       const type = el.dataset.stype, sub = $('.ag-step__sub', el).textContent;
@@ -167,7 +173,7 @@
   const chk = (k, label, on, extra) => '<div class="ag-check"><label class="rmx-check" data-k="' + k + '" data-checked="' + !!on + '" data-rmx-component="Checkbox"><span class="rmx-check__box">' + ic('check', 'rmx-icon rmx-icon--16') + '</span><span class="rmx-text">' + label + '</span></label>' + (extra || '') + '</div>';
   function renderStep(el) {
     curEl = el; const s = stateOf(el);
-    let h = '<div class="ag-insp__head rmx-type-label-s-regular"><span data-ag-headname>' + esc(s.name || 'Untitled step') + '</span><button type="button" class="ag-trash" aria-label="Delete step" data-act="del-step">' + ic('delete-filled') + '</button></div>';
+    let h = headHtml('onboarding-mark', 'onb', s.type, s.name || 'Untitled step', 'data-act="del-step"');
     /* Note (Payment Setup / Make a Payment), above Settings */
     if (CALL[s.type]) h += '<div class="ag-sec"><div class="ag-sec__body"><p class="ag-note rmx-type-paragraph-s-regular">' + CALL[s.type] + '</p></div></div>';
     /* Settings */
@@ -257,7 +263,7 @@
       '</div></div><button type="button" class="rmx-btn rmx-btn--secondary" data-ag-connect data-rmx-component="Button">Connect</button></div></div>';
   }
   const closeConnMenus = () => $$('[data-ag-connsec] [data-ag-menu]').forEach(m => { m.hidden = true; m.closest('[data-ag-dd]').dataset.open = 'false'; });
-  [paneOnb, paneTrig, paneCond].forEach(pane => pane.addEventListener('click', e => {
+  [paneOnb, paneTrig, paneCond, paneNote].forEach(pane => pane.addEventListener('click', e => {
     const connSec = e.target.closest('[data-ag-connsec]'), closeAll = closeConnMenus; if (!connSec) return;
     const t = e.target.closest('[data-ag-trigger]');
     if (t) { e.stopPropagation(); const d = t.closest('[data-ag-dd]'), m = $('[data-ag-menu]', d), open = !m.hidden; closeAll(); m.hidden = open; d.dataset.open = String(!open); return; }
@@ -271,6 +277,7 @@
     }
   }));
   document.addEventListener('click', e => { if (!e.target.closest('[data-ag-dd]')) closeConnMenus(); });
+  paneOnb.querySelector('.ag-insp__head').outerHTML = headHtml('onboarding-mark', 'onb', 'Onboarding', labelOf('onb'), TODO_DEL('an Onboarding node'));
   renderConns(curOnb);
 
   /* ---- trigger: pick which onboarding event this trigger waits for ---- */
@@ -280,7 +287,7 @@
   let curTrig = null;
   function renderTrigger(node) {
     curTrig = node; const cur = trigOpt($('.ag-node__text', node).textContent.trim());
-    paneTrig.innerHTML = '<div class="ag-insp__head rmx-type-label-s-regular">' + ic('schedule', 'ag-insp__mark ag-insp__mark--trigger') + '<span>Trigger</span><button type="button" class="ag-trash" aria-label="Delete trigger" data-rmx-todo="Deleting a trigger is not built in this prototype">' + ic('delete-filled') + '</button></div>' +
+    paneTrig.innerHTML = headHtml('schedule', 'trig', 'Trigger', $('.ag-node__text', node).textContent.trim(), TODO_DEL('a trigger')) +
       '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Settings</div><div class="ag-sec__body">' + dd('Trigger', cur, TRIGGERS.includes(cur) ? TRIGGERS : TRIGGERS.concat(cur), 'trigger') + '</div></div>' +
       '<div class="ag-sec" data-ag-connsec></div>';
     renderConns(node, $('[data-ag-connsec]', paneTrig));
@@ -294,10 +301,79 @@
     if (o) {
       const d = o.closest('[data-ag-dd]'); $('[data-ag-value]', d).textContent = o.dataset.value;
       $$('[data-value]', d).forEach(x => x.removeAttribute('aria-selected')); o.setAttribute('aria-selected', 'true'); closeAll();
-      $('.ag-node__text', curTrig).textContent = trigText(o.dataset.value); draw(); renderConns(curTrig, $('[data-ag-connsec]', paneTrig));
+      $('.ag-node__text', curTrig).textContent = trigText(o.dataset.value); $('.ag-insp__title', paneTrig).textContent = trigText(o.dataset.value); draw(); renderConns(curTrig, $('[data-ag-connsec]', paneTrig));
     }
   });
   document.addEventListener('click', e => { if (!e.target.closest('[data-ag-dd]')) $$('[data-ag-menu]', paneTrig).forEach(m => { if (!m.closest('[data-ag-connsec]')) { m.hidden = true; m.closest('[data-ag-dd]').dataset.open = 'false'; } }); });
+  /* ---- notify: who gets told ---- */
+  const WHO = [['Property manager', 'the PM'], ['Leasing agent', 'the leasing agent'], ['Prospect', 'the prospect'], ['Maintenance team', 'the maintenance team'], ['Accounting', 'accounting']];
+  const noteState = new Map(); let curNote = null;
+  const notifySet = node => { if (!noteState.has(node)) noteState.set(node, new Set(['Property manager'])); return noteState.get(node); };
+  const PEOPLE = [['Maria Santos', 'Leasing Manager'], ['Daniel Okafor', 'Property Manager'], ['Priya Patel', 'Accounting'], ['Tom Reyes', 'Maintenance Lead'], ['Jordan Lee', 'Regional Manager'], ['Aisha Khan', 'Compliance']];
+  const notePeople = new Map();
+  const peopleOf = node => { if (!notePeople.has(node)) notePeople.set(node, []); return notePeople.get(node); };
+  function notifyLabel(set, people) {
+    const names = WHO.filter(w => set.has(w[0])).map(w => w[1]).concat(people || []);
+    const who = names.length === 0 ? 'no one' : names.length === 1 ? names[0] : names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1];
+    return 'Notify ' + who + ' that onboarding was completed';
+  }
+  function renderNotify(node) {
+    curNote = node; const set = notifySet(node);
+    paneNote.innerHTML = headHtml('campaign-outline', 'note', 'Notify', $('.ag-node__text', node).textContent.trim(), TODO_DEL('a notification')) +
+      '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Settings</div><div class="ag-sec__body"><div class="ag-group"><span class="rmx-field__label">Who to notify</span><div class="ag-checks">' +
+      WHO.map(w => chk('who:' + w[0], w[0], set.has(w[0]))).join('') + '</div></div>' +
+      '<div class="ag-group"><span class="rmx-field__label">Specific person</span><div class="rmx-field ag-people" data-ag-people data-rmx-component="Input Field"><div class="rmx-field__box">' + ic('search') + '<input type="text" data-k="people-q" placeholder="Search people" autocomplete="off" aria-label="Search people"></div><div class="rmx-menu rmx-menu--list" data-ag-people-menu hidden></div></div><div class="ag-chips" data-ag-chips>' + chipsHtml(node) + '</div></div>' +
+            '<div class="rmx-field" data-rmx-component="Text Box"><div class="ag-fieldhead"><span class="rmx-field__label">Message</span>' +
+      '<div class="ag-tpl" data-ag-tpl><button type="button" class="ag-iconbtn" aria-label="Choose a message template" aria-haspopup="menu" data-ag-tpl-btn>' + ic('menu') + '</button>' +
+      '<div class="rmx-menu rmx-menu--list ag-tpl__menu" role="menu" data-ag-tpl-menu hidden><div class="ag-tpl__head rmx-type-label-s-regular">Message templates</div>' +
+      TPLS.map((t, i) => '<button type="button" role="menuitem" data-tpl="' + i + '">' + esc(t[0]) + '</button>').join('') + '</div></div></div>' +
+      '<div class="rmx-field__box ag-textarea ag-textarea--lg"><textarea data-k="note-msg" aria-label="Message" placeholder="Write the message to send">' + esc(noteMsg.get(node) != null ? noteMsg.get(node) : TPLS[0][1]) + '</textarea></div></div></div></div>' +
+      '<div class="ag-sec" data-ag-connsec></div>';
+    renderConns(node, $('[data-ag-connsec]', paneNote));
+  }
+  /* specific people: search, pick to add a chip, x to remove */
+  const chipsHtml = node => peopleOf(node).map(n => '<span class="rmx-pill ag-chip" data-person="' + esc(n) + '">' + esc(n) + '<button type="button" class="ag-chip__x" aria-label="Remove ' + esc(n) + '" data-rm-person>' + ic('close', 'rmx-icon rmx-icon--16') + '</button></span>').join('');
+  function peopleMenu(q) {
+    const m = $('[data-ag-people-menu]', paneNote), chosen = peopleOf(curNote), hits = PEOPLE.filter(p => !chosen.includes(p[0]) && (p[0] + ' ' + p[1]).toLowerCase().includes(q.trim().toLowerCase()));
+    m.innerHTML = hits.length ? hits.map(p => '<button type="button" data-person-add="' + esc(p[0]) + '">' + esc(p[0]) + ' <span class="ag-menu__sub">' + esc(p[1]) + '</span></button>').join('') : '<div class="ag-menu__none rmx-type-label-s-regular">No matching people</div>';
+    m.hidden = false;
+  }
+  function peopleChanged() {
+    const text = notifyLabel(notifySet(curNote), peopleOf(curNote));
+    $('.ag-node__text', curNote).textContent = text; $('.ag-insp__title', paneNote).textContent = text; $('[data-ag-chips]', paneNote).innerHTML = chipsHtml(curNote); draw();
+  }
+  paneNote.addEventListener('input', e => { if (e.target.dataset.k === 'people-q') peopleMenu(e.target.value); });
+  paneNote.addEventListener('focusin', e => { if (e.target.dataset && e.target.dataset.k === 'people-q') peopleMenu(e.target.value); });
+  paneNote.addEventListener('click', e => {
+    const add = e.target.closest('[data-person-add]');
+    if (add && curNote) { peopleOf(curNote).push(add.dataset.personAdd); const q = $('[data-k="people-q"]', paneNote); q.value = ''; $('[data-ag-people-menu]', paneNote).hidden = true; peopleChanged(); return; }
+    const rm = e.target.closest('[data-rm-person]');
+    if (rm && curNote) { const n = rm.closest('[data-person]').dataset.person, list = peopleOf(curNote); list.splice(list.indexOf(n), 1); peopleChanged(); }
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('[data-ag-people]')) { const m = $('[data-ag-people-menu]', paneNote); if (m) m.hidden = true; } });
+
+  /* message templates: picking one fills the message field */
+  const TPLS = [['Onboarding completed', '{Prospect} has completed all onboarding steps for {Unit}.'], ['Onboarding needs attention', '{Prospect} still has onboarding steps outstanding for {Unit}. Please follow up.'], ['Onboarding overdue', 'Onboarding for {Prospect} in {Unit} is overdue.'], ['Documents received', '{Prospect} has uploaded the requested documents for {Unit}.']];
+  const noteMsg = new Map();
+  const closeTpl = () => { const m = $('[data-ag-tpl-menu]', paneNote); if (m) { m.hidden = true; $('[data-ag-tpl-btn]', paneNote).setAttribute('aria-expanded', 'false'); } };
+  paneNote.addEventListener('input', e => { if (e.target.dataset.k === 'note-msg' && curNote) noteMsg.set(curNote, e.target.value); });
+  paneNote.addEventListener('click', e => {
+    const b = e.target.closest('[data-ag-tpl-btn]');
+    if (b) { e.stopPropagation(); const m = $('[data-ag-tpl-menu]', paneNote), open = !m.hidden; m.hidden = open; b.setAttribute('aria-expanded', String(!open)); return; }
+    const t = e.target.closest('[data-tpl]');
+    if (t && curNote) { const msg = TPLS[+t.dataset.tpl][1]; $('[data-k="note-msg"]', paneNote).value = msg; noteMsg.set(curNote, msg); closeTpl(); }
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('[data-ag-tpl]')) closeTpl(); });
+  paneNote.addEventListener('click', e => {
+    const c = e.target.closest('label.rmx-check'); if (!c || !curNote) return;
+    setTimeout(() => {
+      const set = notifySet(curNote), name = c.dataset.k.replace(/^who:/, '');
+      if (c.dataset.checked === 'true') set.add(name); else set.delete(name);
+      const text = notifyLabel(set, peopleOf(curNote));
+      $('.ag-node__text', curNote).textContent = text; $('.ag-insp__title', paneNote).textContent = text; draw();
+    }, 0);
+  });
+
   /* ---- condition: the tests that decide whether the branch runs ---- */
   const CFIELDS = ['Prospect has a pet', 'Prospect has a vehicle', 'Unit requires move-in coordination', 'Unit', 'Record status', 'Lease type', 'Property'];
   const COPS = ['is', 'is not'], CMATCH = { any: 'Any condition is true', all: 'All conditions are true' };
@@ -324,7 +400,7 @@
   const condSummary = c => 'Goes on to the next step when ' + c.tests.map(phrase).join(c.match === 'any' ? ' or ' : ' and ') + '. Otherwise this branch is skipped.';
   function renderCondition(node) {
     curCond = node; const c = condOf(node), text = $('.ag-node__text', node).textContent.trim();
-    paneCond.innerHTML = '<div class="ag-insp__head ag-insp__head--two">' + ic('call-split', 'ag-insp__ico') + '<div class="ag-insp__titles"><span class="ag-insp__kind rmx-type-label-s-regular">Condition</span><span class="ag-insp__title rmx-type-paragraph-s-semibold">' + esc(text) + '</span></div><button type="button" class="ag-trash" aria-label="Delete condition" data-rmx-todo="Deleting a condition is not built in this prototype">' + ic('delete-filled') + '</button></div>' +
+    paneCond.innerHTML = headHtml('call-split', 'cond', 'Condition', text, TODO_DEL('a condition')) +
       '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Condition</div><div class="ag-sec__body">' +
       (c.tests.length > 1 ? dd('Goes on when', CMATCH[c.match], Object.values(CMATCH), 'match') : '') +
       c.tests.map((t, i) => '<div class="ag-test" data-i="' + i + '">' + dd('', t.field, CFIELDS.includes(t.field) ? CFIELDS : CFIELDS.concat(t.field), 'field') +

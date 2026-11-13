@@ -246,3 +246,50 @@ body.ag-resizing { cursor: col-resize; user-select: none; }
 .ag-info__text { margin: 0; color: var(--text-primary); }
 
 .ag-wires path { stroke-linejoin: round; stroke-linecap: round; }
+
+/* One header for every inspector (icon, type label, title, delete) */
+.ag-insp__ico { color: var(--icon-quaternary); }
+.ag-insp__ico--trig { color: var(--ag-trigger); }
+.ag-insp__ico--cond { color: var(--ag-condition); }
+
+.ag-insp__ico--note { color: var(--ag-notify); }
+.ag-checks { display: flex; flex-direction: column; }
+
+/* Message field: title row with a hamburger menu for templates */
+.ag-fieldhead { display: flex; align-items: center; justify-content: space-between; }
+.ag-tpl { position: relative; }
+.ag-iconbtn { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; background: none; border: 0; border-radius: var(--radius-sm); color: var(--icon-primary); cursor: pointer; }
+.ag-iconbtn:hover { background: var(--background-row-hover); }
+.ag-iconbtn .rmx-icon { width: 20px; height: 20px; }
+.ag-tpl__menu { right: 0; left: auto; min-width: 240px; }
+.ag-tpl__head { padding: var(--spacing-xs) var(--spacing-sm); color: var(--text-disabled); text-transform: uppercase; letter-spacing: .04em; }
+.ag-tpl__menu > [data-tpl] { display: block; width: 100%; text-align: left; border: 0; background: none; font: inherit; color: var(--text-primary); padding: 0 var(--spacing-sm); height: 32px; line-height: 32px; cursor: pointer; }
+.ag-tpl__menu > [data-tpl]:hover { background: var(--background-ui-primary); }
+.ag-textarea--lg textarea { min-height: 96px; }
+
+/* Header colours follow the step type: pale tint, accent label and icon, matching rule. */
+.ag-insp__head--onb  { --tone: var(--ag-onboarding); --tone-bg: var(--ag-onboarding-bg); --tone-line: var(--ag-onboarding-line); }
+.ag-insp__head--trig { --tone: var(--ag-trigger);    --tone-bg: var(--ag-trigger-bg);    --tone-line: var(--ag-trigger-line); }
+.ag-insp__head--cond { --tone: var(--ag-condition);  --tone-bg: var(--ag-condition-bg);  --tone-line: var(--ag-condition-line); }
+.ag-insp__head--note { --tone: var(--ag-notify);     --tone-bg: var(--ag-notify-bg);     --tone-line: var(--ag-notify-line); }
+.ag-insp__head--two .ag-insp__ico { color: var(--tone); }
+.ag-group { display: flex; flex-direction: column; gap: var(--spacing-xxs); }
+
+/* Specific person: search field with chips */
+.ag-people { width: 100%; }
+.ag-chips { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
+.ag-chips:empty { display: none; }
+.ag-chip { gap: var(--spacing-xxs); height: 24px; padding-right: var(--spacing-xxs); }
+.ag-chip__x { display: grid; place-items: center; width: 20px; height: 20px; padding: 0; background: none; border: 0; border-radius: 50%; color: var(--icon-primary); cursor: pointer; }
+.ag-chip__x:hover { background: var(--background-row-hover); }
+.ag-menu__sub { color: var(--text-disabled); margin-left: var(--spacing-xs); }
+.ag-menu__none { padding: var(--spacing-xs) var(--spacing-sm); color: var(--text-disabled); }
+[data-ag-people-menu] > [data-person-add] { display: block; width: 100%; text-align: left; border: 0; background: none; font: inherit; color: var(--text-primary); padding: 0 var(--spacing-sm); height: 32px; line-height: 32px; cursor: pointer; }
+[data-ag-people-menu] > [data-person-add]:hover { background: var(--background-ui-primary); }
+
+/* Inspector headers: white background; the icon and type label carry the step type colour; the bottom rule is the standard grey. */
+.ag-insp__head--two { background: var(--container-primary); border-bottom-color: var(--border-primary); }
+.ag-insp__head--two .ag-insp__kind { color: var(--tone); }
+
+/* Icons inside input fields (search, dropdown chevrons) are brand blue in RMX. */
+.rmx-field__box .rmx-icon, .rmx-field__box svg { color: var(--icon-primary); }
