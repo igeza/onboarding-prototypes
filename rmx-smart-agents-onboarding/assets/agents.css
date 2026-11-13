@@ -95,7 +95,12 @@
 .ag-node--condition { background: var(--ag-condition-bg); border-color: var(--ag-condition-line); width: 214px; }
 .ag-node--notify { background: var(--ag-notify-bg); border-color: var(--ag-notify-line); width: 214px; }
 .ag-node--onboarding { background: var(--ag-onboarding-bg); border-color: var(--ag-onboarding-line); width: 376px; padding: 9px 11px; cursor: pointer; }
-.ag-node.is-selected { border-color: var(--border-quaternary); box-shadow: var(--dropshadow-md); }
+/* Selected node: its own border colour, darker (the tag colour), plus a shadow. */
+.ag-node.is-selected { box-shadow: var(--dropshadow-md); }
+.ag-node--onboarding.is-selected { border-color: var(--border-secondary); }
+.ag-node--trigger.is-selected { border-color: var(--ag-trigger); }
+.ag-node--condition.is-selected { border-color: var(--ag-condition); }
+.ag-node--notify.is-selected { border-color: var(--ag-notify); }
 .ag-node__tagrow { display: flex; align-items: center; gap: 6px; min-height: 19px; }
 .ag-node__tagrow > svg { width: 16px; height: 16px; display: block; flex: none; }
 .ag-node__tagrow .ag-chev { margin-left: auto; width: 20px; height: 20px; color: var(--icon-quaternary); background: none; border: 0; padding: 0; cursor: pointer; display: grid; place-items: center; }
@@ -128,8 +133,8 @@
 .ag-insp__head span { flex: 1; }
 .ag-trash { background: none; border: 0; color: var(--icon-primary); display: grid; place-items: center; cursor: pointer; padding: 0; width: 20px; height: 20px; }
 .ag-trash .rmx-icon { width: 20px; height: 20px; }
-.ag-sec { overflow: hidden; margin: 0 var(--spacing-xl); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-primary); }
-.ag-sec__head { padding: var(--spacing-xs) var(--spacing-md); background: var(--background-ui-primary); border-bottom: 1px solid var(--border-primary); color: var(--text-secondary); }
+.ag-sec { margin: 0 var(--spacing-xl); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); background: var(--container-primary); }
+.ag-sec__head { border-radius: 3px 3px 0 0; padding: var(--spacing-xs) var(--spacing-md); background: var(--background-ui-primary); border-bottom: 1px solid var(--border-primary); color: var(--text-secondary); }
 .ag-sec__body { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); }
 .ag-order { padding: var(--spacing-xs) 0; color: var(--text-primary); }
 .ag-order .rmx-check { gap: var(--spacing-xs); }
@@ -210,4 +215,34 @@ body.ag-resizing { cursor: col-resize; user-select: none; }
 .ag-pick { display: flex; align-items: center; min-height: 36px; padding: 0 var(--spacing-md); background: none; border: 0; border-bottom: 1px solid var(--border-primary); color: var(--text-secondary); text-align: left; cursor: pointer; font: inherit; }
 .ag-pick:last-child { border-bottom: 0; }
 .ag-pick:hover { background: var(--background-row-hover); }
-.ag-pick[aria-selected="true"] { background: var(--background-brand-secondary); box-shadow: inset 3px 0 0 var(--border-secondary); }
+.ag-pick[aria-selected="true"], .ag-pick[aria-selected="true"]:hover { background: var(--background-brand-primary); color: var(--text-inverse); }
+
+/* Condition inspector (title header, tests, summary) */
+.ag-insp__head--two { color: var(--text-secondary); text-transform: none; letter-spacing: 0; line-height: normal; align-items: center; gap: var(--spacing-sm); }
+.ag-insp__head--two .ag-insp__ico { width: 20px; height: 20px; flex: none; color: var(--ag-condition); }
+.ag-insp__titles { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ag-insp__head--two .ag-insp__titles { flex: 1; }
+.ag-insp__kind { color: var(--text-disabled); text-transform: uppercase; letter-spacing: .04em; line-height: 20px; }
+.ag-insp__title { color: var(--text-secondary); line-height: 20px; }
+.ag-test { display: flex; flex-direction: column; gap: var(--spacing-xs); padding: var(--spacing-sm); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); }
+.ag-test__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--spacing-xs); align-items: start; }
+.ag-test .rmx-field, .ag-test__row .rmx-field { width: 100%; }
+.ag-summary { margin: 0; padding: var(--spacing-sm); background: var(--component-input-default); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); color: var(--text-primary); }
+
+/* Dropdown inputs: the value fills the field so the chevron sits at the far right. */
+[data-ag-value], [data-rmx-value] { flex: 1; min-width: 0; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rmx-field__box > .rmx-icon:last-child { flex: none; margin-left: auto; }
+
+/* The chosen option in an open dropdown (the trigger list, fields, operators): blue background, white text. */
+[data-ag-menu] > [data-value][aria-selected="true"], [data-ag-menu] > [data-value][aria-selected="true"]:hover { background: var(--background-brand-primary); color: var(--text-inverse); font-weight: 400; }
+
+.ag-insp__mark--trigger { color: var(--ag-trigger) !important; }
+
+.ag-file--plain { border: 0; padding: 0; }
+
+/* Information note: lightbulb + plain explanatory text. */
+.ag-info { display: flex; align-items: flex-start; gap: var(--spacing-xs); padding: var(--spacing-sm); background: var(--component-input-default); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); }
+.ag-info__ico { flex: none; width: 20px; height: 20px; color: var(--icon-primary); }
+.ag-info__text { margin: 0; color: var(--text-primary); }
+
+.ag-wires path { stroke-linejoin: round; stroke-linecap: round; }
