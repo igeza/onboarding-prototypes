@@ -366,3 +366,7 @@ body.ag-resizing { cursor: col-resize; user-select: none; }
 .ag-gmenu .rmx-check.is-taken:hover { background: none; }
 .ag-gmenu .rmx-check.is-taken .rmx-check__box { background: var(--background-disabled); border-color: var(--border-disabled); }
 .ag-gtag { margin-left: auto; padding: 0 var(--spacing-xs); border-radius: var(--radius-lg); background: var(--grp); color: var(--text-inverse); white-space: nowrap; }
+
+/* RMR step of type Form: one form card instead of the list of steps. */
+.ag-node[data-steptype="Form"] > .ag-node__steps { display: none; }
+.ag-formcard { display: flex; align-items: center; gap: var(--spacing-sm); padding: 10px var(--spacing-sm); background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); }

@@ -352,6 +352,7 @@
   const GLETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
   const groupOf = new Map([['onb', 'A'], ['a1', 'A'], ['a2', 'A'], ['a3', 'A']]);
   const rmrIds = () => $$('[data-ag-onb]').map(n => n.dataset.node);
+  const typeOf = id => (N(id).dataset.steptype || 'Onboarding');   /* steps are only grouped with steps of the same type */
   const membersOf = g => rmrIds().filter(id => groupOf.get(id) === g);
   function refreshGroupUI() {
     $$('[data-ag-onb]').forEach(n => {
@@ -372,8 +373,9 @@
   }
   /* the menu rows: one checkbox per other RMR step */
   function gOptions(node) {
-    const id = node.dataset.node, g = groupOf.get(id);
-    return rmrIds().filter(x => x !== id).map(x => '<label class="rmx-check" data-gid="' + x + '" data-checked="' + (!!g && groupOf.get(x) === g) + '" data-rmx-component="Checkbox"><span class="rmx-check__box">' + ic('check', 'rmx-icon rmx-icon--16') + '</span><span class="rmx-text">' + esc(labelOf(x)) + '</span></label>').join('');
+    const id = node.dataset.node, g = groupOf.get(id), same = rmrIds().filter(x => x !== id && typeOf(x) === typeOf(id));
+    if (!same.length) return '<div class="ag-menu__none rmx-type-label-s-regular">No other ' + typeOf(id) + ' steps to group with.</div>';
+    return same.map(x => '<label class="rmx-check" data-gid="' + x + '" data-checked="' + (!!g && groupOf.get(x) === g) + '" data-rmx-component="Checkbox"><span class="rmx-check__box">' + ic('check', 'rmx-icon rmx-icon--16') + '</span><span class="rmx-text">' + esc(labelOf(x)) + '</span></label>').join('');
   }
   function groupHtml(node) {
     const id = node.dataset.node, g = groupOf.get(id), sel = rmrIds().filter(x => x !== id && g && groupOf.get(x) === g);
@@ -412,16 +414,28 @@
       Object.keys(SUBS).map(t => { const used = SINGLE.has(t) && counts[t] > 0; return '<div class="ag-pal-step' + (used ? ' is-used' : '') + '"><span class="ag-pal-step__bar"></span><button type="button" class="ag-pal-step__body rmx-type-paragraph-s-semibold" ' + (used ? 'aria-disabled="true" title="Already added. This step can only be added once."' : 'draggable="true" data-pal="' + t + '"') + '><span>' + t + '</span>' + (counts[t] ? '<span class="ag-pal-step__n rmx-type-paragraph-s-regular">' + counts[t] + '</span>' : '') + '</button></div>'; }).join('') + '</div>' +
       (withOrder ? chk('order', 'Steps must be completed in order', node.dataset.order === 'true') : '') + '</div></div>';
   }
+  /* an RMR step of type Form shows one form card in place of its list of steps */
+  function applyType(node) {
+    const isForm = node.dataset.steptype === 'Form'; let card = $('.ag-formcard', node);
+    if (isForm) {
+      if (!card) { card = document.createElement('div'); card.className = 'ag-formcard'; card.innerHTML = '<div class="ag-step__text"><span class="ag-step__title rmx-type-paragraph-s-semibold">Form</span><span class="ag-step__sub rmx-type-label-s-regular"></span></div>'; $('.ag-node__steps', node).after(card); }
+      $('.ag-step__sub', card).textContent = node.dataset.form || 'Pet Addendum';
+    } else if (card) card.remove();
+    draw();
+  }
   function renderOnbPane(node) {
-    const id = node.dataset.node, name = labelOf(id), st = 'Onboarding';   /* the only step type for now */
+    const id = node.dataset.node, name = labelOf(id), st = node.dataset.steptype || 'Onboarding', isForm = st === 'Form', form = node.dataset.form || 'Pet Addendum';
+    /* Onboarding: a list of steps. Form: one form, with the same settings as the Form step (name, which form, required) */
     paneOnb.innerHTML = headHtml('onboarding-mark', 'onb', 'RMR', name, delAttr(node)) +
-      '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Settings</div><div class="ag-sec__body">' + dd('Step Type', st, ['Onboarding'], 'steptype') +
-      '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Onboarding Name</span><div class="rmx-field__box"><input type="text" data-k="onb-name" value="' + esc(name) + '" aria-label="Onboarding Name"></div></div></div></div>' +
-      stepsSection(node, true) + '<div class="ag-sec" data-ag-connsec></div>';
+      '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Settings</div><div class="ag-sec__body">' + dd('Step Type', st, ['Onboarding', 'Form'], 'steptype') +
+      '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">' + (isForm ? 'Step Name *' : 'Onboarding Name') + '</span><div class="rmx-field__box"><input type="text" data-k="onb-name" value="' + esc(name) + '" aria-label="' + (isForm ? 'Step Name' : 'Onboarding Name') + '"></div></div>' +
+      (isForm ? dd('Select Form', form, FORMS.includes(form) ? FORMS : FORMS.concat(form), 'obform') + chk('oreq', 'Required', node.dataset.required === 'true') : '') + '</div></div>' +
+      (isForm ? '' : stepsSection(node, true)) + '<div class="ag-sec" data-ag-connsec></div>';
     renderConns(node, $('[data-ag-connsec]', paneOnb));
   }
   paneOnb.addEventListener('input', e => {
     if (e.target.dataset.k !== 'onb-name') return;
+    curOnb.dataset.named = 'true';   /* a name you typed is kept when the step type changes */
     const v = e.target.value.trim() || 'Untitled onboarding';
     $('.ag-node__text', curOnb).textContent = v; $('.ag-insp__title', paneOnb).textContent = v; draw();
   });
@@ -434,14 +448,28 @@
     const t = e.target.closest('[data-ag-trigger]');
     if (t && !t.closest('[data-ag-connsec]')) { e.stopPropagation(); const d = t.closest('[data-ag-dd]'), m = $('[data-ag-menu]', d), open = !m.hidden; m.hidden = open; d.dataset.open = String(!open); return; }
     const o = e.target.closest('[data-ag-menu] [data-value]');
-    if (o && !o.closest('[data-ag-connsec]')) { const d = o.closest('[data-ag-dd]'); $('[data-ag-value]', d).textContent = o.dataset.value; curOnb.dataset.steptype = o.dataset.value; $('[data-ag-menu]', d).hidden = true; d.dataset.open = 'false'; return; }
-    const c = e.target.closest('label.rmx-check[data-k="order"]');
-    if (c) setTimeout(() => { curOnb.dataset.order = c.dataset.checked; }, 0);
+    if (o && !o.closest('[data-ag-connsec]')) {
+      const d = o.closest('[data-ag-dd]'), v = o.dataset.value; $('[data-ag-value]', d).textContent = v; $('[data-ag-menu]', d).hidden = true; d.dataset.open = 'false';
+      if (d.dataset.k === 'steptype') {
+        curOnb.dataset.steptype = v;
+        /* the name follows the type (Form, or the original name) unless you have already named the step yourself */
+        if (curOnb.dataset.named !== 'true') $('.ag-node__text', curOnb).textContent = v === 'Form' ? 'Form' : (curOnb.dataset.defname || 'New Onboarding');
+        /* a step can only be grouped with steps of its own type, so changing the type takes it out of its group */
+        const og = groupOf.get(curOnb.dataset.node); if (og) { groupOf.delete(curOnb.dataset.node); if (membersOf(og).length < 2) membersOf(og).forEach(i => groupOf.delete(i)); }
+        refreshGroupUI();
+        applyType(curOnb); renderOnbPane(curOnb);
+      }
+      if (d.dataset.k === 'obform') { curOnb.dataset.form = v; applyType(curOnb); }
+      return;
+    }
+    const c = e.target.closest('label.rmx-check[data-k="order"], label.rmx-check[data-k="oreq"]');
+    if (c) setTimeout(() => { if (c.dataset.k === 'order') curOnb.dataset.order = c.dataset.checked; else curOnb.dataset.required = c.dataset.checked; }, 0);
   });
   document.addEventListener('click', e => {
     if (!e.target.closest('[data-ag-gdd]')) { const m = $('[data-ag-gmenu]', paneOnb); if (m) { m.hidden = true; } }
     if (!e.target.closest('[data-ag-dd]')) $$('[data-ag-menu]', paneOnb).forEach(m => { if (!m.closest('[data-ag-connsec]')) { m.hidden = true; m.closest('[data-ag-dd]').dataset.open = 'false'; } });
   });
+  $$('[data-ag-onb]').forEach(n => { if (!n.dataset.defname) n.dataset.defname = labelOf(n.dataset.node); });   /* the name each RMR step starts with */
   refreshGroupUI();
   renderOnbPane(curOnb);
 
