@@ -200,3 +200,5 @@ Add Fields > Selected: the drag handle rearranges the selected fields (drag a ro
 Add Form: the (i) next to Require Approval shows the same tooltip as in the designer ("Approval is required before form answers are mapped to RMX fields.") on hover or focus, instead of the browser's plain title tooltip. The tooltip box floats above the dialog (fixed on `<body>` while shown), so it never adds scroll to the dialog.
 
 Dropdown field menus (Form Type, Response Type, ...): the menu touches the field (no 4px gap) and its items are dark blue (`--text-secondary`), like the field's value; the selected item stays link blue. The Settings menu and row kebab menus are unchanged.
+
+Icon buttons in forms are blue (`--icon-brand`): the question pencil and trash, the + (Add fields), remove-option trash, the question pager arrows (grey when disabled), the close / help icons in dialogs and the clear icon on the field chip.

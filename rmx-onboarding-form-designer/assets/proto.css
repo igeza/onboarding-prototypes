@@ -328,3 +328,8 @@ textarea { resize: none; }
 /* Dropdown field menus: dark blue text (like the field's own value) */
 .rmx-menu-layer .rmx-menu > [data-value] { color: var(--text-secondary); }
 .rmx-menu-layer .rmx-menu > [data-value][aria-selected="true"] { color: var(--text-link); }
+
+/* Icon buttons in forms are blue (--icon-brand): question edit / delete, add fields (+), page pager, remove option, close / help in dialogs, clear chip */
+.rmx .fd-q__tools button, .rmx .fd-rail button, .rmx .fd-opt__del, .rmx .fd-pager button, .rmx .pr-fd__icons button, .rmx .fd-chip button,
+.rmx .fd-q__tools button .rmx-icon, .rmx .fd-rail button .rmx-icon, .rmx .fd-opt__del .rmx-icon, .rmx .fd-pager button .rmx-icon, .rmx .pr-fd__icons button .rmx-icon, .rmx .fd-chip .rmx-icon { color: var(--icon-brand); }
+.rmx .fd-pager button:disabled, .rmx .fd-pager button:disabled .rmx-icon { color: var(--icon-disabled); opacity: 1; }   /* a disabled arrow uses the disabled colour */
