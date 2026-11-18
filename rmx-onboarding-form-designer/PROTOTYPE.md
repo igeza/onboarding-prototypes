@@ -202,3 +202,9 @@ Add Form: the (i) next to Require Approval shows the same tooltip as in the desi
 Dropdown field menus (Form Type, Response Type, ...): the menu touches the field (no 4px gap) and its items are dark blue (`--text-secondary`), like the field's value; the selected item stays link blue. The Settings menu and row kebab menus are unchanged.
 
 Icon buttons in forms are blue (`--icon-brand`): the question pencil and trash, the + (Add fields), remove-option trash, the question pager arrows (grey when disabled), the close / help icons in dialogs and the clear icon on the field chip.
+
+## 2026-11-18 · Updated to the new Forms flow (Figma 6152:19294)
+
+- Header now reads Template Name, Expiration Date (dropdown, default 7 days), Assign to Property. Form Type is no longer shown there (still kept in the data for Add Form).
+- "Always Available in rmResident Portal" is now "Always on rmResident Portal" (designer and Add Form).
+- Add Fields: Response Types and General Fields are one group, **Unmapped Fields** (Date, Yes/No, Checkboxes, Dropdown, File Upload, Image Upload, Short Answer, Paragraph, Text Box, Attachment).

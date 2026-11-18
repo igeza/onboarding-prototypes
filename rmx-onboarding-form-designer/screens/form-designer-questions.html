@@ -92,6 +92,7 @@ a.rmx-btn { text-decoration: none; }
 /* ---- form designer ---- */
 .fd { display: flex; flex-direction: column; min-height: calc(100vh - 88px); background: var(--container-primary); }
 .fd-top { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--spacing-md); flex-wrap: wrap; padding: var(--spacing-md); }
+.fd-formtype { display: none; }   /* Figma: Form Type is no longer shown in the header */
 .fd-top__fields { display: flex; align-items: flex-end; gap: var(--spacing-md); flex-wrap: wrap; }
 .fd-top__tail { display: flex; align-items: center; gap: var(--spacing-md); }
 .fd-approval { display: flex; align-items: center; gap: var(--spacing-xs); height: 36px; }
@@ -391,9 +392,10 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     <div class="fd-top__fields">
       <div class="fd-formtype" data-rmx-component="Text"><span class="rmx-field__label">Form Type</span><span class="fd-formtype__val">Prospect</span></div>
       <div class="wt-w248"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Template Name *</span><div class="rmx-field__box"><input type="text" value="Pet Information"></div></div></div>
+      <div class="wt-w248"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Expiration Date</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>7 days</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden><button type="button" data-value="3 days">3 days</button><button type="button" data-value="7 days">7 days</button><button type="button" data-value="14 days">14 days</button><button type="button" data-value="30 days">30 days</button><button type="button" data-value="60 days">60 days</button><button type="button" data-value="90 days">90 days</button><button type="button" data-value="Never">Never</button></div></div></div>
       <div class="fd-top__prop"><div class="wt-w248"><div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Assign to Property</span><div class="rmx-field__box"><input type="text" value="Riverview Apartments"></div></div></div><button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-todo="Property selection is not built in this prototype">Select Properties</button></div>
       <div class="fd-approval"><label class="rmx-check" data-checked="true" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Require Approval</span></label><span class="fd-tip"><span tabindex="0" aria-label="About Require Approval"><svg class="rmx-icon"><use href="#info"></use></svg></span><span class="fd-tip__box"><div data-rmx-component="Tooltip Text">Approval is required before form answers are mapped to RMX fields.</div></span></span></div>
-      <div class="fd-approval"><label class="rmx-check" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Always Available in rmResident Portal</span></label></div>
+      <div class="fd-approval"><label class="rmx-check" data-checked="false" data-rmx-component="Checkbox"><span class="rmx-check__box"><svg class="rmx-icon rmx-icon--16"><use href="#check"></use></svg></span><span class="rmx-text">Always on rmResident Portal</span></label></div>
     </div>
     <div class="fd-top__tail">
       <a class="rmx-btn rmx-btn--text" href="portal-preview.html" data-rmx-component="Button"><svg class="rmx-icon"><use href="#play-arrow"></use></svg><span class="rmx-btn__label">Preview</span></a>
@@ -998,5 +1000,17 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 })();
 </script>
 <script src="../assets/overlay-scroll.js"></script>
+<script>
+/* Figma: Response Types and General Fields are one group, "Unmapped Fields". */
+(function () {
+  var gs = [].slice.call(document.querySelectorAll('#add-fields [data-af-grp]'));
+  function by(n) { return gs.filter(function (g) { return g.querySelector('.af__group span').textContent === n; })[0]; }
+  var a = by('Response Types'), b = by('General Fields'); if (!a || !b) return;
+  a.querySelector('.af__group span').textContent = 'Unmapped Fields';
+  var box = a.querySelector('.af__items');
+  [].slice.call(b.querySelectorAll('.af__items > *')).forEach(function (n) { box.appendChild(n); });
+  b.remove();
+})();
+</script>
 </body>
 </html>
