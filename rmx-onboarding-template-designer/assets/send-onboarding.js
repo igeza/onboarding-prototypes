@@ -3,8 +3,7 @@
    Bulk Send Form - Prospects 6768:37603 (bar 6768:43339, dialog 6768:37676). Menu lists are from Izzy's Rent Manager screenshots.
    - Row kebab: long action list (scrolls inside). Send Onboarding opens the 298px dialog (Figma 6791:27670: Due Date and Expire days); Send Form opens the Send Form dialog for that person.
    - Bulk mode: Bulk Actions > Send Onboarding / Send Form turns on the first-column checkboxes; a blue bar ("3 prospects selected") then offers that one action. Its x leaves bulk mode.
-   - Send Form: Form, Set Expiration, the people's contacts (Name, Email, Web User, Contact Type) with a checkbox each, and a message.
-     One person: a Tenant / Prospect field shows who. Several: the same dialog without that field, listing every selected person's contacts.
+   - Send Form: one 416px dialog everywhere (row menu, Bulk Actions bar, detail-page Actions panel): Form, Expiration Date, Send Message. No contact list, no person field.
    Use: <script src="../assets/send-onboarding.js" data-kind="prospect|tenant" data-table="prospects"></script> after app.js and datepicker.js. */
 (function () {
   var me = document.currentScript, kind = (me && me.getAttribute('data-kind')) || 'prospect', tableId = (me && me.getAttribute('data-table')) || 'prospects';
@@ -96,55 +95,7 @@
   document.body.appendChild(dlg);
   var openOnb = opener('send-onboarding');
 
-  /* ---------- Send Form dialog ---------- */
-  var fdlg = document.createElement('div');
-  fdlg.className = 'rmx-overlay'; fdlg.id = 'send-form-dlg'; fdlg.hidden = true; fdlg.setAttribute('data-so', 'form'); fdlg.setAttribute('role', 'dialog'); fdlg.setAttribute('aria-modal', 'true'); fdlg.setAttribute('aria-label', 'Send Form'); fdlg.setAttribute('data-rmx-component', 'Dialog Overlay');
-  fdlg.innerHTML =
-    '<div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Send Form</span><span class="so-hicons"><span data-rmx-todo="Help is not built in this prototype">' + ic('help', 'rmx-icon--24') + '</span><button type="button" aria-label="Close" data-rmx-close>' + ic('close', 'rmx-icon--24') + '</button></span></div>' +
-    '<div class="so-body"><div class="so-row"><div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Form</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>' + FORMS[0] + '</span>' + ic('keyboard-arrow-down') + '</button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden>' + FORMS.map(function (f) { return '<button type="button" data-value="' + esc(f) + '">' + esc(f) + '</button>'; }).join('') + '</div></div>' +
-    '<div class="rmx-field so-who so-wide" id="sf-whowrap" data-rmx-component="Input Field"><span class="rmx-field__label">' + NOUN + '</span><div class="rmx-field__box">' + ic('search') + '<input type="text" id="sf-who" readonly aria-label="' + NOUN + '"></div></div>' +
-    '<div class="rmx-field" data-rmx-component="Input Field"><span class="rmx-field__label">Set Expiration</span><div class="rmx-field__box rmx-date"><input type="text" id="sf-date" aria-label="Set Expiration" placeholder="MM/DD/YYYY"><button type="button" class="rmx-date__btn" aria-label="Pick a date">' + ic('calendar-today') + '</button></div></div></div>' +
-    '<div class="so-tbl" id="sf-tbl"></div>' +
-    '<div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label">Send Message</span><div class="rmx-field__box"><textarea id="sf-msg" aria-label="Send Message" placeholder="Type message to ' + NOUN.toLowerCase() + 's here"></textarea></div></div></div>' +
-    '<div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="sf-send" data-rmx-component="Button">Send</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>';
-  document.body.appendChild(fdlg);
-  var openForm = opener('send-form-dlg');
-  var WEB = '<span class="so-web"><svg class="rmx-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.67A8.33 8.33 0 1 0 10 18.33 8.33 8.33 0 0 0 10 1.67zm-1.67 12.5L4.17 10l1.17-1.17 2.99 2.98 6.33-6.32 1.17 1.17-7.5 7.5z"/></svg></span>';
-  function chk() { return '<label class="rmx-check" data-checked="false"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label>'; }
-  function contactsOf(name) { return [[name, 'Primary', true]].concat(CONTACTS[name] || []); }
-  function buildForm(names) {
-    var many = names.length > 1, cols = 'so-cols1';   /* bulk is the same dialog as a single send, without the Tenant/Prospect field: one flat list of every selected person's contacts */
-    var head = '<div class="so-tr so-tr--head ' + cols + '">' + '<label class="rmx-check" data-checked="false" data-sf-all><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label><span>Name</span><span>Email Address</span><span>Web User</span><span>Contact Type</span></div>';
-    var rows = names.map(function (n) {
-      return contactsOf(n).map(function (c, i) {
-        return '<div class="so-tr ' + cols + '">' + chk() +
-          '<span class="so-cell">' + esc(c[0]) + '</span><span class="so-cell so-cell--edit"><input type="email" autocomplete="off" aria-label="Email Address for ' + esc(c[0]) + '"></span>' + (c[2] ? WEB : '<span></span>') + '<span class="so-ct">' + c[1] + '</span></div>';
-      }).join('');
-    }).join('');
-    document.getElementById('sf-tbl').innerHTML = head + rows;
-    document.getElementById('sf-whowrap').hidden = many;
-    document.getElementById('sf-who').value = many ? '' : names[0];
-    document.getElementById('sf-date').value = inAWeek();
-    document.getElementById('sf-msg').value = '';
-    fdlg.classList.remove('so-invalid');
-    fdlg.setAttribute('data-so', 'form');
-  }
-  fdlg.addEventListener('click', function (e) {
-    var all = e.target.closest('[data-sf-all]');
-    if (all) { setTimeout(function () { var on = all.dataset.checked === 'true'; fdlg.querySelectorAll('#sf-tbl .so-tr:not(.so-tr--head) .rmx-check').forEach(function (c) { c.dataset.checked = String(on); }); fdlg.classList.remove('so-invalid'); }, 0); return; }
-    if (e.target.closest('#sf-tbl .rmx-check')) fdlg.classList.remove('so-invalid');
-  });
-  document.getElementById('sf-send').addEventListener('click', function () {
-    var ticked = fdlg.querySelectorAll('#sf-tbl .so-tr:not(.so-tr--head) .rmx-check[data-checked="true"]').length;
-    if (!ticked) { fdlg.classList.add('so-invalid'); if (window.RMX && RMX.toast) RMX.toast('Select at least one contact', 'failure'); return; }
-    var f = (fdlg.querySelector('[data-rmx-value]') || {}).textContent || 'Form';
-    rec(f, document.getElementById('sf-date').value);
-    if (window.RMX && RMX.closeOverlay) RMX.closeOverlay(fdlg);
-    if (window.RMX && RMX.toast) RMX.toast('"' + f + '" sent.', 'success');
-  });
-
-
-  /* ---------- Bulk Send Form (Figma 8062:46201, 416px): Form, Expiration Date, Send Message; no contact list ---------- */
+  /* ---------- Send Form (Figma 8062:46201, 416px): Form, Expiration Date, Send Message — one person or many; no contact list ---------- */
   var bdlg = document.createElement('div');
   bdlg.className = 'rmx-overlay'; bdlg.id = 'send-form-bulk'; bdlg.hidden = true; bdlg.setAttribute('data-so', 'bulk'); bdlg.setAttribute('role', 'dialog'); bdlg.setAttribute('aria-modal', 'true'); bdlg.setAttribute('aria-label', 'Send Form'); bdlg.setAttribute('data-rmx-component', 'Dialog Overlay');
   function dd(label, opts, cur) { return '<div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">' + label + '</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>' + esc(cur) + '</span>' + ic('keyboard-arrow-down') + '</button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden>' + opts.map(function (o) { return '<button type="button" data-value="' + esc(o) + '">' + esc(o) + '</button>'; }).join('') + '</div></div>'; }
@@ -186,8 +137,7 @@
   function startOnboarding() { openOnb.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); }
   function startForm(names) {
     if (kind === 'property') { document.getElementById('sp-who').value = names.length > 1 ? names.length + ' selected' : names[0]; document.getElementById('sp-date').value = inAWeek(); document.getElementById('sp-msg').value = ''; openProp.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); return; }
-    if (names.length > 1) { document.getElementById('sfb-msg').value = ''; openBulkForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); return; }
-    buildForm(names); openForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns();
+    document.getElementById('sfb-msg').value = ''; openBulkForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns();
   }
 
   document.addEventListener('click', function (e) {
