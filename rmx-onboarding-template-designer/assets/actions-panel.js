@@ -39,9 +39,9 @@
     '.ap__list { flex: 1; min-width: 0; overflow-y: auto; }.ap__h { margin: 0 0 var(--spacing-sm); font: 600 16px/24px Roboto, sans-serif; color: var(--text-secondary); }' +
     '.ap .ap__it { display: flex; align-items: center; gap: var(--spacing-xs); width: 100%; min-height: 36px; padding: 0 var(--spacing-xs); text-align: left; color: var(--text-secondary); font: 14px Roboto, sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }.ap .ap__it:hover { background: var(--container-tertiary); }.ap .ap__it { display: block; line-height: 36px; }.ap .ap__it:has(> .rmx-icon) { display: flex; align-items: center; line-height: normal; }.ap__it .rmx-icon { width: 16px; height: 16px; flex: none; }' +
     '.ap .ap__it--plain { padding-left: 24px; }.ap__sub { padding-left: 8px; }.ap__sub .ap__it { min-height: 32px; }.ap__sub[hidden] { display: none; }.ap__it[aria-expanded="true"] > .rmx-icon { transform: rotate(90deg); }' +
-    '.ap-left { flex: none; width: 24px; margin: 16px 0 0 24px; height: 112px; border: 1px solid var(--border-secondary); border-radius: var(--radius-sm); background: var(--container-primary); display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; color: var(--icon-brand); }.ap-left[hidden] { display: none; }.ap-left button, .ap-side button { border: 0; background: none; padding: 0; color: inherit; cursor: pointer; display: inline-flex; }' +
+    '.ap-left { flex: none; width: 24px; margin: 0; align-self: stretch; border: 1px solid var(--border-secondary); border-radius: var(--radius-sm); background: var(--container-primary); display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box; color: var(--icon-brand); }.ap-left[hidden] { display: none; }.ap-left button, .ap-side button { border: 0; background: none; padding: 0; color: inherit; cursor: pointer; display: inline-flex; }' +
     '.ap .ap__close, .ap-side .ap-side__icons button, .ap-left button, .ap .ap__it > .rmx-icon, .ap-side__search .rmx-icon, .ap__search .rmx-icon { color: var(--text-link); }   /* the arrows and header buttons are blue */' +
-    '.pr-main { padding: 16px 24px; }.pr-main.ap-collapsed { padding-left: 8px; }' +
+    '.pr-main { padding: 16px 24px; }.pr-score.ap-row { display: flex; gap: 8px; align-items: stretch; }.pr-score.ap-row > .rmx-scoreboard { flex: 1; min-width: 0; }' +
     '.ap-side { flex: none; width: 292px; align-self: flex-start; position: sticky; top: 104px; height: calc(100vh - 120px); margin: 16px 0 16px 16px; display: flex; flex-direction: column; gap: var(--spacing-sm); padding: var(--spacing-md); background: var(--container-primary); border: 1px solid var(--border-secondary); border-radius: var(--radius-sm); box-sizing: border-box; }.ap-side[hidden] { display: none; }' +
     '.ap-side__icons { display: flex; justify-content: flex-end; gap: var(--spacing-md); color: var(--icon-brand); }.ap-side__icons .rmx-icon { width: 20px; height: 20px; }' +
     '.ap-side__search { display: flex; align-items: center; gap: var(--spacing-xs); height: 36px; padding: 0 var(--spacing-xs); background: var(--component-input-default, #f5f8fa); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); color: var(--icon-brand); }.ap-side__search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; font: italic 14px Roboto, sans-serif; color: var(--text-secondary); }.ap-side__search .rmx-icon:last-child { margin-left: auto; }' +
@@ -90,15 +90,15 @@
   shell.insertBefore(side, main);
   var strip = document.createElement('div');
   strip.className = 'ap-left'; strip.hidden = true; strip.innerHTML = '<button type="button" aria-label="Show ' + NOUN + ' list" data-ap-left>' + ic('keyboard-double-arrow-right') + '</button>';
-  shell.insertBefore(strip, main);
-  var score = main.querySelector('.rmx-scoreboard'); if (score) strip.style.height = score.getBoundingClientRect().height + 'px';
+  var scoreWrap = main.querySelector('.pr-score'), score = main.querySelector('.rmx-scoreboard');   /* the strip sits in the scoreboard's row, so the tiles below keep the full width */
+  if (scoreWrap) { scoreWrap.insertBefore(strip, scoreWrap.firstChild); scoreWrap.classList.add('ap-row'); } else shell.insertBefore(strip, main);
   side.querySelector('input').addEventListener('input', function (e) { var q = e.target.value.toLowerCase(); [].forEach.call(side.querySelectorAll('.ap-side__row'), function (a) { a.hidden = a.textContent.toLowerCase().indexOf(q) < 0; }); });
 
   document.addEventListener('click', function (e) {
     if (mail && e.target.closest('button') === mail) { panel.hidden = false; bar.hidden = true; show('communication'); return; }
     if (e.target.closest('[data-ap-close]')) { panel.hidden = true; bar.hidden = false; return; }
     var sec = e.target.closest('[data-ap-sec]'); if (sec) { show(sec.getAttribute('data-ap-sec')); return; }
-    if (e.target.closest('[data-ap-left]')) { side.hidden = !side.hidden; strip.hidden = !side.hidden; main.classList.toggle('ap-collapsed', side.hidden); if (score) strip.style.height = score.getBoundingClientRect().height + 'px'; return; }
+    if (e.target.closest('[data-ap-left]')) { side.hidden = !side.hidden; strip.hidden = !side.hidden; return; }
     var x = e.target.closest('[data-ap-exp]');
     if (x) { var open = x.getAttribute('aria-expanded') === 'true'; x.setAttribute('aria-expanded', String(!open)); x.nextElementSibling.hidden = open; return; }
     var sf = e.target.closest('[data-ap-sendform]');

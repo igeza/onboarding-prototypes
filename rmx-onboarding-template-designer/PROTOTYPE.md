@@ -241,3 +241,5 @@ Form Details: 24px between questions (was 16px).
 **2026-11-18 · Expiration Date has an empty option instead of Never**: both Send Form dialogs (registers/detail pages, and the form designer's Settings > Send Form) start the list with a blank choice, then 3, 7, 14, 30, 60 and 90 days. Choosing the blank one leaves the field empty.
 
 **2026-11-18 · Detail page side panels**: the collapsed left strip is measured against the scoreboard each time it collapses, so it is always the same height (the tenant scoreboard is taller than the prospect one). The header buttons of both side panels (Add, Select multiple, Settings, Refresh, the double chevrons) and the Actions list arrows are blue.
+
+**2026-11-18 · Collapsed left strip lives in the scoreboard row**: when the left panel is collapsed, the double-chevron strip sits beside the scoreboard (same height, 8px gap) instead of in its own column, so the scoreboard gets slightly narrower and the tabs and tiles below keep the full width from x=24. On the tenant scoreboard, Add Charge and Refund Deposit are the same length (112px + caret).
