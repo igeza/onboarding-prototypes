@@ -253,3 +253,5 @@ Form Details: 24px between questions (was 16px).
 **2026-11-18 · One-off form questions show their edit and delete controls only on hover, focus or click**, with the dashed outline, as on the designer canvas (not always visible).
 
 **2026-11-18 · Detail pages: Actions > Communication > Send Form follows Send Email**: it expands to **<New Form>** first (opens the one-off Send New Form overlay for this person), then the form templates (which open the Send Form dialog with that form selected).
+
+**2026-11-18 · One-off form: radio buttons have an 8px gap before their label** (Yes/No questions and the Yes/No options in the editor).

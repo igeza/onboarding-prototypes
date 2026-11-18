@@ -36,6 +36,7 @@
     '#oo-form .fd-q__body { pointer-events: none; }#oo-form .fd-q__tools button { pointer-events: auto; }#oo-form .fd-q--bad, #oo-form .fd-q--bad:hover { border: 1px dashed var(--border-error); }' +
     '#oo-form .fd-q__tools { position: absolute; top: 7px; right: 7px; display: inline-flex; gap: var(--spacing-xs); color: var(--icon-brand); }' +
     '#oo-form .fd-q__opts { display: flex; flex-direction: column; gap: var(--spacing-xs); }#oo-form .fd-q__opts--row { flex-direction: row; flex-wrap: wrap; gap: var(--spacing-xs) var(--spacing-xl); }#oo-form .fd-q__opts--checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-xs) var(--spacing-xl); }' +
+    '#oo-form .rmx-radio, .oo-pop .rmx-radio { display: inline-flex; align-items: center; gap: var(--spacing-xs); }' +
     '#oo-add-fields.is-open { display: flex; flex-direction: column; }' +
     '.fd-editor.oo-pop { z-index: 980; }.oo-pop .fd-fs { position: absolute; left: 0; right: 0; top: 100%; z-index: 5; }.oo-pop .fd-mapwrap { position: relative; }.oo-pop #oo-e-opts { display: flex; flex-direction: column; gap: var(--spacing-xs); }';
   document.head.appendChild(css);
