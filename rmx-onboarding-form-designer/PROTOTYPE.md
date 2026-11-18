@@ -219,3 +219,5 @@ Icon buttons in forms are blue (`--icon-brand`): the question pencil and trash, 
 **2026-11-18 · Pending Approval dialog buttons (Figma `6908:45287`)**: the footer now reads **Reject** (filled blue), **Approve** (filled blue) and **Cancel** (outlined, closes the dialog), in that order, on the Forms register and on the Prospect and Tenant detail pages (their Pending dialogs). Reject and Approve behave as before.
 
 **2026-11-18 · Overlays opened over another overlay get their own ghosting**: opening Add Note from Approve (over Form Details) dims Form Details with a second scrim between the two, instead of drawing the note straight on top. Closing the note removes the extra scrim and leaves Form Details open. In `assets/app.js` (`openOverlay` / `closeOverlay`), so it applies to any stacked overlay in the form designer and template designer prototypes.
+
+**2026-11-18 · Add Note (after Approve) has a Skip button**: Add and Skip (outlined) in the footer. Skip approves the form without a note, the same as Add with the box empty. On the Forms register and the Prospect and Tenant detail pages.
