@@ -369,4 +369,9 @@ body.ag-resizing { cursor: col-resize; user-select: none; }
 
 /* RMR step of type Form: one form card instead of the list of steps. */
 .ag-node[data-steptype="Form"] > .ag-node__steps { display: none; }
-.ag-formcard { display: flex; align-items: center; gap: var(--spacing-sm); padding: 10px var(--spacing-sm); background: var(--container-primary); border: 1px solid var(--border-primary); border-radius: var(--radius-sm); }
+
+/* Available steps in the Onboarding Steps list: a light blue left edge (steps that can only be added once and already are stay gray). */
+.ag-pal-step:not(.is-used) .ag-pal-step__bar { background: var(--background-brand-primary); }
+
+/* A Form RMR step has nothing to collapse, so it has no chevron. */
+.ag-node[data-steptype="Form"] .ag-chev { display: none; }

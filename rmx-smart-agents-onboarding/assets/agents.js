@@ -413,13 +413,10 @@
       Object.keys(SUBS).map(t => { const used = SINGLE.has(t) && counts[t] > 0; return '<div class="ag-pal-step' + (used ? ' is-used' : '') + '"><span class="ag-pal-step__bar"></span><button type="button" class="ag-pal-step__body rmx-type-paragraph-s-semibold" ' + (used ? 'aria-disabled="true" title="Already added. This step can only be added once."' : 'draggable="true" data-pal="' + t + '"') + '><span>' + t + '</span>' + (counts[t] ? '<span class="ag-pal-step__n rmx-type-paragraph-s-regular">' + counts[t] + '</span>' : '') + '</button></div>'; }).join('') + '</div>' +
       (withOrder ? chk('order', 'Steps must be completed in order', node.dataset.order === 'true') : '') + '</div></div>';
   }
-  /* an RMR step of type Form shows one form card in place of its list of steps */
+  /* an RMR step of type Form is a single form: its name is the form's name (unless you named it yourself) */
   function applyType(node) {
-    const isForm = node.dataset.steptype === 'Form'; let card = $('.ag-formcard', node);
-    if (isForm) {
-      if (!card) { card = document.createElement('div'); card.className = 'ag-formcard'; card.innerHTML = '<div class="ag-step__text"><span class="ag-step__title rmx-type-paragraph-s-semibold">Form</span><span class="ag-step__sub rmx-type-label-s-regular"></span></div>'; $('.ag-node__steps', node).after(card); }
-      $('.ag-step__sub', card).textContent = node.dataset.form || 'Pet Addendum';
-    } else if (card) card.remove();
+    const isForm = node.dataset.steptype === 'Form', card = $('.ag-formcard', node); if (card) card.remove(); if (isForm) node.classList.remove('is-collapsed');
+    if (node.dataset.named !== 'true') $('.ag-node__text', node).textContent = isForm ? (node.dataset.form || 'Pet Addendum') : (node.dataset.defname || 'New Onboarding');
     draw();
   }
   function renderOnbPane(node) {
@@ -452,13 +449,12 @@
       if (d.dataset.k === 'steptype') {
         curOnb.dataset.steptype = v;
         /* the name follows the type (Form, or the original name) unless you have already named the step yourself */
-        if (curOnb.dataset.named !== 'true') $('.ag-node__text', curOnb).textContent = v === 'Form' ? 'Form' : (curOnb.dataset.defname || 'New Onboarding');
         /* a step can only be grouped with steps of its own type, so changing the type takes it out of its group */
         const og = groupOf.get(curOnb.dataset.node); if (og) { groupOf.delete(curOnb.dataset.node); if (membersOf(og).length < 2) membersOf(og).forEach(i => groupOf.delete(i)); }
         refreshGroupUI();
         applyType(curOnb); renderOnbPane(curOnb);
       }
-      if (d.dataset.k === 'obform') { curOnb.dataset.form = v; applyType(curOnb); }
+      if (d.dataset.k === 'obform') { curOnb.dataset.form = v; applyType(curOnb); renderOnbPane(curOnb); }
       return;
     }
     const c = e.target.closest('label.rmx-check[data-k="order"], label.rmx-check[data-k="oreq"]');
