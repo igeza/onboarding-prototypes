@@ -205,7 +205,7 @@ Icon buttons in forms are blue (`--icon-brand`): the question pencil and trash, 
 
 ## 2026-11-18 · Updated to the new Forms flow (Figma 6152:19294)
 
-- Header now reads Template Name, Expiration Date (dropdown, default 7 days), Assign to Property. Form Type is no longer shown there (still kept in the data for Add Form).
+- Header reads Template Name, Assign to Property (Expiration Date was added, then moved to Settings > Send Form). Form Type is no longer shown there (still kept in the data for Add Form).
 - "Always Available in rmResident Portal" is now "Always on rmResident Portal" (designer and Add Form).
 - Settings menu: new Settings group with **Send Form** (Figma 6304:12034) above Automated Notifications; it opens the 440px Send Form dialog (Figma 8041:49689: Expiration Date default and Send Message, Save/Cancel).
 - Add Fields: Response Types and General Fields are one group, **Unmapped Fields** (Date, Yes/No, Checkboxes, Dropdown, File Upload, Image Upload, Short Answer, Paragraph, Text Box, Attachment).
