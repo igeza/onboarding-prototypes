@@ -992,14 +992,12 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
 <script src="../assets/megamenu.js"></script>
 <script src="../assets/pages.js"></script>
 <script src="../assets/dirty-footer.js"></script>
-<script src="../assets/oneoff.js"></script>
 <script>
 /* Pet Information opens with the questions the resident answers in the onboarding (rmr-onboarding-flow, 10-pet-information). */
 (function () {
   var page = document.querySelector('.fd-pane__head .wt-w490 input');
   var fi = new URLSearchParams(location.search).get('f'), mine = null;
   try { mine = fi !== null ? (JSON.parse(sessionStorage.getItem('rmx-forms')) || [])[+fi] : null; } catch (e) {}
-  if (!mine && new URLSearchParams(location.search).get('oneoff')) { var o1 = {}; try { o1 = JSON.parse(sessionStorage.getItem('rmx-oneoff')) || {}; } catch (e) {} mine = { type: o1.kind || 'Tenant', name: '', props: '', approval: false, publish: false }; }   /* one-off form: starts empty */
   if (mine) {   // a form made with Add Form: its own header settings and an empty form
     document.querySelector('.fd-formtype__val').textContent = mine.type;
     document.querySelector('.fd-top__fields input[type=text]').value = mine.name;

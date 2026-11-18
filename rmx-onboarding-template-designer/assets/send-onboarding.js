@@ -170,13 +170,13 @@
   document.addEventListener('rmx:change', function (e) { var x = e.target.closest && e.target.closest('.so-expire'); if (!x) return; var on = e.detail && e.detail.checked; x.toggleAttribute('data-off', !on); x.querySelector('input').disabled = !on; });
   document.getElementById('so-send').addEventListener('click', function () { if (window.RMX && RMX.toast) RMX.toast('Onboarding sent', 'success'); });
 
-  /* One-off form: no template. Opens the form designer in one-off mode (rmx-onboarding-form-designer/assets/oneoff.js). */
+  /* One-off form: no template. A simplified builder in an overlay (oneoff-form.js), loaded the first time it is needed. */
   function startOneOff(names) {
-    try { sessionStorage.setItem('rmx-oneoff', JSON.stringify({ kind: NOUN, names: names, back: location.href })); sessionStorage.removeItem('rmx-onboarding-form'); } catch (e) {}
-    window.location.href = '../../rmx-onboarding-form-designer/screens/form-designer.html?oneoff=1';
+    function go() { window.RMX_ONEOFF.open(names, NOUN); }
+    if (window.RMX_ONEOFF) { go(); return; }
+    var sc = document.createElement('script'); sc.src = (me && me.src ? me.src.replace(/send-onboarding\.js.*$/, '') : '../assets/') + 'oneoff-form.js'; sc.onload = go; document.head.appendChild(sc);
   }
   window.RMX_SEND_FORM = startForm; window.RMX_SEND_ONEOFF = startOneOff;
-  try { var okMsg = sessionStorage.getItem('rmx-oneoff-sent'); if (okMsg) { sessionStorage.removeItem('rmx-oneoff-sent'); setTimeout(function () { if (window.RMX && RMX.toast) RMX.toast(JSON.parse(okMsg), 'success'); }, 300); } } catch (e) {}   /* detail pages: Actions > Communication > Send Form */
 
   /* ---------- selection column and bar ---------- */
   if (!table) return;
