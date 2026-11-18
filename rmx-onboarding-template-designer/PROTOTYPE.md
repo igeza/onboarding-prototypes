@@ -239,3 +239,5 @@ Form Details: 24px between questions (was 16px).
 **2026-11-18 · Send Form dialogs have no ? (help) icon**: the 416px Send Form dialog (registers, bulk, detail Actions panel) and the form designer's Settings > Send Form dialog show only the close icon.
 
 **2026-11-18 · Expiration Date has an empty option instead of Never**: both Send Form dialogs (registers/detail pages, and the form designer's Settings > Send Form) start the list with a blank choice, then 3, 7, 14, 30, 60 and 90 days. Choosing the blank one leaves the field empty.
+
+**2026-11-18 · Detail page side panels**: the collapsed left strip is measured against the scoreboard each time it collapses, so it is always the same height (the tenant scoreboard is taller than the prospect one). The header buttons of both side panels (Add, Select multiple, Settings, Refresh, the double chevrons) and the Actions list arrows are blue.
