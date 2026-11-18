@@ -372,6 +372,9 @@ function applyTenant(t) {
 applyTenant(new URLSearchParams(location.search).get('t'));
 window.addEventListener('message', function (e) { if (e.data && e.data.rmxTenant) applyTenant(e.data.rmxTenant); });
 </script>
+<script src="../assets/datepicker.js"></script>
+<script src="../assets/send-onboarding.js" data-kind="tenant" data-table="none"></script>
+<script src="../assets/actions-panel.js"></script>
 <script src="../assets/overlay-scroll.js"></script>
 </body>
 </html>

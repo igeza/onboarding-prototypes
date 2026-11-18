@@ -218,6 +218,8 @@
   document.addEventListener('rmx:change', function (e) { var x = e.target.closest && e.target.closest('.so-expire'); if (!x) return; var on = e.detail && e.detail.checked; x.toggleAttribute('data-off', !on); x.querySelector('input').disabled = !on; });
   document.getElementById('so-send').addEventListener('click', function () { if (window.RMX && RMX.toast) RMX.toast('Onboarding sent', 'success'); });
 
+  window.RMX_SEND_FORM = startForm;   /* detail pages: Actions > Communication > Send Form */
+
   /* ---------- selection column and bar ---------- */
   if (!table) return;
   var bar = document.createElement('div');
