@@ -34,7 +34,8 @@
     '.so-menu button:hover, .so-menu button:focus-visible { background: var(--container-tertiary); outline: none; }' +
     '.rmx-overlay[data-so] { width: 298px; max-width: calc(100vw - 32px); }' +
     '.rmx-overlay[data-so="form"] { width: 856px; }' +
-    '.rmx-overlay[data-so="bulk"] { width: 1038px; }' +
+    '.rmx-overlay[data-so="bulk"] { width: 416px; }' +
+    '.rmx-overlay[data-so="bulk"] .so-body .rmx-field__box:has(textarea) { height: 96px; min-height: 96px; }.rmx-overlay[data-so="bulk"] .so-body [data-rmx-component="Text Box"] .rmx-field__label { line-height: 20px; }.rmx-overlay[data-so="bulk"] .so-body [data-rmx-component="Input Field"] .rmx-field__label { line-height: 16px; }' +
     '.rmx-overlay[data-so="prop"] { width: 440px; }' +
     '.rmx-overlay[data-so].is-open { display: flex; flex-direction: column; max-height: calc(100vh - 32px); }' +
     '.rmx-overlay[data-so] .rmx-overlay__header { justify-content: space-between; flex: none; }' +
@@ -142,6 +143,25 @@
     if (window.RMX && RMX.toast) RMX.toast('"' + f + '" sent.', 'success');
   });
 
+
+  /* ---------- Bulk Send Form (Figma 8062:46201, 416px): Form, Expiration Date, Send Message; no contact list ---------- */
+  var bdlg = document.createElement('div');
+  bdlg.className = 'rmx-overlay'; bdlg.id = 'send-form-bulk'; bdlg.hidden = true; bdlg.setAttribute('data-so', 'bulk'); bdlg.setAttribute('role', 'dialog'); bdlg.setAttribute('aria-modal', 'true'); bdlg.setAttribute('aria-label', 'Send Form'); bdlg.setAttribute('data-rmx-component', 'Dialog Overlay');
+  function dd(label, opts, cur) { return '<div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">' + label + '</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="oa-value" data-rmx-value>' + esc(cur) + '</span>' + ic('keyboard-arrow-down') + '</button><div class="rmx-menu rmx-menu--list" data-rmx-menu hidden>' + opts.map(function (o) { return '<button type="button" data-value="' + esc(o) + '">' + esc(o) + '</button>'; }).join('') + '</div></div>'; }
+  bdlg.innerHTML =
+    '<div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Send Form</span><span class="so-hicons"><span data-rmx-todo="Help is not built in this prototype">' + ic('help', 'rmx-icon--24') + '</span><button type="button" aria-label="Close" data-rmx-close>' + ic('close', 'rmx-icon--24') + '</button></span></div>' +
+    '<div class="so-body">' + dd('Form', FORMS, FORMS[0]) + dd('Expiration Date', ['3 days', '7 days', '14 days', '30 days', '60 days', '90 days', 'Never'], '7 days') +
+    '<div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label">Send Message</span><div class="rmx-field__box"><textarea id="sfb-msg" aria-label="Send Message"></textarea></div></div></div>' +
+    '<div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" id="sfb-send" data-rmx-component="Button">Send</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>';
+  document.body.appendChild(bdlg);
+  var openBulkForm = opener('send-form-bulk');
+  document.getElementById('sfb-send').addEventListener('click', function () {
+    var f = (bdlg.querySelector('[data-rmx-value]') || {}).textContent || 'Form';
+    rec(f, '');
+    if (window.RMX && RMX.closeOverlay) RMX.closeOverlay(bdlg);
+    if (window.RMX && RMX.toast) RMX.toast('"' + f + '" sent.', 'success');
+  });
+
   /* ---------- Send Form to Property (Figma Send to Property 6070:46986, dialog 6070:47029, 440px) ---------- */
   var pdlg = document.createElement('div');
   pdlg.className = 'rmx-overlay'; pdlg.id = 'send-form-prop'; pdlg.hidden = true; pdlg.setAttribute('data-so', 'prop'); pdlg.setAttribute('role', 'dialog'); pdlg.setAttribute('aria-modal', 'true'); pdlg.setAttribute('aria-label', 'Send Form'); pdlg.setAttribute('data-rmx-component', 'Dialog Overlay');
@@ -166,6 +186,7 @@
   function startOnboarding() { openOnb.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); }
   function startForm(names) {
     if (kind === 'property') { document.getElementById('sp-who').value = names.length > 1 ? names.length + ' selected' : names[0]; document.getElementById('sp-date').value = inAWeek(); document.getElementById('sp-msg').value = ''; openProp.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); return; }
+    if (names.length > 1) { document.getElementById('sfb-msg').value = ''; openBulkForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); return; }
     buildForm(names); openForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns();
   }
 
