@@ -161,16 +161,26 @@
   function openOverlay(id) {
     const el = document.getElementById(id);
     if (!el) return;
+    /* An overlay opened over another one (Approve > Add Note over Form Details) gets its own ghosting between the two. */
+    const under = $$('.rmx-overlay.is-open').filter(o => o !== el);
     el.hidden = false;
     el.classList.add('is-open');
     scrim().hidden = false;
+    if (under.length && !el._stack) {
+      const g = document.createElement('div');
+      g.className = 'rmx-scrim rmx-scrim--stack';
+      g.style.zIndex = '960';
+      document.body.appendChild(g);
+      el._stack = g;
+      el.style.zIndex = '970';
+    }
     const f = $('input, button, [tabindex]', el);
     if (f) f.focus();
   }
 
   function closeOverlay(el) {
     const targets = el ? [el] : $$('.rmx-overlay.is-open, [data-rmx-panel].is-open');
-    targets.forEach(t => { t.classList.remove('is-open'); t.hidden = true; });
+    targets.forEach(t => { t.classList.remove('is-open'); t.hidden = true; if (t._stack) { t._stack.parentNode.removeChild(t._stack); t._stack = null; t.style.zIndex = ''; } });
     if (!$('.rmx-overlay.is-open, [data-rmx-panel].is-open')) scrim().hidden = true;
   }
 
