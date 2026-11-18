@@ -339,4 +339,4 @@ textarea { resize: none; }
 .afm__body .sfd__box { height: 96px; align-items: flex-start; }
 .afm__body .sfd__box textarea { all: unset; flex: 1; width: 100%; height: 100%; color: var(--text-secondary); resize: none; }
 .afm__body [data-rmx-component="Text Box"] .rmx-field__label { line-height: 20px; }   /* Figma: Text Box label row is 20px, field 120px in all */
-.rmx-menu .wt-sub, .rmx-menu-layer .wt-sub { color: var(--text-link); }   /* Settings menu items are blue (Figma 6304:12034) */
+.rmx-menu-layer .rmx-menu > button.wt-sub { color: var(--text-link); }   /* Settings menu items are blue (Figma 6304:12034) */
