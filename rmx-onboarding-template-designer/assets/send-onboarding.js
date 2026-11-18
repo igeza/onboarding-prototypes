@@ -11,7 +11,7 @@
   var NOUN = kind === 'tenant' ? 'Tenant' : kind === 'property' ? 'Property' : 'Prospect', PLURAL = kind === 'property' ? 'properties' : NOUN.toLowerCase() + 's', table = document.getElementById(tableId);
   var LISTS = {
     prospect: ['Send Email', 'Send Onboarding', 'Send Form', 'Lost', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Send Online Application', 'Write Screening Adverse Action Letter', 'Write Income Verification Adverse Action Letter', 'Add Invoice', 'Show All Invoices', 'Add Estimate', 'Show All Estimates'],
-    property: ['Send Email', 'Send Form', 'Add Management Inspection', 'Create Service Issue', 'Write Letters', 'Report Writer', 'Add to Phone Broadcasts', 'Add to Text Broadcasts'],
+    property: ['Send Email', 'Add Management Inspection', 'Create Service Issue', 'Write Letters', 'Report Writer', 'Add to Phone Broadcasts', 'Add to Text Broadcasts'],
     tenant: ['Send Email', 'Send Onboarding', 'Send Form', 'Send Survey', 'Send Management Inspection', 'Send Tenant Self-Inspection', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Jump To Prospect', 'Create Document Packet', 'Publish Signable Documents', 'Add To Account Groups', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge']
   };
   var FORMS = ['Pet Info & Policy Agreement', 'Pet Information', 'Gym Access', 'Notice to Vacate'];
@@ -218,7 +218,7 @@
   var P = kind === 'tenant' ? 'Tenant' : 'Prospect';
   var GROUPS = [['History / Note', ['Add to History >']], ['Service Manager', ['Add Issue']], ['Financial', ['Add Charge']], ['Reports', [P + ' Mailing Labels', 'Report Writer']],
     ['Communication', ['Write Letters', 'Send Email', 'Send Form', 'Send Onboarding', 'Publish Signable Documents', 'Send Text', 'Add to Phone Broadcasts']]];
-  if (kind === 'property') GROUPS = [['Reports', ['Report Writer']], ['Communication', ['Write Letters', 'Send Email', 'Send Form', 'Add to Phone Broadcasts', 'Add to Text Broadcasts']]];
+  if (kind === 'property') GROUPS = [['Reports', ['Report Writer']], ['Communication', ['Write Letters', 'Send Email', 'Add to Phone Broadcasts', 'Add to Text Broadcasts']]];   /* no Send Form for properties */
   else if (kind !== 'tenant') GROUPS.push(['Manage Prospects', ['Set to Lost', 'Change Stage', 'Delete']]);
   bmenu.className = 'so-menu so-bmenu'; bmenu.hidden = true;
   bmenu.innerHTML = '<button type="button" class="so-mass">' + ic('edit') + '<span>Mass Edit Mode</span><em>F2</em></button><div class="so-sep"></div>' +
