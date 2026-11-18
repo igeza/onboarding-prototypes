@@ -399,7 +399,7 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     </div>
     <div class="fd-top__tail">
       <a class="rmx-btn rmx-btn--text" href="portal-preview.html" data-rmx-component="Button"><svg class="rmx-icon"><use href="#play-arrow"></use></svg><span class="rmx-btn__label">Preview</span></a>
-      <div class="fd-settings" data-rmx-dropdown data-rmx-menu-wide><button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-trigger>Settings<svg class="rmx-icon"><use href="#arrow-drop-down"></use></svg></button><span data-rmx-value hidden></span><div class="rmx-menu" data-rmx-menu hidden><div class="wt-menuhead">Automated Notifications</div><button type="button" data-value="Form Published to RMR" class="wt-sub" data-rmx-todo="Automated notifications are not built in this prototype">Form Published to RMR</button><button type="button" data-value="Form Aging" class="wt-sub" data-rmx-todo="Automated notifications are not built in this prototype">Form Aging</button></div></div>
+      <div class="fd-settings" data-rmx-dropdown data-rmx-menu-wide><button type="button" class="rmx-btn rmx-btn--primary" data-rmx-component="Button" data-rmx-trigger>Settings<svg class="rmx-icon"><use href="#arrow-drop-down"></use></svg></button><span data-rmx-value hidden></span><div class="rmx-menu" data-rmx-menu hidden><div class="wt-menuhead">Settings</div><button type="button" data-value="Send Form" class="wt-sub" data-rmx-open="send-form-defaults">Send Form</button><div class="wt-menuhead">Automated Notifications</div><button type="button" data-value="Form Published to RMR" class="wt-sub" data-rmx-todo="Automated notifications are not built in this prototype">Form Published to RMR</button><button type="button" data-value="Form Aging" class="wt-sub" data-rmx-todo="Automated notifications are not built in this prototype">Form Aging</button></div></div>
     </div>
   </div>
   <div class="fd-body">
@@ -454,6 +454,15 @@ button.wt-menuhead { border: 0; background: none; width: 100%; font: inherit; fo
     </section>
   </div>
 </main>
+<div class="rmx-overlay" id="send-form-defaults" hidden role="dialog" aria-modal="true" aria-label="Send Form" data-rmx-component="Dialog Overlay"><div class="afm">
+  <div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Send Form</span><span class="sf__hicons"><span data-rmx-todo="Help is not built in this prototype"><svg class="rmx-icon rmx-icon--24"><use href="#help"></use></svg></span><button type="button" class="fd-close" data-rmx-close aria-label="Close"><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></button></span></div>
+  <div class="afm__body">
+    <p class="sfd__intro">Set the default settings for when the form is sent out to users.</p>
+    <div class="rmx-field" data-rmx-dropdown data-rmx-component="Input Field"><span class="rmx-field__label">Expiration Date</span><button type="button" class="rmx-field__box" data-rmx-trigger><span class="wt-value" data-rmx-value>7 days</span><svg class="rmx-icon"><use href="#keyboard-arrow-down"></use></svg></button><div class="rmx-menu" data-rmx-menu hidden><button type="button" data-value="3 days">3 days</button><button type="button" data-value="7 days">7 days</button><button type="button" data-value="14 days">14 days</button><button type="button" data-value="30 days">30 days</button><button type="button" data-value="60 days">60 days</button><button type="button" data-value="90 days">90 days</button><button type="button" data-value="Never">Never</button></div></div>
+    <div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label">Send Message</span><div class="rmx-field__box sfd__box"><textarea aria-label="Send Message"></textarea></div></div>
+  </div>
+  <div class="rmx-overlay__footer" data-rmx-component="Overlay Footer"><button type="button" class="rmx-btn rmx-btn--primary" data-rmx-close data-rmx-component="Button">Save</button><button type="button" class="rmx-btn rmx-btn--secondary" data-rmx-close data-rmx-component="Button">Cancel</button></div>
+</div></div>
 <div class="rmx-overlay" id="add-fields" hidden role="dialog" aria-modal="true" aria-label="Add Fields" data-rmx-component="Dialog Overlay"><div class="af">
   <div class="rmx-overlay__header" data-rmx-component="Overlay Header"><span class="rmx-type-heading-m-regular">Add Fields</span><button type="button" class="fd-close" data-rmx-close data-af-reset aria-label="Close"><svg class="rmx-icon rmx-icon--24"><use href="#close"></use></svg></button></div>
   <div class="af__panes">
