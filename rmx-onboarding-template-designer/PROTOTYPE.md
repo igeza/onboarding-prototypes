@@ -237,3 +237,5 @@ Form Details: 24px between questions (was 16px).
 **2026-11-18 · Collapsed left panel matches Figma `6752:27976`**: the thin strip sits at x=24 (24px wide), level with the scoreboard, blue 1px border, rounded, with the double chevron centered; the scoreboard starts 8px to its right (x=56).
 
 **2026-11-18 · Send Form dialogs have no ? (help) icon**: the 416px Send Form dialog (registers, bulk, detail Actions panel) and the form designer's Settings > Send Form dialog show only the close icon.
+
+**2026-11-18 · Expiration Date has an empty option instead of Never**: both Send Form dialogs (registers/detail pages, and the form designer's Settings > Send Form) start the list with a blank choice, then 3, 7, 14, 30, 60 and 90 days. Choosing the blank one leaves the field empty.
