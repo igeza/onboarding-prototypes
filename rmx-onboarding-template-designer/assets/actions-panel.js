@@ -1,6 +1,6 @@
 /* Side panels for the Tenant and Prospect detail pages (Figma Prospect Details - Workflow 6752:27976, plus Rent Manager screenshots).
    Right: the Actions panel, always on the page (300px, blue border). Icon rail picks the section: Shortcuts, Tasks, Leasing, Financial,
-   Communication (Send Form lives here), Reports, Settings. The double chevron collapses it to the narrow action bar; the mail button there brings it back.
+   Communication (Send Form lives here), Reports, Settings. The double chevron collapses it to a slim white rail (Figma 6061:35017: expand chevron, search and the section icons); any icon on the rail opens the panel on that section.
    Left: the entity sidebar (Figma Prospect Details - Workflow 8056:53882): quick icons, Find a tenant, the people list. The double chevron collapses it to a thin strip.
    Send Form expands like Send Survey and lists the form templates; picking one opens the Send Form dialog with that form (send-onboarding.js, window.RMX_SEND_FORM) for the person on the page. */
 (function () {
@@ -30,6 +30,7 @@
   css.textContent =
     '.ap { flex: none; width: 300px; align-self: flex-start; position: sticky; top: 104px; height: calc(100vh - 120px); margin: 16px 16px 16px 0; display: flex; flex-direction: column; gap: var(--spacing-sm); padding: var(--spacing-md); background: var(--container-primary); border: 1px solid var(--border-secondary); border-radius: var(--radius-sm); box-sizing: border-box; }' +
     '.ap[hidden] { display: none; }' +
+    '.ap-rail { flex: none; width: 52px; align-self: flex-start; position: sticky; top: 104px; height: calc(100vh - 120px); margin: 16px 16px 16px 0; display: flex; flex-direction: column; align-items: center; gap: var(--spacing-md); padding: var(--spacing-sm) 0; background: var(--container-primary); border: 1px solid var(--border-secondary); border-radius: var(--radius-sm); box-sizing: border-box; }.ap-rail[hidden] { display: none; }.ap-rail button { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 0; background: none; padding: 0; border-radius: var(--radius-sm); color: var(--text-secondary); cursor: pointer; }.ap-rail button[aria-pressed="true"] { background: #d6e8f5; }.ap-rail .ap-rail__open { color: var(--text-link); }.ap-rail hr { width: 32px; margin: 0; border: 0; border-top: 1px solid var(--border-primary); }' +
     '.ap__head { display: flex; align-items: center; justify-content: space-between; }.ap__title { font: 600 16px/24px Roboto, sans-serif; color: var(--text-secondary); }' +
     '.ap button { border: 0; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer; }' +
     '.ap__close { display: inline-flex; color: var(--icon-brand); }' +
@@ -68,9 +69,17 @@
   shell.insertBefore(panel, bar);
   function show(id) {
     var s = SECTIONS.filter(function (x) { return x.id === id; })[0];
-    document.getElementById('ap-list').innerHTML = sectionHTML(s);
+    cur = id; document.getElementById('ap-list').innerHTML = sectionHTML(s);
     [].forEach.call(panel.querySelectorAll('[data-ap-sec]'), function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-ap-sec') === id)); });
+    [].forEach.call(rail.querySelectorAll('[data-ap-open]'), function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-ap-open') === id)); });
   }
+  var cur = start;
+  var rail = document.createElement('aside');
+  rail.className = 'ap-rail'; rail.hidden = true; rail.setAttribute('aria-label', 'Actions (collapsed)'); rail.setAttribute('data-rmx-component', 'Actions Rail');
+  rail.innerHTML = '<button type="button" class="ap-rail__open" aria-label="Expand Actions" data-ap-open="">' + ic('keyboard-double-arrow-left') + '</button><hr>' +
+    '<button type="button" aria-label="Find an action" data-ap-open="search">' + ic('search') + '</button>' +
+    SECTIONS.map(function (x) { return '<button type="button" aria-label="' + x.label + '" aria-pressed="' + (x.id === start) + '" data-ap-open="' + x.id + '">' + x.icon + '</button>'; }).join('');
+  shell.insertBefore(rail, bar);
   show(start);
   bar.hidden = true;
   var mail = bar.querySelector('button[aria-label="Send email"]');
@@ -95,8 +104,10 @@
   side.querySelector('input').addEventListener('input', function (e) { var q = e.target.value.toLowerCase(); [].forEach.call(side.querySelectorAll('.ap-side__row'), function (a) { a.hidden = a.textContent.toLowerCase().indexOf(q) < 0; }); });
 
   document.addEventListener('click', function (e) {
-    if (mail && e.target.closest('button') === mail) { panel.hidden = false; bar.hidden = true; show('communication'); return; }
-    if (e.target.closest('[data-ap-close]')) { panel.hidden = true; bar.hidden = false; return; }
+    
+    if (e.target.closest('[data-ap-close]')) { panel.hidden = true; rail.hidden = false; return; }
+    var op = e.target.closest('[data-ap-open]');
+    if (op) { var id = op.getAttribute('data-ap-open'); panel.hidden = false; rail.hidden = true; show(id && id !== 'search' ? id : cur); if (id === 'search') panel.querySelector('.ap__search input').focus(); return; }
     var sec = e.target.closest('[data-ap-sec]'); if (sec) { show(sec.getAttribute('data-ap-sec')); return; }
     if (e.target.closest('[data-ap-left]')) { side.hidden = !side.hidden; strip.hidden = !side.hidden; return; }
     var x = e.target.closest('[data-ap-exp]');
