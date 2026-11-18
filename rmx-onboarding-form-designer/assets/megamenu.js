@@ -96,7 +96,7 @@
     'rental-info': {
       label: 'Rental Info',
       columns: [
-        { title: 'General', items: [{ label: 'Tenants', href: '../../rmx-onboarding-template-designer/screens/tenants.html' }, { label: 'Prospects', href: '../../rmx-onboarding-template-designer/screens/prospects.html' }, { label: 'Tenant Details', href: '../../rmx-onboarding-template-designer/screens/tenant-details.html' }, { label: 'Prospect Details', href: '../../rmx-onboarding-template-designer/screens/prospect.html' }, 'Units', { label: 'Properties', href: '../../rmx-onboarding-template-designer/screens/properties.html' }, 'Unit Types', 'Assets', 'Violations', 'Merge Prospects'] },
+        { title: 'General', items: [{ label: 'Tenant Detail', href: '../../rmx-onboarding-template-designer/screens/tenant-details.html' }, { label: 'Tenant Register', href: '../../rmx-onboarding-template-designer/screens/tenants.html' }, { label: 'Prospect Detail', href: '../../rmx-onboarding-template-designer/screens/prospect.html' }, { label: 'Prospect Register', href: '../../rmx-onboarding-template-designer/screens/prospects.html' }, 'Units', { label: 'Properties', href: '../../rmx-onboarding-template-designer/screens/properties.html' }, 'Unit Types', 'Assets', 'Violations', 'Merge Prospects'] },
         { title: 'Leasing', items: ['Screenings', 'Applications', 'Application Templates', 'Renewal Increases', 'Prospect Leasing Board', 'Create Renewal Offers', 'Lease Renewal Register', 'Lease Renewal Board', 'Export Minnesota CRP'] },
         { title: 'Short Term Rentals', items: ['STR Reservations', 'Check-ins', 'Find Reservation'] },
         { title: 'Online Listing', items: ['Listings'] },

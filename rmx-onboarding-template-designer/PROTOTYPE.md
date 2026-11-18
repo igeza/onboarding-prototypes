@@ -225,3 +225,5 @@ Form Details: 24px between questions (was 16px).
 **2026-11-18 · No Send Form for properties**: removed from the Properties row menu and Bulk Actions menu. (The Send Form to Property dialog code is still in `send-onboarding.js` but nothing opens it.)
 
 **2026-11-18 · Bulk Send Form (Figma `8062:44447`, dialog `8062:46201`)**: sending to several people now opens a small 416px dialog: Form, Expiration Date (dropdown, 7 days) and Send Message (120px), then Send / Cancel. It has no contact list (that table is only in the single-person Send Form). The selection bar already matched.
+
+**2026-11-18 · Mega Menu General group matches Rent Manager**: Rental Info > General now lists Tenant Detail, Tenant Register, Prospect Detail, Prospect Register, Units, Properties (from Izzy's screenshot), in both prototypes' menus.
