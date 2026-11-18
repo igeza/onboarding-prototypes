@@ -31,7 +31,9 @@
     '#oo-form .oo-gen { display: flex; flex-direction: column; gap: var(--spacing-md); padding: var(--spacing-md); }#oo-form .oo-checks { display: flex; gap: var(--spacing-xl); align-items: center; }' +
     '#oo-form .oo-box { height: 96px; align-items: flex-start; padding: 0; }#oo-form .oo-box textarea { all: unset; box-sizing: border-box; width: 100%; height: 100%; padding: 8px; color: var(--text-secondary); font: var(--type-label-m-regular); }' +
     '#oo-form .oo-qs { display: flex; flex-direction: column; gap: var(--spacing-xs); padding: var(--spacing-md); }#oo-form .oo-empty { margin: 0; color: var(--text-disabled); font: var(--type-label-m-italic); }' +
-    '#oo-form .fd-q { border: 1px dashed var(--icon-disabled); cursor: default; }#oo-form .fd-q:not(.fd-q--active) .fd-q__tools { visibility: visible; }#oo-form .fd-q__body { pointer-events: none; }#oo-form .fd-q__tools button { pointer-events: auto; }#oo-form .fd-q--bad { border-color: var(--border-error); }' +
+    '#oo-form .fd-q { border: 1px solid transparent; border-radius: var(--radius-sm); cursor: default; }#oo-form .fd-q--active, #oo-form .fd-q:hover { border: 1px dashed var(--icon-disabled); }' +
+    '#oo-form .fd-q:not(.fd-q--active) .fd-q__tools { visibility: hidden; }#oo-form .fd-q:hover .fd-q__tools, #oo-form .fd-q:focus-within .fd-q__tools, #oo-form .fd-q--active .fd-q__tools { visibility: visible; }' +
+    '#oo-form .fd-q__body { pointer-events: none; }#oo-form .fd-q__tools button { pointer-events: auto; }#oo-form .fd-q--bad, #oo-form .fd-q--bad:hover { border: 1px dashed var(--border-error); }' +
     '#oo-form .fd-q__tools { position: absolute; top: 7px; right: 7px; display: inline-flex; gap: var(--spacing-xs); color: var(--icon-brand); }' +
     '#oo-form .fd-q__opts { display: flex; flex-direction: column; gap: var(--spacing-xs); }#oo-form .fd-q__opts--row { flex-direction: row; flex-wrap: wrap; gap: var(--spacing-xs) var(--spacing-xl); }#oo-form .fd-q__opts--checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--spacing-xs) var(--spacing-xl); }' +
     '#oo-add-fields.is-open { display: flex; flex-direction: column; }' +
@@ -190,6 +192,7 @@
   dlg.addEventListener('click', function (e) {
     if (e.target.closest('#oo-add-fields-btn')) { loadDesigner().then(function () { openAdd(); }); return; }
     var qEl = e.target.closest('.fd-q'); if (!qEl) return;
+    [].forEach.call(dlg.querySelectorAll('.fd-q'), function (x) { x.classList.toggle('fd-q--active', x === qEl); });   /* click shows the editing controls, as on the designer canvas */
     var i = +qEl.getAttribute('data-i');
     if (e.target.closest('[data-oo-del]')) { qs.splice(i, 1); render(); return; }
     if (e.target.closest('[data-oo-edit]')) { editing = i; loadDesigner().then(function () { paintEditor(); RMX.openOverlay('oo-editor'); if (RMX.dropdowns) RMX.dropdowns(); }); }
