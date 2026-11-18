@@ -261,7 +261,6 @@
         '<div class="rmx-field" data-rmx-component="Text Box"><span class="rmx-field__label">Help Text ' + ic('info', 'rmx-icon rmx-icon--16') + '</span><div class="rmx-field__box ag-textarea"><textarea data-k="file-help" aria-label="Help Text">' + esc(f.help) + '</textarea></div></div>' +
         chk('file-req', 'Required', f.req) + chk('file-multi', 'Allow multiple uploads', f.multi) + '</div></div></div>';
     }
-    h += stepsSection(el.closest('[data-ag-onb]'), false);
     paneStep.innerHTML = h;
   }
   function syncCard(el) {
