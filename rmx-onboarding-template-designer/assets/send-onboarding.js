@@ -135,9 +135,10 @@
   function close() { menu.hidden = true; }
   function nameOf(tr) { var a = tr.querySelector('a'); if (a) return a.textContent.trim(); var nm = ''; [].some.call(tr.querySelectorAll('td'), function (td) { var t = td.textContent.trim(); if (t) { nm = t; return true; } }); return nm; }
   function startOnboarding() { openOnb.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); }
-  function startForm(names) {
+  function startForm(names, form) {
     if (kind === 'property') { document.getElementById('sp-who').value = names.length > 1 ? names.length + ' selected' : names[0]; document.getElementById('sp-date').value = inAWeek(); document.getElementById('sp-msg').value = ''; openProp.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns(); return; }
-    document.getElementById('sfb-msg').value = ''; openBulkForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns();
+    document.getElementById('sfb-msg').value = ''; if (form) { var vv = bdlg.querySelector('[data-rmx-value]'); if (vv) vv.textContent = form; }
+    openBulkForm.click(); if (window.RMX && RMX.dropdowns) RMX.dropdowns();
   }
 
   document.addEventListener('click', function (e) {
