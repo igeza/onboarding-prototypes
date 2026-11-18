@@ -227,3 +227,5 @@ Icon buttons in forms are blue (`--icon-brand`): the question pencil and trash, 
 **2026-11-18 · One-off form questions show their edit and delete controls only on hover, focus or click**, with the dashed outline, as on the designer canvas (not always visible).
 
 **2026-11-18 · One-off form: radio buttons have an 8px gap before their label** (Yes/No questions and the Yes/No options in the editor).
+
+**2026-11-18 · The register menu item is named Send New Form** (row kebab menu, Bulk Actions menu and the selection bar button), matching the overlay title. On the detail pages' Actions panel it stays `<New Form>`, as Send Email has `<New Email>`.

@@ -1,5 +1,5 @@
 /* Send New Form (one-off form): an overlay on the register (Prospects / Tenants).
-   Figma "Send One-Off Form" 8071:51479. Opened by Send One-Off Form (row menu, Bulk Actions) in send-onboarding.js via
+   Figma "Send One-Off Form" 8071:51479. Opened by Send New Form (row menu, Bulk Actions) in send-onboarding.js via
    window.RMX_ONEOFF.open(names, kind). Not a template: nothing is added to Form Templates unless Save as Template is ticked.
    Layout: intro, a General tile (Form Name, Expiration Date, Require Approval, Save as Template, Send Message) and a Questions tile
    (Add Fields, then the questions with edit and delete).

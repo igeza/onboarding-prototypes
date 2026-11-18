@@ -255,3 +255,5 @@ Form Details: 24px between questions (was 16px).
 **2026-11-18 · Detail pages: Actions > Communication > Send Form follows Send Email**: it expands to **<New Form>** first (opens the one-off Send New Form overlay for this person), then the form templates (which open the Send Form dialog with that form selected).
 
 **2026-11-18 · One-off form: radio buttons have an 8px gap before their label** (Yes/No questions and the Yes/No options in the editor).
+
+**2026-11-18 · The register menu item is named Send New Form** (row kebab menu, Bulk Actions menu and the selection bar button), matching the overlay title. On the detail pages' Actions panel it stays `<New Form>`, as Send Email has `<New Email>`.
