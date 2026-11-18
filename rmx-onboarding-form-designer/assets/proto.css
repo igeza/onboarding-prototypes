@@ -340,3 +340,10 @@ textarea { resize: none; }
 .afm__body .sfd__box textarea { all: unset; flex: 1; width: 100%; height: 100%; color: var(--text-secondary); resize: none; }
 .afm__body [data-rmx-component="Text Box"] .rmx-field__label { line-height: 20px; }   /* Figma: Text Box label row is 20px, field 120px in all */
 .rmx-menu-layer .rmx-menu > button.wt-sub { color: var(--text-link); }   /* Settings menu items are blue (Figma 6304:12034) */
+
+/* Form fields in the editor (the questions on the canvas and the question settings) use the RMX type tokens, as Figma does:
+   Web/Label/M/Regular (14px) for labels, values and options, Web/Label/S/Regular (12px) for help text and the "Question N" title,
+   not hard-coded sizes or the RMR portal type. */
+.rmx .fd-q .fd-q__label, .rmx .fd-q .rmx-text, .rmx .fd-q .rmx-radio, .rmx .fd-q .rmx-field__box, .rmx .fd-q .wt-textarea, .rmx .fd-q .wt-value,
+.rmx .fd-editor .rmx-field__label, .rmx .fd-editor .rmx-field__box, .rmx .fd-editor .rmx-text, .rmx .fd-editor .wt-textarea, .rmx .fd-editor .wt-value, .rmx .fd-editor .rmx-field__box > input { font: var(--type-label-m-regular); }
+.rmx .fd-q .fd-q__help, .rmx .fd-editor .fd-editor__title { font: var(--type-label-s-regular); }
