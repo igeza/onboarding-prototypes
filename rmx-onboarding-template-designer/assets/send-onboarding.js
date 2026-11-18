@@ -4,7 +4,7 @@
    - Row kebab: long action list (scrolls inside). Send Onboarding opens the 298px dialog (Figma 6791:27670: Due Date and Expire days); Send Form opens the Send Form dialog for that person.
    - Bulk mode: Bulk Actions > Send Onboarding / Send Form turns on the first-column checkboxes; a blue bar ("3 prospects selected") then offers that one action. Its x leaves bulk mode.
    - Send Form: Form, Set Expiration, the people's contacts (Name, Email, Web User, Contact Type) with a checkbox each, and a message.
-     One person: a Tenant / Prospect field shows who. Several: the table groups contacts under each selected person.
+     One person: a Tenant / Prospect field shows who. Several: the same dialog without that field, listing every selected person's contacts.
    Use: <script src="../assets/send-onboarding.js" data-kind="prospect|tenant" data-table="prospects"></script> after app.js and datepicker.js. */
 (function () {
   var me = document.currentScript, kind = (me && me.getAttribute('data-kind')) || 'prospect', tableId = (me && me.getAttribute('data-table')) || 'prospects';
@@ -112,11 +112,11 @@
   function chk() { return '<label class="rmx-check" data-checked="false"><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label>'; }
   function contactsOf(name) { return [[name, 'Primary', true]].concat(CONTACTS[name] || []); }
   function buildForm(names) {
-    var many = names.length > 1, cols = many ? 'so-colsn' : 'so-cols1';
-    var head = '<div class="so-tr so-tr--head ' + cols + '">' + (many ? '<span>' + NOUN + '</span>' : '') + '<label class="rmx-check" data-checked="false" data-sf-all><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label><span>Name</span><span>Email Address</span><span>Web User</span><span>Contact Type</span></div>';
+    var many = names.length > 1, cols = 'so-cols1';   /* bulk is the same dialog as a single send, without the Tenant/Prospect field: one flat list of every selected person's contacts */
+    var head = '<div class="so-tr so-tr--head ' + cols + '">' + '<label class="rmx-check" data-checked="false" data-sf-all><span class="rmx-check__box">' + ic('check', 'rmx-icon--16') + '</span></label><span>Name</span><span>Email Address</span><span>Web User</span><span>Contact Type</span></div>';
     var rows = names.map(function (n) {
       return contactsOf(n).map(function (c, i) {
-        return '<div class="so-tr ' + cols + '">' + (many ? '<span class="so-grp">' + (i === 0 ? ic('keyboard-arrow-down', 'rmx-icon--20') + esc(n) : '') + '</span>' : '') + chk() +
+        return '<div class="so-tr ' + cols + '">' + chk() +
           '<span class="so-cell">' + esc(c[0]) + '</span><span class="so-cell so-cell--edit"><input type="email" autocomplete="off" aria-label="Email Address for ' + esc(c[0]) + '"></span>' + (c[2] ? WEB : '<span></span>') + '<span class="so-ct">' + c[1] + '</span></div>';
       }).join('');
     }).join('');
@@ -126,7 +126,7 @@
     document.getElementById('sf-date').value = inAWeek();
     document.getElementById('sf-msg').value = '';
     fdlg.classList.remove('so-invalid');
-    fdlg.setAttribute('data-so', many ? 'bulk' : 'form');
+    fdlg.setAttribute('data-so', 'form');
   }
   fdlg.addEventListener('click', function (e) {
     var all = e.target.closest('[data-sf-all]');
