@@ -2,7 +2,7 @@
    Right: the Actions panel, always on the page (300px, blue border). Icon rail picks the section: Shortcuts, Tasks, Leasing, Financial,
    Communication (Send Form lives here), Reports, Settings. The double chevron collapses it to a slim white rail (Figma 6061:35017: expand chevron, search and the section icons); any icon on the rail opens the panel on that section.
    Left: the entity sidebar (Figma Prospect Details - Workflow 8056:53882): quick icons, Find a tenant, the people list. The double chevron collapses it to a thin strip.
-   Send Form expands like Send Survey and lists the form templates; picking one opens the Send Form dialog with that form (send-onboarding.js, window.RMX_SEND_FORM) for the person on the page. */
+   Send Form expands like Send Email: <New Form> (the one-off form overlay) first, then the form templates; picking one opens the Send Form dialog with that form (send-onboarding.js, window.RMX_SEND_FORM) for the person on the page. */
 (function () {
   var bar = document.querySelector('.rmx-actionbar'), shell = bar && bar.parentNode, main = shell && shell.querySelector('.pr-main'); if (!bar || !main) return;
   var TENANT = /tenant-details/.test(location.pathname), NOUN = TENANT ? 'tenant' : 'prospect';
@@ -53,7 +53,7 @@
 
   function expandable(label, kids) { return '<button type="button" class="ap__it" aria-expanded="false" data-ap-exp>' + ic('chevron-right') + label + '</button><div class="ap__sub" hidden>' + (kids || ['Not built in this prototype']).map(function (k) { return '<button type="button" class="ap__it ap__it--plain" data-rmx-todo="' + k + ' is not built in this prototype">' + k + '</button>'; }).join('') + '</div>'; }
   var FORMS = ['Pet Info & Policy Agreement', 'Pet Information', 'Gym Access', 'Notice to Vacate'];
-  function sendForms() { return '<button type="button" class="ap__it" aria-expanded="false" data-ap-exp>' + ic('chevron-right') + 'Send Form</button><div class="ap__sub" hidden>' + FORMS.map(function (f) { return '<button type="button" class="ap__it ap__it--plain" data-ap-sendform="' + f.replace(/&/g, '&amp;') + '">' + f.replace(/&/g, '&amp;') + '</button>'; }).join('') + '</div>'; }
+  function sendForms() { return '<button type="button" class="ap__it" aria-expanded="false" data-ap-exp>' + ic('chevron-right') + 'Send Form</button><div class="ap__sub" hidden>' + '<button type="button" class="ap__it ap__it--plain" data-ap-oneoff>&lt;New Form&gt;</button>' + FORMS.map(function (f) { return '<button type="button" class="ap__it ap__it--plain" data-ap-sendform="' + f.replace(/&/g, '&amp;') + '">' + f.replace(/&/g, '&amp;') + '</button>'; }).join('') + '</div>'; }
   function sectionHTML(s) {
     var h = '<p class="ap__h">' + s.label + '</p>';
     if (s.id === 'communication') return h + expandable('Document Packets') + '<button type="button" class="ap__it ap__it--plain" data-rmx-todo="Publish Signable Documents is not built in this prototype">Publish Signable Documents</button>' + expandable('Send Email') + sendForms() + expandable('Send Survey', SURVEYS) + expandable('Send Text') + expandable('Write Letter');
@@ -112,6 +112,7 @@
     if (e.target.closest('[data-ap-left]')) { side.hidden = !side.hidden; strip.hidden = !side.hidden; return; }
     var x = e.target.closest('[data-ap-exp]');
     if (x) { var open = x.getAttribute('aria-expanded') === 'true'; x.setAttribute('aria-expanded', String(!open)); x.nextElementSibling.hidden = open; return; }
+    if (e.target.closest('[data-ap-oneoff]')) { if (window.RMX_SEND_ONEOFF) window.RMX_SEND_ONEOFF([who || 'Tenant']); return; }
     var sf = e.target.closest('[data-ap-sendform]');
     if (sf) { if (window.RMX_SEND_FORM) window.RMX_SEND_FORM([who || 'Tenant'], sf.getAttribute('data-ap-sendform')); }
   });
