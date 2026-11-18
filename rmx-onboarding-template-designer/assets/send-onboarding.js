@@ -9,9 +9,9 @@
   var me = document.currentScript, kind = (me && me.getAttribute('data-kind')) || 'prospect', tableId = (me && me.getAttribute('data-table')) || 'prospects';
   var NOUN = kind === 'tenant' ? 'Tenant' : kind === 'property' ? 'Property' : 'Prospect', PLURAL = kind === 'property' ? 'properties' : NOUN.toLowerCase() + 's', table = document.getElementById(tableId);
   var LISTS = {
-    prospect: ['Send Email', 'Send Onboarding', 'Send Form', 'Lost', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Send Online Application', 'Write Screening Adverse Action Letter', 'Write Income Verification Adverse Action Letter', 'Add Invoice', 'Show All Invoices', 'Add Estimate', 'Show All Estimates'],
+    prospect: ['Send Email', 'Send Onboarding', 'Send Form', 'Send One-Off Form', 'Lost', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Send Online Application', 'Write Screening Adverse Action Letter', 'Write Income Verification Adverse Action Letter', 'Add Invoice', 'Show All Invoices', 'Add Estimate', 'Show All Estimates'],
     property: ['Send Email', 'Add Management Inspection', 'Create Service Issue', 'Write Letters', 'Report Writer', 'Add to Phone Broadcasts', 'Add to Text Broadcasts'],
-    tenant: ['Send Email', 'Send Onboarding', 'Send Form', 'Send Survey', 'Send Management Inspection', 'Send Tenant Self-Inspection', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Jump To Prospect', 'Create Document Packet', 'Publish Signable Documents', 'Add To Account Groups', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge']
+    tenant: ['Send Email', 'Send Onboarding', 'Send Form', 'Send One-Off Form', 'Send Survey', 'Send Management Inspection', 'Send Tenant Self-Inspection', 'Run Screening', 'Run Income Verification', 'View Screenings', 'View Income Verifications', 'Jump To Prospect', 'Create Document Packet', 'Publish Signable Documents', 'Add To Account Groups', 'Add Call', 'Add Email Note', 'Add Note', 'Add Visit', 'Add Charge']
   };
   var FORMS = ['Pet Info & Policy Agreement', 'Pet Information', 'Gym Access', 'Notice to Vacate'];
   /* sample contacts from the mock; anyone else has just the primary contact */
@@ -159,6 +159,7 @@
       var what = it.getAttribute('data-so-item'), tr = menu._for && menu._for.closest('tr');
       if (what === 'Send Onboarding') startOnboarding();
       else if (what === 'Send Form' && tr) startForm([nameOf(tr)]);
+      else if (what === 'Send One-Off Form' && tr) startOneOff([nameOf(tr)]);
       return;
     }
     if (!e.target.closest('.so-menu')) close();
@@ -169,7 +170,13 @@
   document.addEventListener('rmx:change', function (e) { var x = e.target.closest && e.target.closest('.so-expire'); if (!x) return; var on = e.detail && e.detail.checked; x.toggleAttribute('data-off', !on); x.querySelector('input').disabled = !on; });
   document.getElementById('so-send').addEventListener('click', function () { if (window.RMX && RMX.toast) RMX.toast('Onboarding sent', 'success'); });
 
-  window.RMX_SEND_FORM = startForm;   /* detail pages: Actions > Communication > Send Form */
+  /* One-off form: no template. Opens the form designer in one-off mode (rmx-onboarding-form-designer/assets/oneoff.js). */
+  function startOneOff(names) {
+    try { sessionStorage.setItem('rmx-oneoff', JSON.stringify({ kind: NOUN, names: names, back: location.href })); sessionStorage.removeItem('rmx-onboarding-form'); } catch (e) {}
+    window.location.href = '../../rmx-onboarding-form-designer/screens/form-designer.html?oneoff=1';
+  }
+  window.RMX_SEND_FORM = startForm; window.RMX_SEND_ONEOFF = startOneOff;
+  try { var okMsg = sessionStorage.getItem('rmx-oneoff-sent'); if (okMsg) { sessionStorage.removeItem('rmx-oneoff-sent'); setTimeout(function () { if (window.RMX && RMX.toast) RMX.toast(JSON.parse(okMsg), 'success'); }, 300); } } catch (e) {}   /* detail pages: Actions > Communication > Send Form */
 
   /* ---------- selection column and bar ---------- */
   if (!table) return;
@@ -186,18 +193,18 @@
   var col = table.querySelector('colgroup col:first-child'), colW = col ? col.style.width : '';
   function bulkMode(on) { table.classList.toggle('so-bulk', on); if (col) col.style.width = on ? '64px' : colW; if (!on) table.querySelectorAll('.so-sel .rmx-check').forEach(function (c) { c.dataset.checked = 'false'; }); refresh(); }
   /* Bulk mode: Bulk Actions > one bulk action turns the checkboxes on, and the bar then offers just that one action for the ticked rows. */
-  var mode = kind === 'property' ? 'form' : 'onb', NAMES = { onb: 'Send Onboarding', form: 'Send Form' };
+  var mode = kind === 'property' ? 'form' : 'onb', NAMES = { onb: 'Send Onboarding', form: 'Send Form', oneoff: 'Send One-Off Form' };
   var bulk = document.querySelector('.tn-bulk'), bmenu = document.createElement('div');
   /* the Rent Manager Bulk Actions menu (from Izzy's screenshot of Prospects); Tenants use the same groups, names swapped, and no Manage group */
   var P = kind === 'tenant' ? 'Tenant' : 'Prospect';
   var GROUPS = [['History / Note', ['Add to History >']], ['Service Manager', ['Add Issue']], ['Financial', ['Add Charge']], ['Reports', [P + ' Mailing Labels', 'Report Writer']],
-    ['Communication', ['Write Letters', 'Send Email', 'Send Form', 'Send Onboarding', 'Publish Signable Documents', 'Send Text', 'Add to Phone Broadcasts']]];
+    ['Communication', ['Write Letters', 'Send Email', 'Send Form', 'Send One-Off Form', 'Send Onboarding', 'Publish Signable Documents', 'Send Text', 'Add to Phone Broadcasts']]];
   if (kind === 'property') GROUPS = [['Reports', ['Report Writer']], ['Communication', ['Write Letters', 'Send Email', 'Add to Phone Broadcasts', 'Add to Text Broadcasts']]];   /* no Send Form for properties */
   else if (kind !== 'tenant') GROUPS.push(['Manage Prospects', ['Set to Lost', 'Change Stage', 'Delete']]);
   bmenu.className = 'so-menu so-bmenu'; bmenu.hidden = true;
   bmenu.innerHTML = '<button type="button" class="so-mass">' + ic('edit') + '<span>Mass Edit Mode</span><em>F2</em></button><div class="so-sep"></div>' +
     GROUPS.map(function (g) { return '<div class="so-h">' + g[0] + '</div>' + g[1].map(function (n) {
-      var mode = n === 'Send Onboarding' ? ' data-so-mode="onb"' : n === 'Send Form' ? ' data-so-mode="form"' : '';
+      var mode = n === 'Send Onboarding' ? ' data-so-mode="onb"' : n === 'Send Form' ? ' data-so-mode="form"' : n === 'Send One-Off Form' ? ' data-so-mode="oneoff"' : '';
       return '<button type="button" class="so-it"' + mode + '>' + n.replace(' >', '') + (n.slice(-1) === '>' ? ic('arrow-drop-down', 'so-sub') : '') + '</button>'; }).join(''); }).join('');
   document.body.appendChild(bmenu);
   if (bulk) bulk.removeAttribute('data-rmx-todo');
@@ -226,6 +233,6 @@
     var b = e.target.closest('[data-so-bar]'); if (!b) return;
     var rows = selected(), what = b.getAttribute('data-so-bar');
     if (what === 'clear') bulkMode(false);
-    else if (what === 'go') { if (mode === 'onb') startOnboarding(); else startForm(rows.map(nameOf)); }
+    else if (what === 'go') { if (mode === 'onb') startOnboarding(); else if (mode === 'oneoff') startOneOff(rows.map(nameOf)); else startForm(rows.map(nameOf)); }
   });
 })();
