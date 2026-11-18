@@ -217,3 +217,5 @@ Leasing Board cards: the labels (Last Contact:, Next Contact:, Agent:, Onboardin
 Leasing Board: the swim lane titles ("Application Sent (2)") are 14px, grey (`--text-primary`) and semi-bold; the count in brackets is regular weight.
 
 Form Details: 24px between questions (was 16px).
+
+**2026-11-18 · Properties and Tenant registers re-checked against Figma `6796:48913` / `6796:50951`**: layout, columns, rows and totals already matched. Added the AI assistant (sparkle) icon button next to Command Launch in the header on both screens, and the Tenant Register avatar now reads MG as in the mock.
