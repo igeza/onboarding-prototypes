@@ -291,6 +291,20 @@ body { display: flex; flex-direction: column; }
 <script src="../assets/megamenu.js"></script>
 <script src="../assets/regsel.js"></script>
 <script>
+/* One-off forms sent from a register or detail page are listed here too (status Sent, no details until submitted). */
+(function () {
+  var tb = document.querySelector('#approvals tbody'), list = [];
+  try { list = JSON.parse(sessionStorage.getItem('rmx-oneoff-sent')) || []; } catch (e) {}
+  function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+  list.forEach(function (r) {
+    tb.insertAdjacentHTML('beforeend', '<tr data-rmx-row><td>' + esc(r.name) + '</td><td>' + esc(r.date) + '</td><td>' + esc(r.form) + '</td><td>' + esc(r.status) + '</td><td></td><td class="ft-tight"><button type="button" class="rmx-btn rmx-btn--text" aria-label="Actions" data-rmx-todo="Row actions are not built in this prototype"><svg class="rmx-icon ft-blue"><use href="#more-vert"></use></svg></button></td></tr>');
+  });
+  var n = tb.rows.length, c = document.querySelector('[data-rmx-count="#approvals"]');
+  if (c) { c.textContent = n; c.parentNode.innerHTML = '<span data-rmx-count="#approvals">' + n + '</span> of ' + n + ' Forms'; }
+  var opts = ['Pet Information']; list.forEach(function (r) { if (opts.indexOf(r.form) < 0) opts.push(r.form); });
+  var f = document.querySelector('[data-rmx-target="#approvals"][data-rmx-col="2"]'); if (f) f.setAttribute('data-rmx-options', opts.join('|'));
+  var st = document.querySelector('[data-rmx-target="#approvals"][data-rmx-col="3"]'); if (st && list.length) st.setAttribute('data-rmx-options', 'Sent|' + st.getAttribute('data-rmx-options'));
+})();
 /* Each row opens its form: the name in the dialog is the row's name. Approving a pending form (Approve, then Add on the note) marks it Approved. */
 document.addEventListener('click', function (e) {
   var tr = e.target.closest('tr[data-rmx-open]');

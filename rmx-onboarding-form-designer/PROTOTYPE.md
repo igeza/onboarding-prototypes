@@ -229,3 +229,7 @@ Icon buttons in forms are blue (`--icon-brand`): the question pencil and trash, 
 **2026-11-18 · One-off form: radio buttons have an 8px gap before their label** (Yes/No questions and the Yes/No options in the editor).
 
 **2026-11-18 · The register menu item is named Send New Form** (row kebab menu, Bulk Actions menu and the selection bar button), matching the overlay title. On the detail pages' Actions panel it stays `<New Form>`, as Send Email has `<New Email>`.
+
+## 2026-11-19 — Send Form checkbox, one-off forms in Forms register
+- Settings > Send Form dialog: added "Contacts receive their own form" checkbox (Figma 8041:49689), unchecked by default.
+- A one-off form sent from a register or detail page is now listed in the Forms register (form-approvals.html) with status Sent, one row per recipient (sessionStorage `rmx-oneoff-sent`). Rows have no details dialog until the form is submitted.

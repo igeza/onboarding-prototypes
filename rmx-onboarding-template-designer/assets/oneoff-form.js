@@ -61,7 +61,7 @@
   }
 
   /* ---- the overlay ---- */
-  var kind = 'Tenant', who = '', qs = [], editing = null, picked = [], D = { add: '', fs: '', css: '' };
+  var kind = 'Tenant', who = '', whoList = [], qs = [], editing = null, picked = [], D = { add: '', fs: '', css: '' };
   var dlg = document.createElement('div');
   dlg.className = 'rmx-overlay'; dlg.id = 'oo-form'; dlg.hidden = true; dlg.setAttribute('role', 'dialog'); dlg.setAttribute('aria-modal', 'true'); dlg.setAttribute('aria-label', 'Send New Form'); dlg.setAttribute('data-rmx-component', 'Dialog Overlay');
   dlg.innerHTML =
@@ -231,6 +231,9 @@
     var name = nm.value.trim(), saveT = document.getElementById('oo-save-tpl').dataset.checked === 'true', due = (dlg.querySelector('.oo-narrow [data-rmx-value]').textContent || '').trim();
     try {
       var sent = JSON.parse(sessionStorage.getItem('rmx-sent-forms') || '[]'); sent.push({ form: name, due: due }); sessionStorage.setItem('rmx-sent-forms', JSON.stringify(sent));
+      var reg = JSON.parse(sessionStorage.getItem('rmx-oneoff-sent') || '[]'), dd = new Date(), p2 = function (x) { return String(x).padStart(2, '0'); };
+      (whoList.length ? whoList : [kind]).forEach(function (n) { reg.push({ name: n, form: name, date: p2(dd.getMonth() + 1) + '/' + p2(dd.getDate()) + '/' + String(dd.getFullYear()).slice(2), status: 'Sent' }); });
+      sessionStorage.setItem('rmx-oneoff-sent', JSON.stringify(reg));
       if (saveT) {
         var forms = JSON.parse(sessionStorage.getItem('rmx-forms') || '[]'), d = new Date(), pad = function (x) { return String(x).padStart(2, '0'); };
         forms.push({ name: name, type: kind, props: 'All Properties', approval: document.getElementById('oo-approval').dataset.checked === 'true', publish: false, date: pad(d.getMonth() + 1) + '/' + pad(d.getDate()) + '/' + String(d.getFullYear()).slice(2) });
@@ -241,7 +244,7 @@
     if (window.RMX && RMX.toast) RMX.toast('"' + name + '" sent to ' + who + (saveT ? ' and saved as a template' : '') + '.', 'success');
   });
   window.RMX_ONEOFF = { open: function (names, k) {
-    kind = k || 'Tenant'; who = names.length > 1 ? names.length + ' ' + kind.toLowerCase() + 's' : (names[0] || kind); qs = []; editing = null;
+    whoList = names.slice(); kind = k || 'Tenant'; who = names.length > 1 ? names.length + ' ' + kind.toLowerCase() + 's' : (names[0] || kind); qs = []; editing = null;
     var old = document.getElementById('oo-add-fields'); if (old) old.parentNode.removeChild(old);
     document.getElementById('oo-name').value = ''; document.getElementById('oo-msg').value = ''; document.getElementById('oo-name-box').style.borderColor = '';
     dlg.querySelector('.oo-narrow [data-rmx-value]').textContent = '7 days'; document.getElementById('oo-approval').dataset.checked = 'false'; document.getElementById('oo-save-tpl').dataset.checked = 'false';
