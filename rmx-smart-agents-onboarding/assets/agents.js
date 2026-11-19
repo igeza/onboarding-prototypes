@@ -100,7 +100,9 @@
   const SUBS = { 'Account Information': 'Name, phone, email, and mailing address', 'Payment Setup': 'Save a payment method and setup autopay', 'Make a Payment': 'Based on property payment policies', 'Renters Insurance': 'Allow enrollment in master policy', 'Form': 'Pet Addendum', 'File Upload': 'New File' };
   /* the first four can be added once per RMR step; Form and File Upload as many times as needed */
   const SINGLE = new Set(['Account Information', 'Payment Setup', 'Make a Payment', 'Renters Insurance']);
-  const hasType = (node, t) => $$('.ag-step', node).some(x => x.dataset.stype === t);
+  /* the once-only steps are once per onboarding group: RMR steps sent together share one Account Information, one Payment Setup, and so on */
+  const groupNodes = node => { const g = groupOf.get(node.dataset.node); return g ? $$('.ag-node[data-ag-onb]').filter(n => groupOf.get(n.dataset.node) === g) : [node]; };
+  const hasType = (node, t, except) => groupNodes(node).some(n => $$('.ag-step', n).some(x => x !== except && x.dataset.stype === t));
   let stepSeq = 100;
   function addStep(type, node) {
     /* clicked from the palette with a step selected: the new step goes right after it; otherwise to the bottom of the node */
@@ -143,7 +145,7 @@
     const n = onbOf(e); if (!n || libDrag) return;
     e.preventDefault(); e.stopPropagation(); n.classList.remove('is-droptarget');
     if (dragStep) {
-      if (SINGLE.has(dragStep.dataset.stype) && dragStep.closest('[data-ag-onb]') !== n && hasType(n, dragStep.dataset.stype)) { line.remove(); dragStep.classList.remove('is-dragging'); dragStep = null; return; }
+      if (SINGLE.has(dragStep.dataset.stype) && dragStep.closest('[data-ag-onb]') !== n && hasType(n, dragStep.dataset.stype, dragStep)) { line.remove(); dragStep.classList.remove('is-dragging'); dragStep = null; return; }
       const box = $('.ag-node__steps', n), ref = n.classList.contains('is-collapsed') ? null : dropRef(n, e.clientY), s = dragStep;
       line.remove(); box.insertBefore(s, ref); s.classList.remove('is-dragging'); dragStep = null;
       selectOnb(n, s); draw(); return;
@@ -410,7 +412,7 @@
   function stepsSection(node, withOrder) {
     const counts = {}; $$('.ag-step', node).forEach(s => { counts[s.dataset.stype] = (counts[s.dataset.stype] || 0) + 1; });
     return '<div class="ag-sec"><div class="ag-sec__head rmx-type-paragraph-s-semibold">Onboarding Steps</div><div class="ag-sec__body"><p class="ag-desc2 rmx-type-paragraph-s-regular">Drag and drop available steps or click on them to add them to onboarding.</p><div class="ag-pal-list">' +
-      Object.keys(SUBS).map(t => { const used = SINGLE.has(t) && counts[t] > 0; return '<div class="ag-pal-step' + (used ? ' is-used' : '') + '"><span class="ag-pal-step__bar"></span><button type="button" class="ag-pal-step__body rmx-type-paragraph-s-semibold" ' + (used ? 'aria-disabled="true" title="Already added. This step can only be added once."' : 'draggable="true" data-pal="' + t + '"') + '><span>' + t + '</span>' + (counts[t] ? '<span class="ag-pal-step__n rmx-type-paragraph-s-regular">' + counts[t] + '</span>' : '') + '</button></div>'; }).join('') + '</div>' +
+      Object.keys(SUBS).map(t => { const used = SINGLE.has(t) && hasType(node, t); return '<div class="ag-pal-step' + (used ? ' is-used' : '') + '"><span class="ag-pal-step__bar"></span><button type="button" class="ag-pal-step__body rmx-type-paragraph-s-semibold" ' + (used ? 'aria-disabled="true" title="Already added. This step can only be added once per onboarding group."' : 'draggable="true" data-pal="' + t + '"') + '><span>' + t + '</span>' + (counts[t] ? '<span class="ag-pal-step__n rmx-type-paragraph-s-regular">' + counts[t] + '</span>' : '') + '</button></div>'; }).join('') + '</div>' +
       (withOrder ? chk('order', 'Steps must be completed in order', node.dataset.order === 'true') : '') + '</div></div>';
   }
   /* an RMR step of type Form is a single form: its name is the form's name (unless you named it yourself) */
