@@ -461,7 +461,7 @@ html { background: #f6fafe; color-scheme: light; }
 .tile__head { display: flex; align-items: center; gap: var(--spacing-md); }
 .tile__text { flex: 1 1 0; min-width: 0; justify-content: center; align-items: flex-start; }
 .tile__title { margin: 0; font-size: var(--font-size-lg); line-height: var(--line-height-md); letter-spacing: 0.9px; color: var(--text-primary); }
-.tile__sub { margin: 0; font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; color: var(--text-primary); }
+.tile__sub { margin: 0; font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; color: var(--text-secondary); }
 .ring { position: relative; flex: none; width: 80px; height: 80px; }
 .ring svg { display: block; }
 .ring__value { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; margin: 0; font-size: var(--font-size-lg); line-height: var(--line-height-xl); color: var(--text-primary); }

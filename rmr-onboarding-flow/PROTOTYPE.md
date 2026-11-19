@@ -90,3 +90,4 @@ Form question text is regular weight, not bold (pet form, finish page, tenant ne
 - The steps are Account Information, File Upload, Insurance, Pay Charges, Setup Payment Method, Additional Information, with the first two done at 33%. Documents to Sign is no longer a step: it is the Document to Sign task, and Sign opens `02-docs-to-sign`. Account Information opens `01a-account-information`.
 - The progress ring moved from the hero into the onboarding tile (80px). The completed (`11`) and submit (`13`) states keep their titles, 100% ring and $0.00 balance; **Finish Onboarding** now sits in the onboarding tile. The tasks tile is only on `01` (the documents are signed by the later states).
 - New Poll's Start does nothing yet (no poll screen).
+- The onboarding tile's subtitle ("Complete all the steps below to finish onboarding.") uses the secondary text color (#616466).
