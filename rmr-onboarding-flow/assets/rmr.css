@@ -484,8 +484,16 @@ html { background: #f6fafe; color-scheme: light; }
 .ring--sm .ring__value { font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; }
 .tile__text .btn { margin-top: 0; }   /* the Finish Onboarding button sits 8px under the subtitle */
 
-/* The onboarding tile: the step list scrolls (its scrollbar sits right beside the list) when the window is short; the progress ring, title, subtitle (and Finish Onboarding) above it stay put */
-.task-card--onboarding { overflow: hidden; }
-.task-card--onboarding .tile__head { flex: none; }
-.task-card--onboarding .task-list { flex: 1 1 0; min-height: 0; overflow-y: auto; scrollbar-width: thin; margin-right: -16px; padding-right: 16px; }
+/* The onboarding tile: the step list scrolls when the window is short, in all the free space between the title block (button) and the bottom of the tile, with a floating scrollbar; the ring, title, subtitle and Finish Onboarding above it stay put */
+.task-card--onboarding { overflow: hidden; padding-right: 0; padding-bottom: 0; }
+.task-card--onboarding .tile__head { flex: none; padding-right: var(--spacing-xl); }
+.task-card--onboarding { position: relative; }
+.task-card--onboarding .task-list { flex: 1 1 0; min-height: 0; overflow-y: auto; scrollbar-width: none; margin: 0; padding: 0 var(--spacing-xl) var(--spacing-xl) 0; }
+.task-card--onboarding .task-list::-webkit-scrollbar { display: none; }
+/* floating scrollbar (float-scroll.js): over the list at the tile's right edge, no layout space */
+.fscroll { position: absolute; right: 6px; width: 6px; z-index: 3; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.fscroll[hidden] { display: none; }
+.fscroll.is-on { opacity: 1; pointer-events: auto; }
+.fscroll__thumb { width: 6px; border-radius: 3px; background: rgba(49, 50, 51, .35); cursor: default; }
+.fscroll__thumb:hover { background: rgba(49, 50, 51, .55); }
 .task-card--onboarding .task { flex: 1 0 40px; }
