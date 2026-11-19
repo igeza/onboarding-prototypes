@@ -483,3 +483,9 @@ html { background: #f6fafe; color-scheme: light; }
 .ring--sm { width: 64px; height: 64px; }
 .ring--sm .ring__value { font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; }
 .tile__text .btn { margin-top: 0; }   /* the Finish Onboarding button sits 8px under the subtitle */
+
+/* The onboarding tile scrolls when the window is short; the progress ring, title, subtitle (and Finish Onboarding) stay put at the top */
+.task-card--onboarding { overflow-y: auto; gap: 0; padding-top: 0; scrollbar-width: thin; }
+.task-card--onboarding .tile__head { position: sticky; top: 0; z-index: 2; flex: none; padding: var(--spacing-xl) 0; background: var(--background-primary); }
+.task-card--onboarding .task-list { flex: 1 0 auto; }
+.task-card--onboarding .task { flex: 1 0 40px; }
