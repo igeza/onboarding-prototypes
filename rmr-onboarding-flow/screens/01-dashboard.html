@@ -77,31 +77,8 @@
 </div>
 </div>
 <script src="../assets/app.js"></script>
+<script src="../assets/dash-state.js" data-state=""></script>
 <script src="../assets/float-scroll.js"></script>
-<script>
-/* The dashboard follows the onboarding: a step is done (green check, View) when it has been saved in the steps (session storage
-   "rmr-step-status", written by app.js), otherwise Start. Account Information is always done. The ring is done steps over the
-   steps the resident has (steps hidden by the template designer do not count). Paying charges clears the balance.
-   When every step is done the dashboard is the "Finish Onboarding" one (13-dashboard-submit). */
-(function () {
-  var st = []; try { st = JSON.parse(sessionStorage.getItem('rmr-step-status')) || []; } catch (e) {}
-  var STEPS = window.RMR_STEPS || [], hidden = function (i) { return STEPS[i] && !STEPS[i].visible; };
-  var list = [['Account Information', '01a-account-information.html', true],
-    ['File Upload', '03-file-upload.html', st[1] === 'done', 1], ['Insurance', '04-insurance.html', st[2] === 'done', 2], ['Pay Charges', '05-pay-charges.html', st[3] === 'done', 3],
-    ['Setup Payment Method', '07-setup-payment-method.html', st[4] === 'done', 4], ['Additional Information', '10-pet-information.html', st[5] === 'done', 5]].filter(function (x) { return x[3] === undefined || !hidden(x[3]); });
-  var done = list.filter(function (x) { return x[2]; }).length;
-  if (done === list.length) { location.replace('13-dashboard-submit.html'); return; }
-  var pct = Math.round(done * 100 / list.length);
-  var box = document.querySelector('.task-list');
-  box.innerHTML = list.map(function (x) {
-    return '<div class="task" data-component="Task">\n  <div class="task__stepper" data-component="Stepper"><div class="task__title" data-component="_Stepper Title"><span class="step ' + (x[2] ? 'step--completed' : 'step--pending') + '" data-component="_Step"><img src="../assets/img/' + (x[2] ? 'check-white' : 'check-blue') + '.svg" alt="" width="16" height="16"></span><span class="task__label">' + x[0] + '</span></div><div class="task__line"></div></div>\n  <button type="button" class="btn--text btn--text-24" data-component="Button" data-href="' + x[1] + '">' + (x[2] ? 'View' : 'Start') + '</button>\n</div>';
-  }).join('');
-  var c = 2 * Math.PI * 35, arc = document.querySelector('.ring circle:nth-child(2)'), val = document.querySelector('.ring__value');
-  if (arc) arc.setAttribute('stroke-dasharray', (c * pct / 100).toFixed(2) + ' ' + c.toFixed(2));
-  if (val) val.textContent = pct + '%';
-  try { if (sessionStorage.getItem('rmr-payment-submitted') === '1') document.querySelector('.dash-hero__balance').textContent = '$0.00'; } catch (e) {}
-})();
-</script>
 
 </body>
 </html>

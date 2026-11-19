@@ -106,3 +106,9 @@ Form question text is regular weight, not bold (pet form, finish page, tenant ne
 - On the Finish Onboarding (`13`) and Completed (`11`) states the progress ring is 64px with a 14px value, which makes the subtitle fit on one line; the Finish Onboarding button sits 8px under it. At 1920x937 the six step rows are at y=502, 565, 628, 691, 754 and 817, the same as the mock. The in-progress dashboard (`01`) keeps the 80px ring from its own mock.
 
 - **The step list in the onboarding tile scrolls** when the window is too short for all six steps; its scrollbar is a floating thumb (no track or container, no layout space) over the list's right edge that fades in while you scroll or hover (`assets/float-scroll.js`). The progress ring, title, subtitle (and Finish Onboarding) above it stay put. In a window tall enough (1920x937) nothing scrolls and the rows sit where the mock has them.
+
+## 2026-11-19 · One status for the dashboard tile and the onboarding steps
+
+- The dashboard's onboarding tile and the stepper on the onboarding pages read the same status (`rmr-step-status`, one entry per step), so a step is green on one exactly when it is green on the other (`assets/dash-state.js`). Account Information is the first step (the first stepper entry), no longer "always done"; with nothing stored only that first step is done, as in the stepper.
+- `13-dashboard-submit` (everything done, not yet submitted) and `11-dashboard-complete` (completed) put the onboarding in that state when opened, so the stepper agrees with them. `01-dashboard` shows the state as it is.
+- The stepper's first step is still labelled "Documents to Sign" on the step pages `02` to `14` and "Account Information" on `01a`; the dashboard says "Account Information".
