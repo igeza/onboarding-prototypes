@@ -448,3 +448,30 @@ html { background: #f6fafe; color-scheme: light; }
 .finish-row { display: flex; align-items: center; gap: var(--spacing-md); min-height: 50px; padding: 0 var(--spacing-xs); border-bottom: 1px solid var(--border); }
 .finish-row__name { flex: 1; font-size: var(--font-size-md); line-height: var(--line-height-lg); letter-spacing: 0.32px; color: var(--text-primary); }
 .finish-row__status { width: 120px; font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; color: var(--text-secondary); }
+
+/* Prospect Dashboard (Figma 8112:42247): a balance hero, then the onboarding tile and the tasks tile (no Latest Updates tile) */
+.dash-hero--balance { display: block; padding: var(--spacing-2xl); }
+.dash-hero__bal { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 32px; }
+.dash-hero__bal-top { display: flex; flex-direction: column; gap: 24px; }
+.dash-hero__pay { display: flex; align-items: center; gap: 16px; }
+.btn--text.btn--text-on-dark { color: #fff; background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit; }
+.dash-section--tiles { gap: var(--spacing-md); align-items: stretch; }
+.task-card--onboarding { border-left-color: #afd9a4; width: 454px; }
+.task-card--tasks { border-left-color: #f5b619; width: 443px; }
+.tile__head { display: flex; align-items: center; gap: var(--spacing-md); }
+.tile__text { flex: 1 1 0; min-width: 0; justify-content: center; align-items: flex-start; }
+.tile__title { margin: 0; font-size: var(--font-size-lg); line-height: var(--line-height-md); letter-spacing: 0.9px; color: var(--text-primary); }
+.tile__sub { margin: 0; font-size: var(--font-size-sm); line-height: var(--line-height-md); letter-spacing: 0.28px; color: var(--text-primary); }
+.ring { position: relative; flex: none; width: 80px; height: 80px; }
+.ring svg { display: block; }
+.ring__value { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; margin: 0; font-size: var(--font-size-lg); line-height: var(--line-height-xl); color: var(--text-primary); }
+.atasks { display: flex; flex-direction: column; gap: var(--spacing-sm); }
+.atasks__line { height: 1px; background: var(--border); }
+.atask { display: flex; align-items: flex-start; gap: var(--spacing-xs); }
+.atask__icon { flex: none; display: inline-flex; padding: 6.4px; border-radius: 80px; background: #fbe5ac; color: var(--text-primary); }
+.atask__body { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--spacing-xs); padding-top: var(--spacing-xxs); }
+.atask__head { display: flex; flex-direction: column; gap: 4px; font-size: var(--font-size-sm); line-height: var(--line-height-md); }
+.atask__title { margin: 0; font-weight: 700; color: var(--text-primary); }
+.atask__desc { margin: 0; letter-spacing: 0.28px; color: var(--text-secondary); }
+.atask__foot { display: flex; align-items: center; justify-content: space-between; }
+.atask__ago { font-size: var(--font-size-xs); line-height: var(--line-height-sm); letter-spacing: 0.24px; color: #747474; }

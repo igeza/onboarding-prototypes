@@ -83,3 +83,10 @@ The Onboarding Submitted overlay shows the message set in the RMX template Setti
 Form question text is regular weight, not bold (pet form, finish page, tenant new-pet form and the Portal Preview).
 
 **Pet form = the six questions of the Pet Information template**: 1. Type of Pet (dropdown), 2. Pet Details (paragraph), 3. Is your pet up to date on vaccinations? (Yes/No), 4. Behavior (checkboxes), 5. Emergency Contact for Pet (short answer), 6. Vaccination Records (file upload, shown only when question 3 is Yes).
+
+## 2026-11-19 · Dashboard redesign (Figma Prospect Dashboard `8112:42247`)
+
+- The dashboard screens (`01-dashboard`, `11-dashboard-complete`, `13-dashboard-submit`) now follow the new mock: a **Balance Due** hero ($1,668.53, Make a Payment, Set up AutoPay) on the building image, then two tiles: the **onboarding tile** (green left edge: progress ring, "Get ready for move in", the six steps) and **2 Tasks Needs Your Attention** (yellow left edge: New Poll with Start, Document to Sign with Sign). **There is no Latest Updates tile** (the mock had one; it was dropped).
+- The steps are Account Information, File Upload, Insurance, Pay Charges, Setup Payment Method, Additional Information, with the first two done at 33%. Documents to Sign is no longer a step: it is the Document to Sign task, and Sign opens `02-docs-to-sign`. Account Information opens `01a-account-information`.
+- The progress ring moved from the hero into the onboarding tile (80px). The completed (`11`) and submit (`13`) states keep their titles, 100% ring and $0.00 balance; **Finish Onboarding** now sits in the onboarding tile. The tasks tile is only on `01` (the documents are signed by the later states).
+- New Poll's Start does nothing yet (no poll screen).
