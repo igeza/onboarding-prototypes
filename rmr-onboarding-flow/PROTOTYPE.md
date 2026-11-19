@@ -91,3 +91,10 @@ Form question text is regular weight, not bold (pet form, finish page, tenant ne
 - The progress ring moved from the hero into the onboarding tile (80px). The completed (`11`) and submit (`13`) states keep their titles, 100% ring and $0.00 balance; **Finish Onboarding** now sits in the onboarding tile. The tasks tile is only on `01` (the documents are signed by the later states).
 - New Poll's Start does nothing yet (no poll screen).
 - The onboarding tile's subtitle ("Complete all the steps below to finish onboarding.") uses the secondary text color (#616466).
+
+## 2026-11-19 · The dashboard follows the onboarding steps
+
+- `01-dashboard` reads the step status the onboarding already keeps (`rmr-step-status`, set when a step is saved). A saved step shows the green check and **View**; any other shows **Start**. **Account Information is always done.** The progress ring is done steps over the steps the resident has (steps hidden in the template designer do not count): 17% at the start (1 of 6).
+- Once Pay Charges has been submitted the balance reads $0.00.
+- When every step is done, the dashboard opens as the Finish Onboarding one (`13-dashboard-submit`).
+- Documents to Sign is not a dashboard step (it is the Document to Sign task), so its status is not shown here. The tasks tile is still the fixed sample (New Poll, Document to Sign).
