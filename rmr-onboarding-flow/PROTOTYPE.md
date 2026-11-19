@@ -112,3 +112,7 @@ Form question text is regular weight, not bold (pet form, finish page, tenant ne
 - The dashboard's onboarding tile and the stepper on the onboarding pages read the same status (`rmr-step-status`, one entry per step), so a step is green on one exactly when it is green on the other (`assets/dash-state.js`). Account Information is the first step (the first stepper entry), no longer "always done"; with nothing stored only that first step is done, as in the stepper.
 - `13-dashboard-submit` (everything done, not yet submitted) and `11-dashboard-complete` (completed) put the onboarding in that state when opened, so the stepper agrees with them. `01-dashboard` shows the state as it is.
 - The stepper's first step is still labelled "Documents to Sign" on the step pages `02` to `14` and "Account Information" on `01a`; the dashboard says "Account Information".
+
+## 2026-11-19 · Onboarding complete = view only
+
+- Once the onboarding is complete (Review saved, so the last step is done: after Finish Onboarding, or when `11-dashboard-complete` is opened), every onboarding page is for viewing: all fields, dropdowns, file uploads, checkboxes and radios are disabled and look disabled, and the step's own actions (Submit / Skip / Sign / Pay / Finish) are hidden. Back, the stepper and Back to Dashboard still work. An "Update" button, if the page has one, stays disabled because nothing can change. The check is at the end of `assets/app.js`.

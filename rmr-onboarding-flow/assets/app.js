@@ -265,3 +265,16 @@
   logo.addEventListener('click', reset);
   logo.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); reset(); } });
 })();
+
+/* Onboarding complete (Review saved: the last step is done): the onboarding pages are for viewing only. Every field in the step is disabled
+   and the step's own actions (Submit / Update / Skip / Sign / Finish) are gone; Back, the stepper and Back to Dashboard still work. */
+(function () {
+  var st; try { st = JSON.parse(sessionStorage.getItem('rmr-step-status')); } catch (e) {}
+  var card = document.querySelector('.step-card');
+  if (!st || st[6] !== 'done' || !card) return;
+  document.documentElement.classList.add('is-view-only');
+  [].forEach.call(card.querySelectorAll('input, textarea, select'), function (el) { el.disabled = true; });
+  [].forEach.call(card.querySelectorAll('button:not([data-href]), .dropdown__trigger'), function (b) { if (!b.closest('.footer-buttons')) b.disabled = true; });
+  [].forEach.call(card.querySelectorAll('.attach'), function (a) { a.setAttribute('aria-disabled', 'true'); });
+  [].forEach.call(card.querySelectorAll('[data-step-btn], [data-step-skip], [data-finish], [data-step-save], [data-payment-submit]'), function (b) { b.hidden = true; });
+})();

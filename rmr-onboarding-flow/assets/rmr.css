@@ -497,3 +497,8 @@ html { background: #f6fafe; color-scheme: light; }
 .fscroll__thumb { width: 6px; border-radius: 3px; background: rgba(49, 50, 51, .35); cursor: default; }
 .fscroll__thumb:hover { background: rgba(49, 50, 51, .55); }
 .task-card--onboarding .task { flex: 1 0 40px; }
+
+/* View only (onboarding complete): fields look and behave disabled */
+.is-view-only .step-card .attach, .is-view-only .step-card .dropdown, .is-view-only .step-card .radio, .is-view-only .step-card .checkbox, .is-view-only .step-card .field__input, .is-view-only .step-card .table .btn { opacity: 0.5; pointer-events: none; user-select: none; }
+.is-view-only .step-card input:disabled, .is-view-only .step-card textarea:disabled { cursor: default; }
+.is-view-only .footer-buttons [hidden] { display: none !important; }
