@@ -98,3 +98,9 @@ Form question text is regular weight, not bold (pet form, finish page, tenant ne
 - Once Pay Charges has been submitted the balance reads $0.00.
 - When every step is done, the dashboard opens as the Finish Onboarding one (`13-dashboard-submit`).
 - Documents to Sign is not a dashboard step (it is the Document to Sign task), so its status is not shown here. The tasks tile is still the fixed sample (New Poll, Document to Sign).
+
+## 2026-11-19 · Dashboard sizing and header image (Figma Prospect Dashboard - Submit `6473:24568`)
+
+- The hero ("header") background uses the mock's two image layers (a building photo drawn at 326% height plus a cover photo) under the same `rgba(20,76,143,.85)` blue wash, instead of the old banner pair. The photos are kept as 2400px JPEGs (`assets/img/hero-bg-a.jpg`, `hero-bg-b.jpg`) because the Figma exports are 9 to 10 MB.
+- Tile content starts 24px from the tile's left edge (the green or yellow 5px border is inside the padding, as in Figma), so the ring, step checks and rows line up with the mock (x=320).
+- On the Finish Onboarding (`13`) and Completed (`11`) states the progress ring is 64px with a 14px value, which makes the subtitle fit on one line; the Finish Onboarding button sits 8px under it. At 1920x937 the six step rows are at y=502, 565, 628, 691, 754 and 817, the same as the mock. The in-progress dashboard (`01`) keeps the 80px ring from its own mock.
