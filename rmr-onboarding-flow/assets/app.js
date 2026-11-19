@@ -49,7 +49,9 @@
 
   /* Once Submit Payment has been used, Pay Charges always opens on the Payment Submitted screen. */
   var PAID_KEY = 'rmr-payment-submitted';
-  function paid() { try { return sessionStorage.getItem(PAID_KEY) === '1'; } catch (e) { return false; } }
+  function paid() {   // Submit Payment was used, or Pay Charges is done in the step status (so a finished onboarding shows it too)
+    try { if (sessionStorage.getItem(PAID_KEY) === '1') return true; var s = JSON.parse(sessionStorage.getItem('rmr-step-status')); return !!s && s[3] === 'done'; } catch (e) { return false; }
+  }
   function route(href, back) {
     var name = (href || '').split('/').pop(), s = stepOf(name);
     if (paid() && (name === '05-pay-charges.html' || name === '06-pay-charges-payment.html')) return '06a-payment-submitted.html';

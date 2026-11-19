@@ -4,7 +4,7 @@
    4 Setup Payment Method, 5 Additional Information, 6 Review. With nothing stored yet only the first step is done, as in the stepper.
    data-state="submit" (13) is the "everything done, not yet submitted" dashboard and data-state="complete" (11) the completed one:
    opening them puts the onboarding in that state, so the stepper agrees. Everything else (01) shows the state as it is, and when every
-   step is done it opens the Finish Onboarding dashboard. Paying charges clears the balance. */
+   step is done it opens the Finish Onboarding dashboard. Paying charges (Pay Charges done) clears the balance. */
 (function () {
   var mode = (document.currentScript && document.currentScript.getAttribute('data-state')) || '';
   var st = null; try { st = JSON.parse(sessionStorage.getItem('rmr-step-status')); } catch (e) {}
@@ -26,6 +26,6 @@
   var c = 2 * Math.PI * 35, arc = document.querySelector('.ring circle:nth-child(2)'), val = document.querySelector('.ring__value');
   if (arc) { arc.setAttribute('stroke-dasharray', (c * pct / 100).toFixed(2) + ' ' + c.toFixed(2)); arc.style.display = pct ? '' : 'none'; }
   if (val) val.textContent = pct + '%';
-  try { if (sessionStorage.getItem('rmr-payment-submitted') === '1') document.querySelector('.dash-hero__balance').textContent = '$0.00'; } catch (e) {}
+  try { if (sessionStorage.getItem('rmr-payment-submitted') === '1' || st[3] === 'done') document.querySelector('.dash-hero__balance').textContent = '$0.00'; } catch (e) {}
   window.dispatchEvent(new Event('resize'));   // the floating scrollbar re-measures
 })();

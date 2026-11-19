@@ -116,3 +116,5 @@ Form question text is regular weight, not bold (pet form, finish page, tenant ne
 ## 2026-11-19 · Onboarding complete = view only
 
 - Once the onboarding is complete (Review saved, so the last step is done: after Finish Onboarding, or when `11-dashboard-complete` is opened), every onboarding page is for viewing: all fields, dropdowns, file uploads, checkboxes and radios are disabled and look disabled, and the step's own actions (Submit / Skip / Sign / Pay / Finish) are hidden. Back, the stepper and Back to Dashboard still work. An "Update" button, if the page has one, stays disabled because nothing can change. The check is at the end of `assets/app.js`.
+
+- **Pay Charges opens on Payment Submitted** whenever Pay Charges is done, not only after Submit Payment was used on this tab. So with the onboarding complete (or the Completed / Finish Onboarding dashboards opened), Pay Charges and its View link land on the Payment Submitted screen, and the balance reads $0.00.
